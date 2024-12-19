@@ -32,4 +32,28 @@ public class Customer {
     public static Customer create(AddressDto address, Person person) {
         return new Customer(address, person);
     }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public AddressDto getAddress() {
+        return address;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public ZoneId getCreatedAtZone() {
+        return createdAtZone;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 }
