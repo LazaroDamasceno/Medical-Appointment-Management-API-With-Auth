@@ -22,6 +22,6 @@ public class CustomerFinderUtil {
     public Mono<Customer> findBySsn(String ssn) {
         return personFinderUtil
                 .findBySsn(ssn)
-                .flatMap(person -> customerRepository.findByPerson(person).single());
+                .flatMap(customerRepository::findByPerson);
     }
 }
