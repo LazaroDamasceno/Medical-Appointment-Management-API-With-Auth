@@ -8,7 +8,9 @@ import org.springframework.modulith.core.ApplicationModules;
 public class V2Application {
 
 	public static void main(String[] args) {
-		ApplicationModules.of(V2Application.class).verify();
+		var modules = ApplicationModules.of(V2Application.class);
+		modules.forEach(System.out::println);
+		modules.verify();
 		SpringApplication.run(V2Application.class, args);
 	}
 
