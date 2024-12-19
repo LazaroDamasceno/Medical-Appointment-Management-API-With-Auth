@@ -12,8 +12,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class PersonRegistrationServiceImpl implements PersonRegistrationService {
 
-    @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
+
+    public PersonRegistrationServiceImpl(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     @Override
     public Mono<Person> register(@Valid PersonRegistrationDto registrationDto) {
