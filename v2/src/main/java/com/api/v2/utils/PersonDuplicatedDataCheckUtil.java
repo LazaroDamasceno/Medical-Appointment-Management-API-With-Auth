@@ -29,7 +29,7 @@ public class PersonDuplicatedDataCheckUtil {
     public Mono<Void>  onDuplicatedEmail(String email) {
         return customerRepository
                 .findAll()
-                .filter(c -> c.getPerson().getSsn().equals(email))
+                .filter(c -> c.getPerson().getEmail().equals(email))
                 .hasElements()
                 .flatMap(exists -> {
                     if (exists) return Mono.error(DuplicatedEmailException::new);
