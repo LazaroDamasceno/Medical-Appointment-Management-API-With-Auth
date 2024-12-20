@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class PersonDuplicatedDataCheckUtil {
+public class PersonDuplicatedDataVerifierUtil {
 
     private final CustomerRepository customerRepository;
 
-    public PersonDuplicatedDataCheckUtil(CustomerRepository customerRepository) {
+    public PersonDuplicatedDataVerifierUtil(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
