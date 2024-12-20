@@ -7,7 +7,6 @@ public record PersonModificationDto(
         String middleName,
         String lastName,
         LocalDate birthDate,
-        String ssn,
         String email,
         String phoneNumber,
         String gender
