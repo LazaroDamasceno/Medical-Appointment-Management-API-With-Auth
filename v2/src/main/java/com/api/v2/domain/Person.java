@@ -53,7 +53,6 @@ public class Person {
         this.middleName = modificationDto.middleName();
         this.lastName = modificationDto.lastName();
         this.birthDate = modificationDto.birthDate();
-        this.ssn = modificationDto.ssn();
         this.email = modificationDto.email();
         this.phoneNumber = modificationDto.phoneNumber();
         this.gender = modificationDto.gender();
