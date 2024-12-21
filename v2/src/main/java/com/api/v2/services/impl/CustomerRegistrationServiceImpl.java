@@ -7,6 +7,7 @@ import com.api.v2.dtos.CustomerResponseDto;
 import com.api.v2.exceptions.DuplicatedEmailException;
 import com.api.v2.exceptions.DuplicatedSsnException;
 import com.api.v2.services.CustomerRegistrationService;
+import com.api.v2.services.PersonRegistrationService;
 import com.api.v2.utils.CustomerResponseMapper;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,11 @@ import reactor.core.publisher.Mono;
 public class CustomerRegistrationServiceImpl implements CustomerRegistrationService {
 
     private final CustomerRepository customerRepository;
-    private final PersonRegistrationServiceImpl personRegistrationService;
+    private final PersonRegistrationService personRegistrationService;
 
     public CustomerRegistrationServiceImpl(
             CustomerRepository customerRepository,
-            PersonRegistrationServiceImpl personRegistrationService
+            PersonRegistrationService personRegistrationService
     ) {
         this.customerRepository = customerRepository;
         this.personRegistrationService = personRegistrationService;

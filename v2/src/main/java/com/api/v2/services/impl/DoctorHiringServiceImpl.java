@@ -8,6 +8,7 @@ import com.api.v2.exceptions.DuplicatedEmailException;
 import com.api.v2.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v2.exceptions.DuplicatedSsnException;
 import com.api.v2.services.DoctorHiringService;
+import com.api.v2.services.PersonRegistrationService;
 import com.api.v2.utils.DoctorResponseMapper;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class DoctorHiringServiceImpl implements DoctorHiringService {
 
-    private final PersonRegistrationServiceImpl personRegistrationService;
+    private final PersonRegistrationService personRegistrationService;
     private final DoctorRepository doctorRepository;
 
     public DoctorHiringServiceImpl(
-            PersonRegistrationServiceImpl personRegistrationService,
+            PersonRegistrationService personRegistrationService,
             DoctorRepository doctorRepository
     ) {
         this.personRegistrationService = personRegistrationService;
