@@ -5,7 +5,6 @@ import com.api.v2.domain.PersonRepository;
 import com.api.v2.dtos.PersonRegistrationDto;
 import com.api.v2.services.PersonRegistrationService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -20,9 +19,15 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
 
     @Override
     public Mono<Person> register(@Valid PersonRegistrationDto registrationDto) {
-        return Mono.defer(() -> {
-            Person person = Person.create(registrationDto);
-            return personRepository.save(person);
-        });
+        return personRepository
+                .findBySsn(registrationDto.ssn())
+                .singleOptional()
+                .flatMap(optional -> {
+                   if (optional.isPresent()) return Mono.just(optional.get());
+                   return Mono.defer(() -> {
+                       Person person = Person.create(registrationDto);
+                       return personRepository.save(person);
+                   });
+                });
     }
 }
