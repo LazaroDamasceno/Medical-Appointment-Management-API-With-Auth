@@ -22,12 +22,12 @@ class DoctorHiringTest {
 	DoctorHiringDto hiringDto = new DoctorHiringDto(
 			"12345678CA",
 			new PersonRegistrationDto(
-					"Leo",
+					"Gabriel",
 					"",
-					"Santos",
+					"Varzea",
 					LocalDate.parse("2000-12-12"),
 					"123456789",
-					"contact@leosantos.com",
+					"contact@gabrielvarzea.com",
 					"1234567890",
 					"male"
 			)
