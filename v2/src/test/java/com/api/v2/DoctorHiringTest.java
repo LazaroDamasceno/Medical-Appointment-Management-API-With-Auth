@@ -35,7 +35,7 @@ class DoctorHiringTest {
 
 	@Test
 	@Order(1)
-	void testSuccessfulRegistration() {
+	void testSuccessfulHiring() {
 		webTestClient
 				.post()
 				.uri("api/v2/doctors")
@@ -43,5 +43,69 @@ class DoctorHiringTest {
 				.exchange()
 				.expectStatus()
 				.is2xxSuccessful();
+	}
+
+	@Test
+	@Order(2)
+	void testUnsuccessfulHiring() {
+		webTestClient
+				.post()
+				.uri("api/v2/doctors")
+				.bodyValue(hiringDto)
+				.exchange()
+				.expectStatus()
+				.is5xxServerError();
+	}
+
+	DoctorHiringDto hiringDto2 = new DoctorHiringDto(
+			"12345677CA",
+			new PersonRegistrationDto(
+					"Leo",
+					"",
+					"Santos",
+					LocalDate.parse("2000-12-12"),
+					"123456789",
+					"leosantos@mail.com",
+					"1234567890",
+					"male"
+			)
+	);
+
+	@Test
+	@Order(3)
+	void testUnsuccessfulHiring2() {
+		webTestClient
+				.post()
+				.uri("api/v2/doctors")
+				.bodyValue(hiringDto2)
+				.exchange()
+				.expectStatus()
+				.is5xxServerError();
+	}
+
+	DoctorHiringDto hiringDto3 = new DoctorHiringDto(
+			"12345677CA",
+			new PersonRegistrationDto(
+					"Leo",
+					"",
+					"Santos",
+					LocalDate.parse("2000-12-12"),
+					"123456789",
+					"leosantos@mail.com",
+					"1234567890",
+					"male"
+			)
+	);
+
+	@Test
+	@Order(4)
+	void testUnsuccessfulHiring3() {
+		webTestClient
+				.post()
+				.uri("api/v2/doctors")
+				.bodyValue(hiringDto3)
+				.exchange()
+				.expectStatus()
+				.is5xxServerError();
 	}
 }
