@@ -1,5 +1,6 @@
 package com.api.v2.people.events;
 
+import com.api.v2.people.domain.Person;
 import com.api.v2.people.dtos.PersonRegistrationDto;
 import com.api.v2.people.services.PersonRegistrationService;
 import org.springframework.modulith.events.ApplicationModuleListener;
@@ -14,9 +15,7 @@ public class PersonRegistrationEventListener {
     }
 
     @ApplicationModuleListener
-    public Mono<Void> listener(PersonRegistrationDto registrationDto) {
-        return personRegistrationService
-                .register(registrationDto)
-                .then();
+    public Mono<Person> listen(PersonRegistrationDto registrationDto) {
+        return personRegistrationService.register(registrationDto);
     }
 }

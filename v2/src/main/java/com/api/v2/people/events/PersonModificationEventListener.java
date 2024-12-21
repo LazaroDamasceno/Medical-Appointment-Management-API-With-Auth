@@ -15,9 +15,7 @@ public class PersonModificationEventListener {
     }
 
     @ApplicationModuleListener
-    public Mono<Void> listener(Person person, PersonModificationDto modificationDto) {
-        return modificationService
-                .modify(person, modificationDto)
-                .then();
+    public Mono<Person> listen(Person person, PersonModificationDto modificationDto) {
+        return modificationService.modify(person, modificationDto);
     }
 }
