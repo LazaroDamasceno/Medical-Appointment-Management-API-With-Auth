@@ -1,4 +1,4 @@
-package com.api.v2.customers;
+package com.api.v2.customers.exceptions;
 
 public class NonExistentCustomerException extends RuntimeException {
     public NonExistentCustomerException(String ssn) {

@@ -1,6 +1,6 @@
 package com.api.v2.customers.utils;
 
-import com.api.v2.customers.NonExistentCustomerException;
+import com.api.v2.customers.exceptions.NonExistentCustomerException;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.domain.CustomerRepository;
 import org.springframework.stereotype.Component;
