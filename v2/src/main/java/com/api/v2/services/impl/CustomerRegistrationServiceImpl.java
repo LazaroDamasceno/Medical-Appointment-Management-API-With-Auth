@@ -29,8 +29,8 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
 
     @Override
     public Mono<CustomerResponseDto> register(@Valid CustomerRegistrationDto registrationDto) {
-        return onDuplicatedSsn(registrationDto.personRegistrationDto().email())
-                .then(onDuplicatedEmail(registrationDto.personRegistrationDto().ssn()))
+        return onDuplicatedSsn(registrationDto.personRegistrationDto().ssn())
+                .then(onDuplicatedEmail(registrationDto.personRegistrationDto().email()))
                 .then(Mono.defer(() -> {
                     return personRegistrationService
                             .register(registrationDto.personRegistrationDto())
