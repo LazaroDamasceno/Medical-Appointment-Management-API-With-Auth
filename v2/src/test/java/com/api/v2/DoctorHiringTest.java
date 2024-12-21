@@ -1,7 +1,6 @@
 package com.api.v2;
 
-import com.api.v2.common.AddressDto;
-import com.api.v2.dtos.CustomerRegistrationDto;
+import com.api.v2.dtos.DoctorHiringDto;
 import com.api.v2.dtos.PersonRegistrationDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -15,12 +14,13 @@ import java.time.LocalDate;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CustomerRegistrationTest {
+class DoctorHiringTest {
 
 	@Autowired
 	private WebTestClient webTestClient;
 
-	CustomerRegistrationDto registrationDto = new CustomerRegistrationDto(
+	DoctorHiringDto hiringDto = new DoctorHiringDto(
+			"12345678CA",
 			new PersonRegistrationDto(
 					"Leo",
 					"",
@@ -30,14 +30,7 @@ class CustomerRegistrationTest {
 					"leosantos@mail.com",
 					"1234567890",
 					"male"
-			),
-			new AddressDto(
-					"CA",
-					"Sacramento",
-					"Downtown",
-					"90012"
 			)
-
 	);
 
 	@Test
@@ -45,8 +38,8 @@ class CustomerRegistrationTest {
 	void testSuccessfulRegistration() {
 		webTestClient
 				.post()
-				.uri("api/v2/customers")
-				.bodyValue(registrationDto)
+				.uri("api/v2/doctors")
+				.bodyValue(hiringDto)
 				.exchange()
 				.expectStatus()
 				.is2xxSuccessful();

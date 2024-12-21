@@ -4,10 +4,11 @@ import com.api.v2.domain.Customer;
 import com.api.v2.domain.CustomerRepository;
 import com.api.v2.dtos.CustomerRegistrationDto;
 import com.api.v2.dtos.CustomerResponseDto;
+import com.api.v2.exceptions.DuplicatedEmailException;
+import com.api.v2.exceptions.DuplicatedSsnException;
 import com.api.v2.services.CustomerRegistrationService;
 import com.api.v2.services.PersonRegistrationService;
 import com.api.v2.utils.CustomerResponseMapper;
-import com.api.v2.utils.PersonDuplicatedDataVerifierUtil;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -15,25 +16,21 @@ import reactor.core.publisher.Mono;
 @Service
 public class CustomerRegistrationServiceImpl implements CustomerRegistrationService {
 
-    private final PersonDuplicatedDataVerifierUtil verifierUtil;
     private final CustomerRepository customerRepository;
     private final PersonRegistrationService personRegistrationService;
 
     public CustomerRegistrationServiceImpl(
-            PersonDuplicatedDataVerifierUtil verifierUtil,
             CustomerRepository customerRepository,
             PersonRegistrationService personRegistrationService
     ) {
-        this.verifierUtil = verifierUtil;
         this.customerRepository = customerRepository;
         this.personRegistrationService = personRegistrationService;
     }
 
     @Override
     public Mono<CustomerResponseDto> register(@Valid CustomerRegistrationDto registrationDto) {
-        return verifierUtil
-                .onDuplicatedEmail(registrationDto.personRegistrationDto().email())
-                .then(verifierUtil.onDuplicatedSsn(registrationDto.personRegistrationDto().ssn()))
+        return onDuplicatedSsn(registrationDto.personRegistrationDto().email())
+                .then(onDuplicatedEmail(registrationDto.personRegistrationDto().ssn()))
                 .then(Mono.defer(() -> {
                     return personRegistrationService
                             .register(registrationDto.personRegistrationDto())
@@ -43,5 +40,27 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
                             })
                             .flatMap(CustomerResponseMapper::mapToMono);
                 }));
+    }
+
+    private Mono<Void>  onDuplicatedSsn(String ssn) {
+        return customerRepository
+                .findAll()
+                .filter(c -> c.getPerson().getSsn().equals(ssn))
+                .hasElements()
+                .flatMap(exists -> {
+                    if (exists) return Mono.error(DuplicatedSsnException::new);
+                    return Mono.empty();
+                });
+    }
+
+    private Mono<Void>  onDuplicatedEmail(String email) {
+        return customerRepository
+                .findAll()
+                .filter(c -> c.getPerson().getEmail().equals(email))
+                .hasElements()
+                .flatMap(exists -> {
+                    if (exists) return Mono.error(DuplicatedEmailException::new);
+                    return Mono.empty();
+                });
     }
 }

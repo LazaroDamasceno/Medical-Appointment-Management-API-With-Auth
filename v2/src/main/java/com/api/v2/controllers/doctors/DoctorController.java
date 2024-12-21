@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping
+@RequestMapping("api/v2/doctors")
 public class DoctorController {
 
     private final DoctorHiringService hiringService;
