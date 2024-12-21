@@ -30,7 +30,7 @@ public class CustomerController {
     }
 
     @PatchMapping("{ssn}")
-    public Mono<CustomerResponseDto> modify(@PathVariable String ssn, @Valid @RequestBody CustomerModificationDto modificationDto) {
+    public Mono<Void> modify(@PathVariable String ssn, @Valid @RequestBody CustomerModificationDto modificationDto) {
         return modificationEventPublisher.publish(ssn, modificationDto);
     }
 }
