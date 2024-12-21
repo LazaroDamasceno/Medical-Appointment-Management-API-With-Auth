@@ -1,8 +1,10 @@
 package com.api.v2.customers.events;
 
 import com.api.v2.customers.dtos.CustomerModificationDto;
+import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.customers.services.CustomerModificationService;
 import com.api.v2.customers.utils.CustomerFinderUtil;
+import com.api.v2.customers.utils.CustomerResponseMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -24,12 +26,12 @@ public class CustomerModificationEventPublisher {
         this.customerFinderUtil = customerFinderUtil;
     }
 
-    public Mono<Void> publish(String ssn, CustomerModificationDto modificationDto) {
+    public Mono<CustomerResponseDto> publish(String ssn, CustomerModificationDto modificationDto) {
         return modificationService.modify(ssn, modificationDto)
                 .zipWith(customerFinderUtil.findBySsn(ssn))
                 .flatMap(tuple -> {
-                    eventPublisher.publishEvent(tuple.getT2());
-                    return Mono.empty();
+                    eventPublisher.publishEvent(Mono.empty());
+                    return CustomerResponseMapper.mapToMono(tuple.getT2());
                 });
     }
 }
