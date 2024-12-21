@@ -1,8 +1,7 @@
-package com.api.v2.customers.services.impl;
+package com.api.v2.customers.services;
 
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerModificationDto;
-import com.api.v2.customers.services.CustomerModificationService;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.people.services.PersonModificationService;
 import jakarta.validation.Valid;

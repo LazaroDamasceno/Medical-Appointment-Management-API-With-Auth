@@ -1,9 +1,8 @@
-package com.api.v2.people.services.impl;
+package com.api.v2.people.services;
 
 import com.api.v2.people.domain.Person;
 import com.api.v2.people.domain.PersonRepository;
 import com.api.v2.people.dtos.PersonRegistrationDto;
-import com.api.v2.people.services.PersonRegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
