@@ -2,10 +2,8 @@ package com.api.v2.customers.services.impl;
 
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerModificationDto;
-import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.customers.services.CustomerModificationService;
 import com.api.v2.customers.utils.CustomerFinderUtil;
-import com.api.v2.customers.utils.CustomerResponseMapper;
 import com.api.v2.people.events.PersonModificationEventPublisher;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,7 @@ public class CustomerModificationServiceImpl implements CustomerModificationServ
     }
 
     @Override
-    public Mono<CustomerResponseDto> modify(String ssn, @Valid CustomerModificationDto modificationDto) {
+    public Mono<Void> modify(String ssn, @Valid CustomerModificationDto modificationDto) {
         return customerFinderUtil
                 .findBySsn(ssn)
                 .flatMap(customer -> {
@@ -40,6 +38,6 @@ public class CustomerModificationServiceImpl implements CustomerModificationServ
                                return customerRepository.save(customer);
                             });
                 })
-                .flatMap(CustomerResponseMapper::mapToMono);
+                .then();
     }
 }
