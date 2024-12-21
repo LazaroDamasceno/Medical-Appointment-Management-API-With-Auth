@@ -30,18 +30,18 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
 
     @Override
     public Mono<DoctorResponseDto> hire(@Valid DoctorHiringDto hiringDto) {
-        return personRegistrationService
-                .register(hiringDto.personRegistrationDto())
-                .flatMap(person -> {
-                    return onDuplicatedMedicalLicenseNumber(hiringDto.medicalLicenseNumber())
-                            .then(onDuplicatedSsn(hiringDto.personRegistrationDto().ssn()))
-                            .then(onDuplicatedEmail(hiringDto.personRegistrationDto().email()))
-                            .then(Mono.defer(() -> {
+        return onDuplicatedMedicalLicenseNumber(hiringDto.medicalLicenseNumber())
+                .then(onDuplicatedSsn(hiringDto.personRegistrationDto().ssn()))
+                .then(onDuplicatedEmail(hiringDto.personRegistrationDto().email()))
+                .then(Mono.defer(() -> {
+                    return personRegistrationService
+                            .register(hiringDto.personRegistrationDto())
+                            .flatMap(person -> {
                                 Doctor doctor = Doctor.create(hiringDto.medicalLicenseNumber(), person);
                                 return doctorRepository.save(doctor);
-                            }));
-                })
-                .flatMap(DoctorResponseMapper::mapToMono);
+                            })
+                            .flatMap(DoctorResponseMapper::mapToMono);
+                }));
     }
 
     private Mono<Void> onDuplicatedMedicalLicenseNumber(String medicalLicenseNumber) {
