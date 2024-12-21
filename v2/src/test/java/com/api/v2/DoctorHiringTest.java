@@ -1,7 +1,7 @@
 package com.api.v2;
 
-import com.api.v2.dtos.DoctorHiringDto;
-import com.api.v2.dtos.PersonRegistrationDto;
+import com.api.v2.doctors.dtos.DoctorHiringDto;
+import com.api.v2.people.dtos.PersonRegistrationDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

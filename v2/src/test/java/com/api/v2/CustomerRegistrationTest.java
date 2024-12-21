@@ -1,8 +1,8 @@
 package com.api.v2;
 
 import com.api.v2.common.AddressDto;
-import com.api.v2.dtos.CustomerRegistrationDto;
-import com.api.v2.dtos.PersonRegistrationDto;
+import com.api.v2.customer.dtos.CustomerRegistrationDto;
+import com.api.v2.people.dtos.PersonRegistrationDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
