@@ -16,6 +16,8 @@ public class Doctor {
     private Person person;
     private LocalDate createdAt;
     private ZoneId createdAtZone;
+    private LocalDate terminatedAt;
+    private ZoneId terminatedAtZone;
 
     public Doctor() {
     }
@@ -30,6 +32,16 @@ public class Doctor {
 
     public static Doctor create(String licenseNumber, Person person) {
         return new Doctor(licenseNumber, person);
+    }
+
+    public void markAsTerminated() {
+        terminatedAt = LocalDate.now();
+        terminatedAtZone = ZoneId.systemDefault();
+    }
+
+    public void markAsRehired() {
+        terminatedAt = null;
+        terminatedAtZone = null;
     }
 
     public ObjectId getId() {
