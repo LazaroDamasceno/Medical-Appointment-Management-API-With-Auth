@@ -19,15 +19,9 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
 
     @Override
     public Mono<Person> register(@Valid PersonRegistrationDto registrationDto) {
-        return personRepository
-                .findBySsn(registrationDto.ssn())
-                .singleOptional()
-                .flatMap(optional -> {
-                   if (optional.isPresent()) return Mono.just(optional.get());
-                   return Mono.defer(() -> {
-                       Person person = Person.create(registrationDto);
-                       return personRepository.save(person);
-                   });
-                });
+        return Mono.defer(() -> {
+            Person person = Person.create(registrationDto);
+            return personRepository.save(person);
+        });
     }
 }
