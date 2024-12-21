@@ -27,7 +27,7 @@ class DoctorHiringTest {
 					"Santos",
 					LocalDate.parse("2000-12-12"),
 					"123456789",
-					"leosantos@mail.com",
+					"contact@leosantos.com",
 					"1234567890",
 					"male"
 			)
@@ -65,7 +65,7 @@ class DoctorHiringTest {
 					"Santos",
 					LocalDate.parse("2000-12-12"),
 					"123456789",
-					"leosantos@mail.com",
+					"contact@leosantos.com",
 					"1234567890",
 					"male"
 			)
@@ -91,7 +91,7 @@ class DoctorHiringTest {
 					"Santos",
 					LocalDate.parse("2000-12-12"),
 					"123456788",
-					"leosantos@mail.com",
+					"contact@leosantos.com",
 					"1234567890",
 					"male"
 			)
