@@ -1,9 +1,10 @@
-package com.api.v2.customers.services;
+package com.api.v2.customers.services.impl;
 
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerRegistrationDto;
 import com.api.v2.customers.dtos.CustomerResponseDto;
+import com.api.v2.customers.services.CustomerRegistrationService;
 import com.api.v2.customers.utils.CustomerResponseMapper;
 import com.api.v2.people.events.PersonRegistrationEventPublisher;
 import com.api.v2.people.exceptions.DuplicatedEmailException;

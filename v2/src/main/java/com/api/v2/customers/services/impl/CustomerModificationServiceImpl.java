@@ -1,10 +1,10 @@
-package com.api.v2.customers.services;
+package com.api.v2.customers.services.impl;
 
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerModificationDto;
+import com.api.v2.customers.services.CustomerModificationService;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.people.events.PersonModificationEventPublisher;
-import com.api.v2.people.services.PersonModificationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
