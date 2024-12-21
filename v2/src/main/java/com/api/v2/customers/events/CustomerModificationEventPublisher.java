@@ -1,10 +1,7 @@
 package com.api.v2.customers.events;
 
 import com.api.v2.customers.dtos.CustomerModificationDto;
-import com.api.v2.customers.dtos.CustomerRegistrationDto;
-import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.customers.services.CustomerModificationService;
-import com.api.v2.customers.services.CustomerRegistrationService;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
