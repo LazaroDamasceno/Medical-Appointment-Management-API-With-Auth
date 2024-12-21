@@ -1,7 +1,7 @@
-package com.api.v2.customer.services;
+package com.api.v2.customers.services;
 
-import com.api.v2.customer.dtos.CustomerRegistrationDto;
-import com.api.v2.customer.dtos.CustomerResponseDto;
+import com.api.v2.customers.dtos.CustomerRegistrationDto;
+import com.api.v2.customers.dtos.CustomerResponseDto;
 import reactor.core.publisher.Mono;
 
 public interface CustomerRegistrationService {

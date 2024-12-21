@@ -1,4 +1,4 @@
-package com.api.v2.customer.domain;
+package com.api.v2.customers.domain;
 
 import com.api.v2.people.domain.Person;
 import org.bson.types.ObjectId;

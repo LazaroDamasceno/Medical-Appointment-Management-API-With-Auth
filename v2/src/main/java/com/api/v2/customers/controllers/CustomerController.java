@@ -1,10 +1,10 @@
-package com.api.v2.customer.controllers;
+package com.api.v2.customers.controllers;
 
-import com.api.v2.customer.dtos.CustomerModificationDto;
-import com.api.v2.customer.dtos.CustomerRegistrationDto;
-import com.api.v2.customer.dtos.CustomerResponseDto;
-import com.api.v2.customer.services.CustomerModificationService;
-import com.api.v2.customer.services.CustomerRegistrationService;
+import com.api.v2.customers.dtos.CustomerModificationDto;
+import com.api.v2.customers.dtos.CustomerRegistrationDto;
+import com.api.v2.customers.dtos.CustomerResponseDto;
+import com.api.v2.customers.services.CustomerModificationService;
+import com.api.v2.customers.services.CustomerRegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;

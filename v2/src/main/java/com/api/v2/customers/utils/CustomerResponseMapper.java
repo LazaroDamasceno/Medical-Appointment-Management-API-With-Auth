@@ -1,7 +1,7 @@
-package com.api.v2.customer.utils;
+package com.api.v2.customers.utils;
 
-import com.api.v2.customer.dtos.CustomerResponseDto;
-import com.api.v2.customer.domain.Customer;
+import com.api.v2.customers.dtos.CustomerResponseDto;
+import com.api.v2.customers.domain.Customer;
 import com.api.v2.people.utils.PersonResponseMapper;
 import reactor.core.publisher.Mono;
 

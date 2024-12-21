@@ -1,9 +1,9 @@
-package com.api.v2.customer.services.impl;
+package com.api.v2.customers.services.impl;
 
-import com.api.v2.customer.domain.CustomerRepository;
-import com.api.v2.customer.dtos.CustomerModificationDto;
-import com.api.v2.customer.services.CustomerModificationService;
-import com.api.v2.customer.utils.CustomerFinderUtil;
+import com.api.v2.customers.domain.CustomerRepository;
+import com.api.v2.customers.dtos.CustomerModificationDto;
+import com.api.v2.customers.services.CustomerModificationService;
+import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.people.services.PersonModificationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;

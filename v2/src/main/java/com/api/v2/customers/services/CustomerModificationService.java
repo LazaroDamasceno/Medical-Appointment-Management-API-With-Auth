@@ -1,6 +1,6 @@
-package com.api.v2.customer.services;
+package com.api.v2.customers.services;
 
-import com.api.v2.customer.dtos.CustomerModificationDto;
+import com.api.v2.customers.dtos.CustomerModificationDto;
 import reactor.core.publisher.Mono;
 
 public interface CustomerModificationService {

@@ -1,7 +1,7 @@
 package com.api.v2;
 
 import com.api.v2.common.AddressDto;
-import com.api.v2.customer.dtos.CustomerModificationDto;
+import com.api.v2.customers.dtos.CustomerModificationDto;
 import com.api.v2.people.dtos.PersonModificationDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
