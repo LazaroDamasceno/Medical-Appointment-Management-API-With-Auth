@@ -4,6 +4,7 @@ import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
+import com.api.v2.people.events.PersonRegistrationEventPublisher;
 import com.api.v2.people.exceptions.DuplicatedEmailException;
 import com.api.v2.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
@@ -16,14 +17,14 @@ import reactor.core.publisher.Mono;
 @Service
 public class DoctorHiringServiceImpl implements DoctorHiringService {
 
-    private final PersonRegistrationService personRegistrationService;
+    private final PersonRegistrationEventPublisher personRegistrationEventPublisher;
     private final DoctorRepository doctorRepository;
 
     public DoctorHiringServiceImpl(
-            PersonRegistrationService personRegistrationService,
+            PersonRegistrationEventPublisher personRegistrationEventPublisher,
             DoctorRepository doctorRepository
     ) {
-        this.personRegistrationService = personRegistrationService;
+        this.personRegistrationEventPublisher = personRegistrationEventPublisher;
         this.doctorRepository = doctorRepository;
     }
 
@@ -33,8 +34,8 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
                 .then(onDuplicatedSsn(hiringDto.personRegistrationDto().ssn()))
                 .then(onDuplicatedEmail(hiringDto.personRegistrationDto().email()))
                 .then(Mono.defer(() -> {
-                    return personRegistrationService
-                            .register(hiringDto.personRegistrationDto())
+                    return personRegistrationEventPublisher
+                            .publish(hiringDto.personRegistrationDto())
                             .flatMap(person -> {
                                 Doctor doctor = Doctor.create(hiringDto.medicalLicenseNumber(), person);
                                 return doctorRepository.save(doctor);

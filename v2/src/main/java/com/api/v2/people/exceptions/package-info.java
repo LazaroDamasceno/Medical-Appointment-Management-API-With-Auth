@@ -1,6 +1,6 @@
-@org.springframework.modulith.ApplicationModule(
+@ApplicationModule(
         type = ApplicationModule.Type.OPEN
 )
-package com.api.v2.people.utils;
+package com.api.v2.people.exceptions;
 
 import org.springframework.modulith.ApplicationModule;
