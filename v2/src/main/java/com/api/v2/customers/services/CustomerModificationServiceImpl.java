@@ -3,6 +3,7 @@ package com.api.v2.customers.services;
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerModificationDto;
 import com.api.v2.customers.utils.CustomerFinderUtil;
+import com.api.v2.people.events.PersonModificationEventPublisher;
 import com.api.v2.people.services.PersonModificationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -12,16 +13,16 @@ import reactor.core.publisher.Mono;
 public class CustomerModificationServiceImpl implements CustomerModificationService {
 
     private final CustomerRepository customerRepository;
-    private final PersonModificationService personModificationService;
+    private final PersonModificationEventPublisher personModificationEventPublisher;
     private final CustomerFinderUtil customerFinderUtil;
 
     public CustomerModificationServiceImpl(
             CustomerRepository customerRepository,
-            PersonModificationService personModificationService,
+            PersonModificationEventPublisher personModificationEventPublisher,
             CustomerFinderUtil customerFinderUtil
     ) {
         this.customerRepository = customerRepository;
-        this.personModificationService = personModificationService;
+        this.personModificationEventPublisher = personModificationEventPublisher;
         this.customerFinderUtil = customerFinderUtil;
     }
 
@@ -30,8 +31,8 @@ public class CustomerModificationServiceImpl implements CustomerModificationServ
         return customerFinderUtil
                 .findBySsn(ssn)
                 .flatMap(customer -> {
-                    return personModificationService
-                            .modify(customer.getPerson(), modificationDto.personModificationDto())
+                    return personModificationEventPublisher
+                            .publish(customer.getPerson(), modificationDto.personModificationDto())
                             .flatMap(modifiedPerson -> {
                                customer.setPerson(modifiedPerson);
                                return customerRepository.save(customer);
