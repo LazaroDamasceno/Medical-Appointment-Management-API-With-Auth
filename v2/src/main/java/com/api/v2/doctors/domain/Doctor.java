@@ -65,6 +65,14 @@ public class Doctor {
         return createdAtZone;
     }
 
+    public LocalDate getTerminatedAt() {
+        return terminatedAt;
+    }
+
+    public ZoneId getTerminatedAtZone() {
+        return terminatedAtZone;
+    }
+
     public void setPerson(Person person) {
         this.person = person;
     }
