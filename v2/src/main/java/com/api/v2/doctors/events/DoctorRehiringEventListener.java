@@ -13,7 +13,7 @@ public class DoctorRehiringEventListener {
     }
 
     @ApplicationModuleListener
-    Mono<Void> rehire(String medicalLicenseNumber) {
+    public Mono<Void> listen(String medicalLicenseNumber) {
         return rehiringService.rehire(medicalLicenseNumber);
     }
 }
