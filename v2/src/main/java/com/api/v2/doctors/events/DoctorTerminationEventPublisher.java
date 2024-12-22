@@ -3,8 +3,10 @@ package com.api.v2.doctors.events;
 import com.api.v2.doctors.services.DoctorTerminationService;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+@Component
 public class DoctorTerminationEventPublisher {
 
     private final ApplicationEventPublisher eventPublisher;

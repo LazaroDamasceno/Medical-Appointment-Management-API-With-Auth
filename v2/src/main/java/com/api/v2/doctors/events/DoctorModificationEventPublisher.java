@@ -5,8 +5,10 @@ import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.people.dtos.PersonModificationDto;
 import jakarta.validation.Valid;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+@Component
 public class DoctorModificationEventPublisher {
 
     private final DoctorFinderUtil doctorFinderUtil;

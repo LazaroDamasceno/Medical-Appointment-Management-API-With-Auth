@@ -4,8 +4,10 @@ import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.exceptions.ImmutableDoctorException;
 import com.api.v2.doctors.services.DoctorRehiringService;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+@Service
 public class DoctorRehiringServiceImpl implements DoctorRehiringService {
 
     private final DoctorFinderUtil doctorFinderUtil;
