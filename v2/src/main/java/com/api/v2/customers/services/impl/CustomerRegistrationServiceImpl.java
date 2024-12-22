@@ -6,7 +6,6 @@ import com.api.v2.customers.dtos.CustomerRegistrationDto;
 import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.customers.services.CustomerRegistrationService;
 import com.api.v2.customers.utils.CustomerResponseMapper;
-import com.api.v2.people.events.PersonRegistrationEventPublisher;
 import com.api.v2.people.exceptions.DuplicatedEmailException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
 import com.api.v2.people.services.PersonRegistrationService;
@@ -18,15 +17,14 @@ import reactor.core.publisher.Mono;
 public class CustomerRegistrationServiceImpl implements CustomerRegistrationService {
 
     private final CustomerRepository customerRepository;
-    private final PersonRegistrationEventPublisher personRegistrationEventPublisher;
+    private final PersonRegistrationService personRegistrationService;
 
     public CustomerRegistrationServiceImpl(
             CustomerRepository customerRepository,
-            PersonRegistrationService personRegistrationService,
-            PersonRegistrationEventPublisher personRegistrationEventPublisher
+            PersonRegistrationService personRegistrationService
     ) {
         this.customerRepository = customerRepository;
-        this.personRegistrationEventPublisher = personRegistrationEventPublisher;
+        this.personRegistrationService = personRegistrationService;
     }
 
     @Override
@@ -34,8 +32,8 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
         return onDuplicatedSsn(registrationDto.personRegistrationDto().ssn())
                 .then(onDuplicatedEmail(registrationDto.personRegistrationDto().email()))
                 .then(Mono.defer(() -> {
-                    return personRegistrationEventPublisher
-                            .publish(registrationDto.personRegistrationDto())
+                    return personRegistrationService
+                            .register(registrationDto.personRegistrationDto())
                             .flatMap(person ->  {
                                 Customer customer  = Customer.create(registrationDto.addressDto(), person);
                                 return customerRepository.save(customer);

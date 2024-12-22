@@ -5,11 +5,11 @@ import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.doctors.services.DoctorHiringService;
-import com.api.v2.people.events.PersonRegistrationEventPublisher;
 import com.api.v2.people.exceptions.DuplicatedEmailException;
 import com.api.v2.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
 import com.api.v2.doctors.utils.DoctorResponseMapper;
+import com.api.v2.people.services.PersonRegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -17,14 +17,14 @@ import reactor.core.publisher.Mono;
 @Service
 public class DoctorHiringServiceImpl implements DoctorHiringService {
 
-    private final PersonRegistrationEventPublisher personRegistrationEventPublisher;
+    private final PersonRegistrationService personRegistrationService;
     private final DoctorRepository doctorRepository;
 
     public DoctorHiringServiceImpl(
-            PersonRegistrationEventPublisher personRegistrationEventPublisher,
+            PersonRegistrationService personRegistrationService,
             DoctorRepository doctorRepository
     ) {
-        this.personRegistrationEventPublisher = personRegistrationEventPublisher;
+        this.personRegistrationService = personRegistrationService;
         this.doctorRepository = doctorRepository;
     }
 
@@ -34,8 +34,8 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
                 .then(onDuplicatedSsn(hiringDto.personRegistrationDto().ssn()))
                 .then(onDuplicatedEmail(hiringDto.personRegistrationDto().email()))
                 .then(Mono.defer(() -> {
-                    return personRegistrationEventPublisher
-                            .publish(hiringDto.personRegistrationDto())
+                    return personRegistrationService
+                            .register(hiringDto.personRegistrationDto())
                             .flatMap(person -> {
                                 Doctor doctor = Doctor.create(hiringDto.medicalLicenseNumber(), person);
                                 return doctorRepository.save(doctor);

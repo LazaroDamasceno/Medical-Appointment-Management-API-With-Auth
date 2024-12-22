@@ -4,7 +4,7 @@ import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerModificationDto;
 import com.api.v2.customers.services.CustomerModificationService;
 import com.api.v2.customers.utils.CustomerFinderUtil;
-import com.api.v2.people.events.PersonModificationEventPublisher;
+import com.api.v2.people.services.PersonModificationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -13,16 +13,16 @@ import reactor.core.publisher.Mono;
 public class CustomerModificationServiceImpl implements CustomerModificationService {
 
     private final CustomerRepository customerRepository;
-    private final PersonModificationEventPublisher personModificationEventPublisher;
+    private final PersonModificationService personModificationService;
     private final CustomerFinderUtil customerFinderUtil;
 
     public CustomerModificationServiceImpl(
             CustomerRepository customerRepository,
-            PersonModificationEventPublisher personModificationEventPublisher,
+            PersonModificationService personModificationService,
             CustomerFinderUtil customerFinderUtil
     ) {
         this.customerRepository = customerRepository;
-        this.personModificationEventPublisher = personModificationEventPublisher;
+        this.personModificationService = personModificationService;
         this.customerFinderUtil = customerFinderUtil;
     }
 
@@ -31,8 +31,8 @@ public class CustomerModificationServiceImpl implements CustomerModificationServ
         return customerFinderUtil
                 .findBySsn(ssn)
                 .flatMap(customer -> {
-                    return personModificationEventPublisher
-                            .publish(customer.getPerson(), modificationDto.personModificationDto())
+                    return personModificationService
+                            .modify(customer.getPerson(), modificationDto.personModificationDto())
                             .flatMap(modifiedPerson -> {
                                customer.setPerson(modifiedPerson);
                                return customerRepository.save(customer);

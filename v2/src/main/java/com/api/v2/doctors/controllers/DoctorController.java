@@ -2,10 +2,10 @@ package com.api.v2.doctors.controllers;
 
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
-import com.api.v2.doctors.events.DoctorHiringEventPublisher;
-import com.api.v2.doctors.events.DoctorModificationEventPublisher;
-import com.api.v2.doctors.events.DoctorRehiringEventPublisher;
-import com.api.v2.doctors.events.DoctorTerminationEventPublisher;
+import com.api.v2.doctors.services.DoctorHiringService;
+import com.api.v2.doctors.services.DoctorModificationService;
+import com.api.v2.doctors.services.DoctorRehiringService;
+import com.api.v2.doctors.services.DoctorTerminationService;
 import com.api.v2.people.dtos.PersonModificationDto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -15,26 +15,26 @@ import reactor.core.publisher.Mono;
 @RequestMapping("api/v2/doctors")
 public class DoctorController {
 
-    private final DoctorHiringEventPublisher hiringEventPublisher;
-    private final DoctorModificationEventPublisher modificationEventPublisher;
-    private final DoctorTerminationEventPublisher terminationEventPublisher;
-    private final DoctorRehiringEventPublisher rehiringEventPublisher;
+    private final DoctorHiringService hiringService;
+    private final DoctorModificationService modificationService;
+    private final DoctorTerminationService terminationService;
+    private final DoctorRehiringService rehiringService;
 
     public DoctorController(
-            DoctorHiringEventPublisher hiringEventPublisher,
-            DoctorModificationEventPublisher modificationEventPublisher,
-            DoctorTerminationEventPublisher terminationEventPublisher,
-            DoctorRehiringEventPublisher rehiringEventPublisher
+            DoctorHiringService hiringService,
+            DoctorModificationService modificationService,
+            DoctorTerminationService terminationService,
+            DoctorRehiringService rehiringService
     ) {
-        this.hiringEventPublisher = hiringEventPublisher;
-        this.modificationEventPublisher = modificationEventPublisher;
-        this.terminationEventPublisher = terminationEventPublisher;
-        this.rehiringEventPublisher = rehiringEventPublisher;
+        this.hiringService = hiringService;
+        this.modificationService = modificationService;
+        this.terminationService = terminationService;
+        this.rehiringService = rehiringService;
     }
 
     @PostMapping
     public Mono<DoctorResponseDto> hire(@Valid @RequestBody DoctorHiringDto hiringDto) {
-        return hiringEventPublisher.publish(hiringDto);
+        return hiringService.hire(hiringDto);
     }
 
     @PutMapping("{medicalLicenseNumber}")
@@ -42,16 +42,16 @@ public class DoctorController {
             @PathVariable String medicalLicenseNumber,
             @Valid @RequestBody PersonModificationDto modificationDto
     ) {
-        return modificationEventPublisher.publish(medicalLicenseNumber, modificationDto);
+        return modificationService.modify(medicalLicenseNumber, modificationDto);
     }
 
     @PatchMapping("{medicalLicenseNumber}/termination")
     public Mono<Void> terminate(@PathVariable String medicalLicenseNumber) {
-        return terminationEventPublisher.publish(medicalLicenseNumber);
+        return terminationService.terminate(medicalLicenseNumber);
     }
 
     @PatchMapping("{medicalLicenseNumber}/rehiring")
     public Mono<Void> rehire(@PathVariable String medicalLicenseNumber) {
-        return rehiringEventPublisher.publish(medicalLicenseNumber);
+        return rehiringService.rehire(medicalLicenseNumber);
     }
 }
