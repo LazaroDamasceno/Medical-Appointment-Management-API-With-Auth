@@ -15,7 +15,7 @@ public class DoctorModificationEventListener {
     }
 
     @ApplicationModuleListener
-    public Mono<Void> modify(String medicalLicenseNumber, @Valid PersonModificationDto modificationDto) {
+    public Mono<Void> listen(String medicalLicenseNumber, @Valid PersonModificationDto modificationDto) {
         return doctorModificationService.modify(medicalLicenseNumber, modificationDto);
     }
 }
