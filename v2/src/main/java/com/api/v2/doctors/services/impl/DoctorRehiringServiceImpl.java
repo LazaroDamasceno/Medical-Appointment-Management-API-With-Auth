@@ -2,11 +2,11 @@ package com.api.v2.doctors.services.impl;
 
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.exceptions.ImmutableDoctorException;
-import com.api.v2.doctors.services.DoctorModificationService;
+import com.api.v2.doctors.services.DoctorRehiringService;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import reactor.core.publisher.Mono;
 
-public class DoctorRehiringServiceImpl implements DoctorModificationService {
+public class DoctorRehiringServiceImpl implements DoctorRehiringService {
 
     private final DoctorFinderUtil doctorFinderUtil;
     private final DoctorRepository doctorRepository;
@@ -20,7 +20,7 @@ public class DoctorRehiringServiceImpl implements DoctorModificationService {
     }
 
     @Override
-    public Mono<Void> modify(String medicalLicenseNumber) {
+    public Mono<Void> rehire(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(doctor -> {
