@@ -1,13 +1,14 @@
 package com.api.v2.people.events;
 
-import com.api.v2.people.domain.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.modulith.events.ApplicationModuleListener;
-import reactor.core.publisher.Mono;
 
 public class PersonRegistrationEventListener {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersonRegistrationEventListener.class);
+
     @ApplicationModuleListener
-    public Mono<Person> listen(PersonRegistrationEvent event) {
-        return Mono.just(event.person());
+    public void listen(PersonRegistrationEvent event) {
     }
 }
