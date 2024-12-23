@@ -7,7 +7,7 @@ import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.customers.utils.CustomerResponseMapper;
 import com.api.v2.people.exceptions.DuplicatedEmailException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
-import com.api.v2.people.services.impl.PersonRegistrationServiceImpl;
+import com.api.v2.people.services.interfaces.PersonRegistrationService;
 import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,13 @@ import reactor.core.publisher.Mono;
 public class CustomerRegistrationServiceImpl implements CustomerRegistrationService {
 
     private final CustomerRepository customerRepository;
-    private final PersonRegistrationServiceImpl personRegistrationService;
+    private final PersonRegistrationService personRegistrationService;
     private final TelegramBotMessageSenderService messageSenderService;
     private final String message = "A new customer was created.";
 
     public CustomerRegistrationServiceImpl(
             CustomerRepository customerRepository,
-            PersonRegistrationServiceImpl personRegistrationService,
+            PersonRegistrationService personRegistrationService,
             TelegramBotMessageSenderService messageSenderService
     ) {
         this.customerRepository = customerRepository;
