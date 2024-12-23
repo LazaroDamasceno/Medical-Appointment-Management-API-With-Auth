@@ -20,20 +20,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        /*if (update.hasMessage() && update.getMessage().hasText()) {
-            Message message = update.getMessage();
-            var chatId = message.getChatId();
-            System.out.println(chatId);
-            log.info("Message received: {}", message);
-            var messageText = message.getText();
-            log.info(messageText);
-            try {
-                execute(new SendMessage(chatId.toString(), "Hello"));
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        */
     }
 
     public void sendMessage(String message) throws TelegramApiException {
