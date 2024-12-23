@@ -5,7 +5,7 @@ import com.api.v2.people.domain.PersonAuditTrail;
 import com.api.v2.people.domain.PersonAuditTrailRepository;
 import com.api.v2.people.domain.PersonRepository;
 import com.api.v2.people.dtos.PersonModificationDto;
-import com.api.v2.people.services.PersonModificationService;
+import com.api.v2.people.services.interfaces.PersonModificationService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;

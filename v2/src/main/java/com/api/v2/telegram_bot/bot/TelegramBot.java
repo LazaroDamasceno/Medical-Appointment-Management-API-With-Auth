@@ -1,12 +1,9 @@
-package com.api.v2.telegram_bot;
+package com.api.v2.telegram_bot.bot;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class TelegramBot extends TelegramLongPollingBot {
 
@@ -20,10 +17,6 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-    }
-
-    public void sendMessage(String message) throws TelegramApiException {
-        execute(new SendMessage("209797404", message));
     }
 
     @Override

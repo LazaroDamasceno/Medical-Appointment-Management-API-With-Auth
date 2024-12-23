@@ -1,15 +1,14 @@
-package com.api.v2.customers.services.impl;
+package com.api.v2.customers.services;
 
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerRegistrationDto;
 import com.api.v2.customers.dtos.CustomerResponseDto;
-import com.api.v2.customers.services.CustomerRegistrationService;
 import com.api.v2.customers.utils.CustomerResponseMapper;
 import com.api.v2.people.exceptions.DuplicatedEmailException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
-import com.api.v2.people.services.PersonRegistrationService;
-import com.api.v2.telegram_bot.TelegramBot;
+import com.api.v2.people.services.impl.PersonRegistrationServiceImpl;
+import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -19,18 +18,18 @@ import reactor.core.publisher.Mono;
 public class CustomerRegistrationServiceImpl implements CustomerRegistrationService {
 
     private final CustomerRepository customerRepository;
-    private final PersonRegistrationService personRegistrationService;
-    private final TelegramBot telegramBot;
+    private final PersonRegistrationServiceImpl personRegistrationService;
+    private final TelegramBotMessageSenderService messageSenderService;
     private final String message = "A new customer was created.";
 
     public CustomerRegistrationServiceImpl(
             CustomerRepository customerRepository,
-            PersonRegistrationService personRegistrationService,
-            TelegramBot telegramBot
+            PersonRegistrationServiceImpl personRegistrationService,
+            TelegramBotMessageSenderService messageSenderService
     ) {
         this.customerRepository = customerRepository;
         this.personRegistrationService = personRegistrationService;
-        this.telegramBot = telegramBot;
+        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -42,7 +41,7 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
                             .register(registrationDto.personRegistrationDto())
                             .flatMap(person ->  {
                                 try {
-                                    telegramBot.sendMessage(message);
+                                    messageSenderService.sendMessage(message);
                                 } catch (TelegramApiException e) {
                                     throw new RuntimeException(e);
                                 }

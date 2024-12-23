@@ -1,10 +1,9 @@
-package com.api.v2.doctors.services.impl;
+package com.api.v2.doctors.services;
 
 import com.api.v2.doctors.domain.DoctorRepository;
-import com.api.v2.doctors.services.DoctorModificationService;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.people.dtos.PersonModificationDto;
-import com.api.v2.people.services.PersonModificationService;
+import com.api.v2.people.services.interfaces.PersonModificationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

@@ -1,5 +1,6 @@
-package com.api.v2.telegram_bot;
+package com.api.v2.telegram_bot.config;
 
+import com.api.v2.telegram_bot.bot.TelegramBot;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,8 +1,7 @@
-package com.api.v2.doctors.services.impl;
+package com.api.v2.doctors.services;
 
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.exceptions.ImmutableDoctorException;
-import com.api.v2.doctors.services.DoctorRehiringService;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
