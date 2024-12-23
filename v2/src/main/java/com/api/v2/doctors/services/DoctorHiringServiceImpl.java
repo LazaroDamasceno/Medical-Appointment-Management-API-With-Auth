@@ -9,8 +9,10 @@ import com.api.v2.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
 import com.api.v2.doctors.utils.DoctorResponseMapper;
 import com.api.v2.people.services.interfaces.PersonRegistrationService;
+import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -18,13 +20,17 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
 
     private final PersonRegistrationService personRegistrationService;
     private final DoctorRepository doctorRepository;
+    private final TelegramBotMessageSenderService messageSenderService;
+    private final String message = "A new doctor was created.";
 
     public DoctorHiringServiceImpl(
             PersonRegistrationService personRegistrationService,
-            DoctorRepository doctorRepository
+            DoctorRepository doctorRepository,
+            TelegramBotMessageSenderService messageSenderService
     ) {
         this.personRegistrationService = personRegistrationService;
         this.doctorRepository = doctorRepository;
+        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -36,6 +42,11 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
                     return personRegistrationService
                             .register(hiringDto.personRegistrationDto())
                             .flatMap(person -> {
+                                try {
+                                    messageSenderService.sendMessage(message);
+                                } catch (TelegramApiException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 Doctor doctor = Doctor.create(hiringDto.medicalLicenseNumber(), person);
                                 return doctorRepository.save(doctor);
                             })

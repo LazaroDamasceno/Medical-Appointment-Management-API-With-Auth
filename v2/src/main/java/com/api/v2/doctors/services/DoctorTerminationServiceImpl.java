@@ -3,7 +3,9 @@ package com.api.v2.doctors.services;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.exceptions.ImmutableDoctorException;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -11,13 +13,16 @@ public class DoctorTerminationServiceImpl implements DoctorTerminationService {
 
     private final DoctorFinderUtil doctorFinderUtil;
     private final DoctorRepository doctorRepository;
+    private final TelegramBotMessageSenderService messageSenderService;
 
     public DoctorTerminationServiceImpl(
             DoctorFinderUtil doctorFinderUtil,
-            DoctorRepository doctorRepository
+            DoctorRepository doctorRepository,
+            TelegramBotMessageSenderService messageSenderService
     ) {
         this.doctorFinderUtil = doctorFinderUtil;
         this.doctorRepository = doctorRepository;
+        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -28,6 +33,12 @@ public class DoctorTerminationServiceImpl implements DoctorTerminationService {
                     if (doctor.getTerminatedAt() != null) {
                         String message = "Doctor whose license number is %s is already terminated.".formatted(doctor.getLicenseNumber());
                         return Mono.error(new ImmutableDoctorException(message));
+                    }
+                    String message = "Doctor whose license number is %s was terminated.".formatted(medicalLicenseNumber);
+                    try {
+                        messageSenderService.sendMessage(message);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
                     }
                     doctor.markAsTerminated();
                     return doctorRepository.save(doctor);
