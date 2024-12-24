@@ -19,6 +19,8 @@ public class MedicalSlot {
     private ZoneId availableAtZone;
     private LocalDate createdAt;
     private ZoneId createdAtZone;
+    private LocalDate canceledAt;
+    private ZoneId canceledAtZone;
 
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = new ObjectId();
@@ -34,6 +36,11 @@ public class MedicalSlot {
 
     public static MedicalSlot create(Doctor doctor, LocalDateTime availableAt) {
         return new MedicalSlot(doctor, availableAt);
+    }
+
+    public void markAsCanceled() {
+        canceledAt = LocalDate.now();
+        canceledAtZone = ZoneId.systemDefault();
     }
 
     public ObjectId getId() {
