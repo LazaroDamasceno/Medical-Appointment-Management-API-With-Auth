@@ -6,7 +6,7 @@ import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.dtos.MedicalSlotRegistrationDto;
 import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
 import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
-import com.api.v2.medical_slots.services.interfaces.MedicalSlotRegistration;
+import com.api.v2.medical_slots.services.interfaces.MedicalSlotRegistrationService;
 import com.api.v2.medical_slots.utils.MedicalSlotResponseMapper;
 import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
@@ -15,13 +15,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 @Service
-public class MedicalSlotRegistrationImpl implements MedicalSlotRegistration {
+public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrationService {
 
     private final MedicalSlotRepository medicalSlotRepository;
     private final TelegramBotMessageSenderService messageSenderService;
     private final DoctorFinderUtil doctorFinderUtil;
 
-    public MedicalSlotRegistrationImpl(
+    public MedicalSlotRegistrationServiceImpl(
             MedicalSlotRepository medicalSlotRepository,
             TelegramBotMessageSenderService messageSenderService,
             DoctorFinderUtil doctorFinderUtil
