@@ -22,7 +22,7 @@ public class MedicalSlotFinderUtil {
                 .singleOptional()
                 .flatMap(optional -> {
                    if (optional.isEmpty()) {
-                       return Mono.error(new NonExistentMedicalSlotException(new ObjectId(id)));
+                       return Mono.error(new NonExistentMedicalSlotException(id));
                    }
                    return Mono.just(optional.get());
                 });
