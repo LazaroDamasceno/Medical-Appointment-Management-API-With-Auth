@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 public interface MedicalSlotRepository extends ReactiveMongoRepository<MedicalSlot, ObjectId> {
 
@@ -15,5 +14,5 @@ public interface MedicalSlotRepository extends ReactiveMongoRepository<MedicalSl
         { 'availableAt': ?0 },
         { 'doctor': ?1 }
     """)
-    Mono<MedicalSlot> findByAvailableAt(LocalDateTime availableAt, Doctor doctor);
+    Mono<MedicalSlot> findByDoctorAndAvailableAt(LocalDateTime availableAt, Doctor doctor);
 }

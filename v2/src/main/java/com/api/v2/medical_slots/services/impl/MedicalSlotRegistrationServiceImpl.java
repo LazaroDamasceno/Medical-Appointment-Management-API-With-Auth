@@ -37,7 +37,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                 .findByLicenseNumber(registrationDto.medicalLicenseNumber())
                 .flatMap(doctor -> {
                     return medicalSlotRepository
-                            .findByAvailableAt(registrationDto.availableAt(), doctor)
+                            .findByDoctorAndAvailableAt(registrationDto.availableAt(), doctor)
                             .hasElement()
                             .flatMap(exists -> {
                                if (exists) {
