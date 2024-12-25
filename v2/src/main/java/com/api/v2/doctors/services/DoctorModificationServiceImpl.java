@@ -38,7 +38,7 @@ public class DoctorModificationServiceImpl implements DoctorModificationService 
                     return personModificationService
                             .modify(doctor.getPerson(), modificationDto)
                             .flatMap(modifiedPerson -> {
-                                String message = "Doctor whose license number is %s was modified.".formatted(modifiedPerson);
+                                String message = "Doctor whose license number is %s was modified.".formatted(medicalLicenseNumber);
                                 try {
                                     messageSenderService.sendMessage(message);
                                 } catch (TelegramApiException e) {
