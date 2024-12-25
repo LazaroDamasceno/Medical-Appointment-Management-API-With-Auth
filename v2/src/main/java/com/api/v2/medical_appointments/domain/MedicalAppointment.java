@@ -29,7 +29,7 @@ public class MedicalAppointment {
     public MedicalAppointment() {
     }
 
-    public MedicalAppointment(Customer customer, Doctor doctor, LocalDateTime bookedAt) {
+    private MedicalAppointment(Customer customer, Doctor doctor, LocalDateTime bookedAt) {
         this.id = new ObjectId();
         this.customer = customer;
         this.doctor = doctor;
