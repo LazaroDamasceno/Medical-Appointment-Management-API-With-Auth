@@ -39,6 +39,10 @@ public class MedicalAppointment {
         this.createdAtZone = ZoneId.systemDefault();
     }
 
+    public static MedicalAppointment create(Customer customer, Doctor doctor, LocalDateTime bookedAt) {
+        return new MedicalAppointment(customer, doctor, bookedAt);
+    }
+
     public void markAsCompleted() {
         completedAt = LocalDateTime.now();
         completedAtZone = ZoneId.systemDefault();
