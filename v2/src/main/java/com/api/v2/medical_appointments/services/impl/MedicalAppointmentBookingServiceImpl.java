@@ -1,4 +1,4 @@
-package com.api.v2.medical_appointments.services.services;
+package com.api.v2.medical_appointments.services.impl;
 
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.utils.CustomerFinderUtil;
@@ -9,6 +9,7 @@ import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.exceptions.DuplicatedGivenBookingDateTimeException;
+import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentBookingService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import jakarta.validation.Valid;
