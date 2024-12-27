@@ -1,5 +1,6 @@
 package com.api.v2.medical_appointments.services.impl;
 
+import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
@@ -8,6 +9,7 @@ import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -44,8 +46,10 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                                    return onCompletedMedicalAppointment(medicalAppointment.getCompletedAt(), message.get());
                                }))
                                .then(Mono.defer(() -> {
+                                   LocalDateTime bookedAt = medicalAppointment.getBookedAt();
+                                   Doctor doctor = medicalAppointment.getDoctor();
                                    return medicalSlotRepository
-                                           .findActiveByDoctorAndAvailableAt(medicalAppointment.getCanceledAt(), medicalAppointment.getDoctor())
+                                           .findActiveByDoctorAndAvailableAt(bookedAt, doctor)
                                            .flatMap(medicalSlot -> {
                                                medicalSlot.setMedicalAppointment(null);
                                                return medicalSlotRepository
@@ -61,7 +65,7 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                 .then();
     }
 
-    private Mono<Void> onCanceledMedicalAppointment(LocalDateTime canceledAt, String errorMessage) {
+    private Mono<Void> onCanceledMedicalAppointment(LocalDate canceledAt, String errorMessage) {
         return Mono.just(canceledAt)
                 .filter(Objects::nonNull)
                 .switchIfEmpty(Mono.empty())
@@ -69,7 +73,7 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
 
     }
 
-    private Mono<Void> onCompletedMedicalAppointment(LocalDateTime completedAt, String errorMessage) {
+    private Mono<Void> onCompletedMedicalAppointment(LocalDate completedAt, String errorMessage) {
         return Mono.just(completedAt)
                 .filter(Objects::nonNull)
                 .switchIfEmpty(Mono.empty())
