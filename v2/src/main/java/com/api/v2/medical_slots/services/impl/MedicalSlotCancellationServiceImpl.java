@@ -3,6 +3,7 @@ package com.api.v2.medical_slots.services.impl;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
+import com.api.v2.medical_slots.exceptions.ImmutableMedicalSlotException;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
@@ -10,12 +11,15 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+
 @Service
 public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellationService {
 
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
-    private final TelegramBotMessageSenderService messageSenderService;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
 
     public MedicalSlotCancellationServiceImpl(
@@ -26,7 +30,6 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
-        this.messageSenderService = messageSenderService;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
     }
 
@@ -35,20 +38,19 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
         return medicalSlotFinderUtil
                 .findById(id)
                 .flatMap(slot -> {
-                    String message = "Medical slot whose id is %s was canceled.".formatted(slot.getId());
-                    try {
-                        messageSenderService.sendMessage(message);
-                    } catch (TelegramApiException e) {
-                        throw new RuntimeException(e);
-                    }
-                    slot.markAsCanceled();
-                    return medicalSlotRepository
-                            .save(slot)
+                    AtomicReference<String> message = new AtomicReference<>(
+                            "Medical slot whose id is %s is already canceled.".formatted(id)
+                    );
+                    return onCanceledMedicalSlot(slot.getCanceledAt(), message.get())
+                            .then(Mono.defer(() -> {
+                                message.set("Medical slot whose id is %s is already completed.".formatted(id));
+                                return onCompletedMedicalSlot(slot.getCompletedAt(), message.get());
+                            }))
                             .then(Mono.defer(() -> {
                                 slot.markAsCanceled();
                                 return medicalSlotRepository
                                         .save(slot)
-                                        .then(Mono.defer(() ->{
+                                        .then(Mono.defer(() -> {
                                             MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
                                             medicalAppointment.markAsCanceled();
                                             return medicalAppointmentRepository.save(medicalAppointment);
@@ -56,5 +58,19 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                             }));
                 })
                 .then();
+    }
+
+    private Mono<Void> onCanceledMedicalSlot(LocalDate canceledAt, String errorMessage) {
+        return Mono.just(canceledAt)
+                .filter(Objects::nonNull)
+                .switchIfEmpty(Mono.empty())
+                .then(Mono.error(new ImmutableMedicalSlotException(errorMessage)));
+    }
+
+    private Mono<Void> onCompletedMedicalSlot(LocalDate completedAt, String errorMessage) {
+        return Mono.just(completedAt)
+                .filter(Objects::nonNull)
+                .switchIfEmpty(Mono.empty())
+                .then(Mono.error(new ImmutableMedicalSlotException(errorMessage)));
     }
 }
