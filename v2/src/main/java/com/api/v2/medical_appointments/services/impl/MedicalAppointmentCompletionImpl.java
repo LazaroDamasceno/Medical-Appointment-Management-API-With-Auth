@@ -58,6 +58,7 @@ public class MedicalAppointmentCompletionImpl implements MedicalAppointmentCompl
                                             return medicalSlotRepository
                                                     .findActiveByDoctorAndAvailableAt(bookedAt, doctor)
                                                     .flatMap(medicalSlot -> {
+                                                        medicalSlot.setMedicalAppointment(medicalAppointment);
                                                         return medicalSlotCompletionService.complete(medicalSlot.getId().toString());
                                                     });
                                         }));
