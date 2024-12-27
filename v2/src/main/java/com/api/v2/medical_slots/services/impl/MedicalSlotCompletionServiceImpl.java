@@ -1,14 +1,12 @@
 package com.api.v2.medical_slots.services.impl;
 
+import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
-import com.api.v2.medical_slots.exceptions.ImmutableMedicalSlotException;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCompletionService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -31,10 +29,10 @@ public class MedicalSlotCompletionServiceImpl implements MedicalSlotCompletionSe
                 .findById(id)
                 .flatMap(slot -> {
                     AtomicReference<String> message = new AtomicReference<>("Medical slot whose id is %s is already canceled.".formatted(id));
-                    return onCanceledMedicalSlot(slot.getCanceledAt(), message.get())
+                    return onCanceledMedicalSlot(slot, message.get())
                             .then(Mono.defer(() -> {
                                 message.set("Medical slot whose id is %s is already completed.".formatted(id));
-                                return onCompletedMedicalSlot(slot.getCompletedAt(), message.get());
+                                return onCompletedMedicalSlot(slot, message.get());
                             }))
                             .then(Mono.defer(() -> {
                                 slot.markAsCompleted();
@@ -44,17 +42,11 @@ public class MedicalSlotCompletionServiceImpl implements MedicalSlotCompletionSe
                 .then();
     }
 
-    private Mono<Void> onCanceledMedicalSlot(LocalDate canceledAt, String errorMessage) {
-        return Mono.just(canceledAt)
-                .filter(Objects::nonNull)
-                .switchIfEmpty(Mono.empty())
-                .then(Mono.error(new ImmutableMedicalSlotException(errorMessage)));
+    private Mono<Void> onCanceledMedicalSlot(MedicalSlot slot, String errorMessage) {
+        return Mono.empty();
     }
 
-    private Mono<Void> onCompletedMedicalSlot(LocalDate completedAt, String errorMessage) {
-        return Mono.just(completedAt)
-                .filter(Objects::nonNull)
-                .switchIfEmpty(Mono.empty())
-                .then(Mono.error(new ImmutableMedicalSlotException(errorMessage)));
+    private Mono<Void> onCompletedMedicalSlot(MedicalSlot slot, String errorMessage) {
+        return Mono.empty();
     }
 }
