@@ -78,8 +78,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     public Mono<Void> onAppointmentExistsForSlot(MedicalAppointment medicalAppointment) {
         return Mono.just(medicalAppointment)
                 .filter(Objects::nonNull)
-                .then(Mono.error(UnavailableGivenBookingDateTimeException::new))
                 .switchIfEmpty(Mono.empty())
-                .then();
+                .then(Mono.error(UnavailableGivenBookingDateTimeException::new));
     }
 }
