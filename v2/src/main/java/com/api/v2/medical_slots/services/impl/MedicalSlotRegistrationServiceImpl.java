@@ -60,9 +60,9 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
     private Mono<Void> onUnavailableMedicalSlot(LocalDateTime availableAt, Doctor doctor) {
         return medicalSlotRepository
                 .findActiveByDoctorAndAvailableAt(availableAt, doctor)
-                .hasElement()
-                .flatMap(exists -> {
-                    if (exists) {
+                .singleOptional()
+                .flatMap(optional -> {
+                    if (optional.isPresent()) {
                         return Mono.error(new UnavailableMedicalSlotException(availableAt));
                     }
                     return Mono.empty();
