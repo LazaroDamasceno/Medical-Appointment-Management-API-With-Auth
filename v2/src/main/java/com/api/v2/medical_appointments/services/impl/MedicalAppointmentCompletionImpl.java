@@ -1,8 +1,8 @@
 package com.api.v2.medical_appointments.services.impl;
 
 import com.api.v2.doctors.domain.Doctor;
+import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCompletion;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
@@ -10,9 +10,7 @@ import com.api.v2.medical_slots.services.interfaces.MedicalSlotCompletionService
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -43,10 +41,10 @@ public class MedicalAppointmentCompletionImpl implements MedicalAppointmentCompl
                     AtomicReference<String> message = new AtomicReference<>(
                             "Medical appointment whose id is %s is already canceled.".formatted(id)
                     );
-                    return onCanceledMedicalAppointment(medicalAppointment.getCanceledAt(), message.get())
+                    return onCanceledMedicalAppointment(medicalAppointment, message.get())
                             .then(Mono.defer(() -> {
                                 message.set("Medical appointment whose id is %s is already canceled.".formatted(id));
-                                return onCompletedMedicalAppointment(medicalAppointment.getCompletedAt(), message.get());
+                                return onCompletedMedicalAppointment(medicalAppointment, message.get());
                             }))
                             .then(Mono.defer(() -> {
                                 medicalAppointment.markAsCompleted();
@@ -67,19 +65,13 @@ public class MedicalAppointmentCompletionImpl implements MedicalAppointmentCompl
                 });
     }
 
-    private Mono<Void> onCanceledMedicalAppointment(LocalDate canceledAt, String errorMessage) {
-        return Mono.just(canceledAt)
-                .filter(Objects::nonNull)
-                .switchIfEmpty(Mono.empty())
-                .then(Mono.error(new ImmutableMedicalAppointmentException(errorMessage)));
+    private Mono<Void> onCanceledMedicalAppointment(MedicalAppointment ma, String errorMessage) {
+        return Mono.empty();
 
     }
 
-    private Mono<Void> onCompletedMedicalAppointment(LocalDate completedAt, String errorMessage) {
-        return Mono.just(completedAt)
-                .filter(Objects::nonNull)
-                .switchIfEmpty(Mono.empty())
-                .then(Mono.error(new ImmutableMedicalAppointmentException(errorMessage)));
+    private Mono<Void> onCompletedMedicalAppointment(MedicalAppointment ma, String errorMessage) {
+        return Mono.empty();
 
     }
 }
