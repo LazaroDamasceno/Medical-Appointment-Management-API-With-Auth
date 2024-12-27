@@ -12,7 +12,9 @@ public interface MedicalSlotRepository extends ReactiveMongoRepository<MedicalSl
 
     @Query("""
         { 'availableAt': ?0 },
-        { 'doctor': ?1 }
+        { 'doctor': ?1 },
+        { 'canceledAt': null },
+        { 'completedAt': null }
     """)
-    Mono<MedicalSlot> findByDoctorAndAvailableAt(LocalDateTime availableAt, Doctor doctor);
+    Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(LocalDateTime availableAt, Doctor doctor);
 }
