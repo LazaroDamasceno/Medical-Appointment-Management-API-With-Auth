@@ -5,6 +5,7 @@ import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentExc
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
+import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -18,15 +19,18 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
+    private final MedicalSlotCancellationService medicalSlotCancellationService;
 
     public MedicalAppointmentCancellationServiceImpl(
             MedicalAppointmentFinderUtil medicalAppointmentFinderUtil,
             MedicalSlotRepository medicalSlotRepository,
-            MedicalAppointmentRepository medicalAppointmentRepository
+            MedicalAppointmentRepository medicalAppointmentRepository,
+            MedicalSlotCancellationService medicalSlotCancellationService
     ) {
         this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
+        this.medicalSlotCancellationService = medicalSlotCancellationService;
     }
 
     @Override
@@ -47,9 +51,8 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                                    return medicalSlotRepository
                                            .findActiveByDoctorAndAvailableAt(medicalAppointment.getCanceledAt(), medicalAppointment.getDoctor())
                                            .flatMap(medicalSlot -> {
-                                               medicalSlot.setMedicalAppointment(null);
-                                               return medicalSlotRepository
-                                                       .save(medicalSlot)
+                                               return medicalSlotCancellationService
+                                                       .cancel(medicalSlot.getId().toString())
                                                        .then(Mono.defer(() -> {
                                                            medicalAppointment.markAsCanceled();
                                                            return medicalAppointmentRepository.save(medicalAppointment);
