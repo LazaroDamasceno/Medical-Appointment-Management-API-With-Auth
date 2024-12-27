@@ -39,11 +39,10 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
         return doctorFinderUtil
                 .findByLicenseNumber(registrationDto.medicalLicenseNumber())
                 .flatMap(doctor -> {
-                    return onUnavailableMedicalSlot(registrationDto.availableAt(), doctor)
+                    return onUnavailableMedicalSlot(doctor, registrationDto.availableAt())
                             .then(Mono.defer(() -> {
                                 return Mono.defer(() -> {
-                                    String message = "A new medical slot was registered. Its datetime is %s."
-                                            .formatted(registrationDto.availableAt());
+                                    String message = "A new medical slot was registered. Its datetime is %s.".formatted(registrationDto.availableAt());
                                     try {
                                         messageSenderService.sendMessage(message);
                                     } catch (TelegramApiException e) {
@@ -57,9 +56,9 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
     });
     }
 
-    private Mono<Void> onUnavailableMedicalSlot(LocalDateTime availableAt, Doctor doctor) {
+    private Mono<Void> onUnavailableMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         return medicalSlotRepository
-                .findActiveByDoctorAndAvailableAt(availableAt, doctor)
+                .findActiveByDoctorAndAvailableAt(doctor, availableAt)
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isPresent()) {

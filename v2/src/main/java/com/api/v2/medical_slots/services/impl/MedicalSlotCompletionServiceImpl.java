@@ -5,7 +5,9 @@ import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCompletionService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
+import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -15,13 +17,16 @@ public class MedicalSlotCompletionServiceImpl implements MedicalSlotCompletionSe
 
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
+    private final TelegramBotMessageSenderService telegramBotMessageSenderService;
 
     public MedicalSlotCompletionServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
-            MedicalSlotRepository medicalSlotRepository
+            MedicalSlotRepository medicalSlotRepository,
+            TelegramBotMessageSenderService telegramBotMessageSenderService
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
+        this.telegramBotMessageSenderService = telegramBotMessageSenderService;
     }
 
     @Override
@@ -36,6 +41,12 @@ public class MedicalSlotCompletionServiceImpl implements MedicalSlotCompletionSe
                                 return onCompletedMedicalSlot(slot, message.get());
                             }))
                             .then(Mono.defer(() -> {
+                                message.set("Medical slot whose id is %s is was marked as completed. It's immutable now.".formatted(id));
+                                try {
+                                    telegramBotMessageSenderService.sendMessage(message.get());
+                                } catch (TelegramApiException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 slot.markAsCompleted();
                                 return medicalSlotRepository.save(slot);
                             }));

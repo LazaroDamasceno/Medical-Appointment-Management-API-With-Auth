@@ -4,6 +4,6 @@ import java.time.LocalDateTime;
 
 public class UnavailableMedicalSlotException extends RuntimeException {
     public UnavailableMedicalSlotException(LocalDateTime availableAt) {
-        super("The datetime %s is already r for another medical slot.".formatted(availableAt));
+        super("The datetime %s is already registered for another medical slot.".formatted(availableAt));
     }
 }

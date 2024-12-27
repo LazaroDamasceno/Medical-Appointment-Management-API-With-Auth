@@ -9,6 +9,7 @@ import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationServi
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 import java.util.concurrent.atomic.AtomicReference;
@@ -19,6 +20,7 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
+    private final TelegramBotMessageSenderService messageSenderService;
 
     public MedicalSlotCancellationServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
@@ -29,6 +31,7 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
+        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -50,6 +53,12 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                                 return medicalAppointmentRepository
                                         .save(medicalAppointment)
                                         .flatMap(canceledAppointment -> {
+                                            message.set("Medical slot whose id is %s is was marked as canceled. It's immutable now.".formatted(id));
+                                            try {
+                                                messageSenderService.sendMessage(message.get());
+                                            } catch (TelegramApiException e) {
+                                                throw new RuntimeException(e);
+                                            }
                                             slot.setMedicalAppointment(canceledAppointment);
                                             return medicalSlotRepository.save(slot);
                                         });
