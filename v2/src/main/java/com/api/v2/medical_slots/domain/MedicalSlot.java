@@ -1,6 +1,7 @@
 package com.api.v2.medical_slots.domain;
 
 import com.api.v2.doctors.domain.Doctor;
+import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,6 +18,7 @@ public class MedicalSlot {
     private Doctor doctor;
     private LocalDateTime availableAt;
     private ZoneId availableAtZone;
+    private MedicalAppointment medicalAppointment;
     private LocalDate createdAt;
     private ZoneId createdAtZone;
     private LocalDate canceledAt;
@@ -65,5 +67,21 @@ public class MedicalSlot {
 
     public ZoneId getCreatedAtZone() {
         return createdAtZone;
+    }
+
+    public MedicalAppointment getMedicalAppointment() {
+        return medicalAppointment;
+    }
+
+    public LocalDate getCanceledAt() {
+        return canceledAt;
+    }
+
+    public ZoneId getCanceledAtZone() {
+        return canceledAtZone;
+    }
+
+    public void setMedicalAppointment(MedicalAppointment medicalAppointment) {
+        this.medicalAppointment = medicalAppointment;
     }
 }
