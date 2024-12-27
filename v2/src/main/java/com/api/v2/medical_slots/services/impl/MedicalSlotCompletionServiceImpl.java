@@ -1,5 +1,6 @@
 package com.api.v2.medical_slots.services.impl;
 
+import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCompletionService;
@@ -43,10 +44,18 @@ public class MedicalSlotCompletionServiceImpl implements MedicalSlotCompletionSe
     }
 
     private Mono<Void> onCanceledMedicalSlot(MedicalSlot slot, String errorMessage) {
+        if (slot.getCompletedAt() == null && slot.getCanceledAt() != null) {
+            String message = "Medical appointment whose id is %s is already canceled.".formatted(slot.getId());
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
+        }
         return Mono.empty();
     }
 
     private Mono<Void> onCompletedMedicalSlot(MedicalSlot slot, String errorMessage) {
+        if (slot.getCompletedAt() != null && slot.getCanceledAt() == null) {
+            String message = "Medical appointment whose id is %s is already completed.".formatted(slot.getId());
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
+        }
         return Mono.empty();
     }
 }
