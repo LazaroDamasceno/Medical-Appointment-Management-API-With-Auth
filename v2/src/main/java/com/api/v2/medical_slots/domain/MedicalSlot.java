@@ -23,6 +23,8 @@ public class MedicalSlot {
     private ZoneId createdAtZone;
     private LocalDate canceledAt;
     private ZoneId canceledAtZone;
+    private LocalDate completedAt;
+    private ZoneId completedAtZone;
 
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = new ObjectId();
@@ -43,6 +45,11 @@ public class MedicalSlot {
     public void markAsCanceled() {
         canceledAt = LocalDate.now();
         canceledAtZone = ZoneId.systemDefault();
+    }
+
+    public void markAsCompleted() {
+        completedAt = LocalDate.now();
+        completedAtZone = ZoneId.systemDefault();
     }
 
     public ObjectId getId() {
@@ -83,5 +90,13 @@ public class MedicalSlot {
 
     public void setMedicalAppointment(MedicalAppointment medicalAppointment) {
         this.medicalAppointment = medicalAppointment;
+    }
+
+    public LocalDate getCompletedAt() {
+        return completedAt;
+    }
+
+    public ZoneId getCompletedAtZone() {
+        return completedAtZone;
     }
 }
