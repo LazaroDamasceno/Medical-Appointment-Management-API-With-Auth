@@ -1,5 +1,6 @@
 package com.api.v2.medical_slots.services.impl;
 
+import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
@@ -14,15 +15,18 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
     private final TelegramBotMessageSenderService messageSenderService;
+    private final MedicalAppointmentCancellationService medicalAppointmentCancellationService;
 
     public MedicalSlotCancellationServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalSlotRepository medicalSlotRepository,
-            TelegramBotMessageSenderService messageSenderService
+            TelegramBotMessageSenderService messageSenderService,
+            MedicalAppointmentCancellationService medicalAppointmentCancellationService
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
         this.messageSenderService = messageSenderService;
+        this.medicalAppointmentCancellationService = medicalAppointmentCancellationService;
     }
 
     @Override
@@ -37,7 +41,12 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                         throw new RuntimeException(e);
                     }
                     slot.markAsCanceled();
-                    return medicalSlotRepository.save(slot);
+                    return medicalSlotRepository
+                            .save(slot)
+                            .then(Mono.defer(() -> {
+                                String medicalAppointmentId = slot.getMedicalAppointment().getId().toString();
+                                return medicalAppointmentCancellationService.cancel(medicalAppointmentId);
+                            }));
                 })
                 .then();
     }
