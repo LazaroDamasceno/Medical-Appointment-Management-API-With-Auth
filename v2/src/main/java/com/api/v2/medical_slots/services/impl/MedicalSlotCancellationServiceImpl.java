@@ -1,6 +1,7 @@
 package com.api.v2.medical_slots.services.impl;
 
-import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
+import com.api.v2.medical_appointments.domain.MedicalAppointment;
+import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
@@ -15,18 +16,18 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
     private final TelegramBotMessageSenderService messageSenderService;
-    private final MedicalAppointmentCancellationService medicalAppointmentCancellationService;
+    private final MedicalAppointmentRepository medicalAppointmentRepository;
 
     public MedicalSlotCancellationServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalSlotRepository medicalSlotRepository,
             TelegramBotMessageSenderService messageSenderService,
-            MedicalAppointmentCancellationService medicalAppointmentCancellationService
+            MedicalAppointmentRepository medicalAppointmentRepository
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
         this.messageSenderService = messageSenderService;
-        this.medicalAppointmentCancellationService = medicalAppointmentCancellationService;
+        this.medicalAppointmentRepository = medicalAppointmentRepository;
     }
 
     @Override
@@ -44,8 +45,14 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                     return medicalSlotRepository
                             .save(slot)
                             .then(Mono.defer(() -> {
-                                String medicalAppointmentId = slot.getMedicalAppointment().getId().toString();
-                                return medicalAppointmentCancellationService.cancel(medicalAppointmentId);
+                                slot.markAsCanceled();
+                                return medicalSlotRepository
+                                        .save(slot)
+                                        .then(Mono.defer(() ->{
+                                            MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
+                                            medicalAppointment.markAsCanceled();
+                                            return medicalAppointmentRepository.save(medicalAppointment);
+                                        }));
                             }));
                 })
                 .then();

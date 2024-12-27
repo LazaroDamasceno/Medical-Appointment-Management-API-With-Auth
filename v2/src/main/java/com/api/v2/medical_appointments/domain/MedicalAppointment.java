@@ -19,9 +19,9 @@ public class MedicalAppointment {
     private Doctor doctor;
     private LocalDateTime bookedAt;
     private ZoneId bookedAtZone;
-    private LocalDateTime canceledAt;
+    private LocalDate canceledAt;
     private ZoneId canceledAtZone;
-    private LocalDateTime completedAt;
+    private LocalDate completedAt;
     private ZoneId completedAtZone;
     private LocalDate createdAt;
     private ZoneId createdAtZone;
@@ -44,12 +44,12 @@ public class MedicalAppointment {
     }
 
     public void markAsCompleted() {
-        completedAt = LocalDateTime.now();
+        completedAt = LocalDate.now();
         completedAtZone = ZoneId.systemDefault();
     }
 
     public void markAsCanceled() {
-        canceledAt = LocalDateTime.now();
+        canceledAt = LocalDate.now();
         canceledAtZone = ZoneId.systemDefault();
     }
 
@@ -73,7 +73,7 @@ public class MedicalAppointment {
         return bookedAtZone;
     }
 
-    public LocalDateTime getCanceledAt() {
+    public LocalDate getCanceledAt() {
         return canceledAt;
     }
 
@@ -81,7 +81,7 @@ public class MedicalAppointment {
         return canceledAtZone;
     }
 
-    public LocalDateTime getCompletedAt() {
+    public LocalDate getCompletedAt() {
         return completedAt;
     }
 

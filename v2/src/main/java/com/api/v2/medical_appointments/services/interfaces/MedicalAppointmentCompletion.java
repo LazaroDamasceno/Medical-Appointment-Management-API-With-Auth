@@ -1,4 +1,4 @@
-package com.api.v2.medical_appointments.services.impl;
+package com.api.v2.medical_appointments.services.interfaces;
 
 import reactor.core.publisher.Mono;
 
