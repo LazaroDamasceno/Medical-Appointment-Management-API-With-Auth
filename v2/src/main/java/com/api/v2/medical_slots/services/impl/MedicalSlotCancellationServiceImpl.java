@@ -8,7 +8,6 @@ import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationServi
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -47,14 +46,14 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                                 return onCompletedMedicalSlot(slot.getCompletedAt(), message.get());
                             }))
                             .then(Mono.defer(() -> {
-                                slot.markAsCanceled();
-                                return medicalSlotRepository
-                                        .save(slot)
-                                        .then(Mono.defer(() -> {
-                                            MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
-                                            medicalAppointment.markAsCanceled();
-                                            return medicalAppointmentRepository.save(medicalAppointment);
-                                        }));
+                                MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
+                                medicalAppointment.markAsCanceled();
+                                return medicalAppointmentRepository
+                                        .save(medicalAppointment)
+                                        .flatMap(canceledAppointment -> {
+                                            slot.setMedicalAppointment(canceledAppointment);
+                                            return medicalSlotRepository.save(slot);
+                                        });
                             }));
                 })
                 .then();
