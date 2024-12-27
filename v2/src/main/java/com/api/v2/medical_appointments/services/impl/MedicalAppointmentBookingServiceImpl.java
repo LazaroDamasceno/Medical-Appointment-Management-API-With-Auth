@@ -15,8 +15,6 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
-
 @Service
 public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentBookingService {
 
@@ -69,16 +67,10 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     }
 
     private Mono<Void> onUnavailableGivenBookingDateTime(MedicalSlot medicalSlot) {
-        return Mono.just(medicalSlot)
-                .filter(Objects::nonNull)
-                .switchIfEmpty(Mono.error(UnavailableGivenBookingDateTimeException::new))
-                .then(Mono.empty());
+        return Mono.empty();
     }
 
     public Mono<Void> onAppointmentExistsForSlot(MedicalAppointment medicalAppointment) {
-        return Mono.just(medicalAppointment)
-                .filter(Objects::nonNull)
-                .switchIfEmpty(Mono.empty())
-                .then(Mono.error(UnavailableGivenBookingDateTimeException::new));
+        return Mono.empty();
     }
 }
