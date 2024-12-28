@@ -13,7 +13,7 @@ import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentBoo
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
-import com.api.v2.telegram_bot.services.impl.TelegramBotMessageSenderServiceImpl;
+import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Service
 public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentBookingService {
 
-    private final TelegramBotMessageSenderServiceImpl messageSenderService;
+    private final TelegramBotMessageSenderService messageSenderService;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
     private final DoctorFinderUtil doctorFinderUtil;
@@ -32,7 +32,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
 
     public MedicalAppointmentBookingServiceImpl(
-            TelegramBotMessageSenderServiceImpl messageSenderService,
+            TelegramBotMessageSenderService messageSenderService,
             MedicalSlotRepository medicalSlotRepository,
             MedicalAppointmentRepository medicalAppointmentRepository,
             DoctorFinderUtil doctorFinderUtil,
