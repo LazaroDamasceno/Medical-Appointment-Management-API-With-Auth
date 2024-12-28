@@ -33,7 +33,7 @@ public class MedicalSlotFinderUtil {
     }
 
     public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt) {
-        Mono<MedicalSlot> foundMedicalSlot = repository
+        return repository
                 .findAll()
                 .filter(slot ->
                         slot.getCanceledAt() == null
@@ -41,14 +41,7 @@ public class MedicalSlotFinderUtil {
                         && slot.getDoctor().equals(doctor)
                         && slot.getAvailableAt().equals(availableAt)
                 )
-                .singleOrEmpty();
-        return foundMedicalSlot
-                .hasElement()
-                .flatMap(exists -> {
-                    if (!exists) {
-                        return Mono.error(new UnavailableMedicalSlotException(availableAt));
-                    }
-                    return foundMedicalSlot.single();
-                });
+                .singleOrEmpty()
+                .switchIfEmpty(Mono.error(new UnavailableMedicalSlotException(availableAt)));
     }
 }
