@@ -1,6 +1,7 @@
 package com.api.v2.medical_slots.utils;
 
 import com.api.v2.doctors.domain.Doctor;
+import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.NonExistentMedicalSlotException;
@@ -43,5 +44,12 @@ public class MedicalSlotFinderUtil {
                 )
                 .singleOrEmpty()
                 .switchIfEmpty(Mono.error(new UnavailableMedicalSlotException(availableAt)));
+    }
+
+    public Mono<MedicalSlot> findByMedicalAppointment(MedicalAppointment medicalAppointment) {
+        return repository
+                .findAll()
+                .filter(slot -> slot.getMedicalAppointment().equals(medicalAppointment))
+                .single();
     }
 }
