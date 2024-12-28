@@ -1,11 +1,15 @@
 package com.api.v2.medical_slots.utils;
 
+import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.NonExistentMedicalSlotException;
+import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 
 @Component
 public class MedicalSlotFinderUtil {
@@ -25,6 +29,26 @@ public class MedicalSlotFinderUtil {
                        return Mono.error(new NonExistentMedicalSlotException(id));
                    }
                    return Mono.just(optional.get());
+                });
+    }
+
+    public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt) {
+        Mono<MedicalSlot> foundMedicalSlot = repository
+                .findAll()
+                .filter(slot ->
+                        slot.getCanceledAt() == null
+                        && slot.getCompletedAt() == null
+                        && slot.getDoctor().equals(doctor)
+                        && slot.getAvailableAt().equals(availableAt)
+                )
+                .singleOrEmpty();
+        return foundMedicalSlot
+                .hasElement()
+                .flatMap(exists -> {
+                    if (!exists) {
+                        return Mono.error(new UnavailableMedicalSlotException(availableAt));
+                    }
+                    return foundMedicalSlot.single();
                 });
     }
 }
