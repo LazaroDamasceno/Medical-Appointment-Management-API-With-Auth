@@ -50,7 +50,7 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
                                 medicalAppointment.markAsCanceled();
                                 return medicalAppointmentRepository
                                         .save(medicalAppointment)
-                                        .then(Mono.fromSupplier(() -> {
+                                        .then(Mono.defer(() -> {
                                             medicalSlot.markAsCompleted();
                                             return medicalSlotRepository.save(medicalSlot);
                                         }));
