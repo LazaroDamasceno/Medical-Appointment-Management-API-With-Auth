@@ -9,7 +9,7 @@ public class V2Application {
 
 	public static void main(String[] args) {
 		var modules = ApplicationModules.of(V2Application.class);
-		modules.forEach(System.out::println);
+		//modules.forEach(System.out::println);
 		modules.verify();
 		SpringApplication.run(V2Application.class, args);
 	}
