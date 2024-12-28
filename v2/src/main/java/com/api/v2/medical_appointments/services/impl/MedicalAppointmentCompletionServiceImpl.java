@@ -1,7 +1,7 @@
 package com.api.v2.medical_appointments.services.impl;
 
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
+import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCompletionService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 @Service
-public class MedicalAppointmentCancellationServiceImpl implements MedicalAppointmentCancellationService {
+public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointmentCompletionService {
 
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
@@ -19,7 +19,7 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
     private final TelegramBotMessageSenderService messageSenderService;
 
-    public MedicalAppointmentCancellationServiceImpl(
+    public MedicalAppointmentCompletionServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalSlotRepository medicalSlotRepository,
             MedicalAppointmentRepository medicalAppointmentRepository,
@@ -34,14 +34,14 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     }
 
     @Override
-    public Mono<Void> cancel(String id) {
+    public Mono<Void> complete(String id) {
         return medicalAppointmentFinderUtil
                 .findById(id)
                 .flatMap(medicalAppointment -> {
                     return medicalSlotFinderUtil
                             .findByMedicalAppointment(medicalAppointment)
                             .flatMap(medicalSlot -> {
-                                String message = "Medical appointment whose id is %s was canceled.".formatted(id);
+                                String message = "Medical appointment whose id is %s was completed.".formatted(id);
                                 try {
                                     messageSenderService.sendMessage(message);
                                 } catch (TelegramApiException e) {
@@ -51,7 +51,7 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                                 return medicalAppointmentRepository
                                         .save(medicalAppointment)
                                         .then(Mono.fromSupplier(() -> {
-                                            medicalSlot.setMedicalAppointment(null);
+                                            medicalSlot.markAsCompleted();
                                             return medicalSlotRepository.save(medicalSlot);
                                         }));
                             });
