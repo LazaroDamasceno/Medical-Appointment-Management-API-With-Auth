@@ -5,7 +5,6 @@ import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.NonExistentMedicalSlotException;
-import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -42,8 +41,7 @@ public class MedicalSlotFinderUtil {
                         && slot.getDoctor().equals(doctor)
                         && slot.getAvailableAt().equals(availableAt)
                 )
-                .singleOrEmpty()
-                .switchIfEmpty(Mono.error(new UnavailableMedicalSlotException(availableAt)));
+                .singleOrEmpty();
     }
 
     public Mono<MedicalSlot> findByMedicalAppointment(MedicalAppointment medicalAppointment) {
