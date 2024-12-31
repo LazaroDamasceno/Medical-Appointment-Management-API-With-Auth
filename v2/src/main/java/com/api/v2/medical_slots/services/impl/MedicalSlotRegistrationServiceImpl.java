@@ -66,7 +66,8 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isPresent()) {
-                        return Mono.error(new UnavailableMedicalSlotException(availableAt));
+                        String message = "The given booking datetime %s is not associated with any medical slot.".formatted(availableAt);
+                        return Mono.error(new UnavailableMedicalSlotException(message));
                     }
                     return Mono.empty();
                 });
