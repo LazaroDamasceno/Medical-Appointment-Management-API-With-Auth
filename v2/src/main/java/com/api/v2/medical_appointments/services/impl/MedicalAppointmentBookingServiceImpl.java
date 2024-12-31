@@ -10,8 +10,11 @@ import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.exceptions.UnavailableBookingDateTimeException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentBookingService;
+import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
+import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
+import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
@@ -30,6 +33,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     private final DoctorFinderUtil doctorFinderUtil;
     private final CustomerFinderUtil customerFinderUtil;
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
+    private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
 
     public MedicalAppointmentBookingServiceImpl(
             TelegramBotMessageSenderService messageSenderService,
@@ -37,7 +41,8 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
             MedicalAppointmentRepository medicalAppointmentRepository,
             DoctorFinderUtil doctorFinderUtil,
             CustomerFinderUtil customerFinderUtil,
-            MedicalSlotFinderUtil medicalSlotFinderUtil
+            MedicalSlotFinderUtil medicalSlotFinderUtil,
+            MedicalAppointmentFinderUtil medicalAppointmentFinderUtil
     ) {
         this.messageSenderService = messageSenderService;
         this.medicalSlotRepository = medicalSlotRepository;
@@ -45,6 +50,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
         this.doctorFinderUtil = doctorFinderUtil;
         this.customerFinderUtil = customerFinderUtil;
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
+        this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
     }
 
     @Override
@@ -54,41 +60,56 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
         return doctorMono
                 .zipWith(customerMono)
                 .flatMap(tuple -> {
-                    Doctor doctor = tuple.getT1();
-                    Customer customer = tuple.getT2();
-                    return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
-                            .then(Mono.defer(() -> {
-                                return medicalSlotFinderUtil
-                                        .findActiveByDoctorAndAvailableAt(doctor, bookingDto.bookedAt())
-                                        .flatMap(medicalSlot -> {
-                                            try {
-                                                messageSenderService.sendMessage("A new medical appointment was booked.");
-                                            } catch (TelegramApiException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                            MedicalAppointment medicalAppointment = MedicalAppointment.create(customer, doctor, bookingDto.bookedAt());
-                                            return medicalAppointmentRepository
-                                                    .save(medicalAppointment)
-                                                    .then(Mono.defer(() -> {
-                                                        medicalSlot.setMedicalAppointment(medicalAppointment);
-                                                        return medicalSlotRepository.save(medicalSlot);
-                                                    }))
-                                                    .then(Mono.just(medicalAppointment));
-                                        });
-                            }));
-                })
-                .flatMap(MedicalAppointmentResponseMapper::mapToMono);
+                   Doctor doctor = tuple.getT1();
+                   Customer customer = tuple.getT2();
+                   return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
+                           .flatMap(medicalSlot -> {
+                              return onUnavailableBookingDateTime(doctor, customer, bookingDto.bookedAt())
+                                      .then(Mono.defer(() -> {
+                                          String message = "A new medical appointment was successfully booked.";
+                                          try {
+                                              messageSenderService.sendMessage(message);
+                                          } catch (TelegramApiException e) {
+                                              throw new RuntimeException(e);
+                                          }
+                                          MedicalAppointment medicalAppointment = MedicalAppointment.create(
+                                                  customer,
+                                                  doctor,
+                                                  bookingDto.bookedAt()
+                                          );
+                                          medicalSlot.setMedicalAppointment(medicalAppointment);
+                                          return medicalSlotRepository
+                                                  .save(medicalSlot)
+                                                  .then(medicalAppointmentRepository
+                                                          .save(medicalAppointment)
+                                                          .flatMap(MedicalAppointmentResponseMapper::mapToMono)
+                                                  );
+                                      }));
+                           });
+                });
     }
 
-    private Mono<Void> onUnavailableBookingDateTime(Customer customer, Doctor doctor, LocalDateTime bookedAt) {
-        return medicalAppointmentRepository
-                .findActiveByCustomerAndDoctorAndBookedAt(customer, doctor, bookedAt)
-                .singleOptional()
-                .flatMap(optional -> {
-                    if (optional.isPresent()) {
-                        return Mono.error(UnavailableBookingDateTimeException::new);
-                    }
-                    return Mono.empty();
+    private Mono<MedicalSlot> onFoundMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
+        Mono<MedicalSlot> medicalSlotMono = medicalSlotFinderUtil.findActiveByDoctorAndAvailableAt(doctor, availableAt);
+        return medicalSlotMono
+                .hasElement()
+                .flatMap(exists -> {
+                   if (!exists) {
+                       return Mono.error(new UnavailableMedicalSlotException(availableAt));
+                   }
+                   return medicalSlotMono.single();
+                });
+    }
+
+    private Mono<Void> onUnavailableBookingDateTime(Doctor doctor, Customer customer, LocalDateTime availableAt) {
+        return medicalAppointmentFinderUtil
+                .findActiveByCustomerAndDoctorAndBookedAt(customer, doctor, availableAt)
+                .hasElement()
+                .flatMap(exists -> {
+                   if (exists) {
+                       return Mono.error(UnavailableBookingDateTimeException::new);
+                   }
+                   return Mono.empty();
                 });
     }
 }

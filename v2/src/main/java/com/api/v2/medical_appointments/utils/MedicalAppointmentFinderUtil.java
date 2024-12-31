@@ -1,11 +1,15 @@
 package com.api.v2.medical_appointments.utils;
 
+import com.api.v2.customers.domain.Customer;
+import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.NonExistentMedicalAppointmentException;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 
 @Component
 public class MedicalAppointmentFinderUtil {
@@ -26,5 +30,22 @@ public class MedicalAppointmentFinderUtil {
                    }
                    return Mono.just(optional.get());
                 });
+    }
+
+    public Mono<MedicalAppointment> findActiveByCustomerAndDoctorAndBookedAt(
+            Customer customer,
+            Doctor doctor,
+            LocalDateTime bookedAt
+    ) {
+        return repository
+                .findAll()
+                .filter(slot ->
+                        slot.getCanceledAt() == null
+                        && slot.getCompletedAt() == null
+                        && slot.getCustomer().equals(customer)
+                        && slot.getDoctor().equals(doctor)
+                        && slot.getBookedAt().equals(bookedAt)
+                )
+                .singleOrEmpty();
     }
 }
