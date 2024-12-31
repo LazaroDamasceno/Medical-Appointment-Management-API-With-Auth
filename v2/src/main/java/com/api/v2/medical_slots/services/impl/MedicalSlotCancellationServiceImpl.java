@@ -59,6 +59,7 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                                             } catch (TelegramApiException e) {
                                                 throw new RuntimeException(e);
                                             }
+                                            slot.markAsCanceled();
                                             slot.setMedicalAppointment(canceledAppointment);
                                             return medicalSlotRepository.save(slot);
                                         });
