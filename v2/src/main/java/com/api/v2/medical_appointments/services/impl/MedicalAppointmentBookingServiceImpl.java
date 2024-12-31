@@ -69,13 +69,14 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
 
     private Mono<MedicalSlot> onFoundMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         Mono<MedicalSlot> medicalSlotMono = medicalSlotFinderUtil.findActiveByDoctorAndAvailableAt(doctor, availableAt);
-        var id = medicalSlotMono.single().blockOptional().get().getId();
-        System.out.println(id);
         return medicalSlotMono
                 .hasElement()
                 .flatMap(exists -> {
-                   if (exists) return medicalSlotMono.single();
-                   return Mono.error(new UnavailableMedicalSlotException(availableAt));
+                   if (exists) {
+                       return medicalSlotMono.single();
+                   }
+                   String message = "There's no medical slot which available datetime is equals to given datetime.";
+                   return Mono.error(new UnavailableMedicalSlotException(message));
                 });
     }
 

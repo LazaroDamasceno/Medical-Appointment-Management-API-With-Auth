@@ -31,11 +31,11 @@ public class MedicalSlot {
         this.doctor = doctor;
         this.availableAt = DataTimeAdapterUtil.set(availableAt);
         this.availableAtZone = ZoneId.systemDefault();
-        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
+        this.createdAt = LocalDateTime.now();
         this.createdAtZone = ZoneId.systemDefault();
     }
 
-    private MedicalSlot() {
+    public MedicalSlot() {
     }
 
     public static MedicalSlot create(Doctor doctor, LocalDateTime availableAt) {

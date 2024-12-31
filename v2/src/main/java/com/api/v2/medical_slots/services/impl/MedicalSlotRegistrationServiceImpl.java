@@ -57,16 +57,18 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                                 });
                             }))
                             .flatMap(MedicalSlotResponseMapper::mapToMono);
-    });
+                });
     }
 
     private Mono<Void> onUnavailableMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         return medicalSlotFinderUtil
                 .findActiveByDoctorAndAvailableAt(doctor, availableAt)
-                .singleOptional()
-                .flatMap(optional -> {
-                    if (optional.isPresent()) {
-                        return Mono.error(new UnavailableMedicalSlotException(availableAt));
+                .hasElement()
+                .flatMap(exists -> {
+                    System.out.println(exists);
+                    if (exists) {
+                        String message = "The given datetime %s is already registered for another medical slot".formatted(availableAt);
+                        return Mono.error(new UnavailableMedicalSlotException(message));
                     }
                     return Mono.empty();
                 });
