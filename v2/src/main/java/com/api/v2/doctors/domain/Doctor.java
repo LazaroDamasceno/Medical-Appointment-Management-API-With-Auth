@@ -6,7 +6,6 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -29,7 +28,7 @@ public class Doctor {
         this.id = new ObjectId();
         this.licenseNumber = licenseNumber;
         this.person = person;
-        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
+        this.createdAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -38,7 +37,7 @@ public class Doctor {
     }
 
     public void markAsTerminated() {
-        terminatedAt = DataTimeAdapterUtil.set(LocalDateTime.now());
+        terminatedAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
         terminatedAtZone = ZoneId.systemDefault();
     }
 

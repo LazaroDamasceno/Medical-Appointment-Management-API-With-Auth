@@ -29,7 +29,7 @@ public class MedicalSlot {
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = new ObjectId();
         this.doctor = doctor;
-        this.availableAt = DataTimeAdapterUtil.set(availableAt);
+        this.availableAt = DataTimeAdapterUtil.adapt(availableAt);
         this.availableAtZone = ZoneId.systemDefault();
         this.createdAt = LocalDateTime.now();
         this.createdAtZone = ZoneId.systemDefault();
@@ -43,12 +43,12 @@ public class MedicalSlot {
     }
 
     public void markAsCanceled() {
-        canceledAt = DataTimeAdapterUtil.set(LocalDateTime.now());
+        canceledAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
         canceledAtZone = ZoneId.systemDefault();
     }
 
     public void markAsCompleted() {
-        completedAt = DataTimeAdapterUtil.set(LocalDateTime.now());
+        completedAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
         completedAtZone = ZoneId.systemDefault();
     }
 

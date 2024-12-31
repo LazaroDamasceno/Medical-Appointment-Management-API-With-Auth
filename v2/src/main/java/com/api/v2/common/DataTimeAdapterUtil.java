@@ -6,9 +6,12 @@ import java.time.ZonedDateTime;
 
 public class DataTimeAdapterUtil {
 
-    public static LocalDateTime set(LocalDateTime localDateTime) {
+    public static LocalDateTime adapt(LocalDateTime localDateTime) {
+        return localDateTime.plusHours(offSetZone(localDateTime));
+    }
+
+    public static long offSetZone(LocalDateTime localDateTime) {
         ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
-        long offSet = zonedDateTime.getOffset().getTotalSeconds() / 3600L;
-        return localDateTime.plusHours(offSet);
+        return zonedDateTime.getOffset().getTotalSeconds() / 3600L;
     }
 }

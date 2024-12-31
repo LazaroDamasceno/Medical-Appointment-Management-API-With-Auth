@@ -42,7 +42,7 @@ public class Person {
         this.email = registrationDto.email();
         this.phoneNumber = registrationDto.phoneNumber();
         this.gender = registrationDto.gender();
-        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
+        this.createdAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -58,7 +58,7 @@ public class Person {
         this.email = modificationDto.email();
         this.phoneNumber = modificationDto.phoneNumber();
         this.gender = modificationDto.gender();
-        this.modifiedAt = DataTimeAdapterUtil.set(LocalDateTime.now());
+        this.modifiedAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
         this.modifiedAtZone = ZoneId.systemDefault();
     }
 

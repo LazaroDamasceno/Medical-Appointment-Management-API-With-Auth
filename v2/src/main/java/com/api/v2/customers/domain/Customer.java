@@ -7,7 +7,6 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -28,7 +27,7 @@ public class Customer {
         this.id = new ObjectId();
         this.address = address;
         this.person = person;
-        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
+        this.createdAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
