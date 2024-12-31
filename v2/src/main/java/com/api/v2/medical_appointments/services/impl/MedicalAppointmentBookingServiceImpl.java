@@ -60,44 +60,22 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
         return doctorMono
                 .zipWith(customerMono)
                 .flatMap(tuple -> {
-                   Doctor doctor = tuple.getT1();
-                   Customer customer = tuple.getT2();
-                   return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
-                           .flatMap(medicalSlot -> {
-                              return onUnavailableBookingDateTime(doctor, customer, bookingDto.bookedAt())
-                                      .then(Mono.defer(() -> {
-                                          String message = "A new medical appointment was successfully booked.";
-                                          try {
-                                              messageSenderService.sendMessage(message);
-                                          } catch (TelegramApiException e) {
-                                              throw new RuntimeException(e);
-                                          }
-                                          MedicalAppointment medicalAppointment = MedicalAppointment.create(
-                                                  customer,
-                                                  doctor,
-                                                  bookingDto.bookedAt()
-                                          );
-                                          medicalSlot.setMedicalAppointment(medicalAppointment);
-                                          return medicalSlotRepository
-                                                  .save(medicalSlot)
-                                                  .then(medicalAppointmentRepository
-                                                          .save(medicalAppointment)
-                                                          .flatMap(MedicalAppointmentResponseMapper::mapToMono)
-                                                  );
-                                      }));
-                           });
+                    Doctor doctor = tuple.getT1();
+                    Customer customer = tuple.getT2();
+                    return null;
                 });
     }
 
+
     private Mono<MedicalSlot> onFoundMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         Mono<MedicalSlot> medicalSlotMono = medicalSlotFinderUtil.findActiveByDoctorAndAvailableAt(doctor, availableAt);
+        var id = medicalSlotMono.single().blockOptional().get().getId();
+        System.out.println(id);
         return medicalSlotMono
                 .hasElement()
                 .flatMap(exists -> {
-                   if (!exists) {
-                       return Mono.error(new UnavailableMedicalSlotException(availableAt));
-                   }
-                   return medicalSlotMono.single();
+                   if (exists) return medicalSlotMono.single();
+                   return Mono.error(new UnavailableMedicalSlotException(availableAt));
                 });
     }
 
