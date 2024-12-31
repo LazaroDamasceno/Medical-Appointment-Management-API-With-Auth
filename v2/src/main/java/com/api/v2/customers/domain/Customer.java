@@ -1,12 +1,14 @@
 package com.api.v2.customers.domain;
 
 import com.api.v2.common.AddressDto;
+import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.people.domain.Person;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Document
@@ -16,7 +18,7 @@ public class Customer {
     private ObjectId id;
     private AddressDto address;
     private Person person;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     private ZoneId createdAtZone;
 
     public Customer() {
@@ -26,7 +28,7 @@ public class Customer {
         this.id = new ObjectId();
         this.address = address;
         this.person = person;
-        this.createdAt = LocalDate.now();
+        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -46,7 +48,7 @@ public class Customer {
         return person;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 

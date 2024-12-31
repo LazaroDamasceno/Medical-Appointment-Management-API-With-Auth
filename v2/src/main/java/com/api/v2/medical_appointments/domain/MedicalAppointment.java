@@ -1,5 +1,6 @@
 package com.api.v2.medical_appointments.domain;
 
+import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.doctors.domain.Doctor;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -19,11 +20,11 @@ public class MedicalAppointment {
     private Doctor doctor;
     private LocalDateTime bookedAt;
     private ZoneId bookedAtZone;
-    private LocalDate canceledAt;
+    private LocalDateTime canceledAt;
     private ZoneId canceledAtZone;
-    private LocalDate completedAt;
+    private LocalDateTime completedAt;
     private ZoneId completedAtZone;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     private ZoneId createdAtZone;
 
     public MedicalAppointment() {
@@ -33,9 +34,9 @@ public class MedicalAppointment {
         this.id = new ObjectId();
         this.customer = customer;
         this.doctor = doctor;
-        this.bookedAt = bookedAt;
+        this.bookedAt = DataTimeAdapterUtil.set(bookedAt);
         this.bookedAtZone = ZoneId.systemDefault();
-        this.createdAt = LocalDate.now();
+        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -44,12 +45,12 @@ public class MedicalAppointment {
     }
 
     public void markAsCompleted() {
-        completedAt = LocalDate.now();
+        completedAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         completedAtZone = ZoneId.systemDefault();
     }
 
     public void markAsCanceled() {
-        canceledAt = LocalDate.now();
+        canceledAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         canceledAtZone = ZoneId.systemDefault();
     }
 
@@ -73,7 +74,7 @@ public class MedicalAppointment {
         return bookedAtZone;
     }
 
-    public LocalDate getCanceledAt() {
+    public LocalDateTime getCanceledAt() {
         return canceledAt;
     }
 
@@ -81,7 +82,7 @@ public class MedicalAppointment {
         return canceledAtZone;
     }
 
-    public LocalDate getCompletedAt() {
+    public LocalDateTime getCompletedAt() {
         return completedAt;
     }
 
@@ -89,7 +90,7 @@ public class MedicalAppointment {
         return completedAtZone;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 

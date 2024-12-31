@@ -10,7 +10,8 @@ public class MedicalSlotResponseMapper {
     public static MedicalSlotResponseDto mapToDto(MedicalSlot medicalSlot) {
         return new MedicalSlotResponseDto(
                 DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
-                medicalSlot.getAvailableAt()
+                medicalSlot.getAvailableAt(),
+                medicalSlot.getAvailableAtZone()
         );
     }
 

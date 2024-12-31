@@ -1,5 +1,6 @@
 package com.api.v2.people.domain;
 
+import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.people.dtos.PersonModificationDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -7,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Document
@@ -22,9 +24,9 @@ public class Person {
     private String email;
     private String phoneNumber;
     private String gender;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     private ZoneId createdAtZone;
-    private LocalDate modifiedAt;
+    private LocalDateTime modifiedAt;
     private ZoneId modifiedAtZone;
 
     public Person() {
@@ -40,7 +42,7 @@ public class Person {
         this.email = registrationDto.email();
         this.phoneNumber = registrationDto.phoneNumber();
         this.gender = registrationDto.gender();
-        this.createdAt = LocalDate.now();
+        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -56,7 +58,7 @@ public class Person {
         this.email = modificationDto.email();
         this.phoneNumber = modificationDto.phoneNumber();
         this.gender = modificationDto.gender();
-        this.modifiedAt = LocalDate.now();
+        this.modifiedAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         this.modifiedAtZone = ZoneId.systemDefault();
     }
 
@@ -103,7 +105,7 @@ public class Person {
         return gender;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -111,7 +113,7 @@ public class Person {
         return createdAtZone;
     }
 
-    public LocalDate getModifiedAt() {
+    public LocalDateTime getModifiedAt() {
         return modifiedAt;
     }
 

@@ -13,8 +13,11 @@ public class MedicalAppointmentResponseMapper {
                 CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer()),
                 DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor()),
                 medicalAppointment.getBookedAt(),
+                medicalAppointment.getBookedAtZone(),
                 medicalAppointment.getCanceledAt(),
-                medicalAppointment.getCompletedAt()
+                medicalAppointment.getCanceledAtZone(),
+                medicalAppointment.getCompletedAt(),
+                medicalAppointment.getCompletedAtZone()
         );
     }
 

@@ -1,11 +1,13 @@
 package com.api.v2.doctors.domain;
 
+import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.people.domain.Person;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Document
@@ -15,9 +17,9 @@ public class Doctor {
     private ObjectId  id;
     private String licenseNumber;
     private Person person;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     private ZoneId createdAtZone;
-    private LocalDate terminatedAt;
+    private LocalDateTime terminatedAt;
     private ZoneId terminatedAtZone;
 
     public Doctor() {
@@ -27,7 +29,7 @@ public class Doctor {
         this.id = new ObjectId();
         this.licenseNumber = licenseNumber;
         this.person = person;
-        this.createdAt = LocalDate.now();
+        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -36,7 +38,7 @@ public class Doctor {
     }
 
     public void markAsTerminated() {
-        terminatedAt = LocalDate.now();
+        terminatedAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         terminatedAtZone = ZoneId.systemDefault();
     }
 
@@ -57,7 +59,7 @@ public class Doctor {
         return person;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -65,7 +67,7 @@ public class Doctor {
         return createdAtZone;
     }
 
-    public LocalDate getTerminatedAt() {
+    public LocalDateTime getTerminatedAt() {
         return terminatedAt;
     }
 

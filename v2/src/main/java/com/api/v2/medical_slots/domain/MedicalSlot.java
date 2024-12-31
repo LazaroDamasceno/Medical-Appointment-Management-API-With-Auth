@@ -1,12 +1,12 @@
 package com.api.v2.medical_slots.domain;
 
+import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -19,19 +19,19 @@ public class MedicalSlot {
     private LocalDateTime availableAt;
     private ZoneId availableAtZone;
     private MedicalAppointment medicalAppointment;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     private ZoneId createdAtZone;
-    private LocalDate canceledAt;
+    private LocalDateTime canceledAt;
     private ZoneId canceledAtZone;
-    private LocalDate completedAt;
+    private LocalDateTime completedAt;
     private ZoneId completedAtZone;
 
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = new ObjectId();
         this.doctor = doctor;
-        this.availableAt = availableAt;
+        this.availableAt = DataTimeAdapterUtil.set(availableAt);
         this.availableAtZone = ZoneId.systemDefault();
-        this.createdAt = LocalDate.now();
+        this.createdAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -43,12 +43,12 @@ public class MedicalSlot {
     }
 
     public void markAsCanceled() {
-        canceledAt = LocalDate.now();
+        canceledAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         canceledAtZone = ZoneId.systemDefault();
     }
 
     public void markAsCompleted() {
-        completedAt = LocalDate.now();
+        completedAt = DataTimeAdapterUtil.set(LocalDateTime.now());
         completedAtZone = ZoneId.systemDefault();
     }
 
@@ -68,7 +68,7 @@ public class MedicalSlot {
         return availableAtZone;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -80,7 +80,7 @@ public class MedicalSlot {
         return medicalAppointment;
     }
 
-    public LocalDate getCanceledAt() {
+    public LocalDateTime getCanceledAt() {
         return canceledAt;
     }
 
@@ -92,7 +92,7 @@ public class MedicalSlot {
         this.medicalAppointment = medicalAppointment;
     }
 
-    public LocalDate getCompletedAt() {
+    public LocalDateTime getCompletedAt() {
         return completedAt;
     }
 
