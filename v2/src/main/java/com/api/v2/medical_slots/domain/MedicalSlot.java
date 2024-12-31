@@ -31,7 +31,7 @@ public class MedicalSlot {
         this.doctor = doctor;
         this.availableAt = DataTimeAdapterUtil.adapt(availableAt);
         this.availableAtZone = ZoneId.systemDefault();
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
         this.createdAtZone = ZoneId.systemDefault();
     }
 
