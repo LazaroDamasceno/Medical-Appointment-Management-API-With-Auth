@@ -4,12 +4,14 @@ import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.exceptions.UnavailableBookingDateTimeException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentBookingService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
+import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
@@ -17,6 +19,7 @@ import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -59,10 +62,32 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     Customer customer = tuple.getT2();
-                    return null;
+                    return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
+                            .flatMap(medicalSlot -> {
+                                return onUnavailableBookingDateTime(doctor, customer, bookingDto.bookedAt())
+                                        .then(Mono.defer(() -> {
+                                            String message = "A new medical appointment was successfully booked.";
+                                            try {
+                                                messageSenderService.sendMessage(message);
+                                            } catch (TelegramApiException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                            MedicalAppointment medicalAppointment = MedicalAppointment.create(
+                                                    customer,
+                                                    doctor,
+                                                    bookingDto.bookedAt()
+                                            );
+                                            medicalSlot.setMedicalAppointment(medicalAppointment);
+                                            return medicalSlotRepository
+                                                    .save(medicalSlot)
+                                                    .then(medicalAppointmentRepository
+                                                            .save(medicalAppointment)
+                                                            .flatMap(MedicalAppointmentResponseMapper::mapToMono)
+                                                    );
+                                        }));
+                            });
                 });
     }
-
 
     private Mono<MedicalSlot> onFoundMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         Mono<MedicalSlot> medicalSlotMono = medicalSlotFinderUtil.findActiveByDoctorAndAvailableAt(doctor, availableAt);
