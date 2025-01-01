@@ -1,0 +1,13 @@
+{
+  "medicalLicenseNumber": "12345678CA",
+  "personRegistrationDto": {
+    "firstName": "Leo",
+    "middleName": "",
+    "lastName": "Santos",
+    "birthDate": "2000-01-01",
+    "ssn": "123456789",
+    "email": "leosantos@mail.com",
+    "phoneNumber": "1234567890",
+    "gender": "male"
+  }
+}
