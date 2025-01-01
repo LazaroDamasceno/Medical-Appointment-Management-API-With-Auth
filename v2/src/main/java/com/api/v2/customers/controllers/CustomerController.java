@@ -39,9 +39,9 @@ public class CustomerController {
         return modificationService.modify(ssn, modificationDto);
     }
 
-    @GetMapping("{id}")
-    public Mono<CustomerResponseDto> findById(String id) {
-        return retrievalService.findById(id);
+    @GetMapping("{ssn}")
+    public Mono<CustomerResponseDto> findBySsn(String ssn) {
+        return retrievalService.findBySsn(ssn);
     }
 
     @GetMapping

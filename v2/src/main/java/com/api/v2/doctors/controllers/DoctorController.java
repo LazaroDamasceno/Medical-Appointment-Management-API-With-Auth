@@ -2,13 +2,11 @@ package com.api.v2.doctors.controllers;
 
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
-import com.api.v2.doctors.services.DoctorHiringService;
-import com.api.v2.doctors.services.DoctorModificationService;
-import com.api.v2.doctors.services.DoctorRehiringService;
-import com.api.v2.doctors.services.DoctorTerminationService;
+import com.api.v2.doctors.services.*;
 import com.api.v2.people.dtos.PersonModificationDto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -19,17 +17,20 @@ public class DoctorController {
     private final DoctorModificationService modificationService;
     private final DoctorTerminationService terminationService;
     private final DoctorRehiringService rehiringService;
+    private final DoctorRetrievalService retrievalService;
 
     public DoctorController(
             DoctorHiringService hiringService,
             DoctorModificationService modificationService,
             DoctorTerminationService terminationService,
-            DoctorRehiringService rehiringService
+            DoctorRehiringService rehiringService,
+            DoctorRetrievalService retrievalService
     ) {
         this.hiringService = hiringService;
         this.modificationService = modificationService;
         this.terminationService = terminationService;
         this.rehiringService = rehiringService;
+        this.retrievalService = retrievalService;
     }
 
     @PostMapping
@@ -53,5 +54,15 @@ public class DoctorController {
     @PatchMapping("{medicalLicenseNumber}/rehiring")
     public Mono<Void> rehire(@PathVariable String medicalLicenseNumber) {
         return rehiringService.rehire(medicalLicenseNumber);
+    }
+
+    @GetMapping("{medicalLicenseNumber}")
+    public Mono<DoctorResponseDto> findByMedicalLicenseNumber(String medicalLicenseNumber) {
+        return retrievalService.findByMedicalLicenseNumber(medicalLicenseNumber);
+    }
+
+    @GetMapping
+    public Flux<DoctorResponseDto> findAll() {
+        return retrievalService.findAll();
     }
 }

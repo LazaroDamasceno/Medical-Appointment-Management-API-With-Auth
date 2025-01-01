@@ -5,6 +5,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CustomerRetrievalService {
-    Mono<CustomerResponseDto> findById(String id);
+    Mono<CustomerResponseDto> findBySsn(String ssn);
     Flux<CustomerResponseDto> findAll();
 }

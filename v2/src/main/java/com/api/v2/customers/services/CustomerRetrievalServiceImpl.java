@@ -2,32 +2,31 @@ package com.api.v2.customers.services;
 
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerResponseDto;
-import com.api.v2.customers.exceptions.NonExistentCustomerException;
+import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.customers.utils.CustomerResponseMapper;
-import org.bson.types.ObjectId;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Service
 public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
 
     private final CustomerRepository customerRepository;
+    private final CustomerFinderUtil customerFinderUtil;
 
-    public CustomerRetrievalServiceImpl(CustomerRepository customerRepository) {
+    public CustomerRetrievalServiceImpl(
+            CustomerRepository customerRepository,
+            CustomerFinderUtil customerFinderUtil
+    ) {
         this.customerRepository = customerRepository;
+        this.customerFinderUtil = customerFinderUtil;
     }
 
     @Override
-    public Mono<CustomerResponseDto> findById(String id) {
-        return customerRepository
-                .findById(new ObjectId(id))
-                .singleOptional()
-                .flatMap(optional -> {
-                    if (optional.isEmpty()) {
-                        String ssn = optional.get().getPerson().getSsn();
-                        return Mono.error(new NonExistentCustomerException(ssn));
-                    }
-                    return Mono.just(optional.get()).flatMap(CustomerResponseMapper::mapToMono);
-                });
+    public Mono<CustomerResponseDto> findBySsn(String ssn) {
+        return customerFinderUtil
+                .findBySsn(ssn)
+                .flatMap(CustomerResponseMapper::mapToMono);
     }
 
     @Override
