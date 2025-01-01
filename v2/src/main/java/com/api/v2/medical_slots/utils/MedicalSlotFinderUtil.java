@@ -38,7 +38,7 @@ public class MedicalSlotFinderUtil {
                 .filter(slot ->
                         slot.getCanceledAt() == null
                         && slot.getCompletedAt() == null
-                        && slot.getDoctor().equals(doctor)
+                        && slot.getDoctor().getId().equals(doctor.getId())
                         && slot.getAvailableAt().equals(availableAt)
                 )
                 .singleOrEmpty();

@@ -42,8 +42,8 @@ public class MedicalAppointmentFinderUtil {
                 .filter(slot ->
                         slot.getCanceledAt() == null
                         && slot.getCompletedAt() == null
-                        && slot.getCustomer().equals(customer)
-                        && slot.getDoctor().equals(doctor)
+                        && slot.getCustomer().getId().equals(customer.getId())
+                        && slot.getDoctor().getId().equals(doctor.getId())
                         && slot.getBookedAt().equals(bookedAt)
                 )
                 .singleOrEmpty();
