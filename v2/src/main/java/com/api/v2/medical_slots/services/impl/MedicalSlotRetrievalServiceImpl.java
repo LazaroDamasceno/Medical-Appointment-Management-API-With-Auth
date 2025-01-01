@@ -42,7 +42,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                     return medicalSlotRepository
                             .findAll()
                             .filter(slot -> slot.getDoctor().getId().equals(doctor.getId()))
-                            .flatMap(slot -> Flux.just(MedicalSlotResponseMapper.mapToDto(slot)));
+                            .flatMap(MedicalSlotResponseMapper::mapToMono);
                 });
     }
 
@@ -50,6 +50,6 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     public Flux<MedicalSlotResponseDto> findAll() {
         return medicalSlotRepository
                 .findAll()
-                .flatMap(slot -> Flux.just(MedicalSlotResponseMapper.mapToDto(slot)));
+                .flatMap(MedicalSlotResponseMapper::mapToMono);
     }
 }

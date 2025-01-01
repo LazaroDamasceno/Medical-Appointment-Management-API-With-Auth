@@ -5,7 +5,6 @@ import com.api.v2.people.domain.PersonRepository;
 import com.api.v2.people.dtos.PersonRegistrationDto;
 import com.api.v2.people.services.interfaces.PersonRegistrationService;
 import jakarta.validation.Valid;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -13,14 +12,9 @@ import reactor.core.publisher.Mono;
 public class PersonRegistrationServiceImpl implements PersonRegistrationService {
 
     private final PersonRepository personRepository;
-    private final ApplicationEventPublisher eventPublisher;
 
-    public PersonRegistrationServiceImpl(
-            PersonRepository personRepository,
-            ApplicationEventPublisher eventPublisher
-    ) {
+    public PersonRegistrationServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
-        this.eventPublisher = eventPublisher;
     }
 
     @Override

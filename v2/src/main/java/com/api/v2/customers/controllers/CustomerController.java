@@ -5,8 +5,10 @@ import com.api.v2.customers.dtos.CustomerRegistrationDto;
 import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.customers.services.CustomerModificationService;
 import com.api.v2.customers.services.CustomerRegistrationService;
+import com.api.v2.customers.services.CustomerRetrievalService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -15,13 +17,16 @@ public class CustomerController {
 
     private final CustomerRegistrationService registrationService;
     private final CustomerModificationService modificationService;
+    private final CustomerRetrievalService retrievalService;
 
     public CustomerController(
             CustomerRegistrationService registrationService,
-            CustomerModificationService modificationService
+            CustomerModificationService modificationService,
+            CustomerRetrievalService retrievalService
     ) {
         this.registrationService = registrationService;
         this.modificationService = modificationService;
+        this.retrievalService = retrievalService;
     }
 
     @PostMapping
@@ -32,5 +37,15 @@ public class CustomerController {
     @PatchMapping("{ssn}")
     public Mono<Void> modify(@PathVariable String ssn, @Valid @RequestBody CustomerModificationDto modificationDto) {
         return modificationService.modify(ssn, modificationDto);
+    }
+
+    @GetMapping("{id}")
+    public Mono<CustomerResponseDto> findById(String id) {
+        return retrievalService.findById(id);
+    }
+
+    @GetMapping
+    public Flux<CustomerResponseDto> findAll() {
+        return retrievalService.findAll();
     }
 }
