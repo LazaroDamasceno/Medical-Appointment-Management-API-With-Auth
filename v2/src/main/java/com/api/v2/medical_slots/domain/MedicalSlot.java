@@ -1,6 +1,5 @@
 package com.api.v2.medical_slots.domain;
 
-import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -29,9 +28,9 @@ public class MedicalSlot {
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = new ObjectId();
         this.doctor = doctor;
-        this.availableAt = DataTimeAdapterUtil.adapt(availableAt);
+        this.availableAt = availableAt;
         this.availableAtZone = ZoneId.systemDefault();
-        this.createdAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
+        this.createdAt = LocalDateTime.now();
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -43,12 +42,12 @@ public class MedicalSlot {
     }
 
     public void markAsCanceled() {
-        canceledAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
+        canceledAt = LocalDateTime.now();
         canceledAtZone = ZoneId.systemDefault();
     }
 
     public void markAsCompleted() {
-        completedAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
+        completedAt = LocalDateTime.now();
         completedAtZone = ZoneId.systemDefault();
     }
 

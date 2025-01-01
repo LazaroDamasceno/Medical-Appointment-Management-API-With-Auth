@@ -1,6 +1,5 @@
 package com.api.v2.doctors.domain;
 
-import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.people.domain.Person;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
@@ -28,7 +27,7 @@ public class Doctor {
         this.id = new ObjectId();
         this.licenseNumber = licenseNumber;
         this.person = person;
-        this.createdAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
+        this.createdAt = LocalDateTime.now();
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -37,7 +36,7 @@ public class Doctor {
     }
 
     public void markAsTerminated() {
-        terminatedAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
+        terminatedAt = LocalDateTime.now();
         terminatedAtZone = ZoneId.systemDefault();
     }
 

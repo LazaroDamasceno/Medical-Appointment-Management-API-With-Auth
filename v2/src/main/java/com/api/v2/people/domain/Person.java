@@ -1,6 +1,5 @@
 package com.api.v2.people.domain;
 
-import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.people.dtos.PersonModificationDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -42,7 +41,7 @@ public class Person {
         this.email = registrationDto.email();
         this.phoneNumber = registrationDto.phoneNumber();
         this.gender = registrationDto.gender();
-        this.createdAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
+        this.createdAt = LocalDateTime.now();
         this.createdAtZone = ZoneId.systemDefault();
     }
 
@@ -58,7 +57,7 @@ public class Person {
         this.email = modificationDto.email();
         this.phoneNumber = modificationDto.phoneNumber();
         this.gender = modificationDto.gender();
-        this.modifiedAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
+        this.modifiedAt = LocalDateTime.now();
         this.modifiedAtZone = ZoneId.systemDefault();
     }
 

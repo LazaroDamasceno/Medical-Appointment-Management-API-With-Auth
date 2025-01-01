@@ -1,7 +1,6 @@
 package com.api.v2.customers.domain;
 
 import com.api.v2.common.AddressDto;
-import com.api.v2.common.DataTimeAdapterUtil;
 import com.api.v2.people.domain.Person;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
@@ -27,7 +26,7 @@ public class Customer {
         this.id = new ObjectId();
         this.address = address;
         this.person = person;
-        this.createdAt = DataTimeAdapterUtil.adapt(LocalDateTime.now());
+        this.createdAt = LocalDateTime.now();
         this.createdAtZone = ZoneId.systemDefault();
     }
 

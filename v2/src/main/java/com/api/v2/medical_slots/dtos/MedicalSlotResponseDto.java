@@ -4,7 +4,6 @@ import com.api.v2.doctors.dtos.DoctorResponseDto;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 public record MedicalSlotResponseDto(
         DoctorResponseDto doctorResponseDto,

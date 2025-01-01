@@ -4,7 +4,6 @@ import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
-import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.people.exceptions.DuplicatedEmailException;
 import com.api.v2.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
