@@ -57,7 +57,7 @@ public class DoctorController {
     }
 
     @GetMapping("{medicalLicenseNumber}")
-    public Mono<DoctorResponseDto> findByMedicalLicenseNumber(String medicalLicenseNumber) {
+    public Mono<DoctorResponseDto> findByMedicalLicenseNumber(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findByMedicalLicenseNumber(medicalLicenseNumber);
     }
 

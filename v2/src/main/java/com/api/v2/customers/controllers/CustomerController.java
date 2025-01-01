@@ -40,7 +40,7 @@ public class CustomerController {
     }
 
     @GetMapping("{ssn}")
-    public Mono<CustomerResponseDto> findBySsn(String ssn) {
+    public Mono<CustomerResponseDto> findBySsn(@PathVariable String ssn) {
         return retrievalService.findBySsn(ssn);
     }
 
