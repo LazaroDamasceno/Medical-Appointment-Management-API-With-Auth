@@ -38,12 +38,12 @@ public class MedicalSlotController {
         return cancellationService.cancel(id);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("by-id/{id}")
     public Mono<MedicalSlotResponseDto> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
-    @GetMapping("{medicalLicenseNumber}")
+    @GetMapping("by-medical-license-number/{medicalLicenseNumber}")
     public Flux<MedicalSlotResponseDto> findAllByDoctor(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findAllByDoctor(medicalLicenseNumber);
     }
