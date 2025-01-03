@@ -23,13 +23,7 @@ public class MedicalSlotFinderUtil {
     public Mono<MedicalSlot> findById(String id) {
         return repository
                 .findById(new ObjectId(id))
-                .singleOptional()
-                .flatMap(optional -> {
-                   if (optional.isEmpty()) {
-                       return Mono.error(new NonExistentMedicalSlotException(id));
-                   }
-                   return Mono.just(optional.get());
-                });
+                .switchIfEmpty(Mono.error(new NonExistentMedicalSlotException(id)));
     }
 
     public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt) {
