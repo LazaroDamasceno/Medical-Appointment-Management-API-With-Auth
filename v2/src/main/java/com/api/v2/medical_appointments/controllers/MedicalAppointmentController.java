@@ -3,6 +3,7 @@ package com.api.v2.medical_appointments.controllers;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentBookingService;
+import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCompletionService;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentRetrievalService;
 import jakarta.validation.Valid;
@@ -17,15 +18,18 @@ public class MedicalAppointmentController {
     private final MedicalAppointmentBookingService bookingService;
     private final MedicalAppointmentRetrievalService retrievalService;
     private final MedicalAppointmentCompletionService completionService;
+    private final MedicalAppointmentCancellationService cancellationService;
 
     public MedicalAppointmentController(
             MedicalAppointmentBookingService bookingService,
             MedicalAppointmentRetrievalService retrievalService,
-            MedicalAppointmentCompletionService completionService
+            MedicalAppointmentCompletionService completionService,
+            MedicalAppointmentCancellationService cancellationService
     ) {
         this.bookingService = bookingService;
         this.retrievalService = retrievalService;
         this.completionService = completionService;
+        this.cancellationService = cancellationService;
     }
 
     @PostMapping
@@ -46,5 +50,10 @@ public class MedicalAppointmentController {
     @PatchMapping("{id}/completion")
     public Mono<Void> complete(@PathVariable String id) {
         return completionService.complete(id);
+    }
+
+    @PatchMapping("{id}/cancellation")
+    public Mono<Void> cancel(@PathVariable String id) {
+        return cancellationService.cancel(id);
     }
 }
