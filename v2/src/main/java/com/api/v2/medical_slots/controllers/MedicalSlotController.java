@@ -5,6 +5,7 @@ import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRegistrationService;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRetrievalService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -28,7 +29,7 @@ public class MedicalSlotController {
     }
 
     @PostMapping
-    public Mono<MedicalSlotResponseDto> register(@RequestBody MedicalSlotRegistrationDto registrationDto) {
+    public Mono<MedicalSlotResponseDto> register(@RequestBody @Valid MedicalSlotRegistrationDto registrationDto) {
         return registrationService.register(registrationDto);
     }
 
