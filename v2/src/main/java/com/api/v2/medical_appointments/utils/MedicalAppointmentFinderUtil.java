@@ -23,13 +23,7 @@ public class MedicalAppointmentFinderUtil {
     public Mono<MedicalAppointment> findById(String id) {
         return repository
                 .findById(new ObjectId(id))
-                .singleOptional()
-                .flatMap(optional -> {
-                   if (optional.isEmpty()) {
-                       return Mono.error(new NonExistentMedicalAppointmentException(id));
-                   }
-                   return Mono.just(optional.get());
-                });
+                .switchIfEmpty(Mono.error(new NonExistentMedicalAppointmentException(id)));
     }
 
     public Mono<MedicalAppointment> findActiveByCustomerAndDoctorAndBookedAt(
