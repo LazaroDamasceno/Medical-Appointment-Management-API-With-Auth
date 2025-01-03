@@ -49,7 +49,7 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                                 } catch (TelegramApiException e) {
                                     throw new RuntimeException(e);
                                 }
-                                var optional = Optional.ofNullable(slot.getMedicalAppointment);
+                                var optional = Optional.ofNullable(slot.getMedicalAppointment());
                                 if (optional.isPresent()) {
                                     slot.markAsCanceled();
                                     MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
