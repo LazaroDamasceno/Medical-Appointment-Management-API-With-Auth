@@ -41,7 +41,7 @@ public class MedicalSlotFinderUtil {
     public Mono<MedicalSlot> findByMedicalAppointment(MedicalAppointment medicalAppointment) {
         return repository
                 .findAll()
-                .filter(slot -> slot.getMedicalAppointment().equals(medicalAppointment))
+                .filter(slot -> slot.getMedicalAppointment().getId().equals(medicalAppointment.getId()))
                 .single();
     }
 }

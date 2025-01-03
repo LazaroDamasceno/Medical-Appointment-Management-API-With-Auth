@@ -1,6 +1,7 @@
 package com.api.v2.medical_slots.utils;
 
 import com.api.v2.doctors.utils.DoctorResponseMapper;
+import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
 import reactor.core.publisher.Mono;
@@ -11,7 +12,8 @@ public class MedicalSlotResponseMapper {
         return new MedicalSlotResponseDto(
                 DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                 medicalSlot.getAvailableAt(),
-                medicalSlot.getAvailableAtZone()
+                medicalSlot.getAvailableAtZone(),
+                MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment())
         );
     }
 
