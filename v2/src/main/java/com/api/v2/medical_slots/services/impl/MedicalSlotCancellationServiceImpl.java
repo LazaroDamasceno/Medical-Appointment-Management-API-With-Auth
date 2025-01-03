@@ -2,6 +2,7 @@ package com.api.v2.medical_slots.services.impl;
 
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
+import com.api.v2.medical_appointments.domain.MedicalAppointmentSingleton;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
@@ -11,9 +12,6 @@ import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderServi
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
-
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellationService {
@@ -40,21 +38,16 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
         return medicalSlotFinderUtil
                 .findById(id)
                 .flatMap(slot -> {
-                    var message = new AtomicReference<>("Medical slot whose id is %s is already canceled.".formatted(id));
-                    return onCanceledMedicalSlot(slot, message.get())
+                    return onCanceledMedicalSlot(slot)
+                            .then(onCompletedMedicalSlot(slot))
                             .then(Mono.defer(() -> {
-                                message.set("Medical slot whose id is %s is already completed.".formatted(id));
-                                return onCompletedMedicalSlot(slot, message.get());
-                            }))
-                            .then(Mono.defer(() -> {
-                                message.set("Medical slot whose id is %s is was marked as canceled. It's immutable now.".formatted(id));
+                                String message = "Medical slot whose id is %s is was marked as canceled. It's immutable now.".formatted(id);
                                 try {
-                                    messageSenderService.sendMessage(message.get());
+                                    messageSenderService.sendMessage(message);
                                 } catch (TelegramApiException e) {
                                     throw new RuntimeException(e);
                                 }
-                                var optional = Optional.ofNullable(slot.getMedicalAppointment());
-                                if (optional.isPresent()) {
+                                if (slot.getMedicalAppointment().equals(MedicalAppointmentSingleton.getInstance())) {
                                     slot.markAsCanceled();
                                     MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
                                     slot.setMedicalAppointment(medicalAppointment);
@@ -69,16 +62,18 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                 .then();
     }
 
-    private Mono<Void> onCanceledMedicalSlot(MedicalSlot slot, String errorMessage) {
+    private Mono<Void> onCanceledMedicalSlot(MedicalSlot slot) {
+        String message = "Medical slot whose id is %s is already canceled.".formatted(slot.getId());
         if (slot.getCompletedAt() == null && slot.getCanceledAt() != null) {
-            return Mono.error(new ImmutableMedicalAppointmentException(errorMessage));
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
         }
         return Mono.empty();
     }
 
-    private Mono<Void> onCompletedMedicalSlot(MedicalSlot slot, String errorMessage) {
+    private Mono<Void> onCompletedMedicalSlot(MedicalSlot slot) {
+        String message = "Medical slot whose id is %s is already completed.".formatted(slot.getId());
         if (slot.getCompletedAt() != null && slot.getCanceledAt() == null) {
-            return Mono.error(new ImmutableMedicalAppointmentException(errorMessage));
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
         }
         return Mono.empty();
     }
