@@ -10,29 +10,16 @@ import reactor.core.publisher.Mono;
 @Component
 public class CustomerFinderUtil {
 
-    private final PersonFinderUtil personFinderUtil;
     private final CustomerRepository customerRepository;
 
-    public CustomerFinderUtil(
-            PersonFinderUtil personFinderUtil,
-            CustomerRepository customerRepository
-    ) {
-        this.personFinderUtil = personFinderUtil;
+    public CustomerFinderUtil(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     public Mono<Customer> findBySsn(String ssn) {
-        return personFinderUtil
-                .findBySsn(ssn)
-                .singleOptional()
-                .flatMap(optional -> {
-                   if (optional.isEmpty()) {
-                       return Mono.error(new NonExistentCustomerException(ssn));
-                   }
-                   return customerRepository
-                           .findAll()
-                           .filter(c -> c.getPerson().equals(optional.get()))
-                           .single();
-                });
+        return customerRepository
+                .findAll()
+                .filter(c -> c.getPerson().getSsn().equals(ssn))
+                .single();
     }
 }

@@ -2,13 +2,15 @@ package com.api.v2.medical_slots.services.impl;
 
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v2.medical_appointments.domain.MedicalAppointmentSingleton;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
+
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
@@ -47,9 +49,11 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                                 } catch (TelegramApiException e) {
                                     throw new RuntimeException(e);
                                 }
-                                if (slot.getMedicalAppointment().equals(MedicalAppointmentSingleton.getInstance())) {
+                                var optional = Optional.ofNullable(slot.getMedicalAppointment);
+                                if (optional.isPresent()) {
                                     slot.markAsCanceled();
                                     MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
+                                    medicalAppointment.markAsCanceled();
                                     slot.setMedicalAppointment(medicalAppointment);
                                     return medicalSlotRepository
                                             .save(slot)
