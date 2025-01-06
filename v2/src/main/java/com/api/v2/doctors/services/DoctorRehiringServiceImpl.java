@@ -1,5 +1,7 @@
 package com.api.v2.doctors.services;
 
+import com.api.v2.doctors.domain.DoctorAuditTrail;
+import com.api.v2.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.exceptions.ImmutableDoctorException;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
@@ -13,15 +15,18 @@ public class DoctorRehiringServiceImpl implements DoctorRehiringService {
 
     private final DoctorFinderUtil doctorFinderUtil;
     private final DoctorRepository doctorRepository;
+    private final DoctorAuditTrailRepository doctorAuditTrailRepository;
     private final TelegramBotMessageSenderService messageSenderService;
 
     public DoctorRehiringServiceImpl(
             DoctorFinderUtil doctorFinderUtil,
             DoctorRepository doctorRepository,
+            DoctorAuditTrailRepository doctorAuditTrailRepository,
             TelegramBotMessageSenderService messageSenderService
     ) {
         this.doctorFinderUtil = doctorFinderUtil;
         this.doctorRepository = doctorRepository;
+        this.doctorAuditTrailRepository = doctorAuditTrailRepository;
         this.messageSenderService = messageSenderService;
     }
 
@@ -40,8 +45,13 @@ public class DoctorRehiringServiceImpl implements DoctorRehiringService {
                     } catch (TelegramApiException e) {
                         throw new RuntimeException(e);
                     }
-                    doctor.markAsRehired();
-                    return doctorRepository.save(doctor);
+                    DoctorAuditTrail auditTrail = DoctorAuditTrail.create(doctor);
+                    return doctorAuditTrailRepository
+                            .save(auditTrail)
+                            .then(Mono.defer(() -> {
+                                doctor.markAsRehired();
+                                return doctorRepository.save(doctor);
+                            }));
                 })
                 .then();
     }
