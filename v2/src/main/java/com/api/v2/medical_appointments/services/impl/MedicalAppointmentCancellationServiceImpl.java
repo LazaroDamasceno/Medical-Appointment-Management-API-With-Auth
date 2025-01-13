@@ -5,9 +5,7 @@ import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCan
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
-import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -17,20 +15,17 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
-    private final TelegramBotMessageSenderService messageSenderService;
 
     public MedicalAppointmentCancellationServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalAppointmentFinderUtil medicalAppointmentFinderUtil,
             MedicalSlotRepository medicalSlotRepository,
-            MedicalAppointmentRepository medicalAppointmentRepository,
-            TelegramBotMessageSenderService messageSenderService
+            MedicalAppointmentRepository medicalAppointmentRepository
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
-        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -38,12 +33,6 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
         return medicalAppointmentFinderUtil
                 .findById(id)
                 .flatMap(medicalAppointment -> {
-                    try {
-                        String message = "Medical appointment";
-                        messageSenderService.sendMessage("");
-                    } catch (TelegramApiException e) {
-                        throw new RuntimeException(e);
-                    }
                     return medicalSlotFinderUtil
                             .findByMedicalAppointment(medicalAppointment)
                             .flatMap(medicalSlot -> {

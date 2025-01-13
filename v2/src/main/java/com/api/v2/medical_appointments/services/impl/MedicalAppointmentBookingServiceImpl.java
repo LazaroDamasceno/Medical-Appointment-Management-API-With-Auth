@@ -16,10 +16,8 @@ import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
-import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -33,7 +31,6 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     private final MedicalAppointmentRepository medicalAppointmentRepository;
     private final DoctorFinderUtil doctorFinderUtil;
     private final CustomerFinderUtil customerFinderUtil;
-    private final TelegramBotMessageSenderService messageSenderService;
 
     public MedicalAppointmentBookingServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
@@ -41,8 +38,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
             MedicalSlotRepository medicalSlotRepository,
             MedicalAppointmentRepository medicalAppointmentRepository,
             DoctorFinderUtil doctorFinderUtil,
-            CustomerFinderUtil customerFinderUtil,
-            TelegramBotMessageSenderService messageSenderService
+            CustomerFinderUtil customerFinderUtil
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
@@ -50,7 +46,6 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
         this.medicalAppointmentRepository = medicalAppointmentRepository;
         this.doctorFinderUtil = doctorFinderUtil;
         this.customerFinderUtil = customerFinderUtil;
-        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -66,12 +61,6 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                             .flatMap(slot -> {
                                 return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
                                         .then(Mono.defer(() -> {
-                                            String message = "A new medical appointment was booked.";
-                                            try {
-                                                messageSenderService.sendMessage(message);
-                                            } catch (TelegramApiException e) {
-                                                throw new RuntimeException(e);
-                                            }
                                             MedicalAppointment medicalAppointment = MedicalAppointment.create(customer, doctor, bookingDto.bookedAt());
                                             slot.setMedicalAppointment(medicalAppointment);
                                             return medicalSlotRepository

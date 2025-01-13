@@ -8,10 +8,8 @@ import com.api.v2.customers.utils.CustomerResponseMapper;
 import com.api.v2.people.exceptions.DuplicatedEmailException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
 import com.api.v2.people.services.interfaces.PersonRegistrationService;
-import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -19,17 +17,13 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
 
     private final CustomerRepository customerRepository;
     private final PersonRegistrationService personRegistrationService;
-    private final TelegramBotMessageSenderService messageSenderService;
-    private final String message = "A new customer was created.";
 
     public CustomerRegistrationServiceImpl(
             CustomerRepository customerRepository,
-            PersonRegistrationService personRegistrationService,
-            TelegramBotMessageSenderService messageSenderService
+            PersonRegistrationService personRegistrationService
     ) {
         this.customerRepository = customerRepository;
         this.personRegistrationService = personRegistrationService;
-        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -40,11 +34,6 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
                     return personRegistrationService
                             .register(registrationDto.personRegistrationDto())
                             .flatMap(person ->  {
-                                try {
-                                    messageSenderService.sendMessage(message);
-                                } catch (TelegramApiException e) {
-                                    throw new RuntimeException(e);
-                                }
                                 Customer customer  = Customer.create(registrationDto.addressDto(), person);
                                 return customerRepository.save(customer);
                             })

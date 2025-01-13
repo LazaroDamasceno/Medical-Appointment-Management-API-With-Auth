@@ -10,10 +10,8 @@ import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRegistrationService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import com.api.v2.medical_slots.utils.MedicalSlotResponseMapper;
-import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -22,18 +20,15 @@ import java.time.LocalDateTime;
 public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrationService {
 
     private final MedicalSlotRepository medicalSlotRepository;
-    private final TelegramBotMessageSenderService messageSenderService;
     private final DoctorFinderUtil doctorFinderUtil;
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
 
     public MedicalSlotRegistrationServiceImpl(
             MedicalSlotRepository medicalSlotRepository,
-            TelegramBotMessageSenderService messageSenderService,
             DoctorFinderUtil doctorFinderUtil,
             MedicalSlotFinderUtil medicalSlotFinderUtil
     ) {
         this.medicalSlotRepository = medicalSlotRepository;
-        this.messageSenderService = messageSenderService;
         this.doctorFinderUtil = doctorFinderUtil;
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
     }
@@ -46,12 +41,6 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                     return onUnavailableMedicalSlot(doctor, registrationDto.availableAt())
                             .then(Mono.defer(() -> {
                                 return Mono.defer(() -> {
-                                    String message = "A new medical slot was registered. Its datetime is %s.".formatted(registrationDto.availableAt());
-                                    try {
-                                        messageSenderService.sendMessage(message);
-                                    } catch (TelegramApiException e) {
-                                        throw new RuntimeException(e);
-                                    }
                                     MedicalSlot medicalSlot = MedicalSlot.create(doctor, registrationDto.availableAt());
                                     return medicalSlotRepository.save(medicalSlot);
                                 });

@@ -7,9 +7,7 @@ import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCom
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCompletionService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
-import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -19,20 +17,17 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
     private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
     private final MedicalSlotCompletionService medicalSlotCompletionService;
-    private final TelegramBotMessageSenderService messageSenderService;
 
     public MedicalAppointmentCompletionServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalAppointmentFinderUtil medicalAppointmentFinderUtil,
             MedicalAppointmentRepository medicalAppointmentRepository,
-            MedicalSlotCompletionService medicalSlotCompletionService,
-            TelegramBotMessageSenderService messageSenderService
+            MedicalSlotCompletionService medicalSlotCompletionService
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
         this.medicalSlotCompletionService = medicalSlotCompletionService;
-        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -45,12 +40,6 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
                             .then(medicalSlotFinderUtil
                                 .findByMedicalAppointment(medicalAppointment)
                                 .flatMap(medicalSlot -> {
-                                    String message = "Medical appointment whose id is %s is completed. It's immutable now.".formatted(medicalAppointment.getId());
-                                    try {
-                                        messageSenderService.sendMessage(message);
-                                    } catch (TelegramApiException e) {
-                                        throw new RuntimeException(e);
-                                    }
                                     medicalAppointment.markAsCompleted();
                                     return medicalSlotCompletionService
                                             .complete(medicalSlot, medicalAppointment)

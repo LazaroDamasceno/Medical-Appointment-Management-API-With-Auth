@@ -7,12 +7,10 @@ import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
-import com.api.v2.telegram_bot.services.interfaces.TelegramBotMessageSenderService;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -21,18 +19,15 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
-    private final TelegramBotMessageSenderService messageSenderService;
 
     public MedicalSlotCancellationServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalSlotRepository medicalSlotRepository,
-            TelegramBotMessageSenderService messageSenderService,
             MedicalAppointmentRepository medicalAppointmentRepository
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
-        this.messageSenderService = messageSenderService;
     }
 
     @Override
@@ -43,12 +38,6 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                     return onCanceledMedicalSlot(slot)
                             .then(onCompletedMedicalSlot(slot))
                             .then(Mono.defer(() -> {
-                                String message = "Medical slot whose id is %s is was marked as canceled. It's immutable now.".formatted(id);
-                                try {
-                                    messageSenderService.sendMessage(message);
-                                } catch (TelegramApiException e) {
-                                    throw new RuntimeException(e);
-                                }
                                 var optional = Optional.ofNullable(slot.getMedicalAppointment());
                                 if (optional.isPresent()) {
                                     slot.markAsCanceled();
