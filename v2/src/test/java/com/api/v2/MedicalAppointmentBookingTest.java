@@ -54,7 +54,7 @@ public class MedicalAppointmentBookingTest {
             LocalDateTime.parse("2025-12-12T12:30:30")
     );
 
-    @Order(2)
+    @Order(3)
     @Test
     void testUnsuccessfulBookingDueToNotFoundCustomer() {
         webTestClient
@@ -71,7 +71,7 @@ public class MedicalAppointmentBookingTest {
             LocalDateTime.parse("2025-12-12T12:30:30")
     );
 
-    @Order(2)
+    @Order(4)
     @Test
     void testUnsuccessfulBookingDueToNotFoundDoctor() {
         webTestClient
