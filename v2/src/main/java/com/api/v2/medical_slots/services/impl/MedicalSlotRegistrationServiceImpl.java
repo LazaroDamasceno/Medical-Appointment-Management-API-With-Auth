@@ -42,6 +42,9 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                             .then(Mono.defer(() -> {
                                 return Mono.defer(() -> {
                                     MedicalSlot medicalSlot = MedicalSlot.create(doctor, registrationDto.availableAt());
+                                    if (medicalSlot.getMedicalAppointment() != null) {
+                                        return medicalSlotRepository.save(medicalSlot);
+                                    }
                                     return medicalSlotRepository.save(medicalSlot);
                                 });
                             }))
