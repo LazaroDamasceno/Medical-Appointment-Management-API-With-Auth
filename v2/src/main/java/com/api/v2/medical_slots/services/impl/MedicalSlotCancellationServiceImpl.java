@@ -5,6 +5,7 @@ import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
+import com.api.v2.medical_slots.exceptions.ImmutableMedicalSlotException;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 
@@ -58,7 +59,7 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     private Mono<Void> onCanceledMedicalSlot(MedicalSlot slot) {
         String message = "Medical slot whose id is %s is already canceled.".formatted(slot.getId());
         if (slot.getCompletedAt() == null && slot.getCanceledAt() != null) {
-            return Mono.error(new ImmutableMedicalAppointmentException(message));
+            return Mono.error(new ImmutableMedicalSlotException(message));
         }
         return Mono.empty();
     }
@@ -66,7 +67,7 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     private Mono<Void> onCompletedMedicalSlot(MedicalSlot slot) {
         String message = "Medical slot whose id is %s is already completed.".formatted(slot.getId());
         if (slot.getCompletedAt() != null && slot.getCanceledAt() == null) {
-            return Mono.error(new ImmutableMedicalAppointmentException(message));
+            return Mono.error(new ImmutableMedicalSlotException(message));
         }
         return Mono.empty();
     }

@@ -1,6 +1,8 @@
 package com.api.v2.medical_appointments.services.impl;
 
+import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
+import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
@@ -36,15 +38,35 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                     return medicalSlotFinderUtil
                             .findByMedicalAppointment(medicalAppointment)
                             .flatMap(medicalSlot -> {
-                                medicalSlot.markAsCanceled();
-                                medicalSlot.setMedicalAppointment(null);
-                                return medicalSlotRepository.save(medicalSlot);
-                            })
-                            .then(Mono.defer(() -> {
-                                medicalAppointment.markAsCanceled();
-                                return medicalAppointmentRepository.save(medicalAppointment);
-                            }));
+                                return onCanceledMedicalAppointment(medicalAppointment)
+                                        .then(onCompletedMedicalAppointment(medicalAppointment))
+                                        .then(Mono.defer(() -> {
+                                            medicalSlot.markAsCanceled();
+                                            medicalSlot.setMedicalAppointment(null);
+                                            return medicalSlotRepository.save(medicalSlot);
+                                        }))
+                                        .then(Mono.defer(() -> {
+                                            medicalAppointment.markAsCanceled();
+                                            return medicalAppointmentRepository.save(medicalAppointment);
+                                        }));
+                            });
                 })
                 .then();
+    }
+
+    private Mono<Void> onCanceledMedicalAppointment(MedicalAppointment medicalAppointment) {
+        if (medicalAppointment.getCompletedAt() != null && medicalAppointment.getCanceledAt() == null) {
+            String message = "Medical appointment whose id is %s is already canceled.".formatted(medicalAppointment.getId());
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
+        }
+        return Mono.empty();
+    }
+
+    private Mono<Void> onCompletedMedicalAppointment(MedicalAppointment medicalAppointment) {
+        if (medicalAppointment.getCompletedAt() == null && medicalAppointment.getCanceledAt() != null) {
+            String message = "Medical appointment whose id is %s is already completed.".formatted(medicalAppointment.getId());
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
+        }
+        return Mono.empty();
     }
 }
