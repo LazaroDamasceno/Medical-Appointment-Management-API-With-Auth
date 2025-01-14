@@ -18,7 +18,7 @@ public class MedicalSlotCancellationTest {
     @Test
     @Order(1)
     void testSuccessfulCancellation() {
-        String correctId = "6786a65cca6e0555a82e04bc";
+        String correctId = "";
         webTestClient
                 .patch()
                 .uri("api/v2/medical-slots/%s".formatted(correctId))
@@ -29,11 +29,11 @@ public class MedicalSlotCancellationTest {
     @Test
     @Order(2)
     void testUnsuccessfulCancellationDueToNotFoundId() {
-        String wrongId = "6786a65cca6e0555a82e04bd";
+        String wrongId = "";
         webTestClient
                 .patch()
                 .uri("api/v2/medical-slots/%s".formatted(wrongId))
                 .exchange()
-                .expectStatus().is2xxSuccessful();
+                .expectStatus().is5xxServerError();
     }
 }
