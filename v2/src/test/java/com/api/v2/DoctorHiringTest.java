@@ -2,6 +2,7 @@ package com.api.v2;
 
 import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
+import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -36,19 +37,19 @@ public class DoctorHiringTest {
 
     @Test
     @Order(1)
-    void testSuccessfulRegistration() {
+    void testSuccessfulHiring() {
         webTestClient
                 .post()
                 .uri("api/v2/doctors")
                 .bodyValue(hiringDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody(CustomerResponseDto.class);
+                .expectBody(DoctorResponseDto.class);
     }
 
     @Test
     @Order(2)
-    void testUnsuccessfulRegistrationDueToDuplicatedMedicalLicenseNumber() {
+    void testUnsuccessfulHiringDueToDuplicatedMedicalLicenseNumber() {
         webTestClient
                 .post()
                 .uri("api/v2/doctors")
@@ -73,7 +74,7 @@ public class DoctorHiringTest {
 
     @Test
     @Order(3)
-    void testUnsuccessfulRegistrationDueToDuplicatedMedicalSsn() {
+    void testUnsuccessfulHiringDueToDuplicatedMedicalSsn() {
         webTestClient
                 .post()
                 .uri("api/v2/doctors")
@@ -98,7 +99,7 @@ public class DoctorHiringTest {
 
     @Test
     @Order(4)
-    void testUnsuccessfulRegistrationDueToDuplicatedMedicalEmail() {
+    void testUnsuccessfulHiringDueToDuplicatedMedicalEmail() {
         webTestClient
                 .post()
                 .uri("api/v2/doctors")

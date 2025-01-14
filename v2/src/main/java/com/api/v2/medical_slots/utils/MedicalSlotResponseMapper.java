@@ -9,6 +9,14 @@ import reactor.core.publisher.Mono;
 public class MedicalSlotResponseMapper {
 
     public static MedicalSlotResponseDto mapToDto(MedicalSlot medicalSlot) {
+        if (medicalSlot.getMedicalAppointment() == null) {
+            return new MedicalSlotResponseDto(
+                    DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
+                    medicalSlot.getAvailableAt(),
+                    medicalSlot.getAvailableAtZone(),
+                    null
+            );
+        }
         return new MedicalSlotResponseDto(
                 DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                 medicalSlot.getAvailableAt(),

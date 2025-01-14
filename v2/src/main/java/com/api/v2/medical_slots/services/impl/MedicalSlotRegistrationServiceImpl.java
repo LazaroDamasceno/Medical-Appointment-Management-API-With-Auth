@@ -40,15 +40,11 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                 .flatMap(doctor -> {
                     return onUnavailableMedicalSlot(doctor, registrationDto.availableAt())
                             .then(Mono.defer(() -> {
-                                return Mono.defer(() -> {
-                                    MedicalSlot medicalSlot = MedicalSlot.create(doctor, registrationDto.availableAt());
-                                    if (medicalSlot.getMedicalAppointment() != null) {
-                                        return medicalSlotRepository.save(medicalSlot);
-                                    }
-                                    return medicalSlotRepository.save(medicalSlot);
-                                });
-                            }))
-                            .flatMap(MedicalSlotResponseMapper::mapToMono);
+                                MedicalSlot medicalSlot = MedicalSlot.create(doctor, registrationDto.availableAt());
+                                return medicalSlotRepository
+                                        .save(medicalSlot)
+                                        .then(MedicalSlotResponseMapper.mapToMono(medicalSlot));
+                            }));
                 });
     }
 

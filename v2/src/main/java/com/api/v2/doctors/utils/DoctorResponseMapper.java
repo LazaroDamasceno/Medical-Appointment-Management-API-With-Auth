@@ -9,8 +9,8 @@ public class DoctorResponseMapper {
 
     public static DoctorResponseDto mapToDto(Doctor doctor) {
         return new DoctorResponseDto(
-                doctor.getLicenseNumber(),
-                PersonResponseMapper.map(doctor.getPerson())
+                doctor.getPerson().getFullName(),
+                doctor.getLicenseNumber()
         );
     }
 
