@@ -32,9 +32,19 @@ public class MedicalAppointmentController {
         this.cancellationService = cancellationService;
     }
 
-    @PostMapping
-    public Mono<MedicalAppointmentResponseDto> book(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
-        return bookingService.book(bookingDto);
+    @PostMapping("public-insurance")
+    public Mono<MedicalAppointmentResponseDto> publicInsuranceBooking(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+        return bookingService.publicInsuranceBook(bookingDto);
+    }
+
+    @PostMapping("private-insurance")
+    public Mono<MedicalAppointmentResponseDto> privateInsuranceBooking(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+        return bookingService.privateInsuranceBook(bookingDto);
+    }
+
+    @PostMapping("private")
+    public Mono<MedicalAppointmentResponseDto> privateBooking(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+        return bookingService.privateBook(bookingDto);
     }
 
     @GetMapping("{id}")

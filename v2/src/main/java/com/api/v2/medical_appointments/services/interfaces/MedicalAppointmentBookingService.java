@@ -5,5 +5,7 @@ import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
 import reactor.core.publisher.Mono;
 
 public interface MedicalAppointmentBookingService {
-    Mono<MedicalAppointmentResponseDto> book(MedicalAppointmentBookingDto bookingDto);
+    Mono<MedicalAppointmentResponseDto> publicInsuranceBook(MedicalAppointmentBookingDto bookingDto);
+    Mono<MedicalAppointmentResponseDto> privateInsuranceBook(MedicalAppointmentBookingDto bookingDto);
+    Mono<MedicalAppointmentResponseDto> privateBook(MedicalAppointmentBookingDto bookingDto);
 }

@@ -14,6 +14,7 @@ public class MedicalAppointment {
 
     @BsonId
     private ObjectId id;
+    private String type;
     private Customer customer;
     private Doctor doctor;
     private LocalDateTime bookedAt;
@@ -28,7 +29,7 @@ public class MedicalAppointment {
     public MedicalAppointment() {
     }
 
-    private MedicalAppointment(Customer customer, Doctor doctor, LocalDateTime bookedAt) {
+    private MedicalAppointment(String type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
         this.id = new ObjectId();
         this.customer = customer;
         this.doctor = doctor;
@@ -38,8 +39,8 @@ public class MedicalAppointment {
         this.createdAtZone = ZoneId.systemDefault();
     }
 
-    public static MedicalAppointment create(Customer customer, Doctor doctor, LocalDateTime bookedAt) {
-        return new MedicalAppointment(customer, doctor, bookedAt);
+    public static MedicalAppointment create(String type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
+        return new MedicalAppointment(type, customer, doctor, bookedAt);
     }
 
     public void markAsCompleted() {
@@ -94,5 +95,9 @@ public class MedicalAppointment {
 
     public ZoneId getCreatedAtZone() {
         return createdAtZone;
+    }
+
+    public String getType() {
+        return type;
     }
 }

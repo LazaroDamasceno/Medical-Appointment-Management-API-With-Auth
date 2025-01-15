@@ -30,7 +30,7 @@ public class MedicalAppointmentBookingTest {
     void testSuccessfulBooking() {
         webTestClient
                 .post()
-                .uri("api/v2/medical-appointments")
+                .uri("api/v2/medical-appointments/public-insurance")
                 .bodyValue(bookingDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -42,7 +42,7 @@ public class MedicalAppointmentBookingTest {
     void testUnsuccessfulBookingDueToDuplicatedBookingDateTime() {
         webTestClient
                 .post()
-                .uri("api/v2/medical-appointments")
+                .uri("api/v2/medical-appointments/public-insurance")
                 .bodyValue(bookingDto)
                 .exchange()
                 .expectStatus().is5xxServerError();
@@ -59,7 +59,7 @@ public class MedicalAppointmentBookingTest {
     void testUnsuccessfulBookingDueToNotFoundCustomer() {
         webTestClient
                 .post()
-                .uri("api/v2/medical-appointments")
+                .uri("api/v2/medical-appointments/public-insurance")
                 .bodyValue(bookingDto2)
                 .exchange()
                 .expectStatus().is5xxServerError();
@@ -76,7 +76,7 @@ public class MedicalAppointmentBookingTest {
     void testUnsuccessfulBookingDueToNotFoundDoctor() {
         webTestClient
                 .post()
-                .uri("api/v2/medical-appointments")
+                .uri("api/v2/medical-appointments/public-insurance")
                 .bodyValue(bookingDto3)
                 .exchange()
                 .expectStatus().is5xxServerError();

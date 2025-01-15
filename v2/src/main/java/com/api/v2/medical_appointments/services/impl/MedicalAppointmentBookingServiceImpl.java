@@ -49,7 +49,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     }
 
     @Override
-    public Mono<MedicalAppointmentResponseDto> book(@Valid MedicalAppointmentBookingDto bookingDto) {
+    public Mono<MedicalAppointmentResponseDto> publicInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
         Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
         return doctorMono
@@ -61,7 +61,61 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                             .flatMap(slot -> {
                                 return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
                                         .then(Mono.defer(() -> {
-                                            MedicalAppointment medicalAppointment = MedicalAppointment.create(customer, doctor, bookingDto.bookedAt());
+                                            MedicalAppointment medicalAppointment = MedicalAppointment.create("public insurance", customer, doctor, bookingDto.bookedAt());
+                                            slot.setMedicalAppointment(medicalAppointment);
+                                            return medicalSlotRepository
+                                                    .save(slot)
+                                                    .then(medicalAppointmentRepository
+                                                            .save(medicalAppointment)
+                                                            .flatMap(MedicalAppointmentResponseMapper::mapToMono)
+                                                    );
+                                        }));
+                            });
+
+                });
+    }
+
+    @Override
+    public Mono<MedicalAppointmentResponseDto> privateInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
+        Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
+        Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
+        return doctorMono
+                .zipWith(customerMono)
+                .flatMap(tuple -> {
+                    Doctor doctor = tuple.getT1();
+                    Customer customer = tuple.getT2();
+                    return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
+                            .flatMap(slot -> {
+                                return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
+                                        .then(Mono.defer(() -> {
+                                            MedicalAppointment medicalAppointment = MedicalAppointment.create("private insurance", customer, doctor, bookingDto.bookedAt());
+                                            slot.setMedicalAppointment(medicalAppointment);
+                                            return medicalSlotRepository
+                                                    .save(slot)
+                                                    .then(medicalAppointmentRepository
+                                                            .save(medicalAppointment)
+                                                            .flatMap(MedicalAppointmentResponseMapper::mapToMono)
+                                                    );
+                                        }));
+                            });
+
+                });
+    }
+
+    @Override
+    public Mono<MedicalAppointmentResponseDto> privateBook(@Valid MedicalAppointmentBookingDto bookingDto) {
+        Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
+        Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
+        return doctorMono
+                .zipWith(customerMono)
+                .flatMap(tuple -> {
+                    Doctor doctor = tuple.getT1();
+                    Customer customer = tuple.getT2();
+                    return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
+                            .flatMap(slot -> {
+                                return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
+                                        .then(Mono.defer(() -> {
+                                            MedicalAppointment medicalAppointment = MedicalAppointment.create("paid by patient", customer, doctor, bookingDto.bookedAt());
                                             slot.setMedicalAppointment(medicalAppointment);
                                             return medicalSlotRepository
                                                     .save(slot)
