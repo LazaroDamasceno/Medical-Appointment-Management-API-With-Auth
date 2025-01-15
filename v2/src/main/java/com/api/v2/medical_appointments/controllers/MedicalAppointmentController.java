@@ -57,6 +57,21 @@ public class MedicalAppointmentController {
         return retrievalService.findAll();
     }
 
+    @GetMapping("public-insurance")
+    public Flux<MedicalAppointmentResponseDto> findAllPublicInsurance() {
+        return retrievalService.findAllPublicInsurance();
+    }
+
+    @GetMapping("private-insurance")
+    public Flux<MedicalAppointmentResponseDto> findAllPrivateInsurance() {
+        return retrievalService.findAllPrivateInsurance();
+    }
+
+    @GetMapping("paid-by-patient")
+    public Flux<MedicalAppointmentResponseDto> findAllPaidByPatient() {
+        return retrievalService.findAllPaidByPatient();
+    }
+
     @PatchMapping("{id}/completion")
     public Mono<Void> complete(@PathVariable String id) {
         return completionService.complete(id);

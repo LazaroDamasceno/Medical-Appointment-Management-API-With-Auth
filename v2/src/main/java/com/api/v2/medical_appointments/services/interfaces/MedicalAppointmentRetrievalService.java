@@ -7,4 +7,7 @@ import reactor.core.publisher.Mono;
 public interface MedicalAppointmentRetrievalService {
     Mono<MedicalAppointmentResponseDto> findById(String id);
     Flux<MedicalAppointmentResponseDto> findAll();
+    Flux<MedicalAppointmentResponseDto> findAllPublicInsurance();
+    Flux<MedicalAppointmentResponseDto> findAllPrivateInsurance();
+    Flux<MedicalAppointmentResponseDto> findAllPaidByPatient();
 }

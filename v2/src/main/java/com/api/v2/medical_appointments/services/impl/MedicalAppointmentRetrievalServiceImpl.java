@@ -36,4 +36,28 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                 .findAll()
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono);
     }
+
+    @Override
+    public Flux<MedicalAppointmentResponseDto> findAllPublicInsurance() {
+        return medicalAppointmentRepository
+            .findAll()
+            .filter(appointment -> appointment.getType().equals("public insurance"))
+            .flatMap(MedicalAppointmentResponseMapper::mapToMono);
+    }
+
+    @Override
+    public Flux<MedicalAppointmentResponseDto> findAllPrivateInsurance() {
+        return medicalAppointmentRepository
+                .findAll()
+                .filter(appointment -> appointment.getType().equals("private insurance"))
+                .flatMap(MedicalAppointmentResponseMapper::mapToMono);
+    }
+
+    @Override
+    public Flux<MedicalAppointmentResponseDto> findAllPaidByPatient() {
+        return medicalAppointmentRepository
+                .findAll()
+                .filter(appointment -> appointment.getType().equals("paid by patient"))
+                .flatMap(MedicalAppointmentResponseMapper::mapToMono);
+    }
 }
