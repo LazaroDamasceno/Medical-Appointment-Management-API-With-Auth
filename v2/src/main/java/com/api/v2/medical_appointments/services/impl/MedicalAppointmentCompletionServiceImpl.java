@@ -40,6 +40,9 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
                             .then(medicalSlotFinderUtil
                                 .findByMedicalAppointment(medicalAppointment)
                                 .flatMap(medicalSlot -> {
+                                    if (medicalSlot.getMedicalAppointment() == null) {
+                                        return Mono.empty();
+                                    }
                                     medicalAppointment.markAsCompleted();
                                     return medicalSlotCompletionService
                                             .complete(medicalSlot, medicalAppointment)

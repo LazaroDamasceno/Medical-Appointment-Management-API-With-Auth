@@ -41,7 +41,9 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                                 return onCanceledMedicalAppointment(medicalAppointment)
                                         .then(onCompletedMedicalAppointment(medicalAppointment))
                                         .then(Mono.defer(() -> {
-                                            medicalSlot.markAsCanceled();
+                                            if (medicalSlot.getMedicalAppointment() == null) {
+                                                return Mono.empty();
+                                            }
                                             medicalSlot.setMedicalAppointment(null);
                                             return medicalSlotRepository.save(medicalSlot);
                                         }))
