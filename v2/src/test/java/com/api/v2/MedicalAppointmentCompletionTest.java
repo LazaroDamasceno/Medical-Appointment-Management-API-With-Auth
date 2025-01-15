@@ -21,7 +21,7 @@ public class MedicalAppointmentCompletionTest {
         String correctId = "";
         webTestClient
                 .patch()
-                .uri("api/v2/medical-appointments/%s/cancellation".formatted(correctId))
+                .uri("api/v2/medical-appointments/%s/completion".formatted(correctId))
                 .exchange()
                 .expectStatus().is2xxSuccessful();
     }
@@ -32,7 +32,7 @@ public class MedicalAppointmentCompletionTest {
         String wrongId = "123456789012345678901234";
         webTestClient
                 .patch()
-                .uri("api/v2/medical-appointments/%s/cancellation".formatted(wrongId))
+                .uri("api/v2/medical-appointments/%s/completion".formatted(wrongId))
                 .exchange()
                 .expectStatus().is5xxServerError();
     }
