@@ -10,7 +10,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class MedicalSlotCancellationTest {
+public class MedicalAppointmentCancellationTest {
 
     @Autowired
     private WebTestClient webTestClient;
@@ -21,7 +21,7 @@ public class MedicalSlotCancellationTest {
         String correctId = "";
         webTestClient
                 .patch()
-                .uri("api/v2/medical-slots/%s".formatted(correctId))
+                .uri("api/v2/medical-appointments/%s/cancellation".formatted(correctId))
                 .exchange()
                 .expectStatus().is2xxSuccessful();
     }
@@ -32,7 +32,7 @@ public class MedicalSlotCancellationTest {
         String wrongId = "123456789012345678901234";
         webTestClient
                 .patch()
-                .uri("api/v2/medical-slots/%s".formatted(wrongId))
+                .uri("api/v2/medical-appointments/%s/cancellation".formatted(wrongId))
                 .exchange()
                 .expectStatus().is5xxServerError();
     }
