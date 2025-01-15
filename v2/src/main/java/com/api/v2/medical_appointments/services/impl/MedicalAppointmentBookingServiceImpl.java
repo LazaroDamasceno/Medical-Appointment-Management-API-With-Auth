@@ -103,7 +103,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     }
 
     @Override
-    public Mono<MedicalAppointmentResponseDto> privateBook(@Valid MedicalAppointmentBookingDto bookingDto) {
+    public Mono<MedicalAppointmentResponseDto> paidByPatientBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
         Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
         return doctorMono

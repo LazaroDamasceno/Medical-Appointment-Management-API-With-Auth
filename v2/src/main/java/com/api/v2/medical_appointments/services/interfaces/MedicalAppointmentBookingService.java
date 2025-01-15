@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono;
 public interface MedicalAppointmentBookingService {
     Mono<MedicalAppointmentResponseDto> publicInsuranceBook(MedicalAppointmentBookingDto bookingDto);
     Mono<MedicalAppointmentResponseDto> privateInsuranceBook(MedicalAppointmentBookingDto bookingDto);
-    Mono<MedicalAppointmentResponseDto> privateBook(MedicalAppointmentBookingDto bookingDto);
+    Mono<MedicalAppointmentResponseDto> paidByPatientBook(MedicalAppointmentBookingDto bookingDto);
 }
