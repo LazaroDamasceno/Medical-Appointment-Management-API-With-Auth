@@ -11,6 +11,7 @@ public class MedicalSlotResponseMapper {
     public static MedicalSlotResponseDto mapToDto(MedicalSlot medicalSlot) {
         if (medicalSlot.getMedicalAppointment() == null) {
             return new MedicalSlotResponseDto(
+                    medicalSlot.getId(),
                     DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                     medicalSlot.getAvailableAt(),
                     medicalSlot.getAvailableAtZone(),
@@ -18,6 +19,7 @@ public class MedicalSlotResponseMapper {
             );
         }
         return new MedicalSlotResponseDto(
+                medicalSlot.getId(),
                 DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                 medicalSlot.getAvailableAt(),
                 medicalSlot.getAvailableAtZone(),
