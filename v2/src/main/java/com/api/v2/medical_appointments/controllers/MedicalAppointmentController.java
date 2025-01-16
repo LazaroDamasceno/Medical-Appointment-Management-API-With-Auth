@@ -34,17 +34,17 @@ public class MedicalAppointmentController {
     }
 
     @PostMapping("public-insurance")
-    public Mono<MedicalAppointmentResponseDto> publicInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.publicInsuranceBook(bookingDto);
     }
 
     @PostMapping("private-insurance")
-    public Mono<MedicalAppointmentResponseDto> privateInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.privateInsuranceBook(bookingDto);
     }
 
     @PostMapping("paid-by-patient")
-    public Mono<MedicalAppointmentResponseDto> paidByPatientBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.paidByPatientBook(bookingDto);
     }
 

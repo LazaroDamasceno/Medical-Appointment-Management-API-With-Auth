@@ -4,6 +4,7 @@ import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
@@ -16,11 +17,14 @@ import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
+import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+
+import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder.linkTo;
 
 @Service
 public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentBookingService {
@@ -49,7 +53,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     }
 
     @Override
-    public Mono<MedicalAppointmentResponseDto> publicInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
         Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
         return doctorMono
@@ -70,13 +74,30 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                                                     );
                                         }));
+                            })
+                            .map(dto -> {
+                                return HalResourceWrapper
+                                        .wrap(dto)
+                                        .withLinks(
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.ssn())
+                                                ).withRel("find all public insurance medical appointments by customers"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.ssn())
+                                                ).withRel("find all private insurance medical appointments by customers"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.ssn())
+                                                ).withRel("find all paid by patient medical appointments by customers")
+                                        );
                             });
-
                 });
     }
 
     @Override
-    public Mono<MedicalAppointmentResponseDto> privateInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
         Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
         return doctorMono
@@ -97,13 +118,30 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                                                     );
                                         }));
+                            })
+                            .map(dto -> {
+                                return HalResourceWrapper
+                                        .wrap(dto)
+                                        .withLinks(
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.ssn())
+                                                ).withRel("find all public insurance medical appointments by customers"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.ssn())
+                                                ).withRel("find all private insurance medical appointments by customers"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.ssn())
+                                                ).withRel("find all paid by patient medical appointments by customers")
+                                        );
                             });
-
                 });
     }
 
     @Override
-    public Mono<MedicalAppointmentResponseDto> paidByPatientBook(@Valid MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
         Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
         return doctorMono
@@ -124,8 +162,25 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                                                     );
                                         }));
+                            })
+                            .map(dto -> {
+                                return HalResourceWrapper
+                                        .wrap(dto)
+                                        .withLinks(
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.ssn())
+                                                ).withRel("find all public insurance medical appointments by customers"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.ssn())
+                                                ).withRel("find all private insurance medical appointments by customers"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.ssn())
+                                                ).withRel("find all paid by patient medical appointments by customers")
+                                        );
                             });
-
                 });
     }
 
