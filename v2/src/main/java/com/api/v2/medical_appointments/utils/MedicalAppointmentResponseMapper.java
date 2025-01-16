@@ -10,8 +10,10 @@ public class MedicalAppointmentResponseMapper {
 
     public static MedicalAppointmentResponseDto mapToDto(MedicalAppointment medicalAppointment) {
         return new MedicalAppointmentResponseDto(
+                medicalAppointment.getId(),
                 CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer()),
                 DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor()),
+                medicalAppointment.getType(),
                 medicalAppointment.getBookedAt(),
                 medicalAppointment.getBookedAtZone(),
                 medicalAppointment.getCanceledAt(),
