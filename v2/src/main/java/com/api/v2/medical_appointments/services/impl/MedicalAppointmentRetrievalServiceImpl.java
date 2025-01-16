@@ -76,7 +76,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .findAll()
                             .filter(appointment ->
                                     appointment.getType().equals("public insurance")
-                                    && appointment.getCustomer().equals(customer)
+                                            && appointment.getCustomer().getId().equals(customer.getId())
                             )
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
@@ -109,7 +109,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .findAll()
                             .filter(appointment ->
                                     appointment.getType().equals("private insurance")
-                                    && appointment.getCustomer().equals(customer)
+                                    && appointment.getCustomer().getId().equals(customer.getId())
                             )
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
@@ -142,7 +142,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .findAll()
                             .filter(appointment ->
                                     appointment.getType().equals("paid by patient")
-                                    && appointment.getCustomer().equals(customer)
+                                    && appointment.getCustomer().getId().equals(customer.getId())
                             )
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {

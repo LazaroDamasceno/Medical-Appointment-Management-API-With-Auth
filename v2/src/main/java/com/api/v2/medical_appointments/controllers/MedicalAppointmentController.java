@@ -33,22 +33,22 @@ public class MedicalAppointmentController {
         this.cancellationService = cancellationService;
     }
 
-    @PostMapping("public-insurance")
+    @PostMapping("/public-insurance")
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.publicInsuranceBook(bookingDto);
     }
 
-    @PostMapping("private-insurance")
+    @PostMapping("/private-insurance")
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.privateInsuranceBook(bookingDto);
     }
 
-    @PostMapping("paid-by-patient")
+    @PostMapping("/paid-by-patient")
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.paidByPatientBook(bookingDto);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>>findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
@@ -58,17 +58,17 @@ public class MedicalAppointmentController {
         return retrievalService.findAll();
     }
 
-    @GetMapping("public-insurance/{ssn}")
+    @GetMapping("/public-insurance/{ssn}")
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPublicInsuranceByCustomer(ssn);
     }
 
-    @GetMapping("private-insurance/{ssn}")
+    @GetMapping("/private-insurance/{ssn}")
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPrivateInsuranceByCustomer(ssn);
     }
 
-    @GetMapping("paid-by-patient/{ssn}")
+    @GetMapping("/paid-by-patient/{ssn}")
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPaidByPatientByCustomer(ssn);
     }
