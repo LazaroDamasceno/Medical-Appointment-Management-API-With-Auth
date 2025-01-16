@@ -12,7 +12,7 @@ import java.time.ZoneId;
 
 public class MedicalAppointmentResponseDto {
 
-    private ObjectId id;
+    private String id;
     private CustomerResponseDto customerResponseDto;
     private DoctorResponseDto doctorResponseDto;
     private String type;
@@ -22,34 +22,20 @@ public class MedicalAppointmentResponseDto {
     public MedicalAppointmentResponseDto() {
     }
 
-    protected MedicalAppointmentResponseDto(
-            ObjectId id,
-            CustomerResponseDto customerResponseDto,
-            DoctorResponseDto doctorResponseDto,
-            String type,
-            LocalDateTime bookedAt,
-            ZoneId bookAtZone
-    ) {
-        this.id = id;
-        this.customerResponseDto = customerResponseDto;
-        this.doctorResponseDto = doctorResponseDto;
-        this.type = type;
-        this.bookedAt = bookedAt;
-        this.bookAtZone = bookAtZone;
+    protected MedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
+        this.id = medicalAppointment.getId().toString();
+        this.customerResponseDto = CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer());
+        this.doctorResponseDto = DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor());
+        this.type = medicalAppointment.getType();
+        this.bookedAt = medicalAppointment.getBookedAt();
+        this.bookAtZone = medicalAppointment.getBookedAtZone();
     }
 
     public static MedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
-        return new MedicalAppointmentResponseDto(
-                medicalAppointment.getId(),
-                CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer()),
-                DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor()),
-                medicalAppointment.getType(),
-                medicalAppointment.getBookedAt(),
-                medicalAppointment.getBookedAtZone()
-        );
+        return new MedicalAppointmentResponseDto(medicalAppointment);
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 

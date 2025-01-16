@@ -18,32 +18,14 @@ public class CompletedMedicalAppointmentResponseDto extends MedicalAppointmentRe
     public CompletedMedicalAppointmentResponseDto() {
     }
 
-    private CompletedMedicalAppointmentResponseDto(
-            ObjectId id,
-            CustomerResponseDto customerResponseDto,
-            DoctorResponseDto doctorResponseDto,
-            String type,
-            LocalDateTime bookedAt,
-            ZoneId bookAtZone,
-            LocalDateTime completedAt,
-            ZoneId completedAtZone
-    ) {
-        super(id, customerResponseDto, doctorResponseDto, type, bookedAt, bookAtZone);
-        this.completedAt = completedAt;
-        this.completedAtZone = completedAtZone;
+    private CompletedMedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
+        super(medicalAppointment);
+        this.completedAt = medicalAppointment.getCompletedAt();
+        this.completedAtZone = medicalAppointment.getCompletedAtZone();
     }
 
     public static CompletedMedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
-        return new CompletedMedicalAppointmentResponseDto(
-                medicalAppointment.getId(),
-                CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer()),
-                DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor()),
-                medicalAppointment.getType(),
-                medicalAppointment.getBookedAt(),
-                medicalAppointment.getBookedAtZone(),
-                medicalAppointment.getCompletedAt(),
-                medicalAppointment.getCompletedAtZone()
-        );
+        return new CompletedMedicalAppointmentResponseDto(medicalAppointment);
     }
 
     public LocalDateTime getCompletedAt() {

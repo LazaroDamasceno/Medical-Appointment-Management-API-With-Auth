@@ -9,22 +9,7 @@ import reactor.core.publisher.Mono;
 public class MedicalSlotResponseMapper {
 
     public static MedicalSlotResponseDto mapToDto(MedicalSlot medicalSlot) {
-        if (medicalSlot.getMedicalAppointment() == null) {
-            return new MedicalSlotResponseDto(
-                    medicalSlot.getId().toString(),
-                    DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
-                    medicalSlot.getAvailableAt(),
-                    medicalSlot.getAvailableAtZone(),
-                    null
-            );
-        }
-        return new MedicalSlotResponseDto(
-                medicalSlot.getId().toString(),
-                DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
-                medicalSlot.getAvailableAt(),
-                medicalSlot.getAvailableAtZone(),
-                MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment())
-        );
+        return MedicalSlotResponseDto.create(medicalSlot);
     }
 
     public static Mono<MedicalSlotResponseDto> mapToMono(MedicalSlot medicalSlot) {

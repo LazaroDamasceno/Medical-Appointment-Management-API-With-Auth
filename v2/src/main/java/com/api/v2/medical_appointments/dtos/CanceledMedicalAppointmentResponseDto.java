@@ -18,32 +18,14 @@ public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentRes
     public CanceledMedicalAppointmentResponseDto() {
     }
 
-    private CanceledMedicalAppointmentResponseDto(
-            ObjectId id,
-            CustomerResponseDto customerResponseDto,
-            DoctorResponseDto doctorResponseDto,
-            String type,
-            LocalDateTime bookedAt,
-            ZoneId bookAtZone,
-            LocalDateTime canceledAt,
-            ZoneId canceledAtZone
-    ) {
-        super(id, customerResponseDto, doctorResponseDto, type, bookedAt, bookAtZone);
-        this.canceledAt = canceledAt;
-        this.canceledAtZone = canceledAtZone;
+    private CanceledMedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
+        super(medicalAppointment);
+        this.canceledAt = medicalAppointment.getCanceledAt();
+        this.canceledAtZone = medicalAppointment.getCanceledAtZone();
     }
 
     public static CanceledMedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
-        return new CanceledMedicalAppointmentResponseDto(
-                medicalAppointment.getId(),
-                CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer()),
-                DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor()),
-                medicalAppointment.getType(),
-                medicalAppointment.getBookedAt(),
-                medicalAppointment.getBookedAtZone(),
-                medicalAppointment.getCanceledAt(),
-                medicalAppointment.getCanceledAtZone()
-        );
+        return new CanceledMedicalAppointmentResponseDto(medicalAppointment);
     }
 
     public LocalDateTime getCanceledAt() {
