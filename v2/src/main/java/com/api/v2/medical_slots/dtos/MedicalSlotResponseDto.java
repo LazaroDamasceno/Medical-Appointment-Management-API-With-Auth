@@ -13,7 +13,6 @@ public class MedicalSlotResponseDto {
 
     private String id;
     private DoctorResponseDto doctorResponseDto;
-    private MedicalAppointmentResponseDto medicalAppointmentResponseDto;
     private LocalDateTime availableAt;
     private ZoneId availableAtZone;
 
@@ -22,15 +21,10 @@ public class MedicalSlotResponseDto {
 
     protected MedicalSlotResponseDto(MedicalSlot medicalSlot) {
         if (medicalSlot.getMedicalAppointment() == null) {
-            this.id = medicalSlot.getId().toString();
-            this.doctorResponseDto = DoctorResponseMapper.mapToDto(medicalSlot.getDoctor());
-            this.medicalAppointmentResponseDto = null;
-            this.availableAt = medicalSlot.getAvailableAt();
-            this.availableAtZone = medicalSlot.getAvailableAtZone();
+            return;
         }
         this.id = medicalSlot.getId().toString();
         this.doctorResponseDto = DoctorResponseMapper.mapToDto(medicalSlot.getDoctor());
-        this.medicalAppointmentResponseDto = MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment());
         this.availableAt = medicalSlot.getAvailableAt();
         this.availableAtZone = medicalSlot.getAvailableAtZone();
     }
@@ -45,10 +39,6 @@ public class MedicalSlotResponseDto {
 
     public DoctorResponseDto getDoctorResponseDto() {
         return doctorResponseDto;
-    }
-
-    public MedicalAppointmentResponseDto getMedicalAppointmentResponseDto() {
-        return medicalAppointmentResponseDto;
     }
 
     public LocalDateTime getAvailableAt() {
