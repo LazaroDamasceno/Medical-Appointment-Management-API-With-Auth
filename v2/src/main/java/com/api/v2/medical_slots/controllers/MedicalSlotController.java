@@ -30,7 +30,7 @@ public class MedicalSlotController {
     }
 
     @PostMapping
-    public Mono<MedicalSlotResponseDto> register(@RequestBody @Valid MedicalSlotRegistrationDto registrationDto) {
+    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> register(@RequestBody @Valid MedicalSlotRegistrationDto registrationDto) {
         return registrationService.register(registrationDto);
     }
 
