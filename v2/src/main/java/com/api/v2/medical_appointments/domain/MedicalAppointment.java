@@ -37,6 +37,7 @@ public class MedicalAppointment {
         this.bookedAtZone = ZoneId.systemDefault();
         this.createdAt = LocalDateTime.now();
         this.createdAtZone = ZoneId.systemDefault();
+        this.type = type;
     }
 
     public static MedicalAppointment create(String type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
