@@ -36,7 +36,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                 .findById(id)
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                 .map(dto -> {
-                    String ssn = dto.customerResponseDto().personResponseDto().ssn();
+                    String ssn = dto.getCustomerResponseDto().personResponseDto().ssn();
                     return HalResourceWrapper
                             .wrap(dto)
                             .withLinks(

@@ -40,7 +40,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                     return MedicalSlotResponseMapper
                             .mapToMono(slot)
                             .map(dto -> {
-                                var medicalLicenseNumber = dto.doctorResponseDto().medicalLicenseNumber();
+                                var medicalLicenseNumber = dto.getDoctorResponseDto().medicalLicenseNumber();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
