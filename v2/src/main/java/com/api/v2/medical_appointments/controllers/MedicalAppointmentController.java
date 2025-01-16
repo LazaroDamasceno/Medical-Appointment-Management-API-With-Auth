@@ -73,12 +73,12 @@ public class MedicalAppointmentController {
         return retrievalService.findAllPaidByPatientByCustomer(ssn);
     }
 
-    @PatchMapping("{id}/completion")
+    @PatchMapping("/{id}/completion")
     public Mono<Void> complete(@PathVariable String id) {
         return completionService.complete(id);
     }
 
-    @PatchMapping("{id}/cancellation")
+    @PatchMapping("/{id}/cancellation")
     public Mono<Void> cancel(@PathVariable String id) {
         return cancellationService.cancel(id);
     }
