@@ -5,6 +5,7 @@ import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRegistrationService;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRetrievalService;
+import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -33,17 +34,17 @@ public class MedicalSlotController {
         return registrationService.register(registrationDto);
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     public Mono<Void> cancel(@PathVariable String id) {
         return cancellationService.cancel(id);
     }
 
-    @GetMapping("by-id/{id}")
-    public Mono<MedicalSlotResponseDto> findById(@PathVariable String id) {
+    @GetMapping("/by-id/{id}")
+    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
-    @GetMapping("by-medical-license-number/{medicalLicenseNumber}")
+    @GetMapping("/by-medical-license-number/{medicalLicenseNumber}")
     public Flux<MedicalSlotResponseDto> findAllByDoctor(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findAllByDoctor(medicalLicenseNumber);
     }

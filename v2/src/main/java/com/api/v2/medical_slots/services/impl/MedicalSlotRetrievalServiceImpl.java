@@ -1,14 +1,19 @@
 package com.api.v2.medical_slots.services.impl;
 
 import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.medical_slots.controllers.MedicalSlotController;
+import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRetrievalService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import com.api.v2.medical_slots.utils.MedicalSlotResponseMapper;
+import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder.linkTo;
 
 @Service
 public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalService {
@@ -28,10 +33,32 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Mono<MedicalSlotResponseDto> findById(String id) {
+    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(String id) {
         return medicalSlotFinderUtil
                 .findById(id)
-                .flatMap(MedicalSlotResponseMapper::mapToMono);
+                .flatMap(slot -> {
+                    return MedicalSlotResponseMapper
+                            .mapToMono(slot)
+                            .map(dto -> {
+                                var medicalLicenseNumber = dto.doctorResponseDto().medicalLicenseNumber();
+                                return HalResourceWrapper
+                                        .wrap(dto)
+                                        .withLinks(
+                                                linkTo(
+                                                        MedicalSlotController.class,
+                                                        controller -> controller.findById(id)
+                                                ).withSelfRel(),
+                                                linkTo(
+                                                        MedicalSlotController.class,
+                                                        controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                                ).withRel("find all medical slots associated with doctor"),
+                                                linkTo(
+                                                        MedicalSlotController.class,
+                                                        controller -> controller.cancel(id)
+                                                ).withRel("cancel found medical slot")
+                                        );
+                            });
+                });
     }
 
     @Override
