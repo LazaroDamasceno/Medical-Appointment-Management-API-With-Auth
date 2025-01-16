@@ -75,7 +75,6 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                 .findActiveByDoctorAndAvailableAt(doctor, availableAt)
                 .hasElement()
                 .flatMap(exists -> {
-                    System.out.println(exists);
                     if (exists) {
                         String message = "The given datetime %s is already registered for another medical slot".formatted(availableAt);
                         return Mono.error(new UnavailableMedicalSlotException(message));
