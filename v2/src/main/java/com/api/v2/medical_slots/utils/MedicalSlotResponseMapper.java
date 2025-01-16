@@ -15,7 +15,7 @@ public class MedicalSlotResponseMapper {
             if (medicalSlot.getCompletedAt() != null) {
                 return CompletedMedicalSlotResponseDto.create(medicalSlot);
             }
-            if (medicalSlot.getCanceledAt() != null) {
+            else if (medicalSlot.getCanceledAt() != null) {
                 return CanceledMedicalSlotWithMedicalAppointmentResponseDto.create(medicalSlot);
             }
             return MedicalSlotWithMedicalAppointmentResponseDto.create(medicalSlot);
