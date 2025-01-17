@@ -34,51 +34,61 @@ public class MedicalAppointmentController {
     }
 
     @PostMapping("/public-insurance")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.publicInsuranceBook(bookingDto);
     }
 
     @PostMapping("/private-insurance")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.privateInsuranceBook(bookingDto);
     }
 
     @PostMapping("/paid-by-patient")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.paidByPatientBook(bookingDto);
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>>findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
     @GetMapping
+    @ResponseStatus(value = HttpStatus.OK)
     public Flux<MedicalAppointmentResponseDto> findAll() {
         return retrievalService.findAll();
     }
 
     @GetMapping("/public-insurance/{ssn}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPublicInsuranceByCustomer(ssn);
     }
 
     @GetMapping("/private-insurance/{ssn}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPrivateInsuranceByCustomer(ssn);
     }
 
     @GetMapping("/paid-by-patient/{ssn}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPaidByPatientByCustomer(ssn);
     }
 
     @PatchMapping("/{id}/completion")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> complete(@PathVariable String id) {
         return completionService.complete(id);
     }
 
     @PatchMapping("/{id}/cancellation")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> cancel(@PathVariable String id) {
         return cancellationService.cancel(id);
     }

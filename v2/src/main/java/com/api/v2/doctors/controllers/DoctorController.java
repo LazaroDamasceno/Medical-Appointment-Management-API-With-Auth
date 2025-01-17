@@ -5,6 +5,7 @@ import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.doctors.services.*;
 import com.api.v2.people.dtos.PersonModificationDto;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,11 +35,13 @@ public class DoctorController {
     }
 
     @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<DoctorResponseDto> hire(@Valid @RequestBody DoctorHiringDto hiringDto) {
         return hiringService.hire(hiringDto);
     }
 
     @PutMapping("{medicalLicenseNumber}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> modify(
             @PathVariable String medicalLicenseNumber,
             @Valid @RequestBody PersonModificationDto modificationDto
@@ -47,21 +50,25 @@ public class DoctorController {
     }
 
     @PatchMapping("{medicalLicenseNumber}/termination")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> terminate(@PathVariable String medicalLicenseNumber) {
         return terminationService.terminate(medicalLicenseNumber);
     }
 
     @PatchMapping("{medicalLicenseNumber}/rehiring")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> rehire(@PathVariable String medicalLicenseNumber) {
         return rehiringService.rehire(medicalLicenseNumber);
     }
 
     @GetMapping("{medicalLicenseNumber}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Mono<DoctorResponseDto> findByMedicalLicenseNumber(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findByMedicalLicenseNumber(medicalLicenseNumber);
     }
 
     @GetMapping
+    @ResponseStatus(value = HttpStatus.OK)
     public Flux<DoctorResponseDto> findAll() {
         return retrievalService.findAll();
     }

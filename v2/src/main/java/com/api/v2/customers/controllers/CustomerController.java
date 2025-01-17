@@ -7,6 +7,7 @@ import com.api.v2.customers.services.CustomerModificationService;
 import com.api.v2.customers.services.CustomerRegistrationService;
 import com.api.v2.customers.services.CustomerRetrievalService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -30,21 +31,25 @@ public class CustomerController {
     }
 
     @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<CustomerResponseDto> register(@Valid @RequestBody CustomerRegistrationDto registrationDto) {
         return registrationService.register(registrationDto);
     }
 
     @PatchMapping("{ssn}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> modify(@PathVariable String ssn, @Valid @RequestBody CustomerModificationDto modificationDto) {
         return modificationService.modify(ssn, modificationDto);
     }
 
     @GetMapping("{ssn}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Mono<CustomerResponseDto> findBySsn(@PathVariable String ssn) {
         return retrievalService.findBySsn(ssn);
     }
 
     @GetMapping
+    @ResponseStatus(value = HttpStatus.OK)
     public Flux<CustomerResponseDto> findAll() {
         return retrievalService.findAll();
     }

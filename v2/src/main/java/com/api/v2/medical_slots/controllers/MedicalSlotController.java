@@ -7,6 +7,7 @@ import com.api.v2.medical_slots.services.interfaces.MedicalSlotRegistrationServi
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRetrievalService;
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -30,26 +31,31 @@ public class MedicalSlotController {
     }
 
     @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> register(@RequestBody @Valid MedicalSlotRegistrationDto registrationDto) {
         return registrationService.register(registrationDto);
     }
 
     @PatchMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> cancel(@PathVariable String id) {
         return cancellationService.cancel(id);
     }
 
     @GetMapping("/by-id/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
     @GetMapping("/by-medical-license-number/{medicalLicenseNumber}")
+    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findAllByDoctor(medicalLicenseNumber);
     }
 
     @GetMapping
+    @ResponseStatus(value = HttpStatus.OK)
     public Flux<MedicalSlotResponseDto> findAll() {
         return retrievalService.findAll();
     }
