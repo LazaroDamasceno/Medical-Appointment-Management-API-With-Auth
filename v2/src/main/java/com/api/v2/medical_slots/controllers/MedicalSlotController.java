@@ -45,7 +45,7 @@ public class MedicalSlotController {
     }
 
     @GetMapping("/by-medical-license-number/{medicalLicenseNumber}")
-    public Flux<MedicalSlotResponseDto> findAllByDoctor(@PathVariable String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findAllByDoctor(medicalLicenseNumber);
     }
 

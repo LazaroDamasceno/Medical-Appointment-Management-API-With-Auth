@@ -78,6 +78,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                     appointment.getType().equals("public insurance")
                                             && appointment.getCustomer().getId().equals(customer.getId())
                             )
+                            .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
                                 return HalResourceWrapper
@@ -94,7 +95,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(ssn)
-                                                ).withSelfRel()
+                                                ).withSelfRel(),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.cancel(dto.getId())
+                                                ).withRel("cancel found medical appointment by id"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.findById(dto.getId())
+                                                ).withRel("find medical appointment by id")
                                         );
                             });
                 });
@@ -111,6 +120,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                     appointment.getType().equals("private insurance")
                                     && appointment.getCustomer().getId().equals(customer.getId())
                             )
+                            .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
                                 return HalResourceWrapper
@@ -127,7 +137,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(ssn)
-                                                ).withRel("find all public insurance medical appointments by customer")
+                                                ).withRel("find all public insurance medical appointments by customer"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.cancel(dto.getId())
+                                                ).withRel("cancel found medical appointment by id"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller
+                                                )
                                         );
                             });
                 });
@@ -144,6 +162,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                     appointment.getType().equals("paid by patient")
                                     && appointment.getCustomer().getId().equals(customer.getId())
                             )
+                            .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
                                 return HalResourceWrapper
@@ -160,7 +179,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(ssn)
-                                                ).withRel("find all public insurance medical appointments by customer")
+                                                ).withRel("find all public insurance medical appointments by customer"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller.cancel(dto.getId())
+                                                ).withRel("cancel found medical appointment by id"),
+                                                linkTo(
+                                                        MedicalAppointmentController.class,
+                                                        controller -> controller
+                                                )
                                         );
                             });
                 });

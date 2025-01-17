@@ -62,14 +62,33 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Flux<MedicalSlotResponseDto> findAllByDoctor(String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMapMany(doctor -> {
                     return medicalSlotRepository
                             .findAll()
                             .filter(slot -> slot.getDoctor().getId().equals(doctor.getId()))
+                            .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalSlotResponseMapper::mapToMono);
+                })
+                .map(dto -> {
+                    return HalResourceWrapper
+                            .wrap(dto)
+                            .withLinks(
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findById(dto.getId())
+                                    ).withRel("find medical slot by id"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                    ).withSelfRel(),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.cancel(dto.getId())
+                                    ).withRel("cancel medical slot by id")
+                            );
                 });
     }
 
