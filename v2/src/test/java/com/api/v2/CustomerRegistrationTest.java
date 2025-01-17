@@ -88,7 +88,7 @@ public class CustomerRegistrationTest {
         webTestClient
                 .post()
                 .uri("api/v2/customers")
-                .bodyValue(registrationDto)
+                .bodyValue(registrationDto2)
                 .exchange()
                 .expectStatus().is5xxServerError();
     }

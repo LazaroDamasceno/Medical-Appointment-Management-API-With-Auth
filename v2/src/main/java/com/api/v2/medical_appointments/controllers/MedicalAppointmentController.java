@@ -8,6 +8,8 @@ import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCom
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentRetrievalService;
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

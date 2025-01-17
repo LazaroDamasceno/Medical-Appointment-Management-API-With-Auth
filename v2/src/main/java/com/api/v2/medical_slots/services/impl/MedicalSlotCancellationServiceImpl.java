@@ -2,7 +2,6 @@ package com.api.v2.medical_slots.services.impl;
 
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.ImmutableMedicalSlotException;

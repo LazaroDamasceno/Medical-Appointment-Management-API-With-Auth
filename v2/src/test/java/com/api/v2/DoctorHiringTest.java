@@ -1,6 +1,5 @@
 package com.api.v2;
 
-import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
