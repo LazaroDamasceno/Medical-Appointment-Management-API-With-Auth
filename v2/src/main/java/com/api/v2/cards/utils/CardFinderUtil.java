@@ -21,7 +21,7 @@ public class CardFinderUtil {
                 .findById(new ObjectId(id))
                 .singleOptional()
                 .flatMap(optional -> {
-                   if (optional.isEmpty() || optional.get().getBookedForDeletionAt() != null) {
+                   if (optional.isEmpty()) {
                        return Mono.error(new NonExistentCardException(id));
                    }
                    return Mono.just(optional.get());

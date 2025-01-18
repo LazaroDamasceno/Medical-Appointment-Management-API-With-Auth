@@ -20,7 +20,6 @@ public class Card {
         private LocalDate dueDate;
         private LocalDateTime createdAt;
         private ZoneId createdAtZone;
-        private LocalDateTime bookedForDeletionAt;
 
     public Card() {
     }
@@ -49,10 +48,6 @@ public class Card {
         );
     }
 
-    public void bookDeletion() {
-        bookedForDeletionAt = LocalDateTime.now().plusYears(10);
-    }
-
     public ObjectId getId() {
         return id;
     }
@@ -79,9 +74,5 @@ public class Card {
 
     public ZoneId getCreatedAtZone() {
         return createdAtZone;
-    }
-
-    public LocalDateTime getBookedForDeletionAt() {
-        return bookedForDeletionAt;
     }
 }

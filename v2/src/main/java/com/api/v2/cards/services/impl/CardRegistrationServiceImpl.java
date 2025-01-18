@@ -20,7 +20,7 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
     }
 
     @Override
-    public Mono<CardResponseDto> registerCreditCard(CardRegistrationDto registrationDto) {
+    public Mono<CardResponseDto> registerCreditCard(@Valid CardRegistrationDto registrationDto) {
         return Mono.defer(() -> {
                     Card card = Card.create(
                             "credit card",
@@ -32,7 +32,7 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
     }
 
     @Override
-    public Mono<CardResponseDto> registerDebitCard(CardRegistrationDto registrationDto) {
+    public Mono<CardResponseDto> registerDebitCard(@Valid CardRegistrationDto registrationDto) {
         return Mono.defer(() -> {
                     Card card = Card.create(
                             "debit card",

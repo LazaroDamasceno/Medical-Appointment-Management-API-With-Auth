@@ -24,10 +24,6 @@ public class CardDeletionServiceImpl implements CardDeletionService {
     public Mono<Void> delete(String id) {
         return cardFinderUtil
                 .find(id)
-                .flatMap(card -> {
-                    card.bookDeletion();
-                    return cardRepository.save(card);
-                })
-                .then();
+                .flatMap(cardRepository::delete);
     }
 }
