@@ -38,6 +38,10 @@ public class CardRetrievalServiceImpl implements CardRetrievalService {
                             .wrap(dto)
                             .withLinks(
                                     linkTo(
+                                            CardController.class,
+                                            CardController::findAll
+                                    ).withSelfRel(),
+                                    linkTo(
                                           CardController.class,
                                           controller -> controller.findById(dto.id())
                                     ).withRel("find card by id"),
@@ -58,6 +62,10 @@ public class CardRetrievalServiceImpl implements CardRetrievalService {
                     return HalResourceWrapper
                             .wrap(dto)
                             .withLinks(
+                                    linkTo(
+                                            CardController.class,
+                                            controller -> controller.findById(dto.id())
+                                    ).withSelfRel(),
                                     linkTo(
                                             CardController.class,
                                             controller -> controller.delete(dto.id())
