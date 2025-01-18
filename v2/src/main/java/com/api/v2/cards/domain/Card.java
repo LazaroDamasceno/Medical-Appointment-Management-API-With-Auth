@@ -21,13 +21,18 @@ public record Card(
         ZoneId createdAtZone
 ) {
 
-    public static Card create(CardRegistrationDto registrationDto) {
+    public static Card create(
+            String type,
+            String bank,
+            String cvv_cvc,
+            LocalDate dueDate
+    ) {
         return new Card(
                 new ObjectId(),
-                registrationDto.type(),
-                registrationDto.bank(),
-                registrationDto.cvv_cvc(),
-                registrationDto.dueDate(),
+                type,
+                bank,
+                cvv_cvc,
+                dueDate,
                 LocalDateTime.now(),
                 ZoneId.systemDefault()
         );
