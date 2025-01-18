@@ -24,9 +24,7 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
         return Mono.defer(() -> {
                     Card card = Card.create(
                             "credit card",
-                            registrationDto.bank(),
-                            registrationDto.cvv_cvc(),
-                            registrationDto.dueDate()
+                            registrationDto
                     );
                     return cardRepository.save(card);
                 })
@@ -38,9 +36,7 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
         return Mono.defer(() -> {
                     Card card = Card.create(
                             "debit card",
-                            registrationDto.bank(),
-                            registrationDto.cvv_cvc(),
-                            registrationDto.dueDate()
+                            registrationDto
                     );
                     return cardRepository.save(card);
                 })

@@ -10,31 +10,42 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Document
-public record Card(
-        @BsonId
-        ObjectId id,
-        String type,
-        String bank,
-        String cvv_cvc,
-        LocalDate dueDate,
-        LocalDateTime createdAt,
-        ZoneId createdAtZone
-) {
+public class Card {
 
-    public static Card create(
+        @BsonId
+        private ObjectId id;
+        private String type;
+        private String bank;
+        private String cvv_cvc;
+        private LocalDate dueDate;
+        private LocalDateTime createdAt;
+        private ZoneId createdAtZone;
+        private LocalDateTime bookedForDeletionAt;
+
+    public Card() {
+    }
+
+    private Card(
             String type,
             String bank,
             String cvv_cvc,
             LocalDate dueDate
     ) {
+        this.id = new ObjectId();
+        this.type = type;
+        this.bank = bank;
+        this.cvv_cvc = cvv_cvc;
+        this.dueDate = dueDate;
+        this.createdAt = LocalDateTime.now();
+        this.createdAtZone = ZoneId.systemDefault();
+    }
+
+    public static Card create(String type, CardRegistrationDto registrationDto) {
         return new Card(
-                new ObjectId(),
                 type,
-                bank,
-                cvv_cvc,
-                dueDate,
-                LocalDateTime.now(),
-                ZoneId.systemDefault()
+                registrationDto.bank(),
+                registrationDto.cvv_cvc(),
+                registrationDto.dueDate()
         );
     }
 }
