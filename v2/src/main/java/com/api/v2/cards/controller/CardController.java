@@ -38,7 +38,7 @@ public class CardController {
         return registrationService.registerDebitCard(registrationDto);
     }
 
-    @PatchMapping("{id}")
+    @DeleteMapping("{id}")
     public Mono<Void> delete(@PathVariable String id) {
         return deletionService.delete(id);
     }
@@ -48,7 +48,7 @@ public class CardController {
         return retrievalService.findAll();
     }
 
-    @DeleteMapping("{id}")
+    @GetMapping("{id}")
     public Mono<CardResponseDto> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }

@@ -7,11 +7,11 @@ import reactor.core.publisher.Mono;
 public class CardResponseMapper {
     public static CardResponseDto mapToDto(Card card) {
         return new CardResponseDto(
-                card.id().toString(),
-                card.type(),
-                card.bank(),
-                card.cvv_cvc(),
-                card.dueDate()
+                card.getId().toString(),
+                card.getType(),
+                card.getBank(),
+                card.getCvv_cvc(),
+                card.getDueDate()
         );
     }
 

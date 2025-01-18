@@ -1,14 +1,18 @@
 package com.api.v2.cards.services.impl;
 
+import com.api.v2.cards.controller.CardController;
 import com.api.v2.cards.domain.Card;
 import com.api.v2.cards.domain.CardRepository;
 import com.api.v2.cards.dtos.CardRegistrationDto;
 import com.api.v2.cards.dtos.CardResponseDto;
 import com.api.v2.cards.services.interfaces.CardRegistrationService;
 import com.api.v2.cards.utils.CardResponseMapper;
+import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder.linkTo;
 
 @Service
 public class CardRegistrationServiceImpl implements CardRegistrationService {
@@ -20,7 +24,7 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
     }
 
     @Override
-    public Mono<CardResponseDto> registerCreditCard(@Valid CardRegistrationDto registrationDto) {
+    public Mono<HalResourceWrapper<CardResponseDto, Void>> registerCreditCard(@Valid CardRegistrationDto registrationDto) {
         return Mono.defer(() -> {
                     Card card = Card.create(
                             "credit card",
@@ -28,11 +32,25 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
                     );
                     return cardRepository.save(card);
                 })
-                .flatMap(CardResponseMapper::mapToMono);
+                .flatMap(CardResponseMapper::mapToMono)
+                .map(dto -> {
+                    return HalResourceWrapper
+                            .wrap(dto)
+                            .withLinks(
+                                    linkTo(
+                                            CardController.class,
+                                            controller -> controller.findById(dto.id())
+                                    ).withRel("find card by id"),
+                                    linkTo(
+                                            CardController.class,
+                                            controller -> controller.delete(dto.id())
+                                    ).withRel("delete card by id")
+                            );
+                });
     }
 
     @Override
-    public Mono<CardResponseDto> registerDebitCard(@Valid CardRegistrationDto registrationDto) {
+    public Mono<HalResourceWrapper<CardResponseDto, Void>> registerDebitCard(@Valid CardRegistrationDto registrationDto) {
         return Mono.defer(() -> {
                     Card card = Card.create(
                             "debit card",
@@ -40,6 +58,20 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
                     );
                     return cardRepository.save(card);
                 })
-                .flatMap(CardResponseMapper::mapToMono);
+                .flatMap(CardResponseMapper::mapToMono)
+                .map(dto -> {
+                    return HalResourceWrapper
+                            .wrap(dto)
+                            .withLinks(
+                                    linkTo(
+                                            CardController.class,
+                                            controller -> controller.findById(dto.id())
+                                    ).withRel("find card by id"),
+                                    linkTo(
+                                            CardController.class,
+                                            controller -> controller.delete(dto.id())
+                                    ).withRel("delete card by id")
+                            );
+                });
     }
 }
