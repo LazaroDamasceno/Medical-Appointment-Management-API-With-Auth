@@ -1,6 +1,6 @@
 package com.api.v2.cards.domain;
 
-import com.api.v2.cards.CardRegistrationDto;
+import com.api.v2.cards.dtos.CardRegistrationDto;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
