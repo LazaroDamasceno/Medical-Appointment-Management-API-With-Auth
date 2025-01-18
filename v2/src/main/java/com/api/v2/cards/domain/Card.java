@@ -48,4 +48,40 @@ public class Card {
                 registrationDto.dueDate()
         );
     }
+
+    public void bookDeletion() {
+        bookedForDeletionAt = LocalDateTime.now().plusYears(10);
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public String getCvv_cvc() {
+        return cvv_cvc;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public ZoneId getCreatedAtZone() {
+        return createdAtZone;
+    }
+
+    public LocalDateTime getBookedForDeletionAt() {
+        return bookedForDeletionAt;
+    }
 }
