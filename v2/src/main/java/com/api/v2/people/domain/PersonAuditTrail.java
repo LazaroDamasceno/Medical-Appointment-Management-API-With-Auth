@@ -4,25 +4,24 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 @Document
 public record PersonAuditTrail(
         @BsonId
         ObjectId id,
         Person person,
-        LocalDateTime createdAt,
-        ZoneOffset createdAtZone
+        LocalDate createdAt,
+        ZoneId createdAtZone
 ) {
 
     public static PersonAuditTrail create(Person person) {
         return new PersonAuditTrail(
                 new ObjectId(),
                 person,
-                OffsetDateTime.now().toLocalDateTime(),
-                OffsetDateTime.now().getOffset()
+                LocalDate.now(),
+                ZoneId.systemDefault()
         );
     }
 }

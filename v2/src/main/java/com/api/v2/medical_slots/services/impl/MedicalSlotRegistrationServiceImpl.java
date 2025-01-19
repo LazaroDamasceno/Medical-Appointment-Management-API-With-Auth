@@ -61,16 +61,8 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                                                                     ).withRel("cancel_just_registered_medical_slot"),
                                                                     linkTo(
                                                                             MedicalSlotController.class,
-                                                                            controller -> controller.findAllActiveByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
-                                                                    ).withRel("find active medical slots by doctor"),
-                                                                    linkTo(
-                                                                            MedicalSlotController.class,
-                                                                            controller -> controller.findAllCanceledByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
-                                                                    ).withRel("find canceled medical slots by doctor"),
-                                                                    linkTo(
-                                                                            MedicalSlotController.class,
-                                                                            controller -> controller.findAllCompletedByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
-                                                                    ).withRel("find completed medical slots by doctor")
+                                                                            controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                                                    ).withRel("find_all_medical_slots_by_doctor")
                                                             )
                                                     );
                                         }));

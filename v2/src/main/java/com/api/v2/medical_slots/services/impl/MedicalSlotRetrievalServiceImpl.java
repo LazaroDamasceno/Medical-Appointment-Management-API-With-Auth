@@ -53,6 +53,10 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                                 ).withRel("cancel_found_medical_slot"),
                                                 linkTo(
                                                         MedicalSlotController.class,
+                                                        controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                                ).withRel("find medical slots by doctor"),
+                                                linkTo(
+                                                        MedicalSlotController.class,
                                                         controller -> controller.findAllActiveByDoctor(medicalLicenseNumber)
                                                 ).withRel("find active medical slots by doctor"),
                                                 linkTo(
@@ -90,6 +94,10 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                             MedicalSlotController.class,
                                             controller -> controller.findById(dto.getId())
                                     ).withRel("find_medical_slot_by_id"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                    ).withRel("find medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.findAllActiveByDoctor(medicalLicenseNumber)
@@ -134,6 +142,10 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
+                                            controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                    ).withRel("find medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
                                             controller -> controller.findAllActiveByDoctor(medicalLicenseNumber)
                                     ).withRel("find active medical slots by doctor"),
                                     linkTo(
@@ -176,6 +188,10 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
+                                            controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                    ).withRel("find medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
                                             controller -> controller.findAllActiveByDoctor(medicalLicenseNumber)
                                     ).withRel("find active medical slots by doctor"),
                                     linkTo(
@@ -211,6 +227,10 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                             MedicalSlotController.class,
                                             controller -> controller.findById(dto.getId())
                                     ).withRel("find_medical_slot_by_id"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                    ).withRel("find medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.findAllActiveByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())

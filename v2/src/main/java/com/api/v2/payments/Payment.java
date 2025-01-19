@@ -4,11 +4,11 @@ import com.api.v2.cards.domain.Card;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 
 @Document
 public record Payment(
@@ -17,7 +17,7 @@ public record Payment(
         MedicalAppointment medicalAppointment,
         Card card,
         LocalDateTime createdAt,
-        ZoneOffset createdAtZone
+        ZoneId createdAtZone
 ) {
 
     public static Payment create(MedicalAppointment medicalAppointment, Card card) {
@@ -25,8 +25,8 @@ public record Payment(
                 new ObjectId(),
                 medicalAppointment,
                 card,
-                OffsetDateTime.now().toLocalDateTime(),
-                OffsetDateTime.now().getOffset()
+                LocalDateTime.now(),
+                ZoneId.systemDefault()
         );
     }
 }

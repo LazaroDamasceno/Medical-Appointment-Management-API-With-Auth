@@ -5,14 +5,14 @@ import com.api.v2.doctors.utils.DoctorResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 
 public class MedicalSlotResponseDto {
 
     private String id;
     private DoctorResponseDto doctorResponseDto;
     private LocalDateTime availableAt;
-    private ZoneOffset availableAtZone;
+    private ZoneId availableAtZone;
 
     public MedicalSlotResponseDto() {
     }
@@ -43,7 +43,7 @@ public class MedicalSlotResponseDto {
         return availableAt;
     }
 
-    public ZoneOffset getAvailableAtZone() {
+    public ZoneId getAvailableAtZone() {
         return availableAtZone;
     }
 }

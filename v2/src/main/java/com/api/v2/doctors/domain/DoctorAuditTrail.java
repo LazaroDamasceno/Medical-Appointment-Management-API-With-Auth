@@ -4,14 +4,14 @@ import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 
 public record DoctorAuditTrail(
         @BsonId
         ObjectId id,
         Doctor doctor,
         LocalDate createdAt,
-        ZoneOffset createdAtZone
+        ZoneId createdAtZone
 ) {
 
     public static DoctorAuditTrail create(Doctor doctor) {
@@ -19,7 +19,7 @@ public record DoctorAuditTrail(
                 new ObjectId(),
                 doctor,
                 LocalDate.now(),
-                ZoneOffset.systemDefault()
+                ZoneId.systemDefault()
         );
     }
 }
