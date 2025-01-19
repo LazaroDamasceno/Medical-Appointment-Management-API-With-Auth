@@ -48,10 +48,25 @@ public class MedicalSlotController {
         return retrievalService.findById(id);
     }
 
-    @GetMapping("/by-medical-license-number/{medicalLicenseNumber}")
+    @GetMapping("active/by-doctor/{medicalLicenseNumber}")
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(@PathVariable String medicalLicenseNumber) {
+        return retrievalService.findAllCompletedByDoctor(medicalLicenseNumber);
+    }
+
+    @GetMapping("canceled/by-doctor/{medicalLicenseNumber}")
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(@PathVariable String medicalLicenseNumber) {
+        return retrievalService.findAllCanceledByDoctor(medicalLicenseNumber);
+    }
+
+    @GetMapping("completed/by-doctor/{medicalLicenseNumber}")
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(@PathVariable String medicalLicenseNumber) {
+        return retrievalService.findAllCompletedByDoctor(medicalLicenseNumber);
+    }
+
+    @GetMapping("/by-doctor/{medicalLicenseNumber}")
     @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(@PathVariable String medicalLicenseNumber) {
-        return retrievalService.findAllByDoctor(medicalLicenseNumber);
+        return retrievalService.findAllActiveByDoctor(medicalLicenseNumber);
     }
 
     @GetMapping

@@ -49,25 +49,40 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalSlotController.class,
-                                                        controller -> controller.findAllByDoctor(medicalLicenseNumber)
-                                                ).withRel("find_all_medical_slots_associated_with_doctor"),
+                                                        controller -> controller.cancel(id)
+                                                ).withRel("cancel_found_medical_slot"),
                                                 linkTo(
                                                         MedicalSlotController.class,
-                                                        controller -> controller.cancel(id)
-                                                ).withRel("cancel_found_medical_slot")
+                                                        controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                                ).withRel("find medical slots by doctor"),
+                                                linkTo(
+                                                        MedicalSlotController.class,
+                                                        controller -> controller.findAllActiveByDoctor(medicalLicenseNumber)
+                                                ).withRel("find active medical slots by doctor"),
+                                                linkTo(
+                                                        MedicalSlotController.class,
+                                                        controller -> controller.findAllCanceledByDoctor(medicalLicenseNumber)
+                                                ).withRel("find canceled medical slots by doctor"),
+                                                linkTo(
+                                                        MedicalSlotController.class,
+                                                        controller -> controller.findAllCompletedByDoctor(medicalLicenseNumber)
+                                                ).withRel("find completed medical slots by doctor")
                                         );
                             });
                 });
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMapMany(doctor -> {
                     return medicalSlotRepository
                             .findAll()
-                            .filter(slot -> slot.getDoctor().getId().equals(doctor.getId()))
+                            .filter(slot -> slot.getDoctor().getId().equals(doctor.getId())
+                                    && slot.getCanceledAt() == null
+                                    && slot.getCompletedAt() == null
+                            )
                             .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalSlotResponseMapper::mapToMono);
                 })
@@ -82,7 +97,111 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.findAllByDoctor(medicalLicenseNumber)
-                                    ).withSelfRel(),
+                                    ).withRel("find medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllActiveByDoctor(medicalLicenseNumber)
+                                    ).withRel("find active medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllCanceledByDoctor(medicalLicenseNumber)
+                                    ).withRel("find canceled medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllCompletedByDoctor(medicalLicenseNumber)
+                                    ).withRel("find completed medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.cancel(dto.getId())
+                                    ).withRel("cancel_medical_slot_by_id")
+                            );
+                });
+    }
+
+    @Override
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(String medicalLicenseNumber) {
+        return doctorFinderUtil
+                .findByLicenseNumber(medicalLicenseNumber)
+                .flatMapMany(doctor -> {
+                    return medicalSlotRepository
+                            .findAll()
+                            .filter(slot -> slot.getDoctor().getId().equals(doctor.getId())
+                                    && slot.getCanceledAt() != null
+                                    && slot.getCompletedAt() == null
+                            )
+                            .switchIfEmpty(Flux.empty())
+                            .flatMap(MedicalSlotResponseMapper::mapToMono);
+                })
+                .map(dto -> {
+                    return HalResourceWrapper
+                            .wrap(dto)
+                            .withLinks(
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findById(dto.getId())
+                                    ).withRel("find_medical_slot_by_id"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                    ).withRel("find medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllActiveByDoctor(medicalLicenseNumber)
+                                    ).withRel("find active medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllCanceledByDoctor(medicalLicenseNumber)
+                                    ).withRel("find canceled medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllCompletedByDoctor(medicalLicenseNumber)
+                                    ).withRel("find completed medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.cancel(dto.getId())
+                                    ).withRel("cancel_medical_slot_by_id")
+                            );
+                });
+    }
+
+    @Override
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(String medicalLicenseNumber) {
+        return doctorFinderUtil
+                .findByLicenseNumber(medicalLicenseNumber)
+                .flatMapMany(doctor -> {
+                    return medicalSlotRepository
+                            .findAll()
+                            .filter(slot -> slot.getDoctor().getId().equals(doctor.getId())
+                                    && slot.getCanceledAt() == null
+                                    && slot.getCompletedAt() != null
+                            )
+                            .switchIfEmpty(Flux.empty())
+                            .flatMap(MedicalSlotResponseMapper::mapToMono);
+                })
+                .map(dto -> {
+                    return HalResourceWrapper
+                            .wrap(dto)
+                            .withLinks(
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findById(dto.getId())
+                                    ).withRel("find_medical_slot_by_id"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                    ).withRel("find medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllActiveByDoctor(medicalLicenseNumber)
+                                    ).withRel("find active medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllCanceledByDoctor(medicalLicenseNumber)
+                                    ).withRel("find canceled medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllCompletedByDoctor(medicalLicenseNumber)
+                                    ).withRel("find completed medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.cancel(dto.getId())
@@ -102,8 +221,28 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .withLinks(
                                     linkTo(
                                             MedicalSlotController.class,
+                                            MedicalSlotController::findAll
+                                    ).withSelfRel(),
+                                    linkTo(
+                                            MedicalSlotController.class,
                                             controller -> controller.findById(dto.getId())
                                     ).withRel("find_medical_slot_by_id"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                    ).withRel("find medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllActiveByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                    ).withRel("find active medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllCanceledByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                    ).withRel("find canceled medical slots by doctor"),
+                                    linkTo(
+                                            MedicalSlotController.class,
+                                            controller -> controller.findAllCompletedByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                    ).withRel("find completed medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.cancel(dto.getId())

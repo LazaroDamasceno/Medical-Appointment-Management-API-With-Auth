@@ -7,6 +7,8 @@ import reactor.core.publisher.Mono;
 
 public interface MedicalSlotRetrievalService {
     Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(String id);
-    Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(String medicalLicenseNumber);
+    Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(String medicalLicenseNumber);
+    Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(String medicalLicenseNumber);
+    Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(String medicalLicenseNumber);
     Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAll();
 }
