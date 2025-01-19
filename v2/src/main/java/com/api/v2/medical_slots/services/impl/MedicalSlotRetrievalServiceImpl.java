@@ -50,11 +50,11 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                                 linkTo(
                                                         MedicalSlotController.class,
                                                         controller -> controller.findAllByDoctor(medicalLicenseNumber)
-                                                ).withRel("find all medical slots associated with doctor"),
+                                                ).withRel("find_all_medical_slots_associated_with_doctor"),
                                                 linkTo(
                                                         MedicalSlotController.class,
                                                         controller -> controller.cancel(id)
-                                                ).withRel("cancel found medical slot")
+                                                ).withRel("cancel_found_medical_slot")
                                         );
                             });
                 });
@@ -78,7 +78,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.findById(dto.getId())
-                                    ).withRel("find medical slot by id"),
+                                    ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.findAllByDoctor(medicalLicenseNumber)
@@ -86,7 +86,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.cancel(dto.getId())
-                                    ).withRel("cancel medical slot by id")
+                                    ).withRel("cancel_medical_slot_by_id")
                             );
                 });
     }
@@ -103,11 +103,11 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.findById(dto.getId())
-                                    ).withRel("find medical slot by id"),
+                                    ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
                                             controller -> controller.cancel(dto.getId())
-                                    ).withRel("cancel medical slot by id")
+                                    ).withRel("cancel_medical_slot_by_id")
                             );
                 });
     }

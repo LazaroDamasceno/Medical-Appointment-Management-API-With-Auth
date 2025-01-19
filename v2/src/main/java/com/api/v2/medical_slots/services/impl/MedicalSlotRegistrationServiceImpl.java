@@ -58,11 +58,11 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                                                                     linkTo(
                                                                             MedicalSlotController.class,
                                                                             controller -> controller.cancel(id)
-                                                                    ).withRel("cancel just registered medical slot"),
+                                                                    ).withRel("cancel_just_registered_medical_slot"),
                                                                     linkTo(
                                                                             MedicalSlotController.class,
                                                                             controller -> controller.findAllByDoctor(medicalLicenseNumber)
-                                                                    ).withRel("find all medical slots by doctor")
+                                                                    ).withRel("find_all_medical_slots_by_doctor")
                                                             )
                                                     );
                                         }));

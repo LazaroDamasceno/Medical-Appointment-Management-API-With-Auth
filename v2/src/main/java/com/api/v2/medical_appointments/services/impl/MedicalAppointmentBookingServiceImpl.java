@@ -82,15 +82,15 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.ssn())
-                                                ).withRel("find all public insurance medical appointments by customers"),
+                                                ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.ssn())
-                                                ).withRel("find all private insurance medical appointments by customers"),
+                                                ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPaidByPatientByCustomer(bookingDto.ssn())
-                                                ).withRel("find all paid by patient medical appointments by customers")
+                                                ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
                                         );
                             });
                 });
@@ -126,15 +126,15 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.ssn())
-                                                ).withRel("find all public insurance medical appointments by customers"),
+                                                ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.ssn())
-                                                ).withRel("find all private insurance medical appointments by customers"),
+                                                ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPaidByPatientByCustomer(bookingDto.ssn())
-                                                ).withRel("find all paid by patient medical appointments by customers")
+                                                ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
                                         );
                             });
                 });
@@ -170,15 +170,15 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.ssn())
-                                                ).withRel("find all public insurance medical appointments by customers"),
+                                                ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.ssn())
-                                                ).withRel("find all private insurance medical appointments by customers"),
+                                                ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPaidByPatientByCustomer(bookingDto.ssn())
-                                                ).withRel("find all paid by patient medical appointments by customers")
+                                                ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
                                         );
                             });
                 });

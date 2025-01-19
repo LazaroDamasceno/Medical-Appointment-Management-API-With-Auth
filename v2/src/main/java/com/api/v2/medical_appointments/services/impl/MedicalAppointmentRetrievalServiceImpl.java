@@ -47,15 +47,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                     linkTo(
                                             MedicalAppointmentController.class,
                                             controller -> controller.findAllPaidByPatientByCustomer(ssn)
-                                    ).withRel("find all paid by patient medical appointments by customer"),
+                                    ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                     linkTo(
                                             MedicalAppointmentController.class,
                                             controller -> controller.findAllPrivateInsuranceByCustomer(ssn)
-                                    ).withRel("find all private insurance medical appointments by customer"),
+                                    ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                     linkTo(
                                             MedicalAppointmentController.class,
                                             controller -> controller.findAllPublicInsuranceByCustomer(ssn)
-                                    ).withRel("find all public insurance medical appointments by customer")
+                                    ).withRel("find_all_public_insurance_medical_appointments_by_customer")
                             );
                 });
     }
@@ -72,11 +72,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                     linkTo(
                                             MedicalAppointmentController.class,
                                             controller -> controller.findById(dto.getId())
-                                    ).withRel("find medical appointment by id"),
+                                    ).withRel("find_medical_appointment_by_id"),
                                     linkTo(
                                             MedicalAppointmentController.class,
                                             controller -> controller.cancel(dto.getId())
-                                    ).withRel("cancel medical appointment by id")
+                                    ).withRel("cancel_medical_appointment_by_id")
                             );
                 });
     }
@@ -101,11 +101,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPaidByPatientByCustomer(ssn)
-                                                ).withRel("find all paid by patient medical appointments by customer"),
+                                                ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPrivateInsuranceByCustomer(ssn)
-                                                ).withRel("find all private insurance medical appointments by customer"),
+                                                ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(ssn)
@@ -113,11 +113,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.cancel(dto.getId())
-                                                ).withRel("cancel found medical appointment by id"),
+                                                ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findById(dto.getId())
-                                                ).withRel("find medical appointment by id")
+                                                ).withRel("find_medical_appointment_by_id")
                                         );
                             });
                 });
@@ -143,7 +143,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPaidByPatientByCustomer(ssn)
-                                                ).withRel("find all paid by patient medical appointments by customer"),
+                                                ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPrivateInsuranceByCustomer(ssn)
@@ -151,11 +151,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(ssn)
-                                                ).withRel("find all public insurance medical appointments by customer"),
+                                                ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.cancel(dto.getId())
-                                                ).withRel("cancel found medical appointment by id"),
+                                                ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller
@@ -189,15 +189,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPrivateInsuranceByCustomer(ssn)
-                                                ).withRel("find all private insurance medical appointments by customer"),
+                                                ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.findAllPublicInsuranceByCustomer(ssn)
-                                                ).withRel("find all public insurance medical appointments by customer"),
+                                                ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller.cancel(dto.getId())
-                                                ).withRel("cancel found medical appointment by id"),
+                                                ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
                                                         controller -> controller
