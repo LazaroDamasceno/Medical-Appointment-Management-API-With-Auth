@@ -56,7 +56,7 @@ public class MedicalSlotController {
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<MedicalSlotResponseDto> findAll() {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAll() {
         return retrievalService.findAll();
     }
 }

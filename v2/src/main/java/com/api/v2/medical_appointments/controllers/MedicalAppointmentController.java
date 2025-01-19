@@ -61,7 +61,7 @@ public class MedicalAppointmentController {
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<MedicalAppointmentResponseDto> findAll() {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAll() {
         return retrievalService.findAll();
     }
 

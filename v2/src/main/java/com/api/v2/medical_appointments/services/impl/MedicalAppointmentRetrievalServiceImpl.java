@@ -61,10 +61,24 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<MedicalAppointmentResponseDto> findAll() {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAll() {
         return medicalAppointmentRepository
                 .findAll()
-                .flatMap(MedicalAppointmentResponseMapper::mapToMono);
+                .flatMap(MedicalAppointmentResponseMapper::mapToMono)
+                .map(dto -> {
+                    return HalResourceWrapper
+                            .wrap(dto)
+                            .withLinks(
+                                    linkTo(
+                                            MedicalAppointmentController.class,
+                                            controller -> controller.findById(dto.getId())
+                                    ).withRel("find medical appointment by id"),
+                                    linkTo(
+                                            MedicalAppointmentController.class,
+                                            controller -> controller.cancel(dto.getId())
+                                    ).withRel("cancel medical appointment by id")
+                            );
+                });
     }
 
     @Override
