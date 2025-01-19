@@ -7,7 +7,7 @@ import com.api.v2.doctors.utils.DoctorResponseMapper;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 public class MedicalAppointmentResponseDto {
 
@@ -16,7 +16,7 @@ public class MedicalAppointmentResponseDto {
     private DoctorResponseDto doctorResponseDto;
     private String type;
     private LocalDateTime bookedAt;
-    private ZoneId bookAtZone;
+    private ZoneOffset bookAtZone;
 
     public MedicalAppointmentResponseDto() {
     }
@@ -54,7 +54,7 @@ public class MedicalAppointmentResponseDto {
         return bookedAt;
     }
 
-    public ZoneId getBookAtZone() {
+    public ZoneOffset getBookAtZone() {
         return bookAtZone;
     }
 }

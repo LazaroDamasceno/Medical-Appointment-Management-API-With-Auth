@@ -3,12 +3,12 @@ package com.api.v2.medical_slots.dtos;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 public class CanceledMedicalSlotWithoutMedicalAppointmentResponseDto extends MedicalSlotResponseDto {
 
     private LocalDateTime canceledAt;
-    private ZoneId canceledAtZone;
+    private ZoneOffset canceledAtZone;
 
     public CanceledMedicalSlotWithoutMedicalAppointmentResponseDto() {
     }
@@ -30,7 +30,7 @@ public class CanceledMedicalSlotWithoutMedicalAppointmentResponseDto extends Med
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZone() {
+    public ZoneOffset getCanceledAtZone() {
         return canceledAtZone;
     }
 }

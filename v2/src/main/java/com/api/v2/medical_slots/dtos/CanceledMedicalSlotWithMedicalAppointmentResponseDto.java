@@ -5,13 +5,13 @@ import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends MedicalSlotResponseDto {
 
     private MedicalAppointmentResponseDto medicalAppointmentResponseDto;
     private LocalDateTime canceledAt;
-    private ZoneId canceledAtZone;
+    private ZoneOffset canceledAtZone;
 
     public CanceledMedicalSlotWithMedicalAppointmentResponseDto() {
     }
@@ -38,7 +38,7 @@ public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends Medica
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZone() {
+    public ZoneOffset getCanceledAtZone() {
         return canceledAtZone;
     }
 }

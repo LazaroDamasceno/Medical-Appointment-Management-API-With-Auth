@@ -3,12 +3,12 @@ package com.api.v2.medical_appointments.dtos;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 public class CompletedMedicalAppointmentResponseDto extends MedicalAppointmentResponseDto {
 
     private LocalDateTime completedAt;
-    private ZoneId completedAtZone;
+    private ZoneOffset completedAtZone;
 
     public CompletedMedicalAppointmentResponseDto() {
     }
@@ -27,7 +27,7 @@ public class CompletedMedicalAppointmentResponseDto extends MedicalAppointmentRe
         return completedAt;
     }
 
-    public ZoneId getCompletedAtZone() {
+    public ZoneOffset getCompletedAtZone() {
         return completedAtZone;
     }
 }

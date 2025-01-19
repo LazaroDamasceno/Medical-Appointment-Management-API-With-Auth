@@ -7,7 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @Document
 public class Card {
@@ -19,7 +20,7 @@ public class Card {
         private String cvv_cvc;
         private LocalDate dueDate;
         private LocalDateTime createdAt;
-        private ZoneId createdAtZone;
+        private ZoneOffset createdAtZone;
 
     public Card() {
     }
@@ -35,8 +36,8 @@ public class Card {
         this.bank = bank;
         this.cvv_cvc = cvv_cvc;
         this.dueDate = dueDate;
-        this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.createdAt = OffsetDateTime.now().toLocalDateTime();
+        this.createdAtZone = OffsetDateTime.now().getOffset();
     }
 
     public static Card create(String type, CardRegistrationDto registrationDto) {
@@ -72,7 +73,7 @@ public class Card {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
+    public ZoneOffset getCreatedAtZone() {
         return createdAtZone;
     }
 }

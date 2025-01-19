@@ -7,7 +7,8 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 @Document
 public class MedicalAppointment {
@@ -18,13 +19,13 @@ public class MedicalAppointment {
     private Customer customer;
     private Doctor doctor;
     private LocalDateTime bookedAt;
-    private ZoneId bookedAtZone;
+    private ZoneOffset bookedAtZone;
     private LocalDateTime canceledAt;
-    private ZoneId canceledAtZone;
+    private ZoneOffset canceledAtZone;
     private LocalDateTime completedAt;
-    private ZoneId completedAtZone;
+    private ZoneOffset completedAtZone;
     private LocalDateTime createdAt;
-    private ZoneId createdAtZone;
+    private ZoneOffset createdAtZone;
 
     public MedicalAppointment() {
     }
@@ -34,9 +35,9 @@ public class MedicalAppointment {
         this.customer = customer;
         this.doctor = doctor;
         this.bookedAt = bookedAt;
-        this.bookedAtZone = ZoneId.systemDefault();
-        this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.bookedAtZone = OffsetDateTime.now().getOffset();
+        this.createdAt = OffsetDateTime.now().toLocalDateTime();
+        this.createdAtZone = OffsetDateTime.now().getOffset();
         this.type = type;
     }
 
@@ -45,13 +46,13 @@ public class MedicalAppointment {
     }
 
     public void markAsCompleted() {
-        completedAt = LocalDateTime.now();
-        completedAtZone = ZoneId.systemDefault();
+        completedAt = OffsetDateTime.now().toLocalDateTime();
+        completedAtZone = OffsetDateTime.now().getOffset();
     }
 
     public void markAsCanceled() {
-        canceledAt = LocalDateTime.now();
-        canceledAtZone = ZoneId.systemDefault();
+        canceledAt = OffsetDateTime.now().toLocalDateTime();
+        canceledAtZone = OffsetDateTime.now().getOffset();
     }
 
     public ObjectId getId() {
@@ -70,7 +71,7 @@ public class MedicalAppointment {
         return bookedAt;
     }
 
-    public ZoneId getBookedAtZone() {
+    public ZoneOffset getBookedAtZone() {
         return bookedAtZone;
     }
 
@@ -78,7 +79,7 @@ public class MedicalAppointment {
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZone() {
+    public ZoneOffset getCanceledAtZone() {
         return canceledAtZone;
     }
 
@@ -86,7 +87,7 @@ public class MedicalAppointment {
         return completedAt;
     }
 
-    public ZoneId getCompletedAtZone() {
+    public ZoneOffset getCompletedAtZone() {
         return completedAtZone;
     }
 
@@ -94,7 +95,7 @@ public class MedicalAppointment {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
+    public ZoneOffset getCreatedAtZone() {
         return createdAtZone;
     }
 

@@ -2,13 +2,15 @@ package com.api.v2.people.domain;
 
 import com.api.v2.people.dtos.PersonModificationDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Person {
@@ -24,9 +26,9 @@ public class Person {
     private String phoneNumber;
     private String gender;
     private LocalDateTime createdAt;
-    private ZoneId createdAtZone;
+    private ZoneOffset createdAtZone;
     private LocalDateTime modifiedAt;
-    private ZoneId modifiedAtZone;
+    private ZoneOffset modifiedAtZone;
 
     public Person() {
     }
@@ -41,8 +43,8 @@ public class Person {
         this.email = registrationDto.email();
         this.phoneNumber = registrationDto.phoneNumber();
         this.gender = registrationDto.gender();
-        this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.createdAt = OffsetDateTime.now().toLocalDateTime();
+        this.createdAtZone = OffsetDateTime.now().getOffset();
     }
 
     public static Person create(PersonRegistrationDto registrationDto) {
@@ -57,8 +59,8 @@ public class Person {
         this.email = modificationDto.email();
         this.phoneNumber = modificationDto.phoneNumber();
         this.gender = modificationDto.gender();
-        this.modifiedAt = LocalDateTime.now();
-        this.modifiedAtZone = ZoneId.systemDefault();
+        this.modifiedAt = OffsetDateTime.now().toLocalDateTime();
+        this.modifiedAtZone = OffsetDateTime.now().getOffset();
     }
 
     public String getFullName() {
@@ -96,7 +98,7 @@ public class Person {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
+    public ZoneOffset getCreatedAtZone() {
         return createdAtZone;
     }
 
@@ -104,7 +106,7 @@ public class Person {
         return modifiedAt;
     }
 
-    public ZoneId getModifiedAtZone() {
+    public ZoneOffset getModifiedAtZone() {
         return modifiedAtZone;
     }
 }
