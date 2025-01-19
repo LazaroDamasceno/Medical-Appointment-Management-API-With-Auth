@@ -46,7 +46,6 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                             .then(Mono.defer(() -> {
                                 MedicalSlot medicalSlot = MedicalSlot.create(doctor, registrationDto.availableAt());
                                 String id = medicalSlot.getId().toString();
-                                String medicalLicenseNumber = medicalSlot.getDoctor().getLicenseNumber();
                                 return medicalSlotRepository
                                         .save(medicalSlot)
                                         .then(Mono.defer(() -> {
