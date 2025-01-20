@@ -27,7 +27,7 @@ public class MedicalSlotResponseDto {
         this.availableAtZone = medicalSlot.getAvailableAtZone();
     }
 
-    public static MedicalSlotResponseDto create(MedicalSlot medicalSlot) {
+    public static MedicalSlotResponseDto from(MedicalSlot medicalSlot) {
         return new MedicalSlotResponseDto(medicalSlot);
     }
 

@@ -22,7 +22,7 @@ public class MedicalAppointmentWithoutCustomerAndDoctorResponseDto {
         this.bookAtZone = medicalAppointment.getBookedAtZone();
     }
 
-    public static MedicalAppointmentWithoutCustomerAndDoctorResponseDto create(MedicalAppointment medicalAppointment) {
+    public static MedicalAppointmentWithoutCustomerAndDoctorResponseDto from(MedicalAppointment medicalAppointment) {
         return new MedicalAppointmentWithoutCustomerAndDoctorResponseDto(medicalAppointment);
     }
 

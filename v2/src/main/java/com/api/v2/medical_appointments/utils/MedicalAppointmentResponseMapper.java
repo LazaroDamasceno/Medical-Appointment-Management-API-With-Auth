@@ -11,16 +11,16 @@ public class MedicalAppointmentResponseMapper {
 
     public static CompleteMedicalAppointmentResponseDto mapToDto(MedicalAppointment medicalAppointment) {
         if (medicalAppointment.getCanceledAt() != null) {
-            return CanceledCompleteMedicalAppointmentResponseDto.create(medicalAppointment);
+            return CanceledCompleteMedicalAppointmentResponseDto.from(medicalAppointment);
         }
         else if (medicalAppointment.getCompletedAt() != null) {
-            CompletedCompleteMedicalAppointmentResponseDto.create(medicalAppointment);
+            CompletedCompleteMedicalAppointmentResponseDto.from(medicalAppointment);
         }
-        return CompleteMedicalAppointmentResponseDto.create(medicalAppointment);
+        return CompleteMedicalAppointmentResponseDto.from(medicalAppointment);
     }
 
     public static MedicalAppointmentWithoutCustomerAndDoctorResponseDto mapToDtoWithoutCustomerAndDoctor(MedicalAppointment medicalAppointment) {
-       return MedicalAppointmentWithoutCustomerAndDoctorResponseDto.create(medicalAppointment);
+       return MedicalAppointmentWithoutCustomerAndDoctorResponseDto.from(medicalAppointment);
     }
 
     public static Mono<CompleteMedicalAppointmentResponseDto> mapToMono(MedicalAppointment medicalAppointment) {

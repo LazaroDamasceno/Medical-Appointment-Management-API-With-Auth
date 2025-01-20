@@ -30,7 +30,7 @@ public class CompleteMedicalAppointmentResponseDto {
         this.bookAtZone = medicalAppointment.getBookedAtZone();
     }
 
-    public static CompleteMedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
+    public static CompleteMedicalAppointmentResponseDto from(MedicalAppointment medicalAppointment) {
         return new CompleteMedicalAppointmentResponseDto(medicalAppointment);
     }
 

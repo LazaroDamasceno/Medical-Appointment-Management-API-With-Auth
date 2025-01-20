@@ -4,7 +4,6 @@ import com.api.v2.cards.domain.Card;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
