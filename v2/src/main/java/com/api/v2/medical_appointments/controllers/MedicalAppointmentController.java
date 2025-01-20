@@ -1,7 +1,7 @@
 package com.api.v2.medical_appointments.controllers;
 
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
-import com.api.v2.medical_appointments.dtos.CompleteMedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentBookingService;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCompletionService;
@@ -37,49 +37,49 @@ public class MedicalAppointmentController {
 
     @PostMapping("/public-insurance")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Mono<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.publicInsuranceBook(bookingDto);
     }
 
     @PostMapping("/private-insurance")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Mono<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.privateInsuranceBook(bookingDto);
     }
 
     @PostMapping("/paid-by-patient")
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Mono<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
         return bookingService.paidByPatientBook(bookingDto);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Mono<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>>findById(@PathVariable String id) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>>findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findAll() {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAll() {
         return retrievalService.findAll();
     }
 
     @GetMapping("/public-insurance/{ssn}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String ssn) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPublicInsuranceByCustomer(ssn);
     }
 
     @GetMapping("/private-insurance/{ssn}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String ssn) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPrivateInsuranceByCustomer(ssn);
     }
 
     @GetMapping("/paid-by-patient/{ssn}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String ssn) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String ssn) {
         return retrievalService.findAllPaidByPatientByCustomer(ssn);
     }
 
