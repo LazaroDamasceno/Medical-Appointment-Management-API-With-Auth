@@ -4,7 +4,6 @@ import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.dtos.CanceledCompleteMedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.dtos.CompletedCompleteMedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.dtos.CompleteMedicalAppointmentResponseDto;
-import com.api.v2.medical_appointments.dtos.MedicalAppointmentWithoutCustomerAndDoctorResponseDto;
 import reactor.core.publisher.Mono;
 
 public class MedicalAppointmentResponseMapper {
@@ -17,10 +16,6 @@ public class MedicalAppointmentResponseMapper {
             CompletedCompleteMedicalAppointmentResponseDto.create(medicalAppointment);
         }
         return CompleteMedicalAppointmentResponseDto.create(medicalAppointment);
-    }
-
-    public static MedicalAppointmentWithoutCustomerAndDoctorResponseDto mapToDtoWithoutCustomerAndDoctor(MedicalAppointment medicalAppointment) {
-       return MedicalAppointmentWithoutCustomerAndDoctorResponseDto.create(medicalAppointment);
     }
 
     public static Mono<CompleteMedicalAppointmentResponseDto> mapToMono(MedicalAppointment medicalAppointment) {
