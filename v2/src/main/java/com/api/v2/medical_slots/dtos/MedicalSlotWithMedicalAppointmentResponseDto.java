@@ -1,12 +1,13 @@
 package com.api.v2.medical_slots.dtos;
 
-import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.CompleteMedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.MedicalAppointmentWithoutCustomerAndDoctorResponseDto;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 
 public class MedicalSlotWithMedicalAppointmentResponseDto extends MedicalSlotResponseDto {
 
-    private MedicalAppointmentResponseDto medicalAppointmentResponseDto;
+    private MedicalAppointmentWithoutCustomerAndDoctorResponseDto completeMedicalAppointmentResponseDto;
 
     public MedicalSlotWithMedicalAppointmentResponseDto() {
     }
@@ -16,14 +17,14 @@ public class MedicalSlotWithMedicalAppointmentResponseDto extends MedicalSlotRes
         if (medicalSlot.getMedicalAppointment() == null) {
             return;
         }
-        this.medicalAppointmentResponseDto = MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment());
+        this.completeMedicalAppointmentResponseDto = MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment());
     }
 
     public static MedicalSlotWithMedicalAppointmentResponseDto create(MedicalSlot medicalSlot) {
         return new MedicalSlotWithMedicalAppointmentResponseDto(medicalSlot);
     }
 
-    public MedicalAppointmentResponseDto getMedicalAppointmentResponseDto() {
-        return medicalAppointmentResponseDto;
+    public MedicalAppointmentWithoutCustomerAndDoctorResponseDto getCompleteMedicalAppointmentResponseDto() {
+        return completeMedicalAppointmentResponseDto;
     }
 }

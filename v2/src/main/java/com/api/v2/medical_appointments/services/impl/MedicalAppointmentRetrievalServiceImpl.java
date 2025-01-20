@@ -3,7 +3,7 @@ package com.api.v2.medical_appointments.services.impl;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.CompleteMedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentRetrievalService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
@@ -31,7 +31,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findById(String id) {
+    public Mono<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findById(String id) {
         return medicalAppointmentFinderUtil
                 .findById(id)
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono)
@@ -61,7 +61,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAll() {
+    public Flux<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findAll() {
         return medicalAppointmentRepository
                 .findAll()
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono)
@@ -82,7 +82,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(String ssn) {
+    public Flux<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(String ssn) {
         return customerFinderUtil
                 .findBySsn(ssn)
                 .flatMapMany(customer -> {
@@ -124,7 +124,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(String ssn) {
+    public Flux<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(String ssn) {
         return customerFinderUtil
                 .findBySsn(ssn)
                 .flatMapMany(customer -> {
@@ -166,7 +166,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(String ssn) {
+    public Flux<HalResourceWrapper<CompleteMedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(String ssn) {
         return customerFinderUtil
                 .findBySsn(ssn)
                 .flatMapMany(customer -> {

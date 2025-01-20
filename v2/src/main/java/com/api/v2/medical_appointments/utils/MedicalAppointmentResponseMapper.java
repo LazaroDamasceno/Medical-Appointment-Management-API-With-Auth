@@ -1,24 +1,24 @@
 package com.api.v2.medical_appointments.utils;
 
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
-import com.api.v2.medical_appointments.dtos.CanceledMedicalAppointmentResponseDto;
-import com.api.v2.medical_appointments.dtos.CompletedMedicalAppointmentResponseDto;
-import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.CanceledCompleteMedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.CompletedCompleteMedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.CompleteMedicalAppointmentResponseDto;
 import reactor.core.publisher.Mono;
 
 public class MedicalAppointmentResponseMapper {
 
-    public static MedicalAppointmentResponseDto mapToDto(MedicalAppointment medicalAppointment) {
+    public static CompleteMedicalAppointmentResponseDto mapToDto(MedicalAppointment medicalAppointment) {
         if (medicalAppointment.getCanceledAt() != null) {
-            return CanceledMedicalAppointmentResponseDto.create(medicalAppointment);
+            return CanceledCompleteMedicalAppointmentResponseDto.create(medicalAppointment);
         }
         else if (medicalAppointment.getCompletedAt() != null) {
-            CompletedMedicalAppointmentResponseDto.create(medicalAppointment);
+            CompletedCompleteMedicalAppointmentResponseDto.create(medicalAppointment);
         }
-        return MedicalAppointmentResponseDto.create(medicalAppointment);
+        return CompleteMedicalAppointmentResponseDto.create(medicalAppointment);
     }
 
-    public static Mono<MedicalAppointmentResponseDto> mapToMono(MedicalAppointment medicalAppointment) {
+    public static Mono<CompleteMedicalAppointmentResponseDto> mapToMono(MedicalAppointment medicalAppointment) {
         return Mono.just(mapToDto(medicalAppointment));
     }
 }

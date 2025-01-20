@@ -5,22 +5,22 @@ import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentResponseDto {
+public class CanceledCompleteMedicalAppointmentResponseDto extends CompleteMedicalAppointmentResponseDto {
 
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZone;
 
-    public CanceledMedicalAppointmentResponseDto() {
+    public CanceledCompleteMedicalAppointmentResponseDto() {
     }
 
-    private CanceledMedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
+    private CanceledCompleteMedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
         super(medicalAppointment);
         this.canceledAt = medicalAppointment.getCanceledAt();
         this.canceledAtZone = medicalAppointment.getCanceledAtZone();
     }
 
-    public static CanceledMedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
-        return new CanceledMedicalAppointmentResponseDto(medicalAppointment);
+    public static CanceledCompleteMedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
+        return new CanceledCompleteMedicalAppointmentResponseDto(medicalAppointment);
     }
 
     public LocalDateTime getCanceledAt() {

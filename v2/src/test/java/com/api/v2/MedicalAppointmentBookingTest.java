@@ -1,7 +1,7 @@
 package com.api.v2;
 
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
-import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.CompleteMedicalAppointmentResponseDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ public class MedicalAppointmentBookingTest {
                 .bodyValue(bookingDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
-                .expectBody(MedicalAppointmentResponseDto.class);
+                .expectBody(CompleteMedicalAppointmentResponseDto.class);
     }
 
     @Order(2)

@@ -9,7 +9,7 @@ import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class MedicalAppointmentResponseDto {
+public class MedicalAppointmentWithoutCustomerAndDoctorResponseDto {
 
     private String id;
     private CustomerResponseDto customerResponseDto;
@@ -18,10 +18,10 @@ public class MedicalAppointmentResponseDto {
     private LocalDateTime bookedAt;
     private ZoneId bookAtZone;
 
-    public MedicalAppointmentResponseDto() {
+    public MedicalAppointmentWithoutCustomerAndDoctorResponseDto() {
     }
 
-    protected MedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
+    protected MedicalAppointmentWithoutCustomerAndDoctorResponseDto(MedicalAppointment medicalAppointment) {
         this.id = medicalAppointment.getId().toString();
         this.customerResponseDto = CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer());
         this.doctorResponseDto = DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor());
@@ -30,8 +30,8 @@ public class MedicalAppointmentResponseDto {
         this.bookAtZone = medicalAppointment.getBookedAtZone();
     }
 
-    public static MedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
-        return new MedicalAppointmentResponseDto(medicalAppointment);
+    public static MedicalAppointmentWithoutCustomerAndDoctorResponseDto create(MedicalAppointment medicalAppointment) {
+        return new MedicalAppointmentWithoutCustomerAndDoctorResponseDto(medicalAppointment);
     }
 
     public String getId() {
