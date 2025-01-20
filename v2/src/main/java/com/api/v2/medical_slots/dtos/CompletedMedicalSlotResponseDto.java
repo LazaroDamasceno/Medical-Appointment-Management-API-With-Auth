@@ -26,7 +26,7 @@ public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
         this.completedAtZone = medicalSlot.getCanceledAtZone();
     }
 
-    public static CompletedMedicalSlotResponseDto from(MedicalSlot medicalSlot) {
+    public static CompletedMedicalSlotResponseDto create(MedicalSlot medicalSlot) {
         return new CompletedMedicalSlotResponseDto(medicalSlot);
     }
 

@@ -22,7 +22,7 @@ public class CanceledMedicalSlotWithoutMedicalAppointmentResponseDto extends Med
         this.canceledAtZone = medicalSlot.getCanceledAtZone();
     }
 
-    public static CanceledMedicalSlotWithoutMedicalAppointmentResponseDto from(MedicalSlot medicalSlot) {
+    public static CanceledMedicalSlotWithoutMedicalAppointmentResponseDto create(MedicalSlot medicalSlot) {
         return new CanceledMedicalSlotWithoutMedicalAppointmentResponseDto(medicalSlot);
     }
 

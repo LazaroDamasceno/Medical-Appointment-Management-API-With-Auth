@@ -13,17 +13,17 @@ public class MedicalSlotResponseMapper {
         Optional<MedicalAppointment> optional = Optional.ofNullable(medicalSlot.getMedicalAppointment());
         if (optional.isPresent()) {
             if (medicalSlot.getCompletedAt() != null) {
-                return CompletedMedicalSlotResponseDto.from(medicalSlot);
+                return CompletedMedicalSlotResponseDto.create(medicalSlot);
             }
             else if (medicalSlot.getCanceledAt() != null) {
-                return CanceledMedicalSlotWithMedicalAppointmentResponseDto.from(medicalSlot);
+                return CanceledMedicalSlotWithMedicalAppointmentResponseDto.create(medicalSlot);
             }
-            return MedicalSlotWithMedicalAppointmentResponseDto.from(medicalSlot);
+            return MedicalSlotWithMedicalAppointmentResponseDto.create(medicalSlot);
         }
         else if (optional.isEmpty()) {
-            return CanceledMedicalSlotWithoutMedicalAppointmentResponseDto.from(medicalSlot);
+            return CanceledMedicalSlotWithoutMedicalAppointmentResponseDto.create(medicalSlot);
         }
-        return MedicalSlotResponseDto.from(medicalSlot);
+        return MedicalSlotResponseDto.create(medicalSlot);
     }
 
     public static Mono<MedicalSlotResponseDto> mapToMono(MedicalSlot medicalSlot) {
