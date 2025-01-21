@@ -12,8 +12,8 @@ import java.time.ZoneId;
 public class MedicalAppointmentResponseDto {
 
     private String id;
-    private CustomerResponseDto customerResponseDto;
-    private DoctorResponseDto doctorResponseDto;
+    private CustomerResponseDto customer;
+    private DoctorResponseDto doctor;
     private String type;
     private LocalDateTime bookedAt;
     private ZoneId bookAtZone;
@@ -23,14 +23,14 @@ public class MedicalAppointmentResponseDto {
 
     protected MedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
         this.id = medicalAppointment.getId().toString();
-        this.customerResponseDto = CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer());
-        this.doctorResponseDto = DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor());
+        this.customer = CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer());
+        this.doctor = DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor());
         this.type = medicalAppointment.getType();
         this.bookedAt = medicalAppointment.getBookedAt();
         this.bookAtZone = medicalAppointment.getBookedAtZone();
     }
 
-    public static MedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
+    public static MedicalAppointmentResponseDto from(MedicalAppointment medicalAppointment) {
         return new MedicalAppointmentResponseDto(medicalAppointment);
     }
 
@@ -39,11 +39,11 @@ public class MedicalAppointmentResponseDto {
     }
 
     public CustomerResponseDto getCustomerResponseDto() {
-        return customerResponseDto;
+        return customer;
     }
 
     public DoctorResponseDto getDoctorResponseDto() {
-        return doctorResponseDto;
+        return doctor;
     }
 
     public String getType() {

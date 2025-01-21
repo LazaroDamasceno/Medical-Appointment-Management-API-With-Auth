@@ -10,7 +10,7 @@ import java.time.ZoneId;
 public class MedicalSlotResponseDto {
 
     private String id;
-    private DoctorResponseDto doctorResponseDto;
+    private DoctorResponseDto doctor;
     private LocalDateTime availableAt;
     private ZoneId availableAtZone;
 
@@ -22,7 +22,7 @@ public class MedicalSlotResponseDto {
             return;
         }
         this.id = medicalSlot.getId().toString();
-        this.doctorResponseDto = DoctorResponseMapper.mapToDto(medicalSlot.getDoctor());
+        this.doctor = DoctorResponseMapper.mapToDto(medicalSlot.getDoctor());
         this.availableAt = medicalSlot.getAvailableAt();
         this.availableAtZone = medicalSlot.getAvailableAtZone();
     }
@@ -36,7 +36,7 @@ public class MedicalSlotResponseDto {
     }
 
     public DoctorResponseDto getDoctorResponseDto() {
-        return doctorResponseDto;
+        return doctor;
     }
 
     public LocalDateTime getAvailableAt() {

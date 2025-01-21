@@ -26,7 +26,7 @@ public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends Medica
         this.canceledAtZone = medicalSlot.getCanceledAtZone();
     }
 
-    public static CanceledMedicalSlotWithMedicalAppointmentResponseDto create(MedicalSlot medicalSlot) {
+    public static CanceledMedicalSlotWithMedicalAppointmentResponseDto from(MedicalSlot medicalSlot) {
         return new CanceledMedicalSlotWithMedicalAppointmentResponseDto(medicalSlot);
     }
 

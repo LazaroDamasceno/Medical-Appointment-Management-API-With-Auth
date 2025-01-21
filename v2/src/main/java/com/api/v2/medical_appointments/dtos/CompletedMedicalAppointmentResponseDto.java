@@ -19,7 +19,7 @@ public class CompletedMedicalAppointmentResponseDto extends MedicalAppointmentRe
         this.completedAtZone = medicalAppointment.getCompletedAtZone();
     }
 
-    public static CompletedMedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
+    public static CompletedMedicalAppointmentResponseDto from(MedicalAppointment medicalAppointment) {
         return new CompletedMedicalAppointmentResponseDto(medicalAppointment);
     }
 

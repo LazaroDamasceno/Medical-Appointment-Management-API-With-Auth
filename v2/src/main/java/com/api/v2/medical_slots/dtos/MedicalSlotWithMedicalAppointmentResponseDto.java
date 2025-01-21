@@ -19,7 +19,7 @@ public class MedicalSlotWithMedicalAppointmentResponseDto extends MedicalSlotRes
         this.medicalAppointmentResponseDto = MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment());
     }
 
-    public static MedicalSlotWithMedicalAppointmentResponseDto create(MedicalSlot medicalSlot) {
+    public static MedicalSlotWithMedicalAppointmentResponseDto from(MedicalSlot medicalSlot) {
         return new MedicalSlotWithMedicalAppointmentResponseDto(medicalSlot);
     }
 

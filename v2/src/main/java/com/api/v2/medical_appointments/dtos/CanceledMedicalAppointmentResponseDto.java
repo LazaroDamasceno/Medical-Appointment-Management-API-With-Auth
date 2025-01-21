@@ -19,7 +19,7 @@ public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentRes
         this.canceledAtZone = medicalAppointment.getCanceledAtZone();
     }
 
-    public static CanceledMedicalAppointmentResponseDto create(MedicalAppointment medicalAppointment) {
+    public static CanceledMedicalAppointmentResponseDto from(MedicalAppointment medicalAppointment) {
         return new CanceledMedicalAppointmentResponseDto(medicalAppointment);
     }
 
