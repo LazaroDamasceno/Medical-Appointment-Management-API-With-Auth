@@ -1,12 +1,12 @@
 package com.api.v2.medical_slots.dtos;
 
-import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.MedicalAppointmentWithoutDoctorResponseDto;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 
 public class MedicalSlotWithMedicalAppointmentResponseDto extends MedicalSlotResponseDto {
 
-    private MedicalAppointmentResponseDto medicalAppointmentResponseDto;
+    private MedicalAppointmentWithoutDoctorResponseDto medicalAppointment;
 
     public MedicalSlotWithMedicalAppointmentResponseDto() {
     }
@@ -16,14 +16,14 @@ public class MedicalSlotWithMedicalAppointmentResponseDto extends MedicalSlotRes
         if (medicalSlot.getMedicalAppointment() == null) {
             return;
         }
-        this.medicalAppointmentResponseDto = MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment());
+        this.medicalAppointment = MedicalAppointmentResponseMapper.mapToDtoWithoutDoctor(medicalSlot.getMedicalAppointment());
     }
 
     public static MedicalSlotWithMedicalAppointmentResponseDto from(MedicalSlot medicalSlot) {
         return new MedicalSlotWithMedicalAppointmentResponseDto(medicalSlot);
     }
 
-    public MedicalAppointmentResponseDto getMedicalAppointmentResponseDto() {
-        return medicalAppointmentResponseDto;
+    public MedicalAppointmentWithoutDoctorResponseDto getMedicalAppointment() {
+        return medicalAppointment;
     }
 }

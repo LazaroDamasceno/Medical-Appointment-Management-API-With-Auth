@@ -1,6 +1,7 @@
 package com.api.v2.medical_slots.dtos;
 
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
+import com.api.v2.medical_appointments.dtos.MedicalAppointmentWithoutDoctorResponseDto;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 
@@ -9,7 +10,7 @@ import java.time.ZoneId;
 
 public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends MedicalSlotResponseDto {
 
-    private MedicalAppointmentResponseDto medicalAppointmentResponseDto;
+    private MedicalAppointmentWithoutDoctorResponseDto medicalAppointmentResponseDto;
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZone;
 
@@ -21,7 +22,7 @@ public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends Medica
         if (medicalSlot.getMedicalAppointment() == null) {
             return;
         }
-        this.medicalAppointmentResponseDto = MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment());
+        this.medicalAppointmentResponseDto = MedicalAppointmentResponseMapper.mapToDtoWithoutDoctor(medicalSlot.getMedicalAppointment());
         this.canceledAt = medicalSlot.getCanceledAt();
         this.canceledAtZone = medicalSlot.getCanceledAtZone();
     }
@@ -30,7 +31,7 @@ public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends Medica
         return new CanceledMedicalSlotWithMedicalAppointmentResponseDto(medicalSlot);
     }
 
-    public MedicalAppointmentResponseDto getMedicalAppointmentResponseDto() {
+    public MedicalAppointmentWithoutDoctorResponseDto getMedicalAppointmentResponseDto() {
         return medicalAppointmentResponseDto;
     }
 
