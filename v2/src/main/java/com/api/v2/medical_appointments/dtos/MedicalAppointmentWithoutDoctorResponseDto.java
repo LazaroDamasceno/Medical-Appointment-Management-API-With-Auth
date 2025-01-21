@@ -34,7 +34,7 @@ public class MedicalAppointmentWithoutDoctorResponseDto {
         return id;
     }
 
-    public CustomerResponseDto getCustomerResponseDto() {
+    public CustomerResponseDto getCustomer() {
         return customer;
     }
 

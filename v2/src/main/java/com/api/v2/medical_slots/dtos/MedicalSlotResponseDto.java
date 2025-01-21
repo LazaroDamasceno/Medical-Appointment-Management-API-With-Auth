@@ -35,7 +35,7 @@ public class MedicalSlotResponseDto {
         return id;
     }
 
-    public DoctorResponseDto getDoctorResponseDto() {
+    public DoctorResponseDto getDoctor() {
         return doctor;
     }
 

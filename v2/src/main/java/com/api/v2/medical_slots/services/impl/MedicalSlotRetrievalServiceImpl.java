@@ -39,7 +39,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                     return MedicalSlotResponseMapper
                             .mapToMono(slot)
                             .map(dto -> {
-                                var medicalLicenseNumber = dto.getDoctorResponseDto().medicalLicenseNumber();
+                                var medicalLicenseNumber = dto.getDoctor().medicalLicenseNumber();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
@@ -229,19 +229,19 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findAllByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                            controller -> controller.findAllByDoctor(dto.getDoctor().medicalLicenseNumber())
                                     ).withRel("find medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findAllActiveByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                            controller -> controller.findAllActiveByDoctor(dto.getDoctor().medicalLicenseNumber())
                                     ).withRel("find active medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findAllCanceledByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                            controller -> controller.findAllCanceledByDoctor(dto.getDoctor().medicalLicenseNumber())
                                     ).withRel("find canceled medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findAllCompletedByDoctor(dto.getDoctorResponseDto().medicalLicenseNumber())
+                                            controller -> controller.findAllCompletedByDoctor(dto.getDoctor().medicalLicenseNumber())
                                     ).withRel("find completed medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,

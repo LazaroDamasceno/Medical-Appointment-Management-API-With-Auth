@@ -38,11 +38,11 @@ public class MedicalAppointmentResponseDto {
         return id;
     }
 
-    public CustomerResponseDto getCustomerResponseDto() {
+    public CustomerResponseDto getCustomer() {
         return customer;
     }
 
-    public DoctorResponseDto getDoctorResponseDto() {
+    public DoctorResponseDto getDoctor() {
         return doctor;
     }
 
