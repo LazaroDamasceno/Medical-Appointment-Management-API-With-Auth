@@ -1,4 +1,4 @@
-package com.api.v2;
+package com.api.v2.medical_appointments;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;

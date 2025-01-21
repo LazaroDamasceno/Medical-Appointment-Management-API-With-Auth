@@ -4,7 +4,7 @@ import com.api.v2.common.AddressDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
 
 public record CustomerRegistrationDto(
-        PersonRegistrationDto personRegistrationDto,
+        PersonRegistrationDto person,
         AddressDto addressDto
 ) {
 }

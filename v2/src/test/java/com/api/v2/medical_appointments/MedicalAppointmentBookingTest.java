@@ -1,4 +1,4 @@
-package com.api.v2;
+package com.api.v2.medical_appointments;
 
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;

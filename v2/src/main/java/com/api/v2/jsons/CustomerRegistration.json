@@ -1,5 +1,5 @@
 {
-  "personRegistrationDto": {
+  "person": {
     "firstName": "Gabriel",
     "middleName": "",
     "lastName": "Nazir",

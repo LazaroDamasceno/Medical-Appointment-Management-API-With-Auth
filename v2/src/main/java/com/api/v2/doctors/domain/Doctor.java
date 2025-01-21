@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Document
-public class Doctor {
+public class  Doctor {
 
     @BsonId
     private ObjectId  id;

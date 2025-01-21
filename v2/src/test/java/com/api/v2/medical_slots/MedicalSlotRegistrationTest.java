@@ -1,4 +1,4 @@
-package com.api.v2;
+package com.api.v2.medical_slots;
 
 import com.api.v2.medical_slots.dtos.MedicalSlotRegistrationDto;
 import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;

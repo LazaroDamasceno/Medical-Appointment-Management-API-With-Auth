@@ -28,11 +28,11 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
 
     @Override
     public Mono<CustomerResponseDto> register(@Valid CustomerRegistrationDto registrationDto) {
-        return onDuplicatedSsn(registrationDto.personRegistrationDto().ssn())
-                .then(onDuplicatedEmail(registrationDto.personRegistrationDto().email()))
+        return onDuplicatedSsn(registrationDto.person().ssn())
+                .then(onDuplicatedEmail(registrationDto.person().email()))
                 .then(Mono.defer(() -> {
                     return personRegistrationService
-                            .register(registrationDto.personRegistrationDto())
+                            .register(registrationDto.person())
                             .flatMap(person ->  {
                                 Customer customer  = Customer.create(registrationDto.addressDto(), person);
                                 return customerRepository.save(customer);

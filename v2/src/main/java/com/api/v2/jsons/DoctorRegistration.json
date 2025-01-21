@@ -1,6 +1,6 @@
 {
   "medicalLicenseNumber": "12345678CA",
-  "personRegistrationDto": {
+  "person": {
     "firstName": "Leo",
     "middleName": "",
     "lastName": "Santos",
