@@ -44,8 +44,8 @@ public class CustomerController {
 
     @GetMapping("{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Mono<CustomerResponseDto> findBySsn(@PathVariable String ssn) {
-        return retrievalService.findById(ssn);
+    public Mono<CustomerResponseDto> findById(@PathVariable String id) {
+        return retrievalService.findById(id);
     }
 
     @GetMapping

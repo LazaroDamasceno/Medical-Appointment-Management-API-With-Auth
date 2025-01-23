@@ -36,7 +36,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                 .findById(id)
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                 .map(dto -> {
-                    String ssn = dto.getCustomer().person().ssn();
+                    String id = dto.getCustomer().person().id();
                     return HalResourceWrapper
                             .wrap(dto)
                             .withLinks(
@@ -46,15 +46,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                     ).withSelfRel(),
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.findAllPaidByPatientByCustomer(ssn)
+                                            controller -> controller.findAllPaidByPatientByCustomer(id)
                                     ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.findAllPrivateInsuranceByCustomer(ssn)
+                                            controller -> controller.findAllPrivateInsuranceByCustomer(id)
                                     ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.findAllPublicInsuranceByCustomer(ssn)
+                                            controller -> controller.findAllPublicInsuranceByCustomer(id)
                                     ).withRel("find_all_public_insurance_medical_appointments_by_customer")
                             );
                 });

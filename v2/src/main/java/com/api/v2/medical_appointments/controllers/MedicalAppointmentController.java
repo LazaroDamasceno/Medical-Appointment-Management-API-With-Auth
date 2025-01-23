@@ -65,22 +65,22 @@ public class MedicalAppointmentController {
         return retrievalService.findAll();
     }
 
-    @GetMapping("/public-insurance/{ssn}")
+    @GetMapping("/public-insurance/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String ssn) {
-        return retrievalService.findAllPublicInsuranceByCustomer(ssn);
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String id) {
+        return retrievalService.findAllPublicInsuranceByCustomer(id);
     }
 
-    @GetMapping("/private-insurance/{ssn}")
+    @GetMapping("/private-insurance/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String ssn) {
-        return retrievalService.findAllPrivateInsuranceByCustomer(ssn);
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String id) {
+        return retrievalService.findAllPrivateInsuranceByCustomer(id);
     }
 
-    @GetMapping("/paid-by-patient/{ssn}")
+    @GetMapping("/paid-by-patient/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String ssn) {
-        return retrievalService.findAllPaidByPatientByCustomer(ssn);
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String id) {
+        return retrievalService.findAllPaidByPatientByCustomer(id);
     }
 
     @PatchMapping("/{id}/completion")

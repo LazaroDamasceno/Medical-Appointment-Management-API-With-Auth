@@ -1,6 +1,6 @@
 package com.api.v2.customers;
 
-import com.api.v2.common.AddressDto;
+import com.api.v2.common.Address;
 import com.api.v2.customers.dtos.CustomerRegistrationDto;
 import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
@@ -32,7 +32,7 @@ public class CustomerRegistrationTest {
                     "1234567890",
                     "male"
             ),
-            new AddressDto(
+            new Address(
                     "LA",
                     "CA",
                     "Downtown",
@@ -74,7 +74,7 @@ public class CustomerRegistrationTest {
                     "1234567890",
                     "male"
             ),
-            new AddressDto(
+            new Address(
                     "LA",
                     "CA",
                     "Downtown",
