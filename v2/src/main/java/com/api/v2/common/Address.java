@@ -1,6 +1,6 @@
 package com.api.v2.common;
 
-public record AddressDto(
+public record Address(
         String state,
         String city,
         String street,

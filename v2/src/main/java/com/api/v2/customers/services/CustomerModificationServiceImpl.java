@@ -26,9 +26,9 @@ public class CustomerModificationServiceImpl implements CustomerModificationServ
     }
 
     @Override
-    public Mono<Void> modify(String ssn, @Valid CustomerModificationDto modificationDto) {
+    public Mono<Void> modify(String id, @Valid CustomerModificationDto modificationDto) {
         return customerFinderUtil
-                .findBySsn(ssn)
+                .findById(id)
                 .flatMap(customer -> {
                     return personModificationService
                             .modify(customer.getPerson(), modificationDto.personModificationDto())

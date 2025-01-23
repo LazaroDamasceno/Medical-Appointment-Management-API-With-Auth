@@ -1,6 +1,6 @@
 package com.api.v2.customers.utils;
 
-import com.api.v2.common.AddressDtoMapper;
+import com.api.v2.common.AddressMapper;
 import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.people.utils.PersonResponseMapper;
@@ -11,7 +11,7 @@ public class CustomerResponseMapper {
     public static CustomerResponseDto mapToDto(Customer customer) {
         return new CustomerResponseDto(
                 PersonResponseMapper.map(customer.getPerson()),
-                AddressDtoMapper.map(customer.getAddress())
+                AddressMapper.map(customer.getAddress())
         );
     }
 

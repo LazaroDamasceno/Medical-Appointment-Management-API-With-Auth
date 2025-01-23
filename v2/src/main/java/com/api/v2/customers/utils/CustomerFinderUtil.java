@@ -3,6 +3,7 @@ package com.api.v2.customers.utils;
 import com.api.v2.customers.exceptions.NonExistentCustomerException;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.domain.CustomerRepository;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -15,11 +16,11 @@ public class CustomerFinderUtil {
         this.customerRepository = customerRepository;
     }
 
-    public Mono<Customer> findBySsn(String ssn) {
+    public Mono<Customer> findById(String id) {
         return customerRepository
                 .findAll()
-                .filter(c -> c.getPerson().getSsn().equals(ssn))
+                .filter(c -> c.getPerson().getId().equals(new ObjectId(id)))
                 .singleOrEmpty()
-                .switchIfEmpty(Mono.error(new NonExistentCustomerException(ssn)));
+                .switchIfEmpty(Mono.error(new NonExistentCustomerException(id)));
     }
 }

@@ -55,7 +55,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     @Override
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
-        Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
+        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.ssn());
         return doctorMono
                 .zipWith(customerMono)
                 .flatMap(tuple -> {
@@ -99,7 +99,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     @Override
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
-        Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
+        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.ssn());
         return doctorMono
                 .zipWith(customerMono)
                 .flatMap(tuple -> {
@@ -143,7 +143,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     @Override
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
-        Mono<Customer> customerMono = customerFinderUtil.findBySsn(bookingDto.ssn());
+        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.ssn());
         return doctorMono
                 .zipWith(customerMono)
                 .flatMap(tuple -> {

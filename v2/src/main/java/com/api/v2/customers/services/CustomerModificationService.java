@@ -4,5 +4,5 @@ import com.api.v2.customers.dtos.CustomerModificationDto;
 import reactor.core.publisher.Mono;
 
 public interface CustomerModificationService {
-    Mono<Void> modify(String ssn, CustomerModificationDto modificationDto);
+    Mono<Void> modify(String id, CustomerModificationDto modificationDto);
 }

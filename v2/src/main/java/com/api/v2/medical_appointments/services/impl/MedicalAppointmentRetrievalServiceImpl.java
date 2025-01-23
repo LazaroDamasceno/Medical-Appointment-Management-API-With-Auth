@@ -82,9 +82,9 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(String ssn) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(String id) {
         return customerFinderUtil
-                .findBySsn(ssn)
+                .findById(id)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository
                             .findAll()
@@ -100,15 +100,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(ssn)
+                                                        controller -> controller.findAllPaidByPatientByCustomer(id)
                                                 ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(ssn)
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(id)
                                                 ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(ssn)
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(id)
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
@@ -124,9 +124,9 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(String ssn) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(String id) {
         return customerFinderUtil
-                .findBySsn(ssn)
+                .findById(id)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository
                             .findAll()
@@ -142,15 +142,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(ssn)
+                                                        controller -> controller.findAllPaidByPatientByCustomer(id)
                                                 ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(ssn)
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(id)
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(ssn)
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(id)
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
@@ -166,9 +166,9 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(String ssn) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(String id) {
         return customerFinderUtil
-                .findBySsn(ssn)
+                .findById(id)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository
                             .findAll()
@@ -184,15 +184,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(ssn)
+                                                        controller -> controller.findAllPaidByPatientByCustomer(id)
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(ssn)
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(id)
                                                 ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(ssn)
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(id)
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,

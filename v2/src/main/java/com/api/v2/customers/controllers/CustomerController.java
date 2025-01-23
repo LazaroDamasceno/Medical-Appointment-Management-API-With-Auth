@@ -36,16 +36,16 @@ public class CustomerController {
         return registrationService.register(registrationDto);
     }
 
-    @PatchMapping("{ssn}")
+    @PatchMapping("{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> modify(@PathVariable String ssn, @Valid @RequestBody CustomerModificationDto modificationDto) {
-        return modificationService.modify(ssn, modificationDto);
+    public Mono<Void> modify(@PathVariable String id, @Valid @RequestBody CustomerModificationDto modificationDto) {
+        return modificationService.modify(id, modificationDto);
     }
 
-    @GetMapping("{ssn}")
+    @GetMapping("{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Mono<CustomerResponseDto> findBySsn(@PathVariable String ssn) {
-        return retrievalService.findBySsn(ssn);
+        return retrievalService.findById(ssn);
     }
 
     @GetMapping

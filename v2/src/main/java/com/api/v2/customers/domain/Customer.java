@@ -1,6 +1,6 @@
 package com.api.v2.customers.domain;
 
-import com.api.v2.common.AddressDto;
+import com.api.v2.common.Address;
 import com.api.v2.people.domain.Person;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
@@ -14,7 +14,7 @@ public class Customer {
 
     @BsonId
     private ObjectId id;
-    private AddressDto address;
+    private Address address;
     private Person person;
     private LocalDateTime createdAt;
     private ZoneId createdAtZone;
@@ -22,7 +22,7 @@ public class Customer {
     public Customer() {
     }
 
-    private Customer(AddressDto address, Person person) {
+    private Customer(Address address, Person person) {
         this.id = new ObjectId();
         this.address = address;
         this.person = person;
@@ -30,7 +30,7 @@ public class Customer {
         this.createdAtZone = ZoneId.systemDefault();
     }
 
-    public static Customer create(AddressDto address, Person person) {
+    public static Customer create(Address address, Person person) {
         return new Customer(address, person);
     }
 
@@ -38,7 +38,7 @@ public class Customer {
         return id;
     }
 
-    public AddressDto getAddress() {
+    public Address getAddress() {
         return address;
     }
 

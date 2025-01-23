@@ -23,9 +23,9 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
     }
 
     @Override
-    public Mono<CustomerResponseDto> findBySsn(String ssn) {
+    public Mono<CustomerResponseDto> findById(String id) {
         return customerFinderUtil
-                .findBySsn(ssn)
+                .findById(id)
                 .flatMap(CustomerResponseMapper::mapToMono);
     }
 
