@@ -36,7 +36,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                 .findById(id)
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                 .map(dto -> {
-                    String id = dto.getCustomer().person().id();
+                    String customerId = dto.getCustomer().person().id();
                     return HalResourceWrapper
                             .wrap(dto)
                             .withLinks(
@@ -46,15 +46,15 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                     ).withSelfRel(),
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.findAllPaidByPatientByCustomer(id)
+                                            controller -> controller.findAllPaidByPatientByCustomer(customerId)
                                     ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.findAllPrivateInsuranceByCustomer(id)
+                                            controller -> controller.findAllPrivateInsuranceByCustomer(customerId)
                                     ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.findAllPublicInsuranceByCustomer(id)
+                                            controller -> controller.findAllPublicInsuranceByCustomer(customerId)
                                     ).withRel("find_all_public_insurance_medical_appointments_by_customer")
                             );
                 });
@@ -95,20 +95,21 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
+                                String customerId = dto.getCustomer().person().id();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(id)
+                                                        controller -> controller.findAllPaidByPatientByCustomer(customerId)
                                                 ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(id)
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(customerId)
                                                 ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(id)
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(customerId)
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
@@ -137,20 +138,21 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
+                                String customerId = dto.getCustomer().person().id();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(id)
+                                                        controller -> controller.findAllPaidByPatientByCustomer(customerId)
                                                 ).withRel("find_all_paid_by_patient_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(id)
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(customerId)
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(id)
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(customerId)
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
@@ -179,20 +181,21 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
+                                String customerId = dto.getCustomer().person().id();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(id)
+                                                        controller -> controller.findAllPaidByPatientByCustomer(customerId)
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(id)
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(customerId)
                                                 ).withRel("find_all_private_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(id)
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(customerId)
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,

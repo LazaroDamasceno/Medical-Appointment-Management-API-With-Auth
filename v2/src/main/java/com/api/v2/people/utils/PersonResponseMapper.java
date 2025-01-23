@@ -8,7 +8,7 @@ public class PersonResponseMapper {
     public static PersonResponseDto map(Person person) {
         return new PersonResponseDto(
                 person.getFullName(),
-                person.getId()
+                person.getId().toString()
         );
     }
 }

@@ -55,7 +55,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     @Override
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
-        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.id());
+        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.customerId());
         return doctorMono
                 .zipWith(customerMono)
                 .flatMap(tuple -> {
@@ -81,15 +81,15 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
                                         );
                             });
@@ -99,7 +99,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     @Override
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
-        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.id());
+        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.customerId());
         return doctorMono
                 .zipWith(customerMono)
                 .flatMap(tuple -> {
@@ -125,15 +125,15 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
                                         );
                             });
@@ -143,7 +143,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     @Override
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid MedicalAppointmentBookingDto bookingDto) {
         Mono<Doctor> doctorMono = doctorFinderUtil.findByLicenseNumber(bookingDto.medicalLicenseNumber());
-        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.id());
+        Mono<Customer> customerMono = customerFinderUtil.findById(bookingDto.customerId());
         return doctorMono
                 .zipWith(customerMono)
                 .flatMap(tuple -> {
@@ -169,15 +169,15 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                         .withLinks(
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.id())
+                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
                                                 ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
                                         );
                             });
