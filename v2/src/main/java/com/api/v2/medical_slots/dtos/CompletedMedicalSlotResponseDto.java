@@ -11,7 +11,7 @@ public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
 
     private MedicalAppointmentWithoutDoctorResponseDto medicalAppointment;
     private LocalDateTime completedAt;
-    private ZoneId completedAtZone;
+    private ZoneId completedAtZoneId;
 
     public CompletedMedicalSlotResponseDto() {
     }
@@ -23,7 +23,7 @@ public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
         }
         this.medicalAppointment = MedicalAppointmentResponseMapper.mapToDtoWithoutDoctor(medicalSlot.getMedicalAppointment());
         this.completedAt = medicalSlot.getCanceledAt();
-        this.completedAtZone = medicalSlot.getCanceledAtZone();
+        this.completedAtZoneId = medicalSlot.getCanceledAtZoneId();
     }
 
     public static CompletedMedicalSlotResponseDto from(MedicalSlot medicalSlot) {
@@ -38,7 +38,7 @@ public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
         return completedAt;
     }
 
-    public ZoneId getCompletedAtZone() {
-        return completedAtZone;
+    public ZoneId getCompletedAtZoneId() {
+        return completedAtZoneId;
     }
 }

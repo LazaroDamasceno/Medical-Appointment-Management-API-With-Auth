@@ -11,7 +11,7 @@ public record DoctorAuditTrail(
         ObjectId id,
         Doctor doctor,
         LocalDate createdAt,
-        ZoneId createdAtZone
+        ZoneId createdAtZoneId
 ) {
 
     public static DoctorAuditTrail create(Doctor doctor) {

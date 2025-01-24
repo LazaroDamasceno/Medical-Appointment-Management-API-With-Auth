@@ -13,7 +13,7 @@ public record PersonAuditTrail(
         ObjectId id,
         Person person,
         LocalDate createdAt,
-        ZoneId createdAtZone
+        ZoneId createdAtZoneId
 ) {
 
     public static PersonAuditTrail create(Person person) {

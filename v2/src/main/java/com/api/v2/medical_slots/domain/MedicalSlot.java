@@ -16,22 +16,22 @@ public class MedicalSlot {
     private ObjectId id;
     private Doctor doctor;
     private LocalDateTime availableAt;
-    private ZoneId availableAtZone;
+    private ZoneId availableAtZoneId;
     private MedicalAppointment medicalAppointment;
     private LocalDateTime createdAt;
-    private ZoneId createdAtZone;
+    private ZoneId createdAtZoneId;
     private LocalDateTime canceledAt;
-    private ZoneId canceledAtZone;
+    private ZoneId canceledAtZoneId;
     private LocalDateTime completedAt;
-    private ZoneId completedAtZone;
+    private ZoneId completedAtZoneId;
 
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = new ObjectId();
         this.doctor = doctor;
         this.availableAt = availableAt;
-        this.availableAtZone = ZoneId.systemDefault();
+        this.availableAtZoneId = ZoneId.systemDefault();
         this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.createdAtZoneId = ZoneId.systemDefault();
     }
 
     public MedicalSlot() {
@@ -43,12 +43,12 @@ public class MedicalSlot {
 
     public void markAsCanceled() {
         canceledAt = LocalDateTime.now();
-        canceledAtZone = ZoneId.systemDefault();
+        canceledAtZoneId = ZoneId.systemDefault();
     }
 
     public void markAsCompleted() {
         completedAt = LocalDateTime.now();
-        completedAtZone = ZoneId.systemDefault();
+        completedAtZoneId = ZoneId.systemDefault();
     }
 
     public ObjectId getId() {
@@ -63,16 +63,16 @@ public class MedicalSlot {
         return availableAt;
     }
 
-    public ZoneId getAvailableAtZone() {
-        return availableAtZone;
+    public ZoneId getAvailableAtZoneId() {
+        return availableAtZoneId;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
-        return createdAtZone;
+    public ZoneId getCreatedAtZoneId() {
+        return createdAtZoneId;
     }
 
     public MedicalAppointment getMedicalAppointment() {
@@ -83,8 +83,8 @@ public class MedicalSlot {
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZone() {
-        return canceledAtZone;
+    public ZoneId getCanceledAtZoneId() {
+        return canceledAtZoneId;
     }
 
     public void setMedicalAppointment(MedicalAppointment medicalAppointment) {
@@ -95,7 +95,7 @@ public class MedicalSlot {
         return completedAt;
     }
 
-    public ZoneId getCompletedAtZone() {
-        return completedAtZone;
+    public ZoneId getCompletedAtZoneId() {
+        return completedAtZoneId;
     }
 }

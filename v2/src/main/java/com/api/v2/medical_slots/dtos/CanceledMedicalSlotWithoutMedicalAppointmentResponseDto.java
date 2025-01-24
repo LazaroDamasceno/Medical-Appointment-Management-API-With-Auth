@@ -8,7 +8,7 @@ import java.time.ZoneId;
 public class CanceledMedicalSlotWithoutMedicalAppointmentResponseDto extends MedicalSlotResponseDto {
 
     private LocalDateTime canceledAt;
-    private ZoneId canceledAtZone;
+    private ZoneId canceledAtZoneId;
 
     public CanceledMedicalSlotWithoutMedicalAppointmentResponseDto() {
     }
@@ -19,7 +19,7 @@ public class CanceledMedicalSlotWithoutMedicalAppointmentResponseDto extends Med
             return;
         }
         this.canceledAt = medicalSlot.getCanceledAt();
-        this.canceledAtZone = medicalSlot.getCanceledAtZone();
+        this.canceledAtZoneId = medicalSlot.getCanceledAtZoneId();
     }
 
     public static CanceledMedicalSlotWithoutMedicalAppointmentResponseDto from(MedicalSlot medicalSlot) {
@@ -30,7 +30,7 @@ public class CanceledMedicalSlotWithoutMedicalAppointmentResponseDto extends Med
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZone() {
-        return canceledAtZone;
+    public ZoneId getCanceledAtZoneId() {
+        return canceledAtZoneId;
     }
 }

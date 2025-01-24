@@ -16,7 +16,7 @@ public class MedicalAppointmentResponseDto {
     private DoctorResponseDto doctor;
     private String type;
     private LocalDateTime bookedAt;
-    private ZoneId bookAtZone;
+    private ZoneId bookAtZoneId;
 
     public MedicalAppointmentResponseDto() {
     }
@@ -27,7 +27,7 @@ public class MedicalAppointmentResponseDto {
         this.doctor = DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor());
         this.type = medicalAppointment.getType();
         this.bookedAt = medicalAppointment.getBookedAt();
-        this.bookAtZone = medicalAppointment.getBookedAtZone();
+        this.bookAtZoneId = medicalAppointment.getBookedAtZoneId();
     }
 
     public static MedicalAppointmentResponseDto from(MedicalAppointment medicalAppointment) {
@@ -54,7 +54,7 @@ public class MedicalAppointmentResponseDto {
         return bookedAt;
     }
 
-    public ZoneId getBookAtZone() {
-        return bookAtZone;
+    public ZoneId getBookAtZoneId() {
+        return bookAtZoneId;
     }
 }

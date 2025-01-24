@@ -16,7 +16,7 @@ public record Payment(
         MedicalAppointment medicalAppointment,
         Card card,
         LocalDateTime createdAt,
-        ZoneId createdAtZone
+        ZoneId createdAtZoneId
 ) {
 
     public static Payment create(MedicalAppointment medicalAppointment, Card card) {

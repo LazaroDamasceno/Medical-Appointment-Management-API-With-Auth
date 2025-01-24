@@ -18,13 +18,13 @@ public class MedicalAppointment {
     private Customer customer;
     private Doctor doctor;
     private LocalDateTime bookedAt;
-    private ZoneId bookedAtZone;
+    private ZoneId bookedAtZoneId;
     private LocalDateTime canceledAt;
-    private ZoneId canceledAtZone;
+    private ZoneId canceledAtZoneId;
     private LocalDateTime completedAt;
-    private ZoneId completedAtZone;
+    private ZoneId completedAtZoneId;
     private LocalDateTime createdAt;
-    private ZoneId createdAtZone;
+    private ZoneId createdAtZoneId;
 
     public MedicalAppointment() {
     }
@@ -34,9 +34,9 @@ public class MedicalAppointment {
         this.customer = customer;
         this.doctor = doctor;
         this.bookedAt = bookedAt;
-        this.bookedAtZone = ZoneId.systemDefault();
+        this.bookedAtZoneId = ZoneId.systemDefault();
         this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.createdAtZoneId = ZoneId.systemDefault();
         this.type = type;
     }
 
@@ -46,12 +46,12 @@ public class MedicalAppointment {
 
     public void markAsCompleted() {
         completedAt = LocalDateTime.now();
-        completedAtZone = ZoneId.systemDefault();
+        completedAtZoneId = ZoneId.systemDefault();
     }
 
     public void markAsCanceled() {
         canceledAt = LocalDateTime.now();
-        canceledAtZone = ZoneId.systemDefault();
+        canceledAtZoneId = ZoneId.systemDefault();
     }
 
     public ObjectId getId() {
@@ -70,32 +70,32 @@ public class MedicalAppointment {
         return bookedAt;
     }
 
-    public ZoneId getBookedAtZone() {
-        return bookedAtZone;
+    public ZoneId getBookedAtZoneId() {
+        return bookedAtZoneId;
     }
 
     public LocalDateTime getCanceledAt() {
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZone() {
-        return canceledAtZone;
+    public ZoneId getCanceledAtZoneId() {
+        return canceledAtZoneId;
     }
 
     public LocalDateTime getCompletedAt() {
         return completedAt;
     }
 
-    public ZoneId getCompletedAtZone() {
-        return completedAtZone;
+    public ZoneId getCompletedAtZoneId() {
+        return completedAtZoneId;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
-        return createdAtZone;
+    public ZoneId getCreatedAtZoneId() {
+        return createdAtZoneId;
     }
 
     public String getType() {

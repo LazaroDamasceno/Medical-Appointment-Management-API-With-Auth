@@ -19,7 +19,7 @@ public class Card {
         private String cvv_cvc;
         private LocalDate dueDate;
         private LocalDateTime createdAt;
-        private ZoneId createdAtZone;
+        private ZoneId createdAtZoneId;
 
     public Card() {
     }
@@ -36,7 +36,7 @@ public class Card {
         this.cvv_cvc = cvv_cvc;
         this.dueDate = dueDate;
         this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.createdAtZoneId = ZoneId.systemDefault();
     }
 
     public static Card create(String type, CardRegistrationDto registrationDto) {
@@ -72,7 +72,7 @@ public class Card {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
-        return createdAtZone;
+    public ZoneId getCreatedAtZoneId() {
+        return createdAtZoneId;
     }
 }

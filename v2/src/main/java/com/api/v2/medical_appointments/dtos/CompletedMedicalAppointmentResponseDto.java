@@ -8,7 +8,7 @@ import java.time.ZoneId;
 public class CompletedMedicalAppointmentResponseDto extends MedicalAppointmentResponseDto {
 
     private LocalDateTime completedAt;
-    private ZoneId completedAtZone;
+    private ZoneId completedAtZoneId;
 
     public CompletedMedicalAppointmentResponseDto() {
     }
@@ -16,7 +16,7 @@ public class CompletedMedicalAppointmentResponseDto extends MedicalAppointmentRe
     private CompletedMedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
         super(medicalAppointment);
         this.completedAt = medicalAppointment.getCompletedAt();
-        this.completedAtZone = medicalAppointment.getCompletedAtZone();
+        this.completedAtZoneId = medicalAppointment.getCompletedAtZoneId();
     }
 
     public static CompletedMedicalAppointmentResponseDto from(MedicalAppointment medicalAppointment) {
@@ -27,7 +27,7 @@ public class CompletedMedicalAppointmentResponseDto extends MedicalAppointmentRe
         return completedAt;
     }
 
-    public ZoneId getCompletedAtZone() {
-        return completedAtZone;
+    public ZoneId getCompletedAtZoneId() {
+        return completedAtZoneId;
     }
 }

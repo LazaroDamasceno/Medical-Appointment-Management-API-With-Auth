@@ -24,9 +24,9 @@ public class Person {
     private String phoneNumber;
     private String gender;
     private LocalDateTime createdAt;
-    private ZoneId createdAtZone;
+    private ZoneId createdAtZoneId;
     private LocalDateTime modifiedAt;
-    private ZoneId modifiedAtZone;
+    private ZoneId modifiedAtZoneId;
 
     public Person() {
     }
@@ -42,7 +42,7 @@ public class Person {
         this.phoneNumber = registrationDto.phoneNumber();
         this.gender = registrationDto.gender();
         this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.createdAtZoneId = ZoneId.systemDefault();
     }
 
     public static Person create(PersonRegistrationDto registrationDto) {
@@ -58,7 +58,7 @@ public class Person {
         this.phoneNumber = modificationDto.phoneNumber();
         this.gender = modificationDto.gender();
         this.modifiedAt = LocalDateTime.now();
-        this.modifiedAtZone = ZoneId.systemDefault();
+        this.modifiedAtZoneId = ZoneId.systemDefault();
     }
 
     public String getFullName() {
@@ -96,15 +96,15 @@ public class Person {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
-        return createdAtZone;
+    public ZoneId getCreatedAtZoneId() {
+        return createdAtZoneId;
     }
 
     public LocalDateTime getModifiedAt() {
         return modifiedAt;
     }
 
-    public ZoneId getModifiedAtZone() {
-        return modifiedAtZone;
+    public ZoneId getModifiedAtZoneId() {
+        return modifiedAtZoneId;
     }
 }

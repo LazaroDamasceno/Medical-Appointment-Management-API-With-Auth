@@ -8,7 +8,7 @@ import java.time.ZoneId;
 public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentResponseDto {
 
     private LocalDateTime canceledAt;
-    private ZoneId canceledAtZone;
+    private ZoneId canceledAtZoneId;
 
     public CanceledMedicalAppointmentResponseDto() {
     }
@@ -16,7 +16,7 @@ public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentRes
     private CanceledMedicalAppointmentResponseDto(MedicalAppointment medicalAppointment) {
         super(medicalAppointment);
         this.canceledAt = medicalAppointment.getCanceledAt();
-        this.canceledAtZone = medicalAppointment.getCanceledAtZone();
+        this.canceledAtZoneId = medicalAppointment.getCanceledAtZoneId();
     }
 
     public static CanceledMedicalAppointmentResponseDto from(MedicalAppointment medicalAppointment) {
@@ -27,7 +27,7 @@ public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentRes
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZone() {
-        return canceledAtZone;
+    public ZoneId getCanceledAtZoneId() {
+        return canceledAtZoneId;
     }
 }

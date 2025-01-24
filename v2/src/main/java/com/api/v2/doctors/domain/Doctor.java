@@ -16,9 +16,9 @@ public class  Doctor {
     private String licenseNumber;
     private Person person;
     private LocalDateTime createdAt;
-    private ZoneId createdAtZone;
+    private ZoneId createdAtZoneId;
     private LocalDateTime terminatedAt;
-    private ZoneId terminatedAtZone;
+    private ZoneId terminatedAtZoneId;
 
     public Doctor() {
     }
@@ -28,7 +28,7 @@ public class  Doctor {
         this.licenseNumber = licenseNumber;
         this.person = person;
         this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.createdAtZoneId = ZoneId.systemDefault();
     }
 
     public static Doctor create(String licenseNumber, Person person) {
@@ -37,12 +37,12 @@ public class  Doctor {
 
     public void markAsTerminated() {
         terminatedAt = LocalDateTime.now();
-        terminatedAtZone = ZoneId.systemDefault();
+        terminatedAtZoneId = ZoneId.systemDefault();
     }
 
     public void markAsRehired() {
         terminatedAt = null;
-        terminatedAtZone = null;
+        terminatedAtZoneId = null;
     }
 
     public ObjectId getId() {
@@ -61,16 +61,16 @@ public class  Doctor {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
-        return createdAtZone;
+    public ZoneId getCreatedAtZoneId() {
+        return createdAtZoneId;
     }
 
     public LocalDateTime getTerminatedAt() {
         return terminatedAt;
     }
 
-    public ZoneId getTerminatedAtZone() {
-        return terminatedAtZone;
+    public ZoneId getTerminatedAtZoneId() {
+        return terminatedAtZoneId;
     }
 
     public void setPerson(Person person) {

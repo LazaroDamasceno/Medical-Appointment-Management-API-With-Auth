@@ -17,7 +17,7 @@ public class Customer {
     private Address address;
     private Person person;
     private LocalDateTime createdAt;
-    private ZoneId createdAtZone;
+    private ZoneId createdAtZoneId;
 
     public Customer() {
     }
@@ -27,7 +27,7 @@ public class Customer {
         this.address = address;
         this.person = person;
         this.createdAt = LocalDateTime.now();
-        this.createdAtZone = ZoneId.systemDefault();
+        this.createdAtZoneId = ZoneId.systemDefault();
     }
 
     public static Customer create(Address address, Person person) {
@@ -50,8 +50,8 @@ public class Customer {
         return createdAt;
     }
 
-    public ZoneId getCreatedAtZone() {
-        return createdAtZone;
+    public ZoneId getCreatedAtZoneId() {
+        return createdAtZoneId;
     }
 
     public void setPerson(Person person) {

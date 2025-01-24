@@ -11,7 +11,7 @@ public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends Medica
 
     private MedicalAppointmentWithoutDoctorResponseDto medicalAppointmentResponseDto;
     private LocalDateTime canceledAt;
-    private ZoneId canceledAtZone;
+    private ZoneId canceledAtZoneId;
 
     public CanceledMedicalSlotWithMedicalAppointmentResponseDto() {
     }
@@ -23,7 +23,7 @@ public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends Medica
         }
         this.medicalAppointmentResponseDto = MedicalAppointmentResponseMapper.mapToDtoWithoutDoctor(medicalSlot.getMedicalAppointment());
         this.canceledAt = medicalSlot.getCanceledAt();
-        this.canceledAtZone = medicalSlot.getCanceledAtZone();
+        this.canceledAtZoneId = medicalSlot.getCanceledAtZoneId();
     }
 
     public static CanceledMedicalSlotWithMedicalAppointmentResponseDto from(MedicalSlot medicalSlot) {
@@ -38,7 +38,7 @@ public class CanceledMedicalSlotWithMedicalAppointmentResponseDto extends Medica
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZone() {
-        return canceledAtZone;
+    public ZoneId getCanceledAtZoneId() {
+        return canceledAtZoneId;
     }
 }
