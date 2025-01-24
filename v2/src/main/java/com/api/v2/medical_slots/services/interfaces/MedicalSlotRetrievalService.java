@@ -6,7 +6,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface MedicalSlotRetrievalService {
-    Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(String id);
+    Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(String slotId);
     Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(String medicalLicenseNumber);
     Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(String medicalLicenseNumber);
     Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(String medicalLicenseNumber);

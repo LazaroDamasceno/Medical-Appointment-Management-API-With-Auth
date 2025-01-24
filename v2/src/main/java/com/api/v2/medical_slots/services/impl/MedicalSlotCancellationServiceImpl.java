@@ -31,9 +31,9 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     }
 
     @Override
-    public Mono<Void> cancel(String id) {
+    public Mono<Void> cancel(String slotId) {
         return medicalSlotFinderUtil
-                .findById(id)
+                .findById(slotId)
                 .flatMap(slot -> {
                     return onCanceledMedicalSlot(slot)
                             .then(onCompletedMedicalSlot(slot))

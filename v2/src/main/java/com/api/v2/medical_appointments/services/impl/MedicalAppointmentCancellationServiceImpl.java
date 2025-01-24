@@ -31,9 +31,9 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     }
 
     @Override
-    public Mono<Void> cancel(String id) {
+    public Mono<Void> cancel(String appointmentId) {
         return medicalAppointmentFinderUtil
-                .findById(id)
+                .findById(appointmentId)
                 .flatMap(medicalAppointment -> {
                     return medicalSlotFinderUtil
                             .findByMedicalAppointment(medicalAppointment)

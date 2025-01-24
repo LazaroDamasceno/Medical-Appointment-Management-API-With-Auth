@@ -65,33 +65,33 @@ public class MedicalAppointmentController {
         return retrievalService.findAll();
     }
 
-    @GetMapping("/public-insurance/{id}")
+    @GetMapping("/public-insurance/{customerId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String id) {
-        return retrievalService.findAllPublicInsuranceByCustomer(id);
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String customerId) {
+        return retrievalService.findAllPublicInsuranceByCustomer(customerId);
     }
 
-    @GetMapping("/private-insurance/{id}")
+    @GetMapping("/private-insurance/{customerId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String id) {
-        return retrievalService.findAllPrivateInsuranceByCustomer(id);
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String customerId) {
+        return retrievalService.findAllPrivateInsuranceByCustomer(customerId);
     }
 
-    @GetMapping("/paid-by-patient/{id}")
+    @GetMapping("/paid-by-patient/{customerId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String id) {
-        return retrievalService.findAllPaidByPatientByCustomer(id);
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String customerId) {
+        return retrievalService.findAllPaidByCustomer(customerId);
     }
 
-    @PatchMapping("/{id}/completion")
+    @PatchMapping("/{appointmentId}/completion")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> complete(@PathVariable String id) {
-        return completionService.complete(id);
+    public Mono<Void> complete(@PathVariable String appointmentId) {
+        return completionService.complete(appointmentId);
     }
 
-    @PatchMapping("/{id}/cancellation")
+    @PatchMapping("/{appointmentId}/cancellation")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> cancel(@PathVariable String id) {
-        return cancellationService.cancel(id);
+    public Mono<Void> cancel(@PathVariable String appointmentId) {
+        return cancellationService.cancel(appointmentId);
     }
 }

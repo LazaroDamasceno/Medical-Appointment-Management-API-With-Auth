@@ -31,9 +31,9 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
     }
 
     @Override
-    public Mono<Void> complete(String id) {
+    public Mono<Void> complete(String appointmentId) {
         return medicalAppointmentFinderUtil
-                .findById(id)
+                .findById(appointmentId)
                 .flatMap(medicalAppointment -> {
                     return onCanceledMedicalAppointment(medicalAppointment)
                             .then(onCompletedMedicalAppointment(medicalAppointment))

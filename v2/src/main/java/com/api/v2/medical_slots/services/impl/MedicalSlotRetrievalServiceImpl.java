@@ -32,9 +32,9 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(String id) {
+    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(String slotId) {
         return medicalSlotFinderUtil
-                .findById(id)
+                .findById(slotId)
                 .flatMap(slot -> {
                     return MedicalSlotResponseMapper
                             .mapToMono(slot)
@@ -45,11 +45,11 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                         .withLinks(
                                                 linkTo(
                                                         MedicalSlotController.class,
-                                                        controller -> controller.findById(id)
+                                                        controller -> controller.findById(slotId)
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalSlotController.class,
-                                                        controller -> controller.cancel(id)
+                                                        controller -> controller.cancel(slotId)
                                                 ).withRel("cancel_found_medical_slot"),
                                                 linkTo(
                                                         MedicalSlotController.class,

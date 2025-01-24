@@ -82,9 +82,9 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(String id) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(String customerId) {
         return customerFinderUtil
-                .findById(id)
+                .findById(customerId)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository
                             .findAll()
@@ -95,7 +95,6 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
-                                String customerId = dto.getCustomer().person().id();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
@@ -125,9 +124,9 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(String id) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(String customerId) {
         return customerFinderUtil
-                .findById(id)
+                .findById(customerId)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository
                             .findAll()
@@ -138,7 +137,6 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
-                                String customerId = dto.getCustomer().person().id();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
@@ -168,9 +166,9 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(String id) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByCustomer(String customerId) {
         return customerFinderUtil
-                .findById(id)
+                .findById(customerId)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository
                             .findAll()
@@ -181,7 +179,6 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .switchIfEmpty(Flux.empty())
                             .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                             .map(dto -> {
-                                String customerId = dto.getCustomer().person().id();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
