@@ -24,7 +24,7 @@ public record Payment(
                 new ObjectId(),
                 medicalAppointment,
                 card,
-                LocalDateTime.now(),
+                LocalDateTime.now(ZoneId.systemDefault()),
                 ZoneId.systemDefault()
         );
     }

@@ -27,7 +27,7 @@ public class  Doctor {
         this.id = new ObjectId();
         this.licenseNumber = licenseNumber;
         this.person = person;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
     }
 
@@ -36,7 +36,7 @@ public class  Doctor {
     }
 
     public void markAsTerminated() {
-        terminatedAt = LocalDateTime.now();
+        terminatedAt = LocalDateTime.now(ZoneId.systemDefault());
         terminatedAtZoneId = ZoneId.systemDefault();
     }
 

@@ -35,7 +35,7 @@ public class Card {
         this.bank = bank;
         this.cvv_cvc = cvv_cvc;
         this.dueDate = dueDate;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
     }
 

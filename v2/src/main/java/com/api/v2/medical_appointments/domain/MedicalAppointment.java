@@ -35,7 +35,7 @@ public class MedicalAppointment {
         this.doctor = doctor;
         this.bookedAt = bookedAt;
         this.bookedAtZoneId = ZoneId.systemDefault();
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
         this.type = type;
     }
@@ -45,12 +45,12 @@ public class MedicalAppointment {
     }
 
     public void markAsCompleted() {
-        completedAt = LocalDateTime.now();
+        completedAt = LocalDateTime.now(ZoneId.systemDefault());
         completedAtZoneId = ZoneId.systemDefault();
     }
 
     public void markAsCanceled() {
-        canceledAt = LocalDateTime.now();
+        canceledAt = LocalDateTime.now(ZoneId.systemDefault());
         canceledAtZoneId = ZoneId.systemDefault();
     }
 

@@ -26,7 +26,7 @@ public class Customer {
         this.id = new ObjectId();
         this.address = address;
         this.person = person;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
     }
 

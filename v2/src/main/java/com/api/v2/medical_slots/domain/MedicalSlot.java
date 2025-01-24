@@ -30,7 +30,7 @@ public class MedicalSlot {
         this.doctor = doctor;
         this.availableAt = availableAt;
         this.availableAtZoneId = ZoneId.systemDefault();
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
     }
 
@@ -42,12 +42,12 @@ public class MedicalSlot {
     }
 
     public void markAsCanceled() {
-        canceledAt = LocalDateTime.now();
+        canceledAt = LocalDateTime.now(ZoneId.systemDefault());
         canceledAtZoneId = ZoneId.systemDefault();
     }
 
     public void markAsCompleted() {
-        completedAt = LocalDateTime.now();
+        completedAt = LocalDateTime.now(ZoneId.systemDefault());
         completedAtZoneId = ZoneId.systemDefault();
     }
 
