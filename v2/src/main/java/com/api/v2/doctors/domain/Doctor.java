@@ -6,7 +6,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 @Document
 public class  Doctor {
@@ -17,8 +19,10 @@ public class  Doctor {
     private Person person;
     private LocalDateTime createdAt;
     private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
     private LocalDateTime terminatedAt;
     private ZoneId terminatedAtZoneId;
+    private ZoneOffset terminatedAtZoneOffset;
 
     public Doctor() {
     }
@@ -29,6 +33,7 @@ public class  Doctor {
         this.person = person;
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
+        this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public static Doctor create(String licenseNumber, Person person) {
@@ -38,11 +43,13 @@ public class  Doctor {
     public void markAsTerminated() {
         terminatedAt = LocalDateTime.now(ZoneId.systemDefault());
         terminatedAtZoneId = ZoneId.systemDefault();
+        terminatedAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public void markAsRehired() {
         terminatedAt = null;
         terminatedAtZoneId = null;
+        terminatedAtZoneOffset = null;
     }
 
     public ObjectId getId() {
@@ -76,4 +83,13 @@ public class  Doctor {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+    public ZoneOffset getCreatedAtZoneOffset() {
+        return createdAtZoneOffset;
+    }
+
+    public ZoneOffset getTerminatedAtZoneOffset() {
+        return terminatedAtZoneOffset;
+    }
+    
 }

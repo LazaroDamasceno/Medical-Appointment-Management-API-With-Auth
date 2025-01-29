@@ -7,7 +7,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 @Document
 public class Customer {
@@ -18,6 +20,7 @@ public class Customer {
     private Person person;
     private LocalDateTime createdAt;
     private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
 
     public Customer() {
     }
@@ -28,6 +31,7 @@ public class Customer {
         this.person = person;
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
+        this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public static Customer create(Address address, Person person) {
@@ -56,5 +60,9 @@ public class Customer {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public ZoneOffset getCreatedAtZoneOffset() {
+        return createdAtZoneOffset;
     }
 }

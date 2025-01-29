@@ -7,7 +7,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 @Document
 public class MedicalAppointment {
@@ -21,10 +23,13 @@ public class MedicalAppointment {
     private ZoneId bookedAtZoneId;
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZoneId;
+    private ZoneOffset canceledAtZoneOffset;
     private LocalDateTime completedAt;
     private ZoneId completedAtZoneId;
+    private ZoneOffset completedAtZoneOffset;
     private LocalDateTime createdAt;
     private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
 
     public MedicalAppointment() {
     }
@@ -37,6 +42,7 @@ public class MedicalAppointment {
         this.bookedAtZoneId = ZoneId.systemDefault();
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
+        this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
         this.type = type;
     }
 
@@ -47,11 +53,13 @@ public class MedicalAppointment {
     public void markAsCompleted() {
         completedAt = LocalDateTime.now(ZoneId.systemDefault());
         completedAtZoneId = ZoneId.systemDefault();
+        completedAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public void markAsCanceled() {
         canceledAt = LocalDateTime.now(ZoneId.systemDefault());
         canceledAtZoneId = ZoneId.systemDefault();
+        canceledAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public ObjectId getId() {
@@ -100,5 +108,17 @@ public class MedicalAppointment {
 
     public String getType() {
         return type;
+    }
+
+    public ZoneOffset getCreatedAtZoneOffset() {
+        return createdAtZoneOffset;
+    }
+
+    public ZoneOffset getCanceledAtZoneOffset() {
+        return canceledAtZoneOffset;
+    }
+
+    public ZoneOffset getCompletedAtZoneOffset() {
+        return completedAtZoneOffset;
     }
 }

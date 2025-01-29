@@ -7,7 +7,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 @Document
 public class MedicalSlot {
@@ -17,13 +19,18 @@ public class MedicalSlot {
     private Doctor doctor;
     private LocalDateTime availableAt;
     private ZoneId availableAtZoneId;
+    private ZoneOffset availableAtZoneOffset;
     private MedicalAppointment medicalAppointment;
     private LocalDateTime createdAt;
     private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZoneId;
+    private ZoneOffset canceledAtZoneOffset;
     private LocalDateTime completedAt;
     private ZoneId completedAtZoneId;
+    private ZoneOffset completedAtZoneOffset;
+
 
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = new ObjectId();
@@ -32,6 +39,7 @@ public class MedicalSlot {
         this.availableAtZoneId = ZoneId.systemDefault();
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
+        this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public MedicalSlot() {
@@ -44,11 +52,13 @@ public class MedicalSlot {
     public void markAsCanceled() {
         canceledAt = LocalDateTime.now(ZoneId.systemDefault());
         canceledAtZoneId = ZoneId.systemDefault();
+        canceledAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public void markAsCompleted() {
         completedAt = LocalDateTime.now(ZoneId.systemDefault());
         completedAtZoneId = ZoneId.systemDefault();
+        completedAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public ObjectId getId() {
@@ -98,4 +108,21 @@ public class MedicalSlot {
     public ZoneId getCompletedAtZoneId() {
         return completedAtZoneId;
     }
+
+    public ZoneOffset getAvailableAtZoneOffset() {
+        return availableAtZoneOffset;
+    }
+
+    public ZoneOffset getCreatedAtZoneOffset() {
+        return createdAtZoneOffset;
+    }
+
+    public ZoneOffset getCanceledAtZoneOffset() {
+        return canceledAtZoneOffset;
+    }
+
+    public ZoneOffset getCompletedAtZoneOffset() {
+        return completedAtZoneOffset;
+    }
+
 }

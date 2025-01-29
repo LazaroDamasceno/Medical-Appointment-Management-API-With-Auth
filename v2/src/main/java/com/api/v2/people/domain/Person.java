@@ -8,7 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 @Document
 public class Person {
@@ -25,8 +27,10 @@ public class Person {
     private String gender;
     private LocalDateTime createdAt;
     private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
     private LocalDateTime modifiedAt;
     private ZoneId modifiedAtZoneId;
+    private ZoneOffset modifiedAtZoneOffset;
 
     public Person() {
     }
@@ -43,6 +47,7 @@ public class Person {
         this.gender = registrationDto.gender();
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
+        this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public static Person create(PersonRegistrationDto registrationDto) {
@@ -59,6 +64,7 @@ public class Person {
         this.gender = modificationDto.gender();
         this.modifiedAt = LocalDateTime.now(ZoneId.systemDefault());
         this.modifiedAtZoneId = ZoneId.systemDefault();
+        this.modifiedAtZoneOffset = OffsetDateTime.now().getOffset();
     }
 
     public String getFullName() {
@@ -107,4 +113,13 @@ public class Person {
     public ZoneId getModifiedAtZoneId() {
         return modifiedAtZoneId;
     }
+
+    public ZoneOffset getCreatedAtZoneOffset() {
+        return createdAtZoneOffset;
+    }
+
+    public ZoneOffset getModifiedAtZoneOffset() {
+        return modifiedAtZoneOffset;
+    }
+
 }

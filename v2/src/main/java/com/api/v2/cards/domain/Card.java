@@ -8,18 +8,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 @Document
 public class Card {
 
-        @BsonId
-        private ObjectId id;
-        private String type;
-        private String bank;
-        private String cvv_cvc;
-        private LocalDate dueDate;
-        private LocalDateTime createdAt;
-        private ZoneId createdAtZoneId;
+    @BsonId
+    private ObjectId id;
+    private String type;
+    private String bank;
+    private String cvv_cvc;
+    private LocalDate dueDate;
+    private LocalDateTime createdAt;
+    private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
+
 
     public Card() {
     }
@@ -75,4 +78,9 @@ public class Card {
     public ZoneId getCreatedAtZoneId() {
         return createdAtZoneId;
     }
+
+    public ZoneOffset getCreatedAtZoneOffset() {
+        return createdAtZoneOffset;
+    }
+
 }

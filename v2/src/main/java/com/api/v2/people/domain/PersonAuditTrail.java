@@ -5,7 +5,9 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 @Document
 public record PersonAuditTrail(
@@ -13,7 +15,8 @@ public record PersonAuditTrail(
         ObjectId id,
         Person person,
         LocalDate createdAt,
-        ZoneId createdAtZoneId
+        ZoneId createdAtZoneId,
+        ZoneOffset createdAtZoneOffset
 ) {
 
     public static PersonAuditTrail create(Person person) {
@@ -21,7 +24,8 @@ public record PersonAuditTrail(
                 new ObjectId(),
                 person,
                 LocalDate.now(),
-                ZoneId.systemDefault()
+                ZoneId.systemDefault(),
+                OffsetDateTime.now().getOffset()
         );
     }
 }
