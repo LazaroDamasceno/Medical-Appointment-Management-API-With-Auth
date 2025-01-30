@@ -21,6 +21,7 @@ public class MedicalAppointment {
     private Doctor doctor;
     private LocalDateTime bookedAt;
     private ZoneId bookedAtZoneId;
+    private ZoneId bookedAtZoneOffset;
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZoneId;
     private ZoneOffset canceledAtZoneOffset;
@@ -43,6 +44,9 @@ public class MedicalAppointment {
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
         this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
+        this.bookedAtZoneOffset = OffsetDateTime
+                .ofInstant(bookedAt.toInstant(ZoneOffset.UTC), ZoneId.systemDefault())
+                .getOffset();
         this.type = type;
     }
 
@@ -120,5 +124,9 @@ public class MedicalAppointment {
 
     public ZoneOffset getCompletedAtZoneOffset() {
         return completedAtZoneOffset;
+    }
+
+    public ZoneId getBookedAtZoneOffset() {
+        return bookedAtZoneOffset;
     }
 }
