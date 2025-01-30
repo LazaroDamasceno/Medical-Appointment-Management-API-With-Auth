@@ -37,6 +37,9 @@ public class MedicalSlot {
         this.doctor = doctor;
         this.availableAt = availableAt;
         this.availableAtZoneId = ZoneId.systemDefault();
+        this.availableAtZoneOffset = OffsetDateTime
+                .ofInstant(availableAt.toInstant(ZoneOffset.UTC), ZoneId.systemDefault())
+                .getOffset();
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
         this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
