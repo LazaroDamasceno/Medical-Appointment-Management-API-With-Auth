@@ -43,13 +43,11 @@ public class CustomerController {
     }
 
     @GetMapping("{id}")
-    @ResponseStatus(value = HttpStatus.OK)
     public Mono<CustomerResponseDto> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
     @GetMapping
-    @ResponseStatus(value = HttpStatus.OK)
     public Flux<CustomerResponseDto> findAll() {
         return retrievalService.findAll();
     }

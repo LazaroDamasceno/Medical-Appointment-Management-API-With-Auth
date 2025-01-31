@@ -54,31 +54,26 @@ public class MedicalAppointmentController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
     @GetMapping
-    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAll() {
         return retrievalService.findAll();
     }
 
     @GetMapping("/public-insurance/{customerId}")
-    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String customerId) {
         return retrievalService.findAllPublicInsuranceByCustomer(customerId);
     }
 
     @GetMapping("/private-insurance/{customerId}")
-    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String customerId) {
         return retrievalService.findAllPrivateInsuranceByCustomer(customerId);
     }
 
     @GetMapping("/paid-by-patient/{customerId}")
-    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String customerId) {
         return retrievalService.findAllPaidByCustomer(customerId);
     }

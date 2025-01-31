@@ -43,7 +43,6 @@ public class MedicalSlotController {
     }
 
     @GetMapping("/by-id/{id}")
-    @ResponseStatus(value = HttpStatus.OK)
     public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
@@ -64,13 +63,11 @@ public class MedicalSlotController {
     }
 
     @GetMapping("/by-doctor/{medicalLicenseNumber}")
-    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findAllActiveByDoctor(medicalLicenseNumber);
     }
 
     @GetMapping
-    @ResponseStatus(value = HttpStatus.OK)
     public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAll() {
         return retrievalService.findAll();
     }

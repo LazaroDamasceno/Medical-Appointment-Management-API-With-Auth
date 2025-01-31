@@ -62,13 +62,11 @@ public class DoctorController {
     }
 
     @GetMapping("{medicalLicenseNumber}")
-    @ResponseStatus(value = HttpStatus.OK)
     public Mono<DoctorResponseDto> findByMedicalLicenseNumber(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findByMedicalLicenseNumber(medicalLicenseNumber);
     }
 
     @GetMapping
-    @ResponseStatus(value = HttpStatus.OK)
     public Flux<DoctorResponseDto> findAll() {
         return retrievalService.findAll();
     }
