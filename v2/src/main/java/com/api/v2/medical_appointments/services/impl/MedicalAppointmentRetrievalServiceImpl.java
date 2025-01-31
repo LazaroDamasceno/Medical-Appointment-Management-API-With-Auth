@@ -36,7 +36,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                 .findById(id)
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                 .map(dto -> {
-                    String customerId = dto.getCustomer().person().id();
+                    String customerId = dto.customer().person().id();
                     return HalResourceWrapper
                             .wrap(dto)
                             .withLinks(
@@ -71,11 +71,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .withLinks(
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.findById(dto.getId())
+                                            controller -> controller.findById(dto.id())
                                     ).withRel("find_medical_appointment_by_id"),
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.cancel(dto.getId())
+                                            controller -> controller.cancel(dto.id())
                                     ).withRel("cancel_medical_appointment_by_id")
                             );
                 });
@@ -112,11 +112,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.cancel(dto.getId())
+                                                        controller -> controller.cancel(dto.id())
                                                 ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.findById(dto.getId())
+                                                        controller -> controller.findById(dto.id())
                                                 ).withRel("find_medical_appointment_by_id")
                                         );
                             });
@@ -154,7 +154,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.cancel(dto.getId())
+                                                        controller -> controller.cancel(dto.id())
                                                 ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
@@ -196,7 +196,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.cancel(dto.getId())
+                                                        controller -> controller.cancel(dto.id())
                                                 ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
