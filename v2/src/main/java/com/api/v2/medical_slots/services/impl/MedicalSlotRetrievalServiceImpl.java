@@ -39,7 +39,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                     return MedicalSlotResponseMapper
                             .mapToMono(slot)
                             .map(dto -> {
-                                var medicalLicenseNumber = dto.getDoctor().medicalLicenseNumber();
+                                var medicalLicenseNumber = dto.doctor().medicalLicenseNumber();
                                 return HalResourceWrapper
                                         .wrap(dto)
                                         .withLinks(
@@ -92,7 +92,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .withLinks(
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findById(dto.getId())
+                                            controller -> controller.findById(dto.id())
                                     ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
@@ -112,7 +112,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find completed medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.cancel(dto.getId())
+                                            controller -> controller.cancel(dto.id())
                                     ).withRel("cancel_medical_slot_by_id")
                             );
                 });
@@ -138,7 +138,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .withLinks(
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findById(dto.getId())
+                                            controller -> controller.findById(dto.id())
                                     ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
@@ -158,7 +158,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find completed medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.cancel(dto.getId())
+                                            controller -> controller.cancel(dto.id())
                                     ).withRel("cancel_medical_slot_by_id")
                             );
                 });
@@ -184,7 +184,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .withLinks(
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findById(dto.getId())
+                                            controller -> controller.findById(dto.id())
                                     ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
@@ -204,7 +204,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find completed medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.cancel(dto.getId())
+                                            controller -> controller.cancel(dto.id())
                                     ).withRel("cancel_medical_slot_by_id")
                             );
                 });
@@ -214,6 +214,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAll() {
         return medicalSlotRepository
                 .findAll()
+                .switchIfEmpty(Flux.empty())
                 .flatMap(MedicalSlotResponseMapper::mapToMono)
                 .map(dto -> {
                     return HalResourceWrapper
@@ -225,27 +226,27 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withSelfRel(),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findById(dto.getId())
+                                            controller -> controller.findById(dto.id())
                                     ).withRel("find_medical_slot_by_id"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findAllByDoctor(dto.getDoctor().medicalLicenseNumber())
+                                            controller -> controller.findAllByDoctor(dto.doctor().medicalLicenseNumber())
                                     ).withRel("find medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findAllActiveByDoctor(dto.getDoctor().medicalLicenseNumber())
+                                            controller -> controller.findAllActiveByDoctor(dto.doctor().medicalLicenseNumber())
                                     ).withRel("find active medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findAllCanceledByDoctor(dto.getDoctor().medicalLicenseNumber())
+                                            controller -> controller.findAllCanceledByDoctor(dto.doctor().medicalLicenseNumber())
                                     ).withRel("find canceled medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.findAllCompletedByDoctor(dto.getDoctor().medicalLicenseNumber())
+                                            controller -> controller.findAllCompletedByDoctor(dto.doctor().medicalLicenseNumber())
                                     ).withRel("find completed medical slots by doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.cancel(dto.getId())
+                                            controller -> controller.cancel(dto.id())
                                     ).withRel("cancel_medical_slot_by_id")
                             );
                 });

@@ -55,7 +55,7 @@ public class MedicalAppointmentController {
 
     @GetMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>>findById(@PathVariable String id) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
