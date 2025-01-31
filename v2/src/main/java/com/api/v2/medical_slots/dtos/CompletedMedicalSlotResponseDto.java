@@ -4,14 +4,10 @@ import com.api.v2.medical_appointments.dtos.MedicalAppointmentWithoutDoctorRespo
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
 
     private MedicalAppointmentWithoutDoctorResponseDto medicalAppointment;
-    private LocalDateTime completedAt;
-    private ZoneId completedAtZoneId;
+    private String completedAt;
 
     public CompletedMedicalSlotResponseDto() {
     }
@@ -22,8 +18,11 @@ public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
             return;
         }
         this.medicalAppointment = MedicalAppointmentResponseMapper.mapToDtoWithoutDoctor(medicalSlot.getMedicalAppointment());
-        this.completedAt = medicalSlot.getCanceledAt();
-        this.completedAtZoneId = medicalSlot.getCanceledAtZoneId();
+        this.completedAt = "%s%s[%s]".formatted(
+                medicalSlot.getCompletedAt(),
+                medicalSlot.getCompletedAtZoneOffset(),
+                medicalSlot.getCompletedAtZoneId()
+        );
     }
 
     public static CompletedMedicalSlotResponseDto from(MedicalSlot medicalSlot) {
@@ -34,11 +33,8 @@ public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
         return medicalAppointment;
     }
 
-    public LocalDateTime getCompletedAt() {
+    public String getCompletedAt() {
         return completedAt;
     }
 
-    public ZoneId getCompletedAtZoneId() {
-        return completedAtZoneId;
-    }
 }

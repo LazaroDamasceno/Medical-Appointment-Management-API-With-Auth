@@ -2,13 +2,9 @@ package com.api.v2.medical_slots.dtos;
 
 import com.api.v2.medical_slots.domain.MedicalSlot;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 public class CanceledMedicalSlotWithoutMedicalAppointmentResponseDto extends MedicalSlotResponseDto {
 
-    private LocalDateTime canceledAt;
-    private ZoneId canceledAtZoneId;
+    private String canceledAt;
 
     public CanceledMedicalSlotWithoutMedicalAppointmentResponseDto() {
     }
@@ -18,19 +14,19 @@ public class CanceledMedicalSlotWithoutMedicalAppointmentResponseDto extends Med
         if (medicalSlot.getMedicalAppointment() == null) {
             return;
         }
-        this.canceledAt = medicalSlot.getCanceledAt();
-        this.canceledAtZoneId = medicalSlot.getCanceledAtZoneId();
+        this.canceledAt = "%s%s[%s]".formatted(
+                medicalSlot.getCanceledAt(),
+                medicalSlot.getCanceledAtZoneOffset(),
+                medicalSlot.getCanceledAtZoneId()
+        );
     }
 
     public static CanceledMedicalSlotWithoutMedicalAppointmentResponseDto from(MedicalSlot medicalSlot) {
         return new CanceledMedicalSlotWithoutMedicalAppointmentResponseDto(medicalSlot);
     }
 
-    public LocalDateTime getCanceledAt() {
+    public String getCanceledAt() {
         return canceledAt;
     }
 
-    public ZoneId getCanceledAtZoneId() {
-        return canceledAtZoneId;
-    }
 }

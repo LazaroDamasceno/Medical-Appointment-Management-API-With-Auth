@@ -6,17 +6,13 @@ import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.doctors.utils.DoctorResponseMapper;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 public class MedicalAppointmentResponseDto {
 
     private String id;
     private CustomerResponseDto customer;
     private DoctorResponseDto doctor;
     private String type;
-    private LocalDateTime bookedAt;
-    private ZoneId bookAtZoneId;
+    private String bookedAt;
 
     public MedicalAppointmentResponseDto() {
     }
@@ -26,8 +22,11 @@ public class MedicalAppointmentResponseDto {
         this.customer = CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer());
         this.doctor = DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor());
         this.type = medicalAppointment.getType();
-        this.bookedAt = medicalAppointment.getBookedAt();
-        this.bookAtZoneId = medicalAppointment.getBookedAtZoneId();
+        this.bookedAt = "%s%s[%s]".formatted(
+                medicalAppointment.getBookedAt(),
+                medicalAppointment.getBookedAtZoneOffset(),
+                medicalAppointment.getCanceledAtZoneId()
+        );
     }
 
     public static MedicalAppointmentResponseDto from(MedicalAppointment medicalAppointment) {
@@ -50,11 +49,7 @@ public class MedicalAppointmentResponseDto {
         return type;
     }
 
-    public LocalDateTime getBookedAt() {
+    public String getBookedAt() {
         return bookedAt;
-    }
-
-    public ZoneId getBookAtZoneId() {
-        return bookAtZoneId;
     }
 }
