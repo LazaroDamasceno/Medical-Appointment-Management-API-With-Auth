@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 @Component
 public class MedicalSlotFinderUtil {
@@ -26,7 +28,11 @@ public class MedicalSlotFinderUtil {
                 .switchIfEmpty(Mono.error(new NonExistentMedicalSlotException(id)));
     }
 
-    public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt) {
+    public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor,
+                                                              LocalDateTime availableAt,
+                                                              ZoneId availableAtZoneId,
+                                                              ZoneOffset availableAtZoneOffset
+    ) {
         return repository
                 .findAll()
                 .filter(slot ->
@@ -34,6 +40,8 @@ public class MedicalSlotFinderUtil {
                         && slot.getCompletedAt() == null
                         && slot.getDoctor().getId().equals(doctor.getId())
                         && slot.getAvailableAt().equals(availableAt)
+                        && slot.getAvailableAtZoneId().equals(availableAtZoneId)
+                        && slot.getAvailableAtZoneOffset().equals(availableAtZoneOffset)
                 )
                 .singleOrEmpty();
     }

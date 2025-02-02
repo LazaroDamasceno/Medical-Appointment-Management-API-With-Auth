@@ -23,6 +23,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder.linkTo;
 
@@ -185,9 +188,13 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
     }
 
     private Mono<MedicalSlot> onFoundMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZoneOffset zoneOffset = OffsetDateTime
+                .ofInstant(availableAt.toInstant(ZoneOffset.UTC), ZoneId.systemDefault())
+                .getOffset();
         String message = "There's no medical slot registered for the datetime %s.".formatted(availableAt);
         return medicalSlotFinderUtil
-                .findActiveByDoctorAndAvailableAt(doctor, availableAt)
+                .findActiveByDoctorAndAvailableAt(doctor, availableAt, zoneId, zoneOffset)
                 .switchIfEmpty(Mono.error(new UnavailableMedicalSlotException(message)));
     }
 

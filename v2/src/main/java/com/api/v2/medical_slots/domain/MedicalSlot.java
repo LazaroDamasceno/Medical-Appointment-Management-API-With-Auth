@@ -32,14 +32,16 @@ public class MedicalSlot {
     private ZoneOffset completedAtZoneOffset;
 
 
-    private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
+    private MedicalSlot(Doctor doctor,
+                        LocalDateTime availableAt,
+                        ZoneId availableAtZoneId,
+                        ZoneOffset availableAtZoneOffset
+    ) {
         this.id = new ObjectId();
         this.doctor = doctor;
         this.availableAt = availableAt;
-        this.availableAtZoneId = ZoneId.systemDefault();
-        this.availableAtZoneOffset = OffsetDateTime
-                .ofInstant(availableAt.toInstant(ZoneOffset.UTC), ZoneId.systemDefault())
-                .getOffset();
+        this.availableAtZoneId = availableAtZoneId;
+        this.availableAtZoneOffset = availableAtZoneOffset;
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
         this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
@@ -48,8 +50,12 @@ public class MedicalSlot {
     public MedicalSlot() {
     }
 
-    public static MedicalSlot create(Doctor doctor, LocalDateTime availableAt) {
-        return new MedicalSlot(doctor, availableAt);
+    public static MedicalSlot create(Doctor doctor,
+                                     LocalDateTime availableAt,
+                                     ZoneId availableAtZoneId,
+                                     ZoneOffset availableAtZoneOffset
+    ) {
+        return new MedicalSlot(doctor, availableAt, availableAtZoneId, availableAtZoneOffset);
     }
 
     public void markAsCanceled() {

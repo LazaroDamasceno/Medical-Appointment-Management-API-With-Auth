@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder.linkTo;
 
@@ -39,12 +42,16 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
 
     @Override
     public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> register(@Valid MedicalSlotRegistrationDto registrationDto) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZoneOffset zoneOffset = OffsetDateTime
+                .ofInstant(registrationDto.availableAt().toInstant(ZoneOffset.UTC), ZoneId.systemDefault())
+                .getOffset();
         return doctorFinderUtil
                 .findByLicenseNumber(registrationDto.medicalLicenseNumber())
                 .flatMap(doctor -> {
-                    return onUnavailableMedicalSlot(doctor, registrationDto.availableAt())
+                    return onUnavailableMedicalSlot(doctor, registrationDto.availableAt(), zoneId, zoneOffset)
                             .then(Mono.defer(() -> {
-                                MedicalSlot medicalSlot = MedicalSlot.create(doctor, registrationDto.availableAt());
+                                MedicalSlot medicalSlot = MedicalSlot.create(doctor, registrationDto.availableAt(), zoneId, zoneOffset);
                                 String id = medicalSlot.getId().toString();
                                 String medicalLicenseNumber = medicalSlot.getDoctor().getLicenseNumber();
                                 return medicalSlotRepository
@@ -70,9 +77,13 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                 });
     }
 
-    private Mono<Void> onUnavailableMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
+    private Mono<Void> onUnavailableMedicalSlot(Doctor doctor,
+                                                LocalDateTime availableAt,
+                                                ZoneId availableAtZoneId,
+                                                ZoneOffset availableAtZoneOffset
+    ) {
         return medicalSlotFinderUtil
-                .findActiveByDoctorAndAvailableAt(doctor, availableAt)
+                .findActiveByDoctorAndAvailableAt(doctor, availableAt, availableAtZoneId, availableAtZoneOffset)
                 .hasElement()
                 .flatMap(exists -> {
                     if (exists) {
