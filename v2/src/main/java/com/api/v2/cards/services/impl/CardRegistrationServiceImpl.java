@@ -40,11 +40,11 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
                                     linkTo(
                                             CardController.class,
                                             controller -> controller.findById(dto.id())
-                                    ).withRel("find card by id"),
+                                    ).withRel("find_card_by_id"),
                                     linkTo(
                                             CardController.class,
                                             controller -> controller.delete(dto.id())
-                                    ).withRel("delete card by id")
+                                    ).withRel("delete_card_by_id")
                             );
                 });
     }
@@ -66,11 +66,11 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
                                     linkTo(
                                             CardController.class,
                                             controller -> controller.findById(dto.id())
-                                    ).withRel("find card by id"),
+                                    ).withRel("find_card_by_id"),
                                     linkTo(
                                             CardController.class,
                                             controller -> controller.delete(dto.id())
-                                    ).withRel("delete card by id")
+                                    ).withRel("delete_card_by_id")
                             );
                 });
     }

@@ -4,6 +4,7 @@ import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.doctors.services.*;
 import com.api.v2.people.dtos.PersonModificationDto;
+import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class DoctorController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
-    public Mono<DoctorResponseDto> hire(@Valid @RequestBody DoctorHiringDto hiringDto) {
+    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> hire(@Valid @RequestBody DoctorHiringDto hiringDto) {
         return hiringService.hire(hiringDto);
     }
 
@@ -62,7 +63,7 @@ public class DoctorController {
     }
 
     @GetMapping("{medicalLicenseNumber}")
-    public Mono<DoctorResponseDto> findByMedicalLicenseNumber(@PathVariable String medicalLicenseNumber) {
+    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> findByMedicalLicenseNumber(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findByMedicalLicenseNumber(medicalLicenseNumber);
     }
 

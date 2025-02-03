@@ -1,5 +1,6 @@
 package com.api.v2.doctors.services;
 
+import com.api.v2.doctors.controllers.DoctorController;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
@@ -9,9 +10,12 @@ import com.api.v2.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
 import com.api.v2.doctors.utils.DoctorResponseMapper;
 import com.api.v2.people.services.interfaces.PersonRegistrationService;
+import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder.linkTo;
 
 @Service
 public class DoctorHiringServiceImpl implements DoctorHiringService {
@@ -28,7 +32,7 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
     }
 
     @Override
-    public Mono<DoctorResponseDto> hire(@Valid DoctorHiringDto hiringDto) {
+    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> hire(@Valid DoctorHiringDto hiringDto) {
         return onDuplicatedMedicalLicenseNumber(hiringDto.medicalLicenseNumber())
                 .then(onDuplicatedSsn(hiringDto.person().ssn()))
                 .then(onDuplicatedEmail(hiringDto.person().email()))
@@ -40,7 +44,21 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
                                 return doctorRepository.save(doctor);
                             })
                             .flatMap(DoctorResponseMapper::mapToMono);
-                }));
+                }))
+                .map(dto -> {
+                    return HalResourceWrapper
+                            .wrap(dto)
+                            .withLinks(
+                                    linkTo(
+                                            DoctorController.class,
+                                            controller -> controller.findByMedicalLicenseNumber(hiringDto.medicalLicenseNumber())
+                                    ).withRel("find_doctor_by_medical_license_number"),
+                                    linkTo(
+                                            DoctorController.class,
+                                            controller -> controller.terminate(hiringDto.medicalLicenseNumber())
+                                    ).withRel("terminated_doctor_by_medical_license_number")
+                            );
+                });
     }
 
     private Mono<Void> onDuplicatedMedicalLicenseNumber(String medicalLicenseNumber) {
