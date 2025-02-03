@@ -5,7 +5,7 @@ import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCompletionService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
-import com.api.v2.medical_slots.services.interfaces.MedicalSlotCompletionService;
+import com.api.v2.medical_slots.services.interfaces.exposed.MedicalSlotCompletionService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

@@ -1,4 +1,4 @@
-package com.api.v2.medical_slots.services.interfaces;
+package com.api.v2.medical_slots.services.interfaces.exposed;
 
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_slots.domain.MedicalSlot;
