@@ -5,6 +5,7 @@ import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
+import com.api.v2.medical_appointments.exceptions.InaccessibleMedicalAppointmentException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
@@ -72,6 +73,7 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
         if (medicalAppointment.getCustomer().getId().equals(customer.getId())) {
             String message = "Customer whose id is %s is not associated with the medical appointment whose id id %s"
                     .formatted(customer.getId().toString(), medicalAppointment.getId().toString());
+            return Mono.error(new InaccessibleMedicalAppointmentException(message));
         }
         return Mono.empty();
     }
