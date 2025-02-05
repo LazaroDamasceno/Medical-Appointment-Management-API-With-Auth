@@ -1,11 +1,13 @@
 package com.api.v2.medical_slots.services.impl;
 
+import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.ImmutableMedicalSlotException;
+import com.api.v2.medical_slots.exceptions.InaccessibleMedicalSlotException;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
 import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
 
@@ -45,22 +47,32 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
                                 return doctorFinderUtil
                                         .findByLicenseNumber(medicalLicenseNumber)
                                         .flatMap(doctor -> {
-                                            Optional<MedicalAppointment> optional = Optional.ofNullable(slot.getMedicalAppointment());
-                                            if (optional.isPresent()) {
-                                                slot.markAsCanceled();
-                                                MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
-                                                medicalAppointment.markAsCanceled();
-                                                slot.setMedicalAppointment(medicalAppointment);
-                                                return medicalSlotRepository
-                                                        .save(slot)
-                                                        .then(medicalAppointmentRepository.save(medicalAppointment));
-                                            }
-                                            slot.markAsCanceled();
-                                            return medicalSlotRepository.save(slot);
+                                            return onNonAssociatedMedicalSlotWithDoctor(slot, doctor)
+                                                    .then(Mono.defer(() -> {
+                                                        Optional<MedicalAppointment> optional = Optional.ofNullable(slot.getMedicalAppointment());
+                                                        if (optional.isPresent()) {
+                                                            slot.markAsCanceled();
+                                                            MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
+                                                            medicalAppointment.markAsCanceled();
+                                                            slot.setMedicalAppointment(medicalAppointment);
+                                                            return medicalSlotRepository
+                                                                    .save(slot)
+                                                                    .then(medicalAppointmentRepository.save(medicalAppointment));
+                                                        }
+                                                        slot.markAsCanceled();
+                                                        return medicalSlotRepository.save(slot);
+                                                    }));
                                         });
                             }));
                 })
                 .then();
+    }
+
+    private Mono<Void> onNonAssociatedMedicalSlotWithDoctor(MedicalSlot medicalSlot, Doctor doctor) {
+        if (!medicalSlot.getDoctor().getId().equals(doctor.getId())) {
+            return Mono.error(new InaccessibleMedicalSlotException(doctor.getId().toString(), medicalSlot.getId().toString()));
+        }
+        return Mono.empty();
     }
 
     private Mono<Void> onCanceledMedicalSlot(MedicalSlot slot) {

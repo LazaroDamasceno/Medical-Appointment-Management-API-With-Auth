@@ -1,9 +1,11 @@
 package com.api.v2.medical_appointments.services.impl;
 
+import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
+import com.api.v2.medical_appointments.exceptions.InaccessibleMedicalAppointmentException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCompletionService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
 import com.api.v2.medical_slots.services.interfaces.exposed.MedicalSlotCompletionService;
@@ -41,23 +43,35 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
                     return doctorFinderUtil
                             .findByLicenseNumber(medicalLicenseNumber)
                             .flatMap(doctor -> {
-                                return onCanceledMedicalAppointment(medicalAppointment)
-                                        .then(onCompletedMedicalAppointment(medicalAppointment))
-                                        .then(medicalSlotFinderUtil
-                                                .findByMedicalAppointment(medicalAppointment)
-                                                .flatMap(medicalSlot -> {
-                                                    if (medicalSlot.getMedicalAppointment() == null) {
-                                                        return Mono.empty();
-                                                    }
-                                                    medicalAppointment.markAsCompleted();
-                                                    return medicalSlotCompletionService
-                                                            .complete(medicalSlot, medicalAppointment)
-                                                            .then(medicalAppointmentRepository.save(medicalAppointment));
-                                                })
-                                        );
+                                return onNonAssociatedMedicalAppointmentWithCustomer(medicalAppointment, doctor)
+                                        .then(Mono.defer(() -> {
+                                            return onCanceledMedicalAppointment(medicalAppointment)
+                                                    .then(onCompletedMedicalAppointment(medicalAppointment))
+                                                    .then(medicalSlotFinderUtil
+                                                            .findByMedicalAppointment(medicalAppointment)
+                                                            .flatMap(medicalSlot -> {
+                                                                if (medicalSlot.getMedicalAppointment() == null) {
+                                                                    return Mono.empty();
+                                                                }
+                                                                medicalAppointment.markAsCompleted();
+                                                                return medicalSlotCompletionService
+                                                                        .complete(medicalSlot, medicalAppointment)
+                                                                        .then(medicalAppointmentRepository.save(medicalAppointment));
+                                                            })
+                                                    );
+                                        }));
                             });
                 })
                 .then();
+    }
+
+    private Mono<Void> onNonAssociatedMedicalAppointmentWithCustomer(MedicalAppointment medicalAppointment, Doctor doctor) {
+        if (!medicalAppointment.getDoctor().getId().equals(doctor.getId())) {
+            String message = "Doctor whose medical license number is %s is not associated with the medical appointment whose id is %s"
+                    .formatted(medicalAppointment.getId().toString(), doctor.getId().toString());
+            return Mono.error(new InaccessibleMedicalAppointmentException(message));
+        }
+        return Mono.empty();
     }
 
     private Mono<Void> onCanceledMedicalAppointment(MedicalAppointment medicalAppointment) {

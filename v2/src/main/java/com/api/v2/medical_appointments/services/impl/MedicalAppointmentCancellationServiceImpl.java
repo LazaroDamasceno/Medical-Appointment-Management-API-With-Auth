@@ -1,5 +1,6 @@
 package com.api.v2.medical_appointments.services.impl;
 
+import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
@@ -45,23 +46,34 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                                 return customerFinderUtil
                                         .findById(customerId)
                                         .flatMap(customer -> {
-                                            return onCanceledMedicalAppointment(medicalAppointment)
-                                                    .then(onCompletedMedicalAppointment(medicalAppointment))
+                                            return onNonAssociatedMedicalAppointmentWithCustomer(medicalAppointment, customer)
                                                     .then(Mono.defer(() -> {
-                                                        if (medicalSlot.getMedicalAppointment() == null) {
-                                                            return Mono.empty();
-                                                        }
-                                                        medicalSlot.setMedicalAppointment(null);
-                                                        return medicalSlotRepository.save(medicalSlot);
-                                                    }))
-                                                    .then(Mono.defer(() -> {
-                                                        medicalAppointment.markAsCanceled();
-                                                        return medicalAppointmentRepository.save(medicalAppointment);
+                                                        return onCanceledMedicalAppointment(medicalAppointment)
+                                                                .then(onCompletedMedicalAppointment(medicalAppointment))
+                                                                .then(Mono.defer(() -> {
+                                                                    if (medicalSlot.getMedicalAppointment() == null) {
+                                                                        return Mono.empty();
+                                                                    }
+                                                                    medicalSlot.setMedicalAppointment(null);
+                                                                    return medicalSlotRepository.save(medicalSlot);
+                                                                }))
+                                                                .then(Mono.defer(() -> {
+                                                                    medicalAppointment.markAsCanceled();
+                                                                    return medicalAppointmentRepository.save(medicalAppointment);
+                                                                }));
                                                     }));
                                         });
                             });
                 })
                 .then();
+    }
+
+    private Mono<Void> onNonAssociatedMedicalAppointmentWithCustomer(MedicalAppointment medicalAppointment, Customer customer) {
+        if (medicalAppointment.getCustomer().getId().equals(customer.getId())) {
+            String message = "Customer whose id is %s is not associated with the medical appointment whose id id %s"
+                    .formatted(customer.getId().toString(), medicalAppointment.getId().toString());
+        }
+        return Mono.empty();
     }
 
     private Mono<Void> onCanceledMedicalAppointment(MedicalAppointment medicalAppointment) {
