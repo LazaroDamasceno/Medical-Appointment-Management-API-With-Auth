@@ -78,15 +78,15 @@ public class MedicalAppointmentController {
         return retrievalService.findAllPaidByCustomer(customerId);
     }
 
-    @PatchMapping("/{appointmentId}/completion")
+    @PatchMapping("medical-license-number/{medicalLicenseNumber}/appointment-id/{appointmentId}/completion")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> complete(@PathVariable String appointmentId) {
-        return completionService.complete(appointmentId);
+    public Mono<Void> complete(@PathVariable String medicalLicenseNumber, @PathVariable String appointmentId) {
+        return completionService.complete(medicalLicenseNumber, appointmentId);
     }
 
-    @PatchMapping("/{appointmentId}/cancellation")
+    @PatchMapping("customer-id/{customerId}/appointment-id/{appointmentId}/cancellation")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> cancel(@PathVariable String appointmentId) {
-        return cancellationService.cancel(appointmentId);
+    public Mono<Void> cancel(@PathVariable String customerId, @PathVariable String appointmentId) {
+        return cancellationService.cancel(customerId, appointmentId);
     }
 }

@@ -75,7 +75,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                     ).withRel("find_medical_appointment_by_id"),
                                     linkTo(
                                             MedicalAppointmentController.class,
-                                            controller -> controller.cancel(dto.id())
+                                            controller -> controller.cancel(dto.customer().person().id(), dto.id())
                                     ).withRel("cancel_medical_appointment_by_id")
                             );
                 });
@@ -112,7 +112,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.cancel(dto.id())
+                                                        controller -> controller.cancel(dto.customer().person().id(), dto.id())
                                                 ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
@@ -154,7 +154,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.cancel(dto.id())
+                                                        controller -> controller.cancel(dto.customer().person().id(), dto.id())
                                                 ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
@@ -196,7 +196,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                                                 ).withRel("find_all_public_insurance_medical_appointments_by_customer"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,
-                                                        controller -> controller.cancel(dto.id())
+                                                        controller -> controller.cancel(dto.customer().person().id(), dto.id())
                                                 ).withRel("cancel_found_medical_appointment_by_id"),
                                                 linkTo(
                                                         MedicalAppointmentController.class,

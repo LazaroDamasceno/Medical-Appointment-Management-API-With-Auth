@@ -1,5 +1,6 @@
 package com.api.v2.medical_appointments.services.impl;
 
+import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
@@ -17,40 +18,47 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
+    private final CustomerFinderUtil customerFinderUtil;
 
     public MedicalAppointmentCancellationServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalAppointmentFinderUtil medicalAppointmentFinderUtil,
             MedicalSlotRepository medicalSlotRepository,
-            MedicalAppointmentRepository medicalAppointmentRepository
+            MedicalAppointmentRepository medicalAppointmentRepository,
+            CustomerFinderUtil customerFinderUtil
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
+        this.customerFinderUtil = customerFinderUtil;
     }
 
     @Override
-    public Mono<Void> cancel(String appointmentId) {
+    public Mono<Void> cancel(String customerId, String appointmentId) {
         return medicalAppointmentFinderUtil
                 .findById(appointmentId)
                 .flatMap(medicalAppointment -> {
                     return medicalSlotFinderUtil
                             .findByMedicalAppointment(medicalAppointment)
                             .flatMap(medicalSlot -> {
-                                return onCanceledMedicalAppointment(medicalAppointment)
-                                        .then(onCompletedMedicalAppointment(medicalAppointment))
-                                        .then(Mono.defer(() -> {
-                                            if (medicalSlot.getMedicalAppointment() == null) {
-                                                return Mono.empty();
-                                            }
-                                            medicalSlot.setMedicalAppointment(null);
-                                            return medicalSlotRepository.save(medicalSlot);
-                                        }))
-                                        .then(Mono.defer(() -> {
-                                            medicalAppointment.markAsCanceled();
-                                            return medicalAppointmentRepository.save(medicalAppointment);
-                                        }));
+                                return customerFinderUtil
+                                        .findById(customerId)
+                                        .flatMap(customer -> {
+                                            return onCanceledMedicalAppointment(medicalAppointment)
+                                                    .then(onCompletedMedicalAppointment(medicalAppointment))
+                                                    .then(Mono.defer(() -> {
+                                                        if (medicalSlot.getMedicalAppointment() == null) {
+                                                            return Mono.empty();
+                                                        }
+                                                        medicalSlot.setMedicalAppointment(null);
+                                                        return medicalSlotRepository.save(medicalSlot);
+                                                    }))
+                                                    .then(Mono.defer(() -> {
+                                                        medicalAppointment.markAsCanceled();
+                                                        return medicalAppointmentRepository.save(medicalAppointment);
+                                                    }));
+                                        });
                             });
                 })
                 .then();

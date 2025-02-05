@@ -1,5 +1,6 @@
 package com.api.v2.medical_appointments.services.impl;
 
+import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
@@ -17,39 +18,44 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
     private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
     private final MedicalSlotCompletionService medicalSlotCompletionService;
+    private final DoctorFinderUtil doctorFinderUtil;
 
     public MedicalAppointmentCompletionServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalAppointmentFinderUtil medicalAppointmentFinderUtil,
             MedicalAppointmentRepository medicalAppointmentRepository,
-            MedicalSlotCompletionService medicalSlotCompletionService
+            MedicalSlotCompletionService medicalSlotCompletionService, DoctorFinderUtil doctorFinderUtil
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
         this.medicalSlotCompletionService = medicalSlotCompletionService;
+        this.doctorFinderUtil = doctorFinderUtil;
     }
 
     @Override
-    public Mono<Void> complete(String appointmentId) {
+    public Mono<Void> complete(String medicalLicenseNumber, String appointmentId) {
         return medicalAppointmentFinderUtil
                 .findById(appointmentId)
                 .flatMap(medicalAppointment -> {
-                    return onCanceledMedicalAppointment(medicalAppointment)
-                            .then(onCompletedMedicalAppointment(medicalAppointment))
-                            .then(medicalSlotFinderUtil
-                                .findByMedicalAppointment(medicalAppointment)
-                                .flatMap(medicalSlot -> {
-                                    if (medicalSlot.getMedicalAppointment() == null) {
-                                        return Mono.empty();
-                                    }
-                                    medicalAppointment.markAsCompleted();
-                                    return medicalSlotCompletionService
-                                            .complete(medicalSlot, medicalAppointment)
-                                            .then(medicalAppointmentRepository.save(medicalAppointment));
-                                })
-                            );
-
+                    return doctorFinderUtil
+                            .findByLicenseNumber(medicalLicenseNumber)
+                            .flatMap(doctor -> {
+                                return onCanceledMedicalAppointment(medicalAppointment)
+                                        .then(onCompletedMedicalAppointment(medicalAppointment))
+                                        .then(medicalSlotFinderUtil
+                                                .findByMedicalAppointment(medicalAppointment)
+                                                .flatMap(medicalSlot -> {
+                                                    if (medicalSlot.getMedicalAppointment() == null) {
+                                                        return Mono.empty();
+                                                    }
+                                                    medicalAppointment.markAsCompleted();
+                                                    return medicalSlotCompletionService
+                                                            .complete(medicalSlot, medicalAppointment)
+                                                            .then(medicalAppointmentRepository.save(medicalAppointment));
+                                                })
+                                        );
+                            });
                 })
                 .then();
     }

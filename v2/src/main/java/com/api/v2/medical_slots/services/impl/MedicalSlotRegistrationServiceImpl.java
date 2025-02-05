@@ -64,7 +64,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                                                             .withLinks(
                                                                     linkTo(
                                                                             MedicalSlotController.class,
-                                                                            controller -> controller.cancel(id)
+                                                                            controller -> controller.cancel(registrationDto.medicalLicenseNumber(), id)
                                                                     ).withRel("cancel_just_registered_medical_slot"),
                                                                     linkTo(
                                                                             MedicalSlotController.class,

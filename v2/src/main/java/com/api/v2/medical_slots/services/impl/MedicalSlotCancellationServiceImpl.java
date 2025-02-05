@@ -1,5 +1,6 @@
 package com.api.v2.medical_slots.services.impl;
 
+import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_slots.domain.MedicalSlot;
@@ -19,37 +20,44 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     private final MedicalSlotFinderUtil medicalSlotFinderUtil;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
+    private final DoctorFinderUtil doctorFinderUtil;
 
     public MedicalSlotCancellationServiceImpl(
             MedicalSlotFinderUtil medicalSlotFinderUtil,
             MedicalSlotRepository medicalSlotRepository,
-            MedicalAppointmentRepository medicalAppointmentRepository
+            MedicalAppointmentRepository medicalAppointmentRepository,
+            DoctorFinderUtil doctorFinderUtil
     ) {
         this.medicalSlotFinderUtil = medicalSlotFinderUtil;
         this.medicalSlotRepository = medicalSlotRepository;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
+        this.doctorFinderUtil = doctorFinderUtil;
     }
 
     @Override
-    public Mono<Void> cancel(String slotId) {
+    public Mono<Void> cancel(String medicalLicenseNumber, String slotId) {
         return medicalSlotFinderUtil
                 .findById(slotId)
                 .flatMap(slot -> {
                     return onCanceledMedicalSlot(slot)
                             .then(onCompletedMedicalSlot(slot))
                             .then(Mono.defer(() -> {
-                                var optional = Optional.ofNullable(slot.getMedicalAppointment());
-                                if (optional.isPresent()) {
-                                    slot.markAsCanceled();
-                                    MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
-                                    medicalAppointment.markAsCanceled();
-                                    slot.setMedicalAppointment(medicalAppointment);
-                                    return medicalSlotRepository
-                                            .save(slot)
-                                            .then(medicalAppointmentRepository.save(medicalAppointment));
-                                }
-                                slot.markAsCanceled();
-                                return medicalSlotRepository.save(slot);
+                                return doctorFinderUtil
+                                        .findByLicenseNumber(medicalLicenseNumber)
+                                        .flatMap(doctor -> {
+                                            Optional<MedicalAppointment> optional = Optional.ofNullable(slot.getMedicalAppointment());
+                                            if (optional.isPresent()) {
+                                                slot.markAsCanceled();
+                                                MedicalAppointment medicalAppointment = slot.getMedicalAppointment();
+                                                medicalAppointment.markAsCanceled();
+                                                slot.setMedicalAppointment(medicalAppointment);
+                                                return medicalSlotRepository
+                                                        .save(slot)
+                                                        .then(medicalAppointmentRepository.save(medicalAppointment));
+                                            }
+                                            slot.markAsCanceled();
+                                            return medicalSlotRepository.save(slot);
+                                        });
                             }));
                 })
                 .then();

@@ -36,10 +36,10 @@ public class MedicalSlotController {
         return registrationService.register(registrationDto);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("medical-license-number/{medicalLicenseNumber}/id/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> cancel(@PathVariable String id) {
-        return cancellationService.cancel(id);
+    public Mono<Void> cancel(@PathVariable String medicalLicenseNumber, @PathVariable String id) {
+        return cancellationService.cancel(medicalLicenseNumber, id);
     }
 
     @GetMapping("/by-id/{id}")

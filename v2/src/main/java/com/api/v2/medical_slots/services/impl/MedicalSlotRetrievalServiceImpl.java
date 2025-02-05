@@ -49,7 +49,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                                 ).withSelfRel(),
                                                 linkTo(
                                                         MedicalSlotController.class,
-                                                        controller -> controller.cancel(slotId)
+                                                        controller -> controller.cancel(medicalLicenseNumber, slotId)
                                                 ).withRel("cancel_found_medical_slot"),
                                                 linkTo(
                                                         MedicalSlotController.class,
@@ -112,7 +112,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find_completed_medical_slots_by_doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.cancel(dto.id())
+                                            controller -> controller.cancel(medicalLicenseNumber, dto.id())
                                     ).withRel("cancel_medical_slot_by_id")
                             );
                 });
@@ -158,7 +158,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find_completed_medical_slots_by_doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.cancel(dto.id())
+                                            controller -> controller.cancel(medicalLicenseNumber, dto.id())
                                     ).withRel("cancel_medical_slot_by_id")
                             );
                 });
@@ -204,7 +204,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find_completed_medical_slots_by_doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.cancel(dto.id())
+                                            controller -> controller.cancel(medicalLicenseNumber, dto.id())
                                     ).withRel("cancel_medical_slot_by_id")
                             );
                 });
@@ -246,7 +246,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                     ).withRel("find_completed_medical_slots_by_doctor"),
                                     linkTo(
                                             MedicalSlotController.class,
-                                            controller -> controller.cancel(dto.id())
+                                            controller -> controller.cancel(dto.doctor().medicalLicenseNumber(), dto.id())
                                     ).withRel("cancel_medical_slot_by_id")
                             );
                 });
