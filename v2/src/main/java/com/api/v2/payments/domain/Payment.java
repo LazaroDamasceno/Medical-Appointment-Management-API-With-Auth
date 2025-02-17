@@ -1,17 +1,17 @@
-package com.api.v2.payments;
+package com.api.v2.payments.domain;
 
 import com.api.v2.cards.domain.Card;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
-import org.springframework.stereotype.Service;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 
-@Service
+@Document
 public record Payment(
         @BsonId
         ObjectId id,
