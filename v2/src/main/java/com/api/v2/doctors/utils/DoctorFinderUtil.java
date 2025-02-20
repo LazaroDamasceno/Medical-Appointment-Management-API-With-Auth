@@ -18,7 +18,7 @@ public class DoctorFinderUtil {
     public Mono<Doctor> findByLicenseNumber(String medicalLicenseNumber) {
         return doctorRepository
                 .findAll()
-                .filter(d -> d.getLicenseNumber().equals(medicalLicenseNumber))
+                .filter(d -> d.getMedicalLicenseNumber().equals(medicalLicenseNumber))
                 .singleOrEmpty()
                 .singleOptional()
                 .flatMap(optional -> {

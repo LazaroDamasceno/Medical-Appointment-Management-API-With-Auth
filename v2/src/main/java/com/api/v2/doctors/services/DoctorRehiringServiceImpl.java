@@ -31,7 +31,7 @@ public class DoctorRehiringServiceImpl implements DoctorRehiringService {
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(doctor -> {
                     if (doctor.getTerminatedAt() == null) {
-                        String message = "Doctor whose license number is %s is employed.".formatted(doctor.getLicenseNumber());
+                        String message = "Doctor whose license number is %s is employed.".formatted(doctor.getMedicalLicenseNumber());
                         return Mono.error(new ImmutableDoctorException(message));
                     }
                     DoctorAuditTrail auditTrail = DoctorAuditTrail.create(doctor);

@@ -31,7 +31,7 @@ public class DoctorTerminationServiceImpl implements DoctorTerminationService {
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(doctor -> {
                     if (doctor.getTerminatedAt() != null) {
-                        String message = "Doctor whose license number is %s is already terminated.".formatted(doctor.getLicenseNumber());
+                        String message = "Doctor whose license number is %s is already terminated.".formatted(doctor.getMedicalLicenseNumber());
                         return Mono.error(new ImmutableDoctorException(message));
                     }
                     DoctorAuditTrail auditTrail = DoctorAuditTrail.create(doctor);

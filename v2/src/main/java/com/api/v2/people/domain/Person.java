@@ -1,5 +1,6 @@
 package com.api.v2.people.domain;
 
+import com.api.v2.common.DstCheckerUtil;
 import com.api.v2.people.dtos.PersonModificationDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -21,19 +22,18 @@ public class Person {
     private String middleName;
     private String lastName;
     private LocalDate birthDate;
-    private String ssn;
+    private final String ssn;
     private String email;
     private String phoneNumber;
     private String gender;
-    private LocalDateTime createdAt;
-    private ZoneId createdAtZoneId;
-    private ZoneOffset createdAtZoneOffset;
+    private final LocalDateTime createdAt;
+    private final ZoneId createdAtZoneId;
+    private final ZoneOffset createdAtZoneOffset;
+    private final boolean isCreatedDuringDST;
     private LocalDateTime modifiedAt;
     private ZoneId modifiedAtZoneId;
     private ZoneOffset modifiedAtZoneOffset;
-
-    public Person() {
-    }
+    private boolean isModifiedDuringDST;
 
     private Person(PersonRegistrationDto registrationDto) {
         this.id = new ObjectId();
@@ -48,6 +48,7 @@ public class Person {
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
         this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
+        this.isCreatedDuringDST = DstCheckerUtil.isGivenDateTimeFollowingDST(LocalDateTime.now(), ZoneId.systemDefault());
     }
 
     public static Person create(PersonRegistrationDto registrationDto) {
@@ -65,6 +66,7 @@ public class Person {
         this.modifiedAt = LocalDateTime.now(ZoneId.systemDefault());
         this.modifiedAtZoneId = ZoneId.systemDefault();
         this.modifiedAtZoneOffset = OffsetDateTime.now().getOffset();
+        this.isModifiedDuringDST = DstCheckerUtil.isGivenDateTimeFollowingDST(LocalDateTime.now(), ZoneId.systemDefault());
     }
 
     public String getFullName() {
@@ -122,4 +124,11 @@ public class Person {
         return modifiedAtZoneOffset;
     }
 
+    public boolean isCreatedDuringDST() {
+        return isCreatedDuringDST;
+    }
+
+    public boolean isModifiedDuringDST() {
+        return isModifiedDuringDST;
+    }
 }

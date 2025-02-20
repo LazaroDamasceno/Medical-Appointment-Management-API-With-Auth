@@ -64,7 +64,7 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
     private Mono<Void> onDuplicatedMedicalLicenseNumber(String medicalLicenseNumber) {
         return doctorRepository
                 .findAll()
-                .filter(d -> d.getLicenseNumber().equals(medicalLicenseNumber))
+                .filter(d -> d.getMedicalLicenseNumber().equals(medicalLicenseNumber))
                 .singleOrEmpty()
                 .hasElement()
                 .flatMap(exists -> {

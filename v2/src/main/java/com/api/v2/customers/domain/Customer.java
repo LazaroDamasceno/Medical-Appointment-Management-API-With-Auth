@@ -1,6 +1,7 @@
 package com.api.v2.customers.domain;
 
 import com.api.v2.common.Address;
+import com.api.v2.common.DstCheckerUtil;
 import com.api.v2.people.domain.Person;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
@@ -18,12 +19,10 @@ public class Customer {
     private ObjectId id;
     private Address address;
     private Person person;
-    private LocalDateTime createdAt;
-    private ZoneId createdAtZoneId;
-    private ZoneOffset createdAtZoneOffset;
-
-    public Customer() {
-    }
+    private final LocalDateTime createdAt;
+    private final ZoneId createdAtZoneId;
+    private final ZoneOffset createdAtZoneOffset;
+    private final boolean isCreatedDuringDST;
 
     private Customer(Address address, Person person) {
         this.id = new ObjectId();
@@ -32,6 +31,7 @@ public class Customer {
         this.createdAt = LocalDateTime.now(ZoneId.systemDefault());
         this.createdAtZoneId = ZoneId.systemDefault();
         this.createdAtZoneOffset = OffsetDateTime.now().getOffset();
+        this.isCreatedDuringDST = DstCheckerUtil.isGivenDateTimeFollowingDST(LocalDateTime.now(), ZoneId.systemDefault());
     }
 
     public static Customer create(Address address, Person person) {
@@ -64,5 +64,9 @@ public class Customer {
 
     public ZoneOffset getCreatedAtZoneOffset() {
         return createdAtZoneOffset;
+    }
+
+    public boolean isCreatedDuringDST() {
+        return isCreatedDuringDST;
     }
 }
