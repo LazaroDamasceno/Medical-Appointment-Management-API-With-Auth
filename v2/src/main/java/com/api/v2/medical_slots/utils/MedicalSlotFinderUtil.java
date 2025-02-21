@@ -1,5 +1,6 @@
 package com.api.v2.medical_slots.utils;
 
+import com.api.v2.common.Id;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_slots.domain.MedicalSlot;
@@ -22,7 +23,7 @@ public class MedicalSlotFinderUtil {
         this.repository = repository;
     }
 
-    public Mono<MedicalSlot> findById(String id) {
+    public Mono<MedicalSlot> findById(@Id String id) {
         return repository
                 .findById(new ObjectId(id))
                 .switchIfEmpty(Mono.error(new NonExistentMedicalSlotException(id)));

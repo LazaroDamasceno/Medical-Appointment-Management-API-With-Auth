@@ -1,5 +1,7 @@
 package com.api.v2.medical_appointments.services.impl;
 
+import com.api.v2.common.Id;
+import com.api.v2.common.MLN;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
@@ -36,7 +38,7 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
     }
 
     @Override
-    public Mono<Void> complete(String medicalLicenseNumber, String appointmentId) {
+    public Mono<Void> complete(@MLN String medicalLicenseNumber, @Id String appointmentId) {
         return medicalAppointmentFinderUtil
                 .findById(appointmentId)
                 .flatMap(medicalAppointment -> {

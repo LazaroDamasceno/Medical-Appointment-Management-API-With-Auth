@@ -1,5 +1,6 @@
 package com.api.v2.customers.services;
 
+import com.api.v2.common.Id;
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.customers.utils.CustomerFinderUtil;
@@ -23,7 +24,7 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
     }
 
     @Override
-    public Mono<CustomerResponseDto> findById(String id) {
+    public Mono<CustomerResponseDto> findById(@Id String id) {
         return customerFinderUtil
                 .findById(id)
                 .flatMap(CustomerResponseMapper::mapToMono);

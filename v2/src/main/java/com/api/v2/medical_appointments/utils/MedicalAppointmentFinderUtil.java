@@ -1,5 +1,6 @@
 package com.api.v2.medical_appointments.utils;
 
+import com.api.v2.common.Id;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
@@ -20,7 +21,7 @@ public class MedicalAppointmentFinderUtil {
         this.repository = repository;
     }
 
-    public Mono<MedicalAppointment> findById(String id) {
+    public Mono<MedicalAppointment> findById(@Id String id) {
         return repository
                 .findById(new ObjectId(id))
                 .switchIfEmpty(Mono.error(new NonExistentMedicalAppointmentException(id)));

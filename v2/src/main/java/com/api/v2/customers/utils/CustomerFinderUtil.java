@@ -1,6 +1,7 @@
 package com.api.v2.customers.utils;
 
 import com.api.v2.customers.exceptions.NonExistentCustomerException;
+import com.api.v2.common.Id;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.domain.CustomerRepository;
 import org.bson.types.ObjectId;
@@ -16,7 +17,7 @@ public class CustomerFinderUtil {
         this.customerRepository = customerRepository;
     }
 
-    public Mono<Customer> findById(String id) {
+    public Mono<Customer> findById(@Id String id) {
         return customerRepository
                 .findAll()
                 .filter(c -> c.getPerson().getId().equals(new ObjectId(id)))

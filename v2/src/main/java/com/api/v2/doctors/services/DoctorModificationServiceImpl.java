@@ -1,5 +1,6 @@
 package com.api.v2.doctors.services;
 
+import com.api.v2.common.MLN;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.people.dtos.PersonModificationDto;
@@ -26,7 +27,7 @@ public class DoctorModificationServiceImpl implements DoctorModificationService 
     }
 
     @Override
-    public Mono<Void> modify(String medicalLicenseNumber, @Valid PersonModificationDto modificationDto) {
+    public Mono<Void> modify(@MLN String medicalLicenseNumber, @Valid PersonModificationDto modificationDto) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(doctor -> {

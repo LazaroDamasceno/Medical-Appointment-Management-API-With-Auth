@@ -1,5 +1,6 @@
 package com.api.v2.customers.controllers;
 
+import com.api.v2.common.Id;
 import com.api.v2.customers.dtos.CustomerModificationDto;
 import com.api.v2.customers.dtos.CustomerRegistrationDto;
 import com.api.v2.customers.dtos.CustomerResponseDto;
@@ -38,12 +39,12 @@ public class CustomerController {
 
     @PatchMapping("{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> modify(@PathVariable String id, @Valid @RequestBody CustomerModificationDto modificationDto) {
+    public Mono<Void> modify(@PathVariable @Id String id, @Valid @RequestBody CustomerModificationDto modificationDto) {
         return modificationService.modify(id, modificationDto);
     }
 
     @GetMapping("{id}")
-    public Mono<CustomerResponseDto> findById(@PathVariable String id) {
+    public Mono<CustomerResponseDto> findById(@PathVariable @Id String id) {
         return retrievalService.findById(id);
     }
 

@@ -1,7 +1,9 @@
 package com.api.v2.people.dtos;
 
+import com.api.v2.common.Id;
+
 public record PersonResponseDto(
         String fullName,
-        String id
+        @Id String id
 ) {
 }

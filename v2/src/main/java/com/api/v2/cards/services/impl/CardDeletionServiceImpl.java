@@ -3,6 +3,8 @@ package com.api.v2.cards.services.impl;
 import com.api.v2.cards.domain.CardRepository;
 import com.api.v2.cards.services.interfaces.CardDeletionService;
 import com.api.v2.cards.utils.CardFinderUtil;
+import com.api.v2.common.Id;
+
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -21,7 +23,7 @@ public class CardDeletionServiceImpl implements CardDeletionService {
     }
 
     @Override
-    public Mono<Void> delete(String id) {
+    public Mono<Void> delete(@Id String id) {
         return cardFinderUtil
                 .find(id)
                 .flatMap(cardRepository::delete);

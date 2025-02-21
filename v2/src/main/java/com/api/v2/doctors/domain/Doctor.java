@@ -1,6 +1,7 @@
 package com.api.v2.doctors.domain;
 
 import com.api.v2.common.DstCheckerUtil;
+import com.api.v2.common.MLN;
 import com.api.v2.people.domain.Person;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
@@ -27,7 +28,7 @@ public class  Doctor {
     private ZoneOffset terminatedAtZoneOffset;
     private Boolean isTerminatedDuringDST;
 
-    private Doctor(String medicalLicenseNumber, Person person) {
+    private Doctor(@MLN String medicalLicenseNumber, Person person) {
         this.id = new ObjectId();
         this.medicalLicenseNumber = medicalLicenseNumber;
         this.person = person;

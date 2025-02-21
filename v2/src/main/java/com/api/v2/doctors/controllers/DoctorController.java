@@ -1,5 +1,6 @@
 package com.api.v2.doctors.controllers;
 
+import com.api.v2.common.MLN;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.doctors.services.*;
@@ -44,7 +45,7 @@ public class DoctorController {
     @PutMapping("{medicalLicenseNumber}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> modify(
-            @PathVariable String medicalLicenseNumber,
+            @PathVariable @MLN String medicalLicenseNumber,
             @Valid @RequestBody PersonModificationDto modificationDto
     ) {
         return modificationService.modify(medicalLicenseNumber, modificationDto);
@@ -52,18 +53,18 @@ public class DoctorController {
 
     @PatchMapping("{medicalLicenseNumber}/termination")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> terminate(@PathVariable String medicalLicenseNumber) {
+    public Mono<Void> terminate(@PathVariable @MLN String medicalLicenseNumber) {
         return terminationService.terminate(medicalLicenseNumber);
     }
 
     @PatchMapping("{medicalLicenseNumber}/rehiring")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> rehire(@PathVariable String medicalLicenseNumber) {
+    public Mono<Void> rehire(@PathVariable @MLN String medicalLicenseNumber) {
         return rehiringService.rehire(medicalLicenseNumber);
     }
 
     @GetMapping("{medicalLicenseNumber}")
-    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> findByMedicalLicenseNumber(@PathVariable String medicalLicenseNumber) {
+    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> findByMedicalLicenseNumber(@PathVariable @MLN String medicalLicenseNumber) {
         return retrievalService.findByMedicalLicenseNumber(medicalLicenseNumber);
     }
 

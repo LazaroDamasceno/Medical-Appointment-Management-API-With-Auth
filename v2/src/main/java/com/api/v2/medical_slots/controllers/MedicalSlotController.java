@@ -1,5 +1,7 @@
 package com.api.v2.medical_slots.controllers;
 
+import com.api.v2.common.Id;
+import com.api.v2.common.MLN;
 import com.api.v2.medical_slots.dtos.MedicalSlotRegistrationDto;
 import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
@@ -38,32 +40,32 @@ public class MedicalSlotController {
 
     @PatchMapping("medical-license-number/{medicalLicenseNumber}/id/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> cancel(@PathVariable String medicalLicenseNumber, @PathVariable String id) {
+    public Mono<Void> cancel(@PathVariable @MLN String medicalLicenseNumber, @PathVariable @Id String id) {
         return cancellationService.cancel(medicalLicenseNumber, id);
     }
 
     @GetMapping("/by-id/{id}")
-    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(@PathVariable String id) {
+    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(@PathVariable @Id String id) {
         return retrievalService.findById(id);
     }
 
     @GetMapping("/active/by-doctor/{medicalLicenseNumber}")
-    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(@PathVariable String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(@PathVariable @MLN String medicalLicenseNumber) {
         return retrievalService.findAllCompletedByDoctor(medicalLicenseNumber);
     }
 
     @GetMapping("/canceled/by-doctor/{medicalLicenseNumber}")
-    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(@PathVariable String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(@PathVariable @MLN String medicalLicenseNumber) {
         return retrievalService.findAllCanceledByDoctor(medicalLicenseNumber);
     }
 
     @GetMapping("/completed/by-doctor/{medicalLicenseNumber}")
-    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(@PathVariable String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(@PathVariable @MLN String medicalLicenseNumber) {
         return retrievalService.findAllCompletedByDoctor(medicalLicenseNumber);
     }
 
     @GetMapping("/by-doctor/{medicalLicenseNumber}")
-    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(@PathVariable String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllByDoctor(@PathVariable @MLN String medicalLicenseNumber) {
         return retrievalService.findAllActiveByDoctor(medicalLicenseNumber);
     }
 

@@ -5,6 +5,8 @@ import com.api.v2.cards.dtos.CardResponseDto;
 import com.api.v2.cards.services.interfaces.CardDeletionService;
 import com.api.v2.cards.services.interfaces.CardRegistrationService;
 import com.api.v2.cards.services.interfaces.CardRetrievalService;
+import com.api.v2.common.Id;
+
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +42,7 @@ public class CardController {
     }
 
     @DeleteMapping("{id}")
-    public Mono<Void> delete(@PathVariable String id) {
+    public Mono<Void> delete(@PathVariable @Id String id) {
         return deletionService.delete(id);
     }
 
@@ -50,7 +52,7 @@ public class CardController {
     }
 
     @GetMapping("{id}")
-    public Mono<HalResourceWrapper<CardResponseDto, Void>> findById(@PathVariable String id) {
+    public Mono<HalResourceWrapper<CardResponseDto, Void>> findById(@PathVariable @Id String id) {
         return retrievalService.findById(id);
     }
 }

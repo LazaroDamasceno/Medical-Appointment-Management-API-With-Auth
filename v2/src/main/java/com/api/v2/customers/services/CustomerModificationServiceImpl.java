@@ -1,5 +1,6 @@
 package com.api.v2.customers.services;
 
+import com.api.v2.common.Id;
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerModificationDto;
 import com.api.v2.customers.utils.CustomerFinderUtil;
@@ -26,7 +27,7 @@ public class CustomerModificationServiceImpl implements CustomerModificationServ
     }
 
     @Override
-    public Mono<Void> modify(String id, @Valid CustomerModificationDto modificationDto) {
+    public Mono<Void> modify(@Id String id, @Valid CustomerModificationDto modificationDto) {
         return customerFinderUtil
                 .findById(id)
                 .flatMap(customer -> {

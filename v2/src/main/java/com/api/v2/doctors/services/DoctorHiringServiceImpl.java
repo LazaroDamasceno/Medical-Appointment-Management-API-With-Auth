@@ -1,5 +1,6 @@
 package com.api.v2.doctors.services;
 
+import com.api.v2.common.MLN;
 import com.api.v2.doctors.controllers.DoctorController;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.domain.DoctorRepository;
@@ -61,7 +62,7 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
                 });
     }
 
-    private Mono<Void> onDuplicatedMedicalLicenseNumber(String medicalLicenseNumber) {
+    private Mono<Void> onDuplicatedMedicalLicenseNumber(@MLN String medicalLicenseNumber) {
         return doctorRepository
                 .findAll()
                 .filter(d -> d.getMedicalLicenseNumber().equals(medicalLicenseNumber))
