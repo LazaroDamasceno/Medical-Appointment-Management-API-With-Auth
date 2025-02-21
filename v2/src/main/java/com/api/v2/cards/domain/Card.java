@@ -42,7 +42,7 @@ public class Card {
         this.createdAtZoneId = ZoneId.systemDefault();
     }
 
-    public static Card create(String type, CardRegistrationDto registrationDto) {
+    public static Card of(String type, CardRegistrationDto registrationDto) {
         return new Card(
                 type,
                 registrationDto.bank(),

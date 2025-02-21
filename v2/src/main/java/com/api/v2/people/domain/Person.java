@@ -51,7 +51,7 @@ public class Person {
         this.isCreatedDuringDST = DstCheckerUtil.isGivenDateTimeFollowingDST(LocalDateTime.now(), ZoneId.systemDefault());
     }
 
-    public static Person create(PersonRegistrationDto registrationDto) {
+    public static Person of(PersonRegistrationDto registrationDto) {
         return new Person(registrationDto);
     }
 

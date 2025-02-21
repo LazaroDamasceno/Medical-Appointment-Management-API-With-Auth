@@ -54,7 +54,7 @@ public class MedicalSlot {
         this.isCreatedDuringDST = DstCheckerUtil.isGivenDateTimeFollowingDST(LocalDateTime.now(), ZoneId.systemDefault());
     }
 
-    public static MedicalSlot create(Doctor doctor,
+    public static MedicalSlot of(Doctor doctor,
                                      LocalDateTime availableAt,
                                      ZoneId availableAtZoneId,
                                      ZoneOffset availableAtZoneOffset

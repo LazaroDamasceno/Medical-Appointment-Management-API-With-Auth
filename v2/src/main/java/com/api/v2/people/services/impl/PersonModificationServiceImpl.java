@@ -28,7 +28,7 @@ public class PersonModificationServiceImpl implements PersonModificationService 
     @Override
     public Mono<Person> modify(@NotNull Person person, @Valid PersonModificationDto modificationDto) {
         return Mono.defer(() -> {
-            PersonAuditTrail auditTrail = PersonAuditTrail.create(person);
+            PersonAuditTrail auditTrail = PersonAuditTrail.of(person);
             return personAuditTrailRepository
                     .save(auditTrail)
                     .then(Mono.defer(() -> {

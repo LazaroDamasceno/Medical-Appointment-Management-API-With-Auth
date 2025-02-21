@@ -26,7 +26,7 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
     @Override
     public Mono<HalResourceWrapper<CardResponseDto, Void>> registerCreditCard(@Valid CardRegistrationDto registrationDto) {
         return Mono.defer(() -> {
-                    Card card = Card.create(
+                    Card card = Card.of(
                             "credit card",
                             registrationDto
                     );
@@ -52,7 +52,7 @@ public class CardRegistrationServiceImpl implements CardRegistrationService {
     @Override
     public Mono<HalResourceWrapper<CardResponseDto, Void>> registerDebitCard(@Valid CardRegistrationDto registrationDto) {
         return Mono.defer(() -> {
-                    Card card = Card.create(
+                    Card card = Card.of(
                             "debit card",
                             registrationDto
                     );

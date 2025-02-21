@@ -22,7 +22,7 @@ public record Payment(
         ZoneOffset payedAtZoneOffset
 ) {
 
-    public static Payment create(Card card, MedicalAppointment medicalAppointment) {
+    public static Payment of(Card card, MedicalAppointment medicalAppointment) {
         return new Payment(
                 new ObjectId(),
                 card,

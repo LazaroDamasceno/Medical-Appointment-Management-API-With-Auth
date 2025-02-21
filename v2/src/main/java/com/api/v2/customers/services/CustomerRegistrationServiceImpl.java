@@ -34,7 +34,7 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
                     return personRegistrationService
                             .register(registrationDto.person())
                             .flatMap(person ->  {
-                                Customer customer  = Customer.create(registrationDto.address(), person);
+                                Customer customer  = Customer.of(registrationDto.address(), person);
                                 return customerRepository.save(customer);
                             })
                             .flatMap(CustomerResponseMapper::mapToMono);

@@ -54,7 +54,7 @@ public class MedicalAppointment {
         this.type = type;
     }
 
-    public static MedicalAppointment create(String type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
+    public static MedicalAppointment of(String type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
         return new MedicalAppointment(type, customer, doctor, bookedAt);
     }
 

@@ -20,7 +20,7 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
     @Override
     public Mono<Person> register(@Valid PersonRegistrationDto registrationDto) {
         return Mono.defer(() -> {
-            Person person = Person.create(registrationDto);
+            Person person = Person.of(registrationDto);
             return personRepository.save(person);
         });
     }

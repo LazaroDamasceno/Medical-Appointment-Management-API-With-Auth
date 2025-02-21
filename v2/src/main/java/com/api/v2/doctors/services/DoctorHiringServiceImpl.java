@@ -40,7 +40,7 @@ public class DoctorHiringServiceImpl implements DoctorHiringService {
                     return personRegistrationService
                             .register(hiringDto.person())
                             .flatMap(person -> {
-                                Doctor doctor = Doctor.create(hiringDto.medicalLicenseNumber(), person);
+                                Doctor doctor = Doctor.of(hiringDto.medicalLicenseNumber(), person);
                                 return doctorRepository.save(doctor);
                             })
                             .flatMap(DoctorResponseMapper::mapToMono);

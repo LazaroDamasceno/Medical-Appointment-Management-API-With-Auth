@@ -34,7 +34,7 @@ public class DoctorRehiringServiceImpl implements DoctorRehiringService {
                         String message = "Doctor whose license number is %s is employed.".formatted(doctor.getMedicalLicenseNumber());
                         return Mono.error(new ImmutableDoctorException(message));
                     }
-                    DoctorAuditTrail auditTrail = DoctorAuditTrail.create(doctor);
+                    DoctorAuditTrail auditTrail = DoctorAuditTrail.of(doctor);
                     return doctorAuditTrailRepository
                             .save(auditTrail)
                             .then(Mono.defer(() -> {

@@ -34,7 +34,7 @@ public class DoctorTerminationServiceImpl implements DoctorTerminationService {
                         String message = "Doctor whose license number is %s is already terminated.".formatted(doctor.getMedicalLicenseNumber());
                         return Mono.error(new ImmutableDoctorException(message));
                     }
-                    DoctorAuditTrail auditTrail = DoctorAuditTrail.create(doctor);
+                    DoctorAuditTrail auditTrail = DoctorAuditTrail.of(doctor);
                     return doctorAuditTrailRepository
                             .save(auditTrail)
                             .then(Mono.defer(() -> {

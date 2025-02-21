@@ -51,7 +51,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                 .flatMap(doctor -> {
                     return onUnavailableMedicalSlot(doctor, registrationDto.availableAt(), zoneId, zoneOffset)
                             .then(Mono.defer(() -> {
-                                MedicalSlot medicalSlot = MedicalSlot.create(doctor, registrationDto.availableAt(), zoneId, zoneOffset);
+                                MedicalSlot medicalSlot = MedicalSlot.of(doctor, registrationDto.availableAt(), zoneId, zoneOffset);
                                 String id = medicalSlot.getId().toString();
                                 String medicalLicenseNumber = medicalSlot.getDoctor().getMedicalLicenseNumber();
                                 return medicalSlotRepository

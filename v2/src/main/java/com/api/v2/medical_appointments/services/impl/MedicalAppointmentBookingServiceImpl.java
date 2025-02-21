@@ -68,7 +68,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                             .flatMap(slot -> {
                                 return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
                                         .then(Mono.defer(() -> {
-                                            MedicalAppointment medicalAppointment = MedicalAppointment.create("public insurance", customer, doctor, bookingDto.bookedAt());
+                                            MedicalAppointment medicalAppointment = MedicalAppointment.of("public insurance", customer, doctor, bookingDto.bookedAt());
                                             slot.setMedicalAppointment(medicalAppointment);
                                             return medicalSlotRepository
                                                     .save(slot)
@@ -112,7 +112,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                             .flatMap(slot -> {
                                 return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
                                         .then(Mono.defer(() -> {
-                                            MedicalAppointment medicalAppointment = MedicalAppointment.create("private insurance", customer, doctor, bookingDto.bookedAt());
+                                            MedicalAppointment medicalAppointment = MedicalAppointment.of("private insurance", customer, doctor, bookingDto.bookedAt());
                                             slot.setMedicalAppointment(medicalAppointment);
                                             return medicalSlotRepository
                                                     .save(slot)
@@ -156,7 +156,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                             .flatMap(slot -> {
                                 return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
                                         .then(Mono.defer(() -> {
-                                            MedicalAppointment medicalAppointment = MedicalAppointment.create("paid by patient", customer, doctor, bookingDto.bookedAt());
+                                            MedicalAppointment medicalAppointment = MedicalAppointment.of("paid by patient", customer, doctor, bookingDto.bookedAt());
                                             slot.setMedicalAppointment(medicalAppointment);
                                             return medicalSlotRepository
                                                     .save(slot)
