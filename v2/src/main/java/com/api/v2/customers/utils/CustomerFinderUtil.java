@@ -20,7 +20,7 @@ public class CustomerFinderUtil {
     public Mono<Customer> findById(@Id String id) {
         return customerRepository
                 .findAll()
-                .filter(c -> c.getPerson().getId().equals(new ObjectId(id)))
+                .filter(c -> c.getId().equals(new ObjectId(id)))
                 .singleOrEmpty()
                 .switchIfEmpty(Mono.error(new NonExistentCustomerException(id)));
     }
