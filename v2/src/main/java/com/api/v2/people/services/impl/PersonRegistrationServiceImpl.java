@@ -21,9 +21,7 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
     public Mono<Person> register(@Valid PersonRegistrationDto registrationDto) {
         return personRepository
                 .findAll()
-                .filter(p -> p.getSsn().equals(registrationDto.ssn())
-                    || p.getEmail().equals(registrationDto.email())
-                )
+                .filter(p -> p.getSsn().equals(registrationDto.ssn()))
                 .singleOrEmpty()
                 .singleOptional()
                 .flatMap(optional -> {
