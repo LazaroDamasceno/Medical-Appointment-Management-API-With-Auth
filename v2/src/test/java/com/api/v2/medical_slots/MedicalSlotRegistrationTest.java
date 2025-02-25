@@ -21,7 +21,7 @@ public class MedicalSlotRegistrationTest {
 
     private final MedicalSlotRegistrationDto registrationDto = new MedicalSlotRegistrationDto(
             "12345678CA",
-            LocalDateTime.parse("2025-12-12T12:30:30")
+            LocalDateTime.parse("2025-12-18T12:30:30")
     );
 
     @Test
