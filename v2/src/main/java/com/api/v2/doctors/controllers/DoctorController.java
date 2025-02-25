@@ -17,20 +17,17 @@ import reactor.core.publisher.Mono;
 public class DoctorController {
 
     private final DoctorHiringService hiringService;
-    private final DoctorModificationService modificationService;
     private final DoctorTerminationService terminationService;
     private final DoctorRehiringService rehiringService;
     private final DoctorRetrievalService retrievalService;
 
     public DoctorController(
             DoctorHiringService hiringService,
-            DoctorModificationService modificationService,
             DoctorTerminationService terminationService,
             DoctorRehiringService rehiringService,
             DoctorRetrievalService retrievalService
     ) {
         this.hiringService = hiringService;
-        this.modificationService = modificationService;
         this.terminationService = terminationService;
         this.rehiringService = rehiringService;
         this.retrievalService = retrievalService;
@@ -40,15 +37,6 @@ public class DoctorController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<HalResourceWrapper<DoctorResponseDto, Void>> hire(@Valid @RequestBody DoctorHiringDto hiringDto) {
         return hiringService.hire(hiringDto);
-    }
-
-    @PutMapping("{medicalLicenseNumber}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> modify(
-            @PathVariable @MLN String medicalLicenseNumber,
-            @Valid @RequestBody PersonModificationDto modificationDto
-    ) {
-        return modificationService.modify(medicalLicenseNumber, modificationDto);
     }
 
     @PatchMapping("{medicalLicenseNumber}/termination")

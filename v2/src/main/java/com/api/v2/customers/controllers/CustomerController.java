@@ -4,7 +4,6 @@ import com.api.v2.common.Id;
 import com.api.v2.customers.dtos.CustomerModificationDto;
 import com.api.v2.customers.dtos.CustomerRegistrationDto;
 import com.api.v2.customers.dtos.CustomerResponseDto;
-import com.api.v2.customers.services.CustomerModificationService;
 import com.api.v2.customers.services.CustomerRegistrationService;
 import com.api.v2.customers.services.CustomerRetrievalService;
 import jakarta.validation.Valid;
@@ -18,16 +17,13 @@ import reactor.core.publisher.Mono;
 public class CustomerController {
 
     private final CustomerRegistrationService registrationService;
-    private final CustomerModificationService modificationService;
     private final CustomerRetrievalService retrievalService;
 
     public CustomerController(
             CustomerRegistrationService registrationService,
-            CustomerModificationService modificationService,
             CustomerRetrievalService retrievalService
     ) {
         this.registrationService = registrationService;
-        this.modificationService = modificationService;
         this.retrievalService = retrievalService;
     }
 
@@ -35,12 +31,6 @@ public class CustomerController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<CustomerResponseDto> register(@Valid @RequestBody CustomerRegistrationDto registrationDto) {
         return registrationService.register(registrationDto);
-    }
-
-    @PatchMapping("{id}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> modify(@PathVariable @Id String id, @Valid @RequestBody CustomerModificationDto modificationDto) {
-        return modificationService.modify(id, modificationDto);
     }
 
     @GetMapping("{id}")
