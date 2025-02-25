@@ -30,11 +30,11 @@ public class MedicalSlot {
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZoneId;
     private ZoneOffset canceledAtZoneOffset;
-    private boolean isCanceledDuringDST;
+    private Boolean isCanceledDuringDST;
     private LocalDateTime completedAt;
     private ZoneId completedAtZoneId;
     private ZoneOffset completedAtZoneOffset;
-    private boolean isCompletedDuringDst;
+    private Boolean isCompletedDuringDst;
 
 
     private MedicalSlot(Doctor doctor,
