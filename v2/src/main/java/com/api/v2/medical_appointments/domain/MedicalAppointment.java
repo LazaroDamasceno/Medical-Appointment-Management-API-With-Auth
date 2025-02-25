@@ -27,11 +27,11 @@ public class MedicalAppointment {
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZoneId;
     private ZoneOffset canceledAtZoneOffset;
-    private boolean isCanceledDuringDST;
+    private Boolean isCanceledDuringDST;
     private LocalDateTime completedAt;
     private ZoneId completedAtZoneId;
     private ZoneOffset completedAtZoneOffset;
-    private boolean isCompletionDuringDST;
+    private Boolean isCompletionDuringDST;
     private final LocalDateTime createdAt;
     private final ZoneId createdAtZoneId;
     private final ZoneOffset createdAtZoneOffset;
