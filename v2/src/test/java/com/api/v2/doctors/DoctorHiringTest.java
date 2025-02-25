@@ -23,12 +23,12 @@ public class DoctorHiringTest {
     private final DoctorHiringDto hiringDto = new DoctorHiringDto(
             "12345678CA",
             new PersonRegistrationDto(
-                    "Gabriel",
+                    "Leo",
                     "",
-                    "Nazar",
+                    "Santos",
                     LocalDate.parse("2000-12-12"),
-                    "987654321",
-                    "g.nazar@drnazar.com",
+                    "123456789",
+                    "leosantos@mail.com",
                     "1234567890",
                     "male"
             )
@@ -60,12 +60,12 @@ public class DoctorHiringTest {
     private final DoctorHiringDto hiringDto2 = new DoctorHiringDto(
             "12345677CA",
             new PersonRegistrationDto(
-                    "Gabriel",
+                    "Leo",
                     "",
-                    "Nazar",
+                    "Santos",
                     LocalDate.parse("2000-12-12"),
-                    "987654321",
-                    "g.nazar@drnazar.com",
+                    "123456789",
+                    "leosantos@mail.com",
                     "1234567890",
                     "male"
             )
@@ -73,7 +73,7 @@ public class DoctorHiringTest {
 
     @Test
     @Order(3)
-    void testUnsuccessfulHiringDueToDuplicatedMedicalSsn() {
+    void testUnsuccessfulHiringDueToDuplicatedSsn() {
         webTestClient
                 .post()
                 .uri("api/v2/doctors")
@@ -83,14 +83,14 @@ public class DoctorHiringTest {
     }
 
     private final DoctorHiringDto hiringDto3 = new DoctorHiringDto(
-            "12345677CA",
+            "12345676CA",
             new PersonRegistrationDto(
-                    "Gabriel",
+                    "Leo",
                     "",
-                    "Nazar",
+                    "Santos",
                     LocalDate.parse("2000-12-12"),
-                    "987654320",
-                    "g.nazar@drnazar.com",
+                    "123456789",
+                    "leosantos@mail.com",
                     "1234567890",
                     "male"
             )
@@ -98,7 +98,7 @@ public class DoctorHiringTest {
 
     @Test
     @Order(4)
-    void testUnsuccessfulHiringDueToDuplicatedMedicalEmail() {
+    void testUnsuccessfulHiringDueToEmail() {
         webTestClient
                 .post()
                 .uri("api/v2/doctors")
