@@ -3,6 +3,7 @@ package com.api.v2.people.domain;
 import com.api.v2.common.DstCheckerUtil;
 import com.api.v2.people.dtos.PersonModificationDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
+import com.api.v2.people.utils.Gender;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,7 +26,7 @@ public class Person {
     private String ssn;
     private String email;
     private String phoneNumber;
-    private String gender;
+    private Gender gender;
     private LocalDateTime createdAt;
     private ZoneId createdAtZoneId;
     private ZoneOffset createdAtZoneOffset;

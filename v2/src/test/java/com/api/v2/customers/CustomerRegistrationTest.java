@@ -4,6 +4,7 @@ import com.api.v2.common.Address;
 import com.api.v2.customers.dtos.CustomerRegistrationDto;
 import com.api.v2.customers.dtos.CustomerResponseDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
+import com.api.v2.people.utils.Gender;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class CustomerRegistrationTest {
                     "123456789",
                     "leosantos@mail.com",
                     "1234567890",
-                    "male"
+                    Gender.CIS_MALE
             ),
             new Address(
                     "LA",
@@ -72,7 +73,7 @@ public class CustomerRegistrationTest {
                     "123456788",
                     "leosantos@mail.com",
                     "1234567890",
-                    "male"
+                    Gender.CIS_MALE
             ),
             new Address(
                     "LA",

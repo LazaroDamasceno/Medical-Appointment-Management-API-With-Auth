@@ -3,6 +3,7 @@ package com.api.v2.doctors;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.people.dtos.PersonRegistrationDto;
+import com.api.v2.people.utils.Gender;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class DoctorHiringTest {
                     "123456789",
                     "leosantos@mail.com",
                     "1234567890",
-                    "male"
+                    Gender.CIS_MALE
             )
     );
 
@@ -67,7 +68,7 @@ public class DoctorHiringTest {
                     "123456789",
                     "leosantos@mail.com",
                     "1234567890",
-                    "male"
+                    Gender.CIS_MALE
             )
     );
 
@@ -92,7 +93,7 @@ public class DoctorHiringTest {
                     "123456789",
                     "leosantos@mail.com",
                     "1234567890",
-                    "male"
+                    Gender.CIS_MALE
             )
     );
 

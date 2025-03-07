@@ -1,5 +1,6 @@
 package com.api.v2.people.dtos;
 
+import com.api.v2.people.utils.Gender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,6 +16,6 @@ public record PersonRegistrationDto(
         @NotBlank @Size(min = 9, max = 9) String ssn,
         @NotBlank @Email String email,
         @NotBlank @Size(min = 10, max = 10) String phoneNumber,
-        @NotBlank @Size(min = 1) String gender
+        @NotNull Gender gender
 ) {
 }
