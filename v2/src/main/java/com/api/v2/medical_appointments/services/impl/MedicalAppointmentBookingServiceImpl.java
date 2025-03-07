@@ -9,7 +9,6 @@ import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
-import com.api.v2.medical_appointments.exceptions.InaccessibleMedicalAppointmentException;
 import com.api.v2.medical_appointments.exceptions.UnavailableBookingDateTimeException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentBookingService;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
@@ -153,11 +152,9 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     Customer customer = tuple.getT2();
-                    return
-                            onFoundMedicalSlot(doctor, bookingDto.bookedAt())
+                    return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
                             .flatMap(slot -> {
-                                return onConflictingBook(doctor, slot)
-                                        .then(onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt()))
+                                return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
                                         .then(Mono.defer(() -> {
                                             MedicalAppointment medicalAppointment = MedicalAppointment.of("paid by patient", customer, doctor, bookingDto.bookedAt());
                                             slot.setMedicalAppointment(medicalAppointment);
@@ -188,14 +185,6 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                                         );
                             });
                 });
-    }
-
-    private Mono<MedicalSlot> onConflictingBook(Doctor doctor, MedicalSlot medicalSlot) {
-        if (medicalSlot.getDoctor().getMedicalLicenseNumber().equals(doctor.getMedicalLicenseNumber())) {
-            String message = "Doctor cannot book a medical appointment if they're the medical slot's doctor.";
-            return Mono.error(new InaccessibleMedicalAppointmentException(message));
-        }
-        return Mono.empty();
     }
 
     private Mono<MedicalSlot> onFoundMedicalSlot(Doctor doctor, LocalDateTime availableAt) {
