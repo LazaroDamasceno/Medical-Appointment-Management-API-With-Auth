@@ -1,6 +1,7 @@
 package com.api.v2.people.domain;
 
 import com.api.v2.common.DstCheckerUtil;
+import com.api.v2.people.domain.exposed.Person;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
