@@ -55,7 +55,7 @@ public class DoctorHiringTest {
                 .uri("api/v2/doctors")
                 .bodyValue(hiringDto)
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is4xxClientError();
     }
 
     private final DoctorHiringDto hiringDto2 = new DoctorHiringDto(
@@ -80,7 +80,7 @@ public class DoctorHiringTest {
                 .uri("api/v2/doctors")
                 .bodyValue(hiringDto2)
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is4xxClientError();
     }
 
     private final DoctorHiringDto hiringDto3 = new DoctorHiringDto(
@@ -105,7 +105,7 @@ public class DoctorHiringTest {
                 .uri("api/v2/doctors")
                 .bodyValue(hiringDto3)
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is4xxClientError();
     }
 
 }

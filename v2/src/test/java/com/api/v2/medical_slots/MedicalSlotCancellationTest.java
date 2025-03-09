@@ -34,6 +34,6 @@ public class MedicalSlotCancellationTest {
                 .patch()
                 .uri("api/v2/medical-slots/%s".formatted(wrongId))
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is4xxClientError();
     }
 }

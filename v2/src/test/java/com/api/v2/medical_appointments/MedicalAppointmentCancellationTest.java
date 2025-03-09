@@ -34,6 +34,6 @@ public class MedicalAppointmentCancellationTest {
                 .patch()
                 .uri("api/v2/medical-appointments/%s/cancellation".formatted(wrongId))
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is4xxClientError();
     }
 }

@@ -61,7 +61,7 @@ public class CustomerRegistrationTest {
                 .uri("api/v2/customers")
                 .bodyValue(registrationDto)
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is4xxClientError();
     }
 
     private final CustomerRegistrationDto registrationDto2 = new CustomerRegistrationDto(
@@ -91,6 +91,6 @@ public class CustomerRegistrationTest {
                 .uri("api/v2/customers")
                 .bodyValue(registrationDto2)
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is4xxClientError();
     }
 }

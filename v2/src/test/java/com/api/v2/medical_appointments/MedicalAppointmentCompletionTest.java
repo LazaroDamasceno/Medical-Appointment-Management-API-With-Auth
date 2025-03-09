@@ -34,6 +34,6 @@ public class MedicalAppointmentCompletionTest {
                 .patch()
                 .uri("api/v2/medical-appointments/%s/completion".formatted(wrongId))
                 .exchange()
-                .expectStatus().is5xxServerError();
+                .expectStatus().is4xxClientError();
     }
 }
