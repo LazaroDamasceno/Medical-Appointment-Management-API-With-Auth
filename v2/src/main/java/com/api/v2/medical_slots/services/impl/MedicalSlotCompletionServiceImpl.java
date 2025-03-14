@@ -22,8 +22,7 @@ public class MedicalSlotCompletionServiceImpl implements MedicalSlotCompletionSe
         return onCanceledMedicalSlot(medicalSlot)
                 .then(onCompletedMedicalSlot(medicalSlot))
                 .then(Mono.defer(() -> {
-                    medicalSlot.markAsCompleted();
-                    medicalSlot.setMedicalAppointment(medicalAppointment);
+                    medicalSlot.markAsCompleted(medicalAppointment);
                     return medicalSlotRepository
                             .save(medicalSlot)
                             .then();
