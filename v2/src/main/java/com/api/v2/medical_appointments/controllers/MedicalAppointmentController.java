@@ -1,6 +1,4 @@
 package com.api.v2.medical_appointments.controllers;
-
-import com.api.v2.common.Id;
 import com.api.v2.common.MLN;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
@@ -56,7 +54,7 @@ public class MedicalAppointmentController {
     }
 
     @GetMapping("/{id}")
-    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findById(@PathVariable @Id String id) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
@@ -66,29 +64,29 @@ public class MedicalAppointmentController {
     }
 
     @GetMapping("/public-insurance/{customerId}")
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable @Id String customerId) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@PathVariable String customerId) {
         return retrievalService.findAllPublicInsuranceByCustomer(customerId);
     }
 
     @GetMapping("/private-insurance/{customerId}")
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable @Id String customerId) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@PathVariable String customerId) {
         return retrievalService.findAllPrivateInsuranceByCustomer(customerId);
     }
 
     @GetMapping("/paid-by-patient/{customerId}")
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable @Id String customerId) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByPatientByCustomer(@PathVariable String customerId) {
         return retrievalService.findAllPaidByCustomer(customerId);
     }
 
     @PatchMapping("medical-license-number/{medicalLicenseNumber}/appointment-id/{appointmentId}/completion")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> complete(@PathVariable @MLN String medicalLicenseNumber, @PathVariable @Id String appointmentId) {
+    public Mono<Void> complete(@PathVariable @MLN String medicalLicenseNumber, @PathVariable String appointmentId) {
         return completionService.complete(medicalLicenseNumber, appointmentId);
     }
 
     @PatchMapping("customer-id/{customerId}/appointment-id/{appointmentId}/cancellation")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> cancel(@PathVariable @Id String customerId, @PathVariable @Id String appointmentId) {
+    public Mono<Void> cancel(@PathVariable String customerId, @PathVariable String appointmentId) {
         return cancellationService.cancel(customerId, appointmentId);
     }
 }

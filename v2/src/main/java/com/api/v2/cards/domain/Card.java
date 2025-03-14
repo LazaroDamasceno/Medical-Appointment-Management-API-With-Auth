@@ -1,20 +1,20 @@
 package com.api.v2.cards.domain;
 
 import com.api.v2.cards.dtos.CardRegistrationDto;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.UUID;
 
 @Document
 public class Card {
 
-    @BsonId
-    private ObjectId id;
+    @Id
+    private String id;
     private String type;
     private String bank;
     private String cvv_cvc;
@@ -33,7 +33,7 @@ public class Card {
             String cvv_cvc,
             LocalDate dueDate
     ) {
-        this.id = new ObjectId();
+        this.id = UUID.randomUUID().toString();
         this.type = type;
         this.bank = bank;
         this.cvv_cvc = cvv_cvc;
@@ -51,7 +51,7 @@ public class Card {
         );
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 

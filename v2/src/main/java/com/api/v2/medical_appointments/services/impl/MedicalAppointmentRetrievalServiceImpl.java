@@ -1,6 +1,5 @@
 package com.api.v2.medical_appointments.services.impl;
 
-import com.api.v2.common.Id;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
@@ -32,7 +31,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findById(@Id String id) {
+    public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findById(String id) {
         return medicalAppointmentFinderUtil
                 .findById(id)
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono)
@@ -83,7 +82,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(@Id String customerId) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(String customerId) {
         return customerFinderUtil
                 .findById(customerId)
                 .flatMapMany(customer -> {
@@ -125,7 +124,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(@Id String customerId) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(String customerId) {
         return customerFinderUtil
                 .findById(customerId)
                 .flatMapMany(customer -> {
@@ -167,7 +166,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByCustomer(@Id String customerId) {
+    public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByCustomer(String customerId) {
         return customerFinderUtil
                 .findById(customerId)
                 .flatMapMany(customer -> {

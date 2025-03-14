@@ -4,7 +4,6 @@ import com.api.v2.common.MLN;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.doctors.services.*;
-import com.api.v2.people.dtos.PersonModificationDto;
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

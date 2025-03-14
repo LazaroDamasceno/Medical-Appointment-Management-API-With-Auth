@@ -1,6 +1,5 @@
 package com.api.v2.medical_slots.controllers;
 
-import com.api.v2.common.Id;
 import com.api.v2.common.MLN;
 import com.api.v2.medical_slots.dtos.MedicalSlotRegistrationDto;
 import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
@@ -40,12 +39,12 @@ public class MedicalSlotController {
 
     @PatchMapping("medical-license-number/{medicalLicenseNumber}/id/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> cancel(@PathVariable @MLN String medicalLicenseNumber, @PathVariable @Id String id) {
+    public Mono<Void> cancel(@PathVariable @MLN String medicalLicenseNumber, @PathVariable String id) {
         return cancellationService.cancel(medicalLicenseNumber, id);
     }
 
     @GetMapping("/by-id/{id}")
-    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(@PathVariable @Id String id) {
+    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 

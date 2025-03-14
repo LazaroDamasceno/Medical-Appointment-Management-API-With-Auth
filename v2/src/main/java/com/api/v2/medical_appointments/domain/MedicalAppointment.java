@@ -3,20 +3,20 @@ package com.api.v2.medical_appointments.domain;
 import com.api.v2.common.DstCheckerUtil;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.doctors.domain.Doctor;
-import org.bson.codecs.pojo.annotations.BsonId;
-import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.UUID;
 
 @Document
 public class MedicalAppointment {
 
-    @BsonId
-    private ObjectId id;
+    @Id
+    private String id;
     private final String type;
     private final Customer customer;
     private final Doctor doctor;
@@ -38,7 +38,7 @@ public class MedicalAppointment {
     private final boolean isCreatedDuringDST;
 
     private MedicalAppointment(String type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
-        this.id = new ObjectId();
+        this.id = UUID.randomUUID().toString();
         this.customer = customer;
         this.doctor = doctor;
         this.bookedAt = bookedAt;
@@ -72,7 +72,7 @@ public class MedicalAppointment {
         isCanceledDuringDST = DstCheckerUtil.isGivenDateTimeFollowingDST(canceledAt, canceledAtZoneId);
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 

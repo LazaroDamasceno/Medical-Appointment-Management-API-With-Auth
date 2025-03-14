@@ -1,12 +1,10 @@
 package com.api.v2.medical_slots.utils;
 
-import com.api.v2.common.Id;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.NonExistentMedicalSlotException;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
@@ -23,9 +21,9 @@ public class MedicalSlotFinderUtil {
         this.repository = repository;
     }
 
-    public Mono<MedicalSlot> findById(@Id String id) {
+    public Mono<MedicalSlot> findById(String id) {
         return repository
-                .findById(new ObjectId(id))
+                .findById(id)
                 .switchIfEmpty(Mono.error(new NonExistentMedicalSlotException(id)));
     }
 

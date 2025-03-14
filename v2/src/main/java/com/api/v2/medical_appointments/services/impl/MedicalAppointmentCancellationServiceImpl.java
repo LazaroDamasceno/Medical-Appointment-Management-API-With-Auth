@@ -1,6 +1,5 @@
 package com.api.v2.medical_appointments.services.impl;
 
-import com.api.v2.common.Id;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
@@ -38,7 +37,7 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     }
 
     @Override
-    public Mono<Void> cancel(@Id String customerId, @Id String appointmentId) {
+    public Mono<Void> cancel(String customerId, String appointmentId) {
         return medicalAppointmentFinderUtil
                 .findById(appointmentId)
                 .flatMap(medicalAppointment -> {

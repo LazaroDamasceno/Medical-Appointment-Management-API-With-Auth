@@ -1,6 +1,5 @@
 package com.api.v2.medical_slots.services.impl;
 
-import com.api.v2.common.Id;
 import com.api.v2.common.MLN;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
@@ -39,7 +38,7 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
     }
 
     @Override
-    public Mono<Void> cancel(@MLN String medicalLicenseNumber, @Id String slotId) {
+    public Mono<Void> cancel(@MLN String medicalLicenseNumber, String slotId) {
         return medicalSlotFinderUtil
                 .findById(slotId)
                 .flatMap(slot -> {

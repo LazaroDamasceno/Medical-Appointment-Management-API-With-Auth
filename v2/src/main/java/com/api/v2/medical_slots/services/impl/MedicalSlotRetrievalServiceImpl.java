@@ -1,6 +1,5 @@
 package com.api.v2.medical_slots.services.impl;
 
-import com.api.v2.common.Id;
 import com.api.v2.common.MLN;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_slots.controllers.MedicalSlotController;
@@ -34,7 +33,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(@Id String slotId) {
+    public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(String slotId) {
         return medicalSlotFinderUtil
                 .findById(slotId)
                 .flatMap(slot -> {

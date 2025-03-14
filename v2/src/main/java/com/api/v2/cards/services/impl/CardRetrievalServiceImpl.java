@@ -6,7 +6,6 @@ import com.api.v2.cards.dtos.CardResponseDto;
 import com.api.v2.cards.services.interfaces.CardRetrievalService;
 import com.api.v2.cards.utils.CardFinderUtil;
 import com.api.v2.cards.utils.CardResponseMapper;
-import com.api.v2.common.Id;
 
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import org.springframework.stereotype.Service;
@@ -56,7 +55,7 @@ public class CardRetrievalServiceImpl implements CardRetrievalService {
     }
 
     @Override
-    public Mono<HalResourceWrapper<CardResponseDto, Void>> findById(@Id String id) {
+    public Mono<HalResourceWrapper<CardResponseDto, Void>> findById(String id) {
         return cardFinderUtil
                 .find(id)
                 .flatMap(CardResponseMapper::mapToMono)
