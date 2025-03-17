@@ -1,6 +1,6 @@
 package com.api.v2.medical_appointments.services.impl;
 
-import com.api.v2.common.DateTimeHandler;
+import com.api.v2.common.BlockedDateTimeHandler;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.doctors.domain.Doctor;
@@ -65,7 +65,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     Customer customer = tuple.getT2();
-                    return DateTimeHandler
+                    return BlockedDateTimeHandler
                             .handle(bookingDto.bookedAt().toLocalDate())
                             .then(Mono.defer(() ->
                                     onFoundMedicalSlot(doctor, bookingDto.bookedAt())
@@ -113,7 +113,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     Customer customer = tuple.getT2();
-                    return DateTimeHandler
+                    return BlockedDateTimeHandler
                             .handle(bookingDto.bookedAt().toLocalDate())
                             .then(Mono.defer(() ->
                                     onFoundMedicalSlot(doctor, bookingDto.bookedAt())
@@ -161,7 +161,7 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     Customer customer = tuple.getT2();
-                    return DateTimeHandler
+                    return BlockedDateTimeHandler
                             .handle(bookingDto.bookedAt().toLocalDate())
                             .then(Mono.defer(() ->
                                     onFoundMedicalSlot(doctor, bookingDto.bookedAt())

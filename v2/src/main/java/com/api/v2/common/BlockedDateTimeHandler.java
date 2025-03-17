@@ -4,7 +4,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 
-public final class DateTimeHandler {
+public final class BlockedDateTimeHandler {
 
     public static Mono<Void> handle(LocalDate date) {
         if (DateTimeChecker.isBeforeToday(date)) {

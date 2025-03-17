@@ -1,6 +1,6 @@
 package com.api.v2.medical_slots.services.impl;
 
-import com.api.v2.common.DateTimeHandler;
+import com.api.v2.common.BlockedDateTimeHandler;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_slots.controllers.MedicalSlotController;
@@ -50,7 +50,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
         return doctorFinderUtil
                 .findByLicenseNumber(registrationDto.medicalLicenseNumber())
                 .flatMap(doctor -> {
-                    return DateTimeHandler
+                    return BlockedDateTimeHandler
                             .handle(registrationDto.availableAt().toLocalDate())
                             .then(Mono.defer(() ->
                                     onUnavailableMedicalSlot(doctor, registrationDto.availableAt(), zoneId, zoneOffset)
