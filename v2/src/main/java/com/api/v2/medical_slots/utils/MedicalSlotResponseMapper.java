@@ -11,7 +11,7 @@ public class MedicalSlotResponseMapper {
     public static MedicalSlotResponseDto mapToDto(MedicalSlot medicalSlot) {
         if (medicalSlot.getMedicalAppointment() == null) {
             return new MedicalSlotResponseDto(
-                    medicalSlot.getId().toString(),
+                    medicalSlot.getId(),
                     DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                     null,
                     "%s%s[%s]".formatted(
@@ -25,7 +25,7 @@ public class MedicalSlotResponseMapper {
         }
         if (medicalSlot.getCanceledAt() != null && medicalSlot.getMedicalAppointment() == null) {
             return new MedicalSlotResponseDto(
-                    medicalSlot.getId().toString(),
+                    medicalSlot.getId(),
                     DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                     null,
                     "%s%s[%s]".formatted(
@@ -43,7 +43,7 @@ public class MedicalSlotResponseMapper {
         }
         if (medicalSlot.getCanceledAt() != null && medicalSlot.getMedicalAppointment() != null) {
             return new MedicalSlotResponseDto(
-                    medicalSlot.getId().toString(),
+                    medicalSlot.getId(),
                     DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                     MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment()),
                     "%s%s[%s]".formatted(
@@ -61,7 +61,7 @@ public class MedicalSlotResponseMapper {
         }
         if (medicalSlot.getCompletedAt() != null && medicalSlot.getMedicalAppointment() != null) {
             return new MedicalSlotResponseDto(
-                    medicalSlot.getId().toString(),
+                    medicalSlot.getId(),
                     DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                     MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment()),
                     "%s%s[%s]".formatted(
@@ -78,7 +78,7 @@ public class MedicalSlotResponseMapper {
             );
         }
         return new MedicalSlotResponseDto(
-                medicalSlot.getId().toString(),
+                medicalSlot.getId(),
                 DoctorResponseMapper.mapToDto(medicalSlot.getDoctor()),
                 MedicalAppointmentResponseMapper.mapToDto(medicalSlot.getMedicalAppointment()),
                 "%s%s[%s]".formatted(

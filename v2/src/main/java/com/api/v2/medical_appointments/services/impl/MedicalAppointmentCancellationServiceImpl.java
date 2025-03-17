@@ -72,7 +72,7 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     private Mono<Void> onNonAssociatedMedicalAppointmentWithCustomer(MedicalAppointment medicalAppointment, Customer customer) {
         if (medicalAppointment.getCustomer().getId().equals(customer.getId())) {
             String message = "Customer whose id is %s is not associated with the medical appointment whose id id %s"
-                    .formatted(customer.getId().toString(), medicalAppointment.getId().toString());
+                    .formatted(customer.getId(), medicalAppointment.getId());
             return Mono.error(new InaccessibleMedicalAppointmentException(message));
         }
         return Mono.empty();

@@ -1,5 +1,6 @@
 package com.api.v2.medical_slots.services.impl;
 
+import com.api.v2.common.DateTimeHandler;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_slots.controllers.MedicalSlotController;
@@ -49,31 +50,35 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
         return doctorFinderUtil
                 .findByLicenseNumber(registrationDto.medicalLicenseNumber())
                 .flatMap(doctor -> {
-                    return onUnavailableMedicalSlot(doctor, registrationDto.availableAt(), zoneId, zoneOffset)
-                            .then(Mono.defer(() -> {
-                                MedicalSlot medicalSlot = MedicalSlot.of(doctor, registrationDto.availableAt(), zoneId, zoneOffset);
-                                String id = medicalSlot.getId().toString();
-                                String medicalLicenseNumber = medicalSlot.getDoctor().getMedicalLicenseNumber();
-                                return medicalSlotRepository
-                                        .save(medicalSlot)
-                                        .then(Mono.defer(() -> {
-                                            return MedicalSlotResponseMapper
-                                                    .mapToMono(medicalSlot)
-                                                    .map(dto -> HalResourceWrapper
-                                                            .wrap(dto)
-                                                            .withLinks(
-                                                                    linkTo(
-                                                                            MedicalSlotController.class,
-                                                                            controller -> controller.cancel(registrationDto.medicalLicenseNumber(), id)
-                                                                    ).withRel("cancel_just_registered_medical_slot"),
-                                                                    linkTo(
-                                                                            MedicalSlotController.class,
-                                                                            controller -> controller.findAllByDoctor(medicalLicenseNumber)
-                                                                    ).withRel("find_all_medical_slots_by_doctor")
-                                                            )
-                                                    );
-                                        }));
-                            }));
+                    return DateTimeHandler
+                            .handle(registrationDto.availableAt().toLocalDate())
+                            .then(Mono.defer(() ->
+                                    onUnavailableMedicalSlot(doctor, registrationDto.availableAt(), zoneId, zoneOffset)
+                                            .then(Mono.defer(() -> {
+                                                MedicalSlot medicalSlot = MedicalSlot.of(doctor, registrationDto.availableAt(), zoneId, zoneOffset);
+                                                String id = medicalSlot.getId();
+                                                String medicalLicenseNumber = medicalSlot.getDoctor().getMedicalLicenseNumber();
+                                                return medicalSlotRepository
+                                                        .save(medicalSlot)
+                                                        .flatMap(savedSlot ->
+                                                                MedicalSlotResponseMapper
+                                                                        .mapToMono(savedSlot)
+                                                                        .map(dto -> HalResourceWrapper
+                                                                                .wrap(dto)
+                                                                                .withLinks(
+                                                                                        linkTo(
+                                                                                                MedicalSlotController.class,
+                                                                                                controller -> controller.cancel(registrationDto.medicalLicenseNumber(), id)
+                                                                                        ).withRel("cancel_just_registered_medical_slot"),
+                                                                                        linkTo(
+                                                                                                MedicalSlotController.class,
+                                                                                                controller -> controller.findAllByDoctor(medicalLicenseNumber)
+                                                                                        ).withRel("find_all_medical_slots_by_doctor")
+                                                                                )
+                                                                        )
+                                                        );
+                                            }))
+                            ));
                 });
     }
 

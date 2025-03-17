@@ -71,7 +71,7 @@ public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellati
 
     private Mono<Void> onNonAssociatedMedicalSlotWithDoctor(MedicalSlot medicalSlot, Doctor doctor) {
         if (!medicalSlot.getDoctor().getId().equals(doctor.getId())) {
-            return Mono.error(new InaccessibleMedicalSlotException(doctor.getId().toString(), medicalSlot.getId().toString()));
+            return Mono.error(new InaccessibleMedicalSlotException(doctor.getId(), medicalSlot.getId()));
         }
         return Mono.empty();
     }

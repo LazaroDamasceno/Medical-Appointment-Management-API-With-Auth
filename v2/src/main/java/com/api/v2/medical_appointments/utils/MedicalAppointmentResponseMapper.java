@@ -11,7 +11,7 @@ public class MedicalAppointmentResponseMapper {
     public static MedicalAppointmentResponseDto mapToDto(MedicalAppointment medicalAppointment) {
         if (medicalAppointment.getCanceledAt() != null) {
             return new MedicalAppointmentResponseDto(
-                    medicalAppointment.getId().toString(),
+                    medicalAppointment.getId(),
                     CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer()),
                     DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor()),
                     medicalAppointment.getType(),
@@ -30,7 +30,7 @@ public class MedicalAppointmentResponseMapper {
         }
         if (medicalAppointment.getCompletedAt() != null) {
             return new MedicalAppointmentResponseDto(
-                    medicalAppointment.getId().toString(),
+                    medicalAppointment.getId(),
                     CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer()),
                     DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor()),
                     medicalAppointment.getType(),
@@ -48,7 +48,7 @@ public class MedicalAppointmentResponseMapper {
             );
         }
         return new MedicalAppointmentResponseDto(
-                medicalAppointment.getId().toString(),
+                medicalAppointment.getId(),
                 CustomerResponseMapper.mapToDto(medicalAppointment.getCustomer()),
                 DoctorResponseMapper.mapToDto(medicalAppointment.getDoctor()),
                 medicalAppointment.getType(),

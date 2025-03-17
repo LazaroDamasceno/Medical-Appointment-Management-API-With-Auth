@@ -69,7 +69,7 @@ public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointme
     private Mono<Void> onNonAssociatedMedicalAppointmentWithCustomer(MedicalAppointment medicalAppointment, Doctor doctor) {
         if (!medicalAppointment.getDoctor().getId().equals(doctor.getId())) {
             String message = "Doctor whose medical license number is %s is not associated with the medical appointment whose id is %s"
-                    .formatted(medicalAppointment.getId().toString(), doctor.getId().toString());
+                    .formatted(medicalAppointment.getId(), doctor.getId());
             return Mono.error(new InaccessibleMedicalAppointmentException(message));
         }
         return Mono.empty();
