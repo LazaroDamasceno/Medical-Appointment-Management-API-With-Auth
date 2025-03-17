@@ -58,8 +58,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ImmutableMedicalSlotException.class)
     public ResponseEntity<String> handleException(ImmutableMedicalSlotException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
+    @ExceptionHandler(BlockedBookingDateTimeException.class)
+    public ResponseEntity<String> handleException(BlockedBookingDateTimeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
 
     @ExceptionHandler(NonExistentMedicalAppointmentException.class)
     public ResponseEntity<String> handleException(NonExistentMedicalAppointmentException ex) {
