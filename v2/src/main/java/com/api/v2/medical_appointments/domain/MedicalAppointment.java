@@ -3,7 +3,7 @@ package com.api.v2.medical_appointments.domain;
 import com.api.v2.common.DstCheckerUtil;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.doctors.domain.Doctor;
-import com.api.v2.medical_appointments.MedicalAppointmentType;
+import com.api.v2.medical_appointments.enums.MedicalAppointmentType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
