@@ -1,12 +1,15 @@
 package com.api.v2.common;
 
+import reactor.core.publisher.Mono;
+
 import java.time.LocalDate;
 
 public final class DateTimeHandler {
 
-    public static void handle(LocalDate date) {
+    public static Mono<Void> handle(LocalDate date) {
         if (DateTimeChecker.isBeforeToday(date)) {
-            throw new BlockedBookingDateTimeException();
+            return Mono.error(new BlockedBookingDateTimeException());
         }
+        return Mono.empty();
     }
 }

@@ -1,5 +1,6 @@
 package com.api.v2.medical_appointments.services.impl;
 
+import com.api.v2.common.DateTimeHandler;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.customers.utils.CustomerFinderUtil;
 import com.api.v2.doctors.domain.Doctor;
@@ -64,38 +65,42 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     Customer customer = tuple.getT2();
-                    return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
-                            .flatMap(slot -> {
-                                return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
-                                        .then(Mono.defer(() -> {
-                                            MedicalAppointment medicalAppointment = MedicalAppointment.of("public insurance", customer, doctor, bookingDto.bookedAt());
-                                            slot.setMedicalAppointment(medicalAppointment);
-                                            return medicalSlotRepository
-                                                    .save(slot)
-                                                    .then(medicalAppointmentRepository
-                                                            .save(medicalAppointment)
-                                                            .flatMap(MedicalAppointmentResponseMapper::mapToMono)
-                                                    );
-                                        }));
-                            })
-                            .map(dto -> {
-                                return HalResourceWrapper
-                                        .wrap(dto)
-                                        .withLinks(
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
-                                        );
-                            });
+                    return DateTimeHandler
+                            .handle(bookingDto.bookedAt().toLocalDate())
+                            .then(Mono.defer(() ->
+                                    onFoundMedicalSlot(doctor, bookingDto.bookedAt())
+                                            .flatMap(slot ->
+                                                    onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
+                                                            .then(Mono.defer(() -> {
+                                                                MedicalAppointment medicalAppointment = MedicalAppointment.of("public insurance", customer, doctor, bookingDto.bookedAt());
+                                                                slot.setMedicalAppointment(medicalAppointment);
+                                                                return medicalSlotRepository
+                                                                        .save(slot)
+                                                                        .then(medicalAppointmentRepository
+                                                                                .save(medicalAppointment)
+                                                                                .flatMap(MedicalAppointmentResponseMapper::mapToMono)
+                                                                        );
+                                                            }))
+                                            )
+                                            .map(dto ->
+                                                    HalResourceWrapper
+                                                            .wrap(dto)
+                                                            .withLinks(
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
+                                                            )
+                                            )
+                            ));
                 });
     }
 
@@ -108,38 +113,42 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     Customer customer = tuple.getT2();
-                    return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
-                            .flatMap(slot -> {
-                                return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
-                                        .then(Mono.defer(() -> {
-                                            MedicalAppointment medicalAppointment = MedicalAppointment.of("private insurance", customer, doctor, bookingDto.bookedAt());
-                                            slot.setMedicalAppointment(medicalAppointment);
-                                            return medicalSlotRepository
-                                                    .save(slot)
-                                                    .then(medicalAppointmentRepository
-                                                            .save(medicalAppointment)
-                                                            .flatMap(MedicalAppointmentResponseMapper::mapToMono)
-                                                    );
-                                        }));
-                            })
-                            .map(dto -> {
-                                return HalResourceWrapper
-                                        .wrap(dto)
-                                        .withLinks(
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
-                                        );
-                            });
+                    return DateTimeHandler
+                            .handle(bookingDto.bookedAt().toLocalDate())
+                            .then(Mono.defer(() ->
+                                    onFoundMedicalSlot(doctor, bookingDto.bookedAt())
+                                            .flatMap(slot ->
+                                                    onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
+                                                            .then(Mono.defer(() -> {
+                                                                MedicalAppointment medicalAppointment = MedicalAppointment.of("private insurance", customer, doctor, bookingDto.bookedAt());
+                                                                slot.setMedicalAppointment(medicalAppointment);
+                                                                return medicalSlotRepository
+                                                                        .save(slot)
+                                                                        .then(medicalAppointmentRepository
+                                                                                .save(medicalAppointment)
+                                                                                .flatMap(MedicalAppointmentResponseMapper::mapToMono)
+                                                                        );
+                                                            }))
+                                            )
+                                            .map(dto ->
+                                                    HalResourceWrapper
+                                                            .wrap(dto)
+                                                            .withLinks(
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
+                                                            )
+                                            )
+                            ));
                 });
     }
 
@@ -152,38 +161,42 @@ public class MedicalAppointmentBookingServiceImpl implements MedicalAppointmentB
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     Customer customer = tuple.getT2();
-                    return onFoundMedicalSlot(doctor, bookingDto.bookedAt())
-                            .flatMap(slot -> {
-                                return onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
-                                        .then(Mono.defer(() -> {
-                                            MedicalAppointment medicalAppointment = MedicalAppointment.of("paid by patient", customer, doctor, bookingDto.bookedAt());
-                                            slot.setMedicalAppointment(medicalAppointment);
-                                            return medicalSlotRepository
-                                                    .save(slot)
-                                                    .then(medicalAppointmentRepository
-                                                            .save(medicalAppointment)
-                                                            .flatMap(MedicalAppointmentResponseMapper::mapToMono)
-                                                    );
-                                        }));
-                            })
-                            .map(dto -> {
-                                return HalResourceWrapper
-                                        .wrap(dto)
-                                        .withLinks(
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
-                                                linkTo(
-                                                        MedicalAppointmentController.class,
-                                                        controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
-                                                ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
-                                        );
-                            });
+                    return DateTimeHandler
+                            .handle(bookingDto.bookedAt().toLocalDate())
+                            .then(Mono.defer(() ->
+                                    onFoundMedicalSlot(doctor, bookingDto.bookedAt())
+                                            .flatMap(slot ->
+                                                    onUnavailableBookingDateTime(customer, doctor, bookingDto.bookedAt())
+                                                            .then(Mono.defer(() -> {
+                                                                MedicalAppointment medicalAppointment = MedicalAppointment.of("paid by patient", customer, doctor, bookingDto.bookedAt());
+                                                                slot.setMedicalAppointment(medicalAppointment);
+                                                                return medicalSlotRepository
+                                                                        .save(slot)
+                                                                        .then(medicalAppointmentRepository
+                                                                                .save(medicalAppointment)
+                                                                                .flatMap(MedicalAppointmentResponseMapper::mapToMono)
+                                                                        );
+                                                            }))
+                                            )
+                                            .map(dto ->
+                                                    HalResourceWrapper
+                                                            .wrap(dto)
+                                                            .withLinks(
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPublicInsuranceByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_public_insurance_medical_appointments_by_customers"),
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPrivateInsuranceByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_private_insurance_medical_appointments_by_customers"),
+                                                                    linkTo(
+                                                                            MedicalAppointmentController.class,
+                                                                            controller -> controller.findAllPaidByPatientByCustomer(bookingDto.customerId())
+                                                                    ).withRel("find_all_paid_by_patient_medical_appointments_by_customers")
+                                                            )
+                                            )
+                            ));
                 });
     }
 
