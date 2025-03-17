@@ -3,6 +3,7 @@ package com.api.v2.medical_appointments.domain;
 import com.api.v2.common.DstCheckerUtil;
 import com.api.v2.customers.domain.Customer;
 import com.api.v2.doctors.domain.Doctor;
+import com.api.v2.medical_appointments.MedicalAppointmentType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +18,7 @@ public class MedicalAppointment {
 
     @Id
     private String id;
-    private final String type;
+    private final MedicalAppointmentType type;
     private final Customer customer;
     private final Doctor doctor;
     private final LocalDateTime bookedAt;
@@ -37,7 +38,7 @@ public class MedicalAppointment {
     private final ZoneOffset createdAtZoneOffset;
     private final boolean isCreatedDuringDST;
 
-    private MedicalAppointment(String type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
+    private MedicalAppointment(MedicalAppointmentType type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
         this.id = UUID.randomUUID().toString();
         this.customer = customer;
         this.doctor = doctor;
@@ -54,7 +55,7 @@ public class MedicalAppointment {
         this.type = type;
     }
 
-    public static MedicalAppointment of(String type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
+    public static MedicalAppointment of(MedicalAppointmentType type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
         return new MedicalAppointment(type, customer, doctor, bookedAt);
     }
 
@@ -116,7 +117,7 @@ public class MedicalAppointment {
         return createdAtZoneId;
     }
 
-    public String getType() {
+    public MedicalAppointmentType getType() {
         return type;
     }
 

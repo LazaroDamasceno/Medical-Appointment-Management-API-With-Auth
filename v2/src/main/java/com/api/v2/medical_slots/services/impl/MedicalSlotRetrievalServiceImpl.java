@@ -1,6 +1,5 @@
 package com.api.v2.medical_slots.services.impl;
 
-import com.api.v2.common.MLN;
 import com.api.v2.doctors.utils.DoctorFinderUtil;
 import com.api.v2.medical_slots.controllers.MedicalSlotController;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
@@ -74,7 +73,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(@MLN String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMapMany(doctor -> {
@@ -120,7 +119,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(@MLN String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMapMany(doctor -> {
@@ -166,7 +165,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(@MLN String medicalLicenseNumber) {
+    public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMapMany(doctor -> {

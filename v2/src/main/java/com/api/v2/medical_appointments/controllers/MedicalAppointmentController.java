@@ -1,5 +1,4 @@
 package com.api.v2.medical_appointments.controllers;
-import com.api.v2.common.MLN;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentBookingDto;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentBookingService;
@@ -38,19 +37,19 @@ public class MedicalAppointmentController {
     @PostMapping("/public-insurance")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> publicInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
-        return bookingService.publicInsuranceBook(bookingDto);
+        return bookingService.publicInsurance(bookingDto);
     }
 
     @PostMapping("/private-insurance")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> privateInsuranceBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
-        return bookingService.privateInsuranceBook(bookingDto);
+        return bookingService.privateInsurance(bookingDto);
     }
 
     @PostMapping("/paid-by-patient")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> paidByPatientBook(@Valid @RequestBody MedicalAppointmentBookingDto bookingDto) {
-        return bookingService.paidByPatientBook(bookingDto);
+        return bookingService.paidByPatient(bookingDto);
     }
 
     @GetMapping("/{id}")
@@ -80,7 +79,7 @@ public class MedicalAppointmentController {
 
     @PatchMapping("medical-license-number/{medicalLicenseNumber}/appointment-id/{appointmentId}/completion")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> complete(@PathVariable @MLN String medicalLicenseNumber, @PathVariable String appointmentId) {
+    public Mono<Void> complete(@PathVariable String medicalLicenseNumber, @PathVariable String appointmentId) {
         return completionService.complete(medicalLicenseNumber, appointmentId);
     }
 

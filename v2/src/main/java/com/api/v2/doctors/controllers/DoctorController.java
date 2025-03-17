@@ -1,6 +1,5 @@
 package com.api.v2.doctors.controllers;
 
-import com.api.v2.common.MLN;
 import com.api.v2.doctors.dtos.DoctorHiringDto;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
 import com.api.v2.doctors.services.*;
@@ -40,18 +39,18 @@ public class DoctorController {
 
     @PatchMapping("{medicalLicenseNumber}/termination")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> terminate(@PathVariable @MLN String medicalLicenseNumber) {
+    public Mono<Void> terminate(@PathVariable String medicalLicenseNumber) {
         return terminationService.terminate(medicalLicenseNumber);
     }
 
     @PatchMapping("{medicalLicenseNumber}/rehiring")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public Mono<Void> rehire(@PathVariable @MLN String medicalLicenseNumber) {
+    public Mono<Void> rehire(@PathVariable String medicalLicenseNumber) {
         return rehiringService.rehire(medicalLicenseNumber);
     }
 
     @GetMapping("{medicalLicenseNumber}")
-    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> findByMedicalLicenseNumber(@PathVariable @MLN String medicalLicenseNumber) {
+    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> findByMedicalLicenseNumber(@PathVariable String medicalLicenseNumber) {
         return retrievalService.findByMedicalLicenseNumber(medicalLicenseNumber);
     }
 

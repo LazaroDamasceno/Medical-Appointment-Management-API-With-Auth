@@ -1,6 +1,5 @@
 package com.api.v2.doctors.services;
 
-import com.api.v2.common.MLN;
 import com.api.v2.doctors.domain.DoctorAuditTrail;
 import com.api.v2.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v2.doctors.domain.DoctorRepository;
@@ -27,7 +26,7 @@ public class DoctorTerminationServiceImpl implements DoctorTerminationService {
     }
 
     @Override
-    public Mono<Void> terminate(@MLN String medicalLicenseNumber) {
+    public Mono<Void> terminate(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(doctor -> {

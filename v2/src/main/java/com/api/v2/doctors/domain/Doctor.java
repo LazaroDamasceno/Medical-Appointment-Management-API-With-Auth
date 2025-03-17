@@ -1,7 +1,6 @@
 package com.api.v2.doctors.domain;
 
 import com.api.v2.common.DstCheckerUtil;
-import com.api.v2.common.MLN;
 import com.api.v2.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,7 +27,7 @@ public class  Doctor {
     private ZoneOffset terminatedAtZoneOffset;
     private Boolean isTerminatedDuringDST;
 
-    private Doctor(@MLN String medicalLicenseNumber, Person person) {
+    private Doctor(String medicalLicenseNumber, Person person) {
         this.id = UUID.randomUUID().toString();
         this.medicalLicenseNumber = medicalLicenseNumber;
         this.person = person;

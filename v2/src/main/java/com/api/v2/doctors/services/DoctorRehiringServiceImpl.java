@@ -1,6 +1,5 @@
 package com.api.v2.doctors.services;
 
-import com.api.v2.common.MLN;
 import com.api.v2.doctors.domain.DoctorAuditTrail;
 import com.api.v2.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v2.doctors.domain.DoctorRepository;
@@ -27,7 +26,7 @@ public class DoctorRehiringServiceImpl implements DoctorRehiringService {
     }
 
     @Override
-    public Mono<Void> rehire(@MLN String medicalLicenseNumber) {
+    public Mono<Void> rehire(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(doctor -> {

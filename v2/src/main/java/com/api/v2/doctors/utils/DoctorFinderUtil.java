@@ -1,6 +1,5 @@
 package com.api.v2.doctors.utils;
 
-import com.api.v2.common.MLN;
 import com.api.v2.doctors.domain.Doctor;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.exceptions.NonExistentDoctorException;
@@ -16,7 +15,7 @@ public class DoctorFinderUtil {
         this.doctorRepository = doctorRepository;
     }
 
-    public Mono<Doctor> findByLicenseNumber(@MLN String medicalLicenseNumber) {
+    public Mono<Doctor> findByLicenseNumber(String medicalLicenseNumber) {
         return doctorRepository
                 .findAll()
                 .filter(d -> d.getMedicalLicenseNumber().equals(medicalLicenseNumber))

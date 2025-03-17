@@ -1,6 +1,5 @@
 package com.api.v2.doctors.services;
 
-import com.api.v2.common.MLN;
 import com.api.v2.doctors.controllers.DoctorController;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
@@ -28,7 +27,7 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
     }
 
     @Override
-    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> findByMedicalLicenseNumber(@MLN String medicalLicenseNumber) {
+    public Mono<HalResourceWrapper<DoctorResponseDto, Void>> findByMedicalLicenseNumber(String medicalLicenseNumber) {
         return doctorFinderUtil
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(DoctorResponseMapper::mapToMono)
