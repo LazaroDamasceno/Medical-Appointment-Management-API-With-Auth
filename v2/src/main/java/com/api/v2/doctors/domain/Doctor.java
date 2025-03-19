@@ -16,16 +16,19 @@ public class  Doctor {
 
     @Id
     private String  id;
-    private final String medicalLicenseNumber;
+    private String medicalLicenseNumber;
     private Person person;
-    private final LocalDateTime createdAt;
-    private final ZoneId createdAtZoneId;
-    private final ZoneOffset createdAtZoneOffset;
-    private final boolean isCreatedDuringDST;
+    private LocalDateTime createdAt;
+    private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
+    private boolean isCreatedDuringDST;
     private LocalDateTime terminatedAt;
     private ZoneId terminatedAtZoneId;
     private ZoneOffset terminatedAtZoneOffset;
     private Boolean isTerminatedDuringDST;
+
+    public Doctor() {
+    }
 
     private Doctor(String medicalLicenseNumber, Person person) {
         this.id = UUID.randomUUID().toString();

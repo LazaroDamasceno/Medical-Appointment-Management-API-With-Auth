@@ -18,13 +18,13 @@ public class MedicalAppointment {
 
     @Id
     private String id;
-    private final MedicalAppointmentType type;
-    private final Customer customer;
-    private final Doctor doctor;
-    private final LocalDateTime bookedAt;
-    private final ZoneId bookedAtZoneId;
-    private final ZoneId bookedAtZoneOffset;
-    private final boolean isBookedDuringDST;
+    private MedicalAppointmentType type;
+    private Customer customer;
+    private Doctor doctor;
+    private LocalDateTime bookedAt;
+    private ZoneId bookedAtZoneId;
+    private ZoneId bookedAtZoneOffset;
+    private boolean isBookedDuringDST;
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZoneId;
     private ZoneOffset canceledAtZoneOffset;
@@ -33,10 +33,13 @@ public class MedicalAppointment {
     private ZoneId completedAtZoneId;
     private ZoneOffset completedAtZoneOffset;
     private Boolean isCompletionDuringDST;
-    private final LocalDateTime createdAt;
-    private final ZoneId createdAtZoneId;
-    private final ZoneOffset createdAtZoneOffset;
-    private final boolean isCreatedDuringDST;
+    private LocalDateTime createdAt;
+    private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
+    private boolean isCreatedDuringDST;
+
+    public MedicalAppointment() {
+    }
 
     private MedicalAppointment(MedicalAppointmentType type, Customer customer, Doctor doctor, LocalDateTime bookedAt) {
         this.id = UUID.randomUUID().toString();

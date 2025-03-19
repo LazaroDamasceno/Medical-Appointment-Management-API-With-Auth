@@ -17,16 +17,16 @@ public class MedicalSlot {
 
     @Id
     private String id;
-    private final Doctor doctor;
-    private final LocalDateTime availableAt;
-    private final ZoneId availableAtZoneId;
-    private final ZoneOffset availableAtZoneOffset;
-    private final boolean isAvailableDuringDST;
+    private Doctor doctor;
+    private LocalDateTime availableAt;
+    private ZoneId availableAtZoneId;
+    private ZoneOffset availableAtZoneOffset;
+    private boolean isAvailableDuringDST;
     private MedicalAppointment medicalAppointment;
-    private final LocalDateTime createdAt;
-    private final ZoneId createdAtZoneId;
-    private final ZoneOffset createdAtZoneOffset;
-    private final boolean isCreatedDuringDST;
+    private LocalDateTime createdAt;
+    private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
+    private boolean isCreatedDuringDST;
     private LocalDateTime canceledAt;
     private ZoneId canceledAtZoneId;
     private ZoneOffset canceledAtZoneOffset;
@@ -36,6 +36,8 @@ public class MedicalSlot {
     private ZoneOffset completedAtZoneOffset;
     private Boolean isCompletedDuringDst;
 
+    public MedicalSlot() {
+    }
 
     private MedicalSlot(Doctor doctor,
                         LocalDateTime availableAt,

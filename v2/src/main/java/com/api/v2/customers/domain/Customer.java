@@ -19,10 +19,13 @@ public class Customer {
     private String id;
     private Address address;
     private Person person;
-    private final LocalDateTime createdAt;
-    private final ZoneId createdAtZoneId;
-    private final ZoneOffset createdAtZoneOffset;
-    private final boolean isCreatedDuringDST;
+    private LocalDateTime createdAt;
+    private ZoneId createdAtZoneId;
+    private ZoneOffset createdAtZoneOffset;
+    private boolean isCreatedDuringDST;
+
+    public Customer() {
+    }
 
     private Customer(Address address, Person person) {
         this.id = UUID.randomUUID().toString();
