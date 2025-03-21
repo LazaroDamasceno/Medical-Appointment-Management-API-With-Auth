@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class DoctorFinderUtil {
+public class DoctorFinder {
 
     private final DoctorRepository doctorRepository;
 
-    public DoctorFinderUtil(DoctorRepository doctorRepository) {
+    public DoctorFinder(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
     }
 

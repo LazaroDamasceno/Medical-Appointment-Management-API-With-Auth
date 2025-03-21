@@ -2,7 +2,7 @@ package com.api.v2.customers.services;
 
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.dtos.CustomerResponseDto;
-import com.api.v2.customers.utils.CustomerFinderUtil;
+import com.api.v2.customers.utils.CustomerFinder;
 import com.api.v2.customers.utils.CustomerResponseMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -12,19 +12,19 @@ import reactor.core.publisher.Mono;
 public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
 
     private final CustomerRepository customerRepository;
-    private final CustomerFinderUtil customerFinderUtil;
+    private final CustomerFinder customerFinder;
 
     public CustomerRetrievalServiceImpl(
             CustomerRepository customerRepository,
-            CustomerFinderUtil customerFinderUtil
+            CustomerFinder customerFinder
     ) {
         this.customerRepository = customerRepository;
-        this.customerFinderUtil = customerFinderUtil;
+        this.customerFinder = customerFinder;
     }
 
     @Override
     public Mono<CustomerResponseDto> findById(String id) {
-        return customerFinderUtil
+        return customerFinder
                 .findById(id)
                 .flatMap(CustomerResponseMapper::mapToMono);
     }

@@ -1,7 +1,7 @@
 package com.api.v2.medical_slots.services.impl;
 
 import com.api.v2.doctors.domain.Doctor;
-import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.doctors.utils.DoctorFinder;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_slots.domain.MedicalSlot;
@@ -9,7 +9,7 @@ import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.exceptions.ImmutableMedicalSlotException;
 import com.api.v2.medical_slots.exceptions.InaccessibleMedicalSlotException;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotCancellationService;
-import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
+import com.api.v2.medical_slots.utils.MedicalSlotFinder;
 
 import java.util.Optional;
 
@@ -19,32 +19,32 @@ import reactor.core.publisher.Mono;
 @Service
 public class MedicalSlotCancellationServiceImpl implements MedicalSlotCancellationService {
 
-    private final MedicalSlotFinderUtil medicalSlotFinderUtil;
+    private final MedicalSlotFinder medicalSlotFinder;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
-    private final DoctorFinderUtil doctorFinderUtil;
+    private final DoctorFinder doctorFinder;
 
     public MedicalSlotCancellationServiceImpl(
-            MedicalSlotFinderUtil medicalSlotFinderUtil,
+            MedicalSlotFinder medicalSlotFinder,
             MedicalSlotRepository medicalSlotRepository,
             MedicalAppointmentRepository medicalAppointmentRepository,
-            DoctorFinderUtil doctorFinderUtil
+            DoctorFinder doctorFinder
     ) {
-        this.medicalSlotFinderUtil = medicalSlotFinderUtil;
+        this.medicalSlotFinder = medicalSlotFinder;
         this.medicalSlotRepository = medicalSlotRepository;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
-        this.doctorFinderUtil = doctorFinderUtil;
+        this.doctorFinder = doctorFinder;
     }
 
     @Override
     public Mono<Void> cancel(String medicalLicenseNumber, String slotId) {
-        return medicalSlotFinderUtil
+        return medicalSlotFinder
                 .findById(slotId)
                 .flatMap(slot -> {
                     return onCanceledMedicalSlot(slot)
                             .then(onCompletedMedicalSlot(slot))
                             .then(Mono.defer(() -> {
-                                return doctorFinderUtil
+                                return doctorFinder
                                         .findByLicenseNumber(medicalLicenseNumber)
                                         .flatMap(doctor -> {
                                             return onNonAssociatedMedicalSlotWithDoctor(slot, doctor)

@@ -4,30 +4,30 @@ import com.api.v2.doctors.domain.DoctorAuditTrail;
 import com.api.v2.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.exceptions.ImmutableDoctorException;
-import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.doctors.utils.DoctorFinder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
 public class DoctorRehiringServiceImpl implements DoctorRehiringService {
 
-    private final DoctorFinderUtil doctorFinderUtil;
+    private final DoctorFinder doctorFinder;
     private final DoctorRepository doctorRepository;
     private final DoctorAuditTrailRepository doctorAuditTrailRepository;
 
     public DoctorRehiringServiceImpl(
-            DoctorFinderUtil doctorFinderUtil,
+            DoctorFinder doctorFinder,
             DoctorRepository doctorRepository,
             DoctorAuditTrailRepository doctorAuditTrailRepository
     ) {
-        this.doctorFinderUtil = doctorFinderUtil;
+        this.doctorFinder = doctorFinder;
         this.doctorRepository = doctorRepository;
         this.doctorAuditTrailRepository = doctorAuditTrailRepository;
     }
 
     @Override
     public Mono<Void> rehire(String medicalLicenseNumber) {
-        return doctorFinderUtil
+        return doctorFinder
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(doctor -> {
                     if (doctor.getTerminatedAt() == null) {

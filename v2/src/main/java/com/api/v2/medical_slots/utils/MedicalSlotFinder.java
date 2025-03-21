@@ -13,11 +13,11 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 @Component
-public class MedicalSlotFinderUtil {
+public class MedicalSlotFinder {
 
     private final MedicalSlotRepository repository;
 
-    public MedicalSlotFinderUtil(MedicalSlotRepository repository) {
+    public MedicalSlotFinder(MedicalSlotRepository repository) {
         this.repository = repository;
     }
 

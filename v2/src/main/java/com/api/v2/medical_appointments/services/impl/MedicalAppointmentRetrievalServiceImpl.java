@@ -1,11 +1,11 @@
 package com.api.v2.medical_appointments.services.impl;
 
-import com.api.v2.customers.utils.CustomerFinderUtil;
+import com.api.v2.customers.utils.CustomerFinder;
 import com.api.v2.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.dtos.MedicalAppointmentResponseDto;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentRetrievalService;
-import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
+import com.api.v2.medical_appointments.utils.MedicalAppointmentFinder;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentResponseMapper;
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import org.springframework.stereotype.Service;
@@ -17,22 +17,22 @@ import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder
 @Service
 public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmentRetrievalService {
 
-    private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
+    private final MedicalAppointmentFinder medicalAppointmentFinder;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
-    private final CustomerFinderUtil customerFinderUtil;
+    private final CustomerFinder customerFinder;
 
     public MedicalAppointmentRetrievalServiceImpl(
-            MedicalAppointmentFinderUtil medicalAppointmentFinderUtil,
-            MedicalAppointmentRepository medicalAppointmentRepository, CustomerFinderUtil customerFinderUtil
+            MedicalAppointmentFinder medicalAppointmentFinder,
+            MedicalAppointmentRepository medicalAppointmentRepository, CustomerFinder customerFinder
     ) {
-        this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
+        this.medicalAppointmentFinder = medicalAppointmentFinder;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
-        this.customerFinderUtil = customerFinderUtil;
+        this.customerFinder = customerFinder;
     }
 
     @Override
     public Mono<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findById(String id) {
-        return medicalAppointmentFinderUtil
+        return medicalAppointmentFinder
                 .findById(id)
                 .flatMap(MedicalAppointmentResponseMapper::mapToMono)
                 .map(dto -> {
@@ -83,7 +83,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
 
     @Override
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPublicInsuranceByCustomer(String customerId) {
-        return customerFinderUtil
+        return customerFinder
                 .findById(customerId)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository
@@ -125,7 +125,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
 
     @Override
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPrivateInsuranceByCustomer(String customerId) {
-        return customerFinderUtil
+        return customerFinder
                 .findById(customerId)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository
@@ -167,7 +167,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
 
     @Override
     public Flux<HalResourceWrapper<MedicalAppointmentResponseDto, Void>> findAllPaidByCustomer(String customerId) {
-        return customerFinderUtil
+        return customerFinder
                 .findById(customerId)
                 .flatMapMany(customer -> {
                     return medicalAppointmentRepository

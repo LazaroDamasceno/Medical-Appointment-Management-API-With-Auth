@@ -2,7 +2,7 @@ package com.api.v2.medical_slots.services.impl;
 
 import com.api.v2.common.BlockedDateTimeHandler;
 import com.api.v2.doctors.domain.Doctor;
-import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.doctors.utils.DoctorFinder;
 import com.api.v2.medical_slots.controllers.MedicalSlotController;
 import com.api.v2.medical_slots.domain.MedicalSlot;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
@@ -10,7 +10,7 @@ import com.api.v2.medical_slots.dtos.MedicalSlotRegistrationDto;
 import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
 import com.api.v2.medical_slots.exceptions.UnavailableMedicalSlotException;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRegistrationService;
-import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
+import com.api.v2.medical_slots.utils.MedicalSlotFinder;
 import com.api.v2.medical_slots.utils.MedicalSlotResponseMapper;
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import jakarta.validation.Valid;
@@ -28,17 +28,17 @@ import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder
 public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrationService {
 
     private final MedicalSlotRepository medicalSlotRepository;
-    private final DoctorFinderUtil doctorFinderUtil;
-    private final MedicalSlotFinderUtil medicalSlotFinderUtil;
+    private final DoctorFinder doctorFinder;
+    private final MedicalSlotFinder medicalSlotFinder;
 
     public MedicalSlotRegistrationServiceImpl(
             MedicalSlotRepository medicalSlotRepository,
-            DoctorFinderUtil doctorFinderUtil,
-            MedicalSlotFinderUtil medicalSlotFinderUtil
+            DoctorFinder doctorFinder,
+            MedicalSlotFinder medicalSlotFinder
     ) {
         this.medicalSlotRepository = medicalSlotRepository;
-        this.doctorFinderUtil = doctorFinderUtil;
-        this.medicalSlotFinderUtil = medicalSlotFinderUtil;
+        this.doctorFinder = doctorFinder;
+        this.medicalSlotFinder = medicalSlotFinder;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
         ZoneOffset zoneOffset = OffsetDateTime
                 .ofInstant(registrationDto.availableAt().toInstant(ZoneOffset.UTC), ZoneId.systemDefault())
                 .getOffset();
-        return doctorFinderUtil
+        return doctorFinder
                 .findByLicenseNumber(registrationDto.medicalLicenseNumber())
                 .flatMap(doctor -> {
                     return BlockedDateTimeHandler
@@ -87,7 +87,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                                                 ZoneId availableAtZoneId,
                                                 ZoneOffset availableAtZoneOffset
     ) {
-        return medicalSlotFinderUtil
+        return medicalSlotFinder
                 .findActiveByDoctorAndAvailableAt(doctor, availableAt, availableAtZoneId, availableAtZoneOffset)
                 .hasElement()
                 .flatMap(exists -> {

@@ -1,53 +1,53 @@
 package com.api.v2.medical_appointments.services.impl;
 
 import com.api.v2.doctors.domain.Doctor;
-import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.doctors.utils.DoctorFinder;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.exceptions.InaccessibleMedicalAppointmentException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCompletionService;
-import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
+import com.api.v2.medical_appointments.utils.MedicalAppointmentFinder;
 import com.api.v2.medical_slots.services.interfaces.exposed.MedicalSlotCompletionService;
-import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
+import com.api.v2.medical_slots.utils.MedicalSlotFinder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
 public class MedicalAppointmentCompletionServiceImpl implements MedicalAppointmentCompletionService {
 
-    private final MedicalSlotFinderUtil medicalSlotFinderUtil;
-    private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
+    private final MedicalSlotFinder medicalSlotFinder;
+    private final MedicalAppointmentFinder medicalAppointmentFinder;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
     private final MedicalSlotCompletionService medicalSlotCompletionService;
-    private final DoctorFinderUtil doctorFinderUtil;
+    private final DoctorFinder doctorFinder;
 
     public MedicalAppointmentCompletionServiceImpl(
-            MedicalSlotFinderUtil medicalSlotFinderUtil,
-            MedicalAppointmentFinderUtil medicalAppointmentFinderUtil,
+            MedicalSlotFinder medicalSlotFinder,
+            MedicalAppointmentFinder medicalAppointmentFinder,
             MedicalAppointmentRepository medicalAppointmentRepository,
-            MedicalSlotCompletionService medicalSlotCompletionService, DoctorFinderUtil doctorFinderUtil
+            MedicalSlotCompletionService medicalSlotCompletionService, DoctorFinder doctorFinder
     ) {
-        this.medicalSlotFinderUtil = medicalSlotFinderUtil;
-        this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
+        this.medicalSlotFinder = medicalSlotFinder;
+        this.medicalAppointmentFinder = medicalAppointmentFinder;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
         this.medicalSlotCompletionService = medicalSlotCompletionService;
-        this.doctorFinderUtil = doctorFinderUtil;
+        this.doctorFinder = doctorFinder;
     }
 
     @Override
     public Mono<Void> complete(String medicalLicenseNumber, String appointmentId) {
-        return medicalAppointmentFinderUtil
+        return medicalAppointmentFinder
                 .findById(appointmentId)
                 .flatMap(medicalAppointment -> {
-                    return doctorFinderUtil
+                    return doctorFinder
                             .findByLicenseNumber(medicalLicenseNumber)
                             .flatMap(doctor -> {
                                 return onNonAssociatedMedicalAppointmentWithCustomer(medicalAppointment, doctor)
                                         .then(Mono.defer(() -> {
                                             return onCanceledMedicalAppointment(medicalAppointment)
                                                     .then(onCompletedMedicalAppointment(medicalAppointment))
-                                                    .then(medicalSlotFinderUtil
+                                                    .then(medicalSlotFinder
                                                             .findByMedicalAppointment(medicalAppointment)
                                                             .flatMap(medicalSlot -> {
                                                                 if (medicalSlot.getMedicalAppointment() == null) {

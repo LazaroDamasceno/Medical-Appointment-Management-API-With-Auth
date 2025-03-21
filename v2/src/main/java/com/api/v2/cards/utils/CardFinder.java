@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class CardFinderUtil {
+public class CardFinder {
 
     private final CardRepository cardRepository;
 
-    public CardFinderUtil(CardRepository cardRepository) {
+    public CardFinder(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }
 

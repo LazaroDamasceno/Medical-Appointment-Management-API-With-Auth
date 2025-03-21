@@ -1,50 +1,50 @@
 package com.api.v2.medical_appointments.services.impl;
 
 import com.api.v2.customers.domain.Customer;
-import com.api.v2.customers.utils.CustomerFinderUtil;
+import com.api.v2.customers.utils.CustomerFinder;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.exceptions.InaccessibleMedicalAppointmentException;
 import com.api.v2.medical_appointments.services.interfaces.MedicalAppointmentCancellationService;
-import com.api.v2.medical_appointments.utils.MedicalAppointmentFinderUtil;
+import com.api.v2.medical_appointments.utils.MedicalAppointmentFinder;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
-import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
+import com.api.v2.medical_slots.utils.MedicalSlotFinder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
 public class MedicalAppointmentCancellationServiceImpl implements MedicalAppointmentCancellationService {
 
-    private final MedicalSlotFinderUtil medicalSlotFinderUtil;
-    private final MedicalAppointmentFinderUtil medicalAppointmentFinderUtil;
+    private final MedicalSlotFinder medicalSlotFinder;
+    private final MedicalAppointmentFinder medicalAppointmentFinder;
     private final MedicalSlotRepository medicalSlotRepository;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
-    private final CustomerFinderUtil customerFinderUtil;
+    private final CustomerFinder customerFinder;
 
     public MedicalAppointmentCancellationServiceImpl(
-            MedicalSlotFinderUtil medicalSlotFinderUtil,
-            MedicalAppointmentFinderUtil medicalAppointmentFinderUtil,
+            MedicalSlotFinder medicalSlotFinder,
+            MedicalAppointmentFinder medicalAppointmentFinder,
             MedicalSlotRepository medicalSlotRepository,
             MedicalAppointmentRepository medicalAppointmentRepository,
-            CustomerFinderUtil customerFinderUtil
+            CustomerFinder customerFinder
     ) {
-        this.medicalSlotFinderUtil = medicalSlotFinderUtil;
-        this.medicalAppointmentFinderUtil = medicalAppointmentFinderUtil;
+        this.medicalSlotFinder = medicalSlotFinder;
+        this.medicalAppointmentFinder = medicalAppointmentFinder;
         this.medicalSlotRepository = medicalSlotRepository;
         this.medicalAppointmentRepository = medicalAppointmentRepository;
-        this.customerFinderUtil = customerFinderUtil;
+        this.customerFinder = customerFinder;
     }
 
     @Override
     public Mono<Void> cancel(String customerId, String appointmentId) {
-        return medicalAppointmentFinderUtil
+        return medicalAppointmentFinder
                 .findById(appointmentId)
                 .flatMap(medicalAppointment -> {
-                    return medicalSlotFinderUtil
+                    return medicalSlotFinder
                             .findByMedicalAppointment(medicalAppointment)
                             .flatMap(medicalSlot -> {
-                                return customerFinderUtil
+                                return customerFinder
                                         .findById(customerId)
                                         .flatMap(customer -> {
                                             return onNonAssociatedMedicalAppointmentWithCustomer(medicalAppointment, customer)

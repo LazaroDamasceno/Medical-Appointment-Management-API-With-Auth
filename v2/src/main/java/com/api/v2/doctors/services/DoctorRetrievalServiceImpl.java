@@ -3,7 +3,7 @@ package com.api.v2.doctors.services;
 import com.api.v2.doctors.controllers.DoctorController;
 import com.api.v2.doctors.domain.DoctorRepository;
 import com.api.v2.doctors.dtos.DoctorResponseDto;
-import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.doctors.utils.DoctorFinder;
 import com.api.v2.doctors.utils.DoctorResponseMapper;
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import org.springframework.stereotype.Service;
@@ -15,20 +15,20 @@ import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder
 @Service
 public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
 
-    private final DoctorFinderUtil doctorFinderUtil;
+    private final DoctorFinder doctorFinder;
     private final DoctorRepository doctorRepository;
 
     public DoctorRetrievalServiceImpl(
-            DoctorFinderUtil doctorFinderUtil,
+            DoctorFinder doctorFinder,
             DoctorRepository doctorRepository
     ) {
-        this.doctorFinderUtil = doctorFinderUtil;
+        this.doctorFinder = doctorFinder;
         this.doctorRepository = doctorRepository;
     }
 
     @Override
     public Mono<HalResourceWrapper<DoctorResponseDto, Void>> findByMedicalLicenseNumber(String medicalLicenseNumber) {
-        return doctorFinderUtil
+        return doctorFinder
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMap(DoctorResponseMapper::mapToMono)
                 .map(dto -> {

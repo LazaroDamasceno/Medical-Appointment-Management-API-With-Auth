@@ -4,7 +4,7 @@ import com.api.v2.cards.controller.CardController;
 import com.api.v2.cards.domain.CardRepository;
 import com.api.v2.cards.dtos.CardResponseDto;
 import com.api.v2.cards.services.interfaces.CardRetrievalService;
-import com.api.v2.cards.utils.CardFinderUtil;
+import com.api.v2.cards.utils.CardFinder;
 import com.api.v2.cards.utils.CardResponseMapper;
 
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
@@ -17,14 +17,14 @@ import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder
 @Service
 public class CardRetrievalServiceImpl implements CardRetrievalService {
 
-    private final CardFinderUtil cardFinderUtil;
+    private final CardFinder cardFinder;
     private final CardRepository cardRepository;
 
     public CardRetrievalServiceImpl(
-            CardFinderUtil cardFinderUtil,
+            CardFinder cardFinder,
             CardRepository cardRepository
     ) {
-        this.cardFinderUtil = cardFinderUtil;
+        this.cardFinder = cardFinder;
         this.cardRepository = cardRepository;
     }
 
@@ -56,7 +56,7 @@ public class CardRetrievalServiceImpl implements CardRetrievalService {
 
     @Override
     public Mono<HalResourceWrapper<CardResponseDto, Void>> findById(String id) {
-        return cardFinderUtil
+        return cardFinder
                 .find(id)
                 .flatMap(CardResponseMapper::mapToMono)
                 .map(dto -> {

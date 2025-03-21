@@ -1,11 +1,11 @@
 package com.api.v2.medical_slots.services.impl;
 
-import com.api.v2.doctors.utils.DoctorFinderUtil;
+import com.api.v2.doctors.utils.DoctorFinder;
 import com.api.v2.medical_slots.controllers.MedicalSlotController;
 import com.api.v2.medical_slots.domain.MedicalSlotRepository;
 import com.api.v2.medical_slots.dtos.MedicalSlotResponseDto;
 import com.api.v2.medical_slots.services.interfaces.MedicalSlotRetrievalService;
-import com.api.v2.medical_slots.utils.MedicalSlotFinderUtil;
+import com.api.v2.medical_slots.utils.MedicalSlotFinder;
 import com.api.v2.medical_slots.utils.MedicalSlotResponseMapper;
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import org.springframework.stereotype.Service;
@@ -17,23 +17,23 @@ import static de.kamillionlabs.hateoflux.linkbuilder.SpringControllerLinkBuilder
 @Service
 public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalService {
 
-    private final DoctorFinderUtil doctorFinderUtil;
+    private final DoctorFinder doctorFinder;
     private final MedicalSlotRepository medicalSlotRepository;
-    private final MedicalSlotFinderUtil medicalSlotFinderUtil;
+    private final MedicalSlotFinder medicalSlotFinder;
 
     public MedicalSlotRetrievalServiceImpl(
-            DoctorFinderUtil doctorFinderUtil,
+            DoctorFinder doctorFinder,
             MedicalSlotRepository medicalSlotRepository,
-            MedicalSlotFinderUtil medicalSlotFinderUtil
+            MedicalSlotFinder medicalSlotFinder
     ) {
-        this.doctorFinderUtil = doctorFinderUtil;
+        this.doctorFinder = doctorFinder;
         this.medicalSlotRepository = medicalSlotRepository;
-        this.medicalSlotFinderUtil = medicalSlotFinderUtil;
+        this.medicalSlotFinder = medicalSlotFinder;
     }
 
     @Override
     public Mono<HalResourceWrapper<MedicalSlotResponseDto, Void>> findById(String slotId) {
-        return medicalSlotFinderUtil
+        return medicalSlotFinder
                 .findById(slotId)
                 .flatMap(slot -> {
                     return MedicalSlotResponseMapper
@@ -74,7 +74,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
 
     @Override
     public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllActiveByDoctor(String medicalLicenseNumber) {
-        return doctorFinderUtil
+        return doctorFinder
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMapMany(doctor -> {
                     return medicalSlotRepository
@@ -120,7 +120,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
 
     @Override
     public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCanceledByDoctor(String medicalLicenseNumber) {
-        return doctorFinderUtil
+        return doctorFinder
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMapMany(doctor -> {
                     return medicalSlotRepository
@@ -166,7 +166,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
 
     @Override
     public Flux<HalResourceWrapper<MedicalSlotResponseDto, Void>> findAllCompletedByDoctor(String medicalLicenseNumber) {
-        return doctorFinderUtil
+        return doctorFinder
                 .findByLicenseNumber(medicalLicenseNumber)
                 .flatMapMany(doctor -> {
                     return medicalSlotRepository

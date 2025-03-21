@@ -11,11 +11,11 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 
 @Component
-public class MedicalAppointmentFinderUtil {
+public class MedicalAppointmentFinder {
 
     private final MedicalAppointmentRepository repository;
 
-    public MedicalAppointmentFinderUtil(MedicalAppointmentRepository repository) {
+    public MedicalAppointmentFinder(MedicalAppointmentRepository repository) {
         this.repository = repository;
     }
 
