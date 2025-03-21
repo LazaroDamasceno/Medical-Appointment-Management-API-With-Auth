@@ -17,9 +17,9 @@ public record Payment(
         String id,
         Card card,
         MedicalAppointment medicalAppointment,
-        LocalDateTime payedAt,
-        ZoneId payedAtZoneId,
-        ZoneOffset payedAtZoneOffset
+        LocalDateTime paidAt,
+        ZoneId paidAtZoneId,
+        ZoneOffset paidAtZoneOffset
 ) {
 
     public static Payment of(Card card, MedicalAppointment medicalAppointment) {

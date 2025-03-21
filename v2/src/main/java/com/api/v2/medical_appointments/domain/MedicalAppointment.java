@@ -37,6 +37,10 @@ public class MedicalAppointment {
     private ZoneId createdAtZoneId;
     private ZoneOffset createdAtZoneOffset;
     private boolean isCreatedDuringDST;
+    private LocalDateTime paidAt;
+    private ZoneId paidAtZoneId;
+    private ZoneOffset paidAtZoneOffset;
+    private boolean isPaymentDuringDST;
 
     public MedicalAppointment() {
     }
@@ -74,6 +78,13 @@ public class MedicalAppointment {
         canceledAtZoneId = ZoneId.systemDefault();
         canceledAtZoneOffset = OffsetDateTime.now().getOffset();
         isCanceledDuringDST = DstCheckerUtil.isGivenDateTimeFollowingDST(canceledAt, canceledAtZoneId);
+    }
+
+    public void markAsPaid() {
+        paidAt = LocalDateTime.now(ZoneId.systemDefault());
+        paidAtZoneId = ZoneId.systemDefault();
+        paidAtZoneOffset = OffsetDateTime.now().getOffset();
+        isPaymentDuringDST = DstCheckerUtil.isGivenDateTimeFollowingDST(paidAt, getPaidAtZoneId());
     }
 
     public String getId() {
@@ -154,5 +165,29 @@ public class MedicalAppointment {
 
     public boolean isCreatedDuringDST() {
         return isCreatedDuringDST;
+    }
+
+    public Boolean getCanceledDuringDST() {
+        return isCanceledDuringDST;
+    }
+
+    public Boolean getCompletionDuringDST() {
+        return isCompletionDuringDST;
+    }
+
+    public LocalDateTime getPaidAt() {
+        return paidAt;
+    }
+
+    public ZoneId getPaidAtZoneId() {
+        return paidAtZoneId;
+    }
+
+    public ZoneOffset getPaidAtZoneOffset() {
+        return paidAtZoneOffset;
+    }
+
+    public boolean isPaymentDuringDST() {
+        return isPaymentDuringDST;
     }
 }
