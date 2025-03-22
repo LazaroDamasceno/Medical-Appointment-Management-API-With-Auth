@@ -3,6 +3,8 @@ package com.api.v2.payments.services;
 import com.api.v2.cards.domain.Card;
 import com.api.v2.cards.utils.CardFinder;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
+import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
+import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinder;
 import com.api.v2.payments.domain.Payment;
 import com.api.v2.payments.domain.PaymentRepository;
@@ -19,14 +21,17 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
     private final MedicalAppointmentFinder medicalAppointmentFinder;
     private final CardFinder cardFinder;
     private final PaymentRepository paymentRepository;
+    private final MedicalAppointmentRepository medicalAppointmentRepository;
 
     public MedicalAppointmentPaymentServiceImpl(MedicalAppointmentFinder medicalAppointmentFinder,
                                                 CardFinder cardFinder,
-                                                PaymentRepository paymentRepository
+                                                PaymentRepository paymentRepository,
+                                                MedicalAppointmentRepository medicalAppointmentRepository
     ) {
         this.medicalAppointmentFinder = medicalAppointmentFinder;
         this.cardFinder = cardFinder;
         this.paymentRepository = paymentRepository;
+        this.medicalAppointmentRepository = medicalAppointmentRepository;
     }
 
 
@@ -47,11 +52,45 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
                 .zipWith(cardMono)
                 .flatMap(tuple -> {
             MedicalAppointment medicalAppointment = tuple.getT1();
-            Card card = tuple.getT2();
-            Payment payment = Payment.of(card, medicalAppointment, BigDecimal.valueOf(price));
-            return paymentRepository
-                    .save(payment)
-                    .flatMap(PaymentResponseMapper::mapToMono);
+            return onCanceledMedicalAppointment(medicalAppointment)
+                    .then(onPaidMedicalAppointment(medicalAppointment))
+                    .then(onActiveMedicalAppointment(medicalAppointment))
+                    .then(Mono.defer(() -> {
+                        Card card = tuple.getT2();
+                        Payment payment = Payment.of(card, medicalAppointment, BigDecimal.valueOf(price));
+                        medicalAppointment.markAsPaid();
+                        return medicalAppointmentRepository
+                                .save(medicalAppointment)
+                                .then(Mono.defer(() -> {
+                                    return paymentRepository
+                                            .save(payment)
+                                            .flatMap(PaymentResponseMapper::mapToMono);
+                                }));
+                    }));
         });
+    }
+
+    private Mono<Void> onCanceledMedicalAppointment(MedicalAppointment medicalAppointment) {
+        if (medicalAppointment.getCompletedAt() != null && medicalAppointment.getCanceledAt() == null) {
+            String message = "Medical appointment whose id is %s is already canceled.".formatted(medicalAppointment.getId());
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
+        }
+        return Mono.empty();
+    }
+
+    private Mono<Void> onActiveMedicalAppointment(MedicalAppointment medicalAppointment) {
+        if (medicalAppointment.getCompletedAt() == null && medicalAppointment.getCanceledAt() == null) {
+            String message = "Medical appointment whose id is %s is cannot be paid, due to it's active.".formatted(medicalAppointment.getId());
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
+        }
+        return Mono.empty();
+    }
+
+    private Mono<Void> onPaidMedicalAppointment(MedicalAppointment medicalAppointment) {
+        if (medicalAppointment.getPaidAt()  != null) {
+            String message = "Medical appointment whose id is %s is already completed.".formatted(medicalAppointment.getId());
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
+        }
+        return Mono.empty();
     }
 }
