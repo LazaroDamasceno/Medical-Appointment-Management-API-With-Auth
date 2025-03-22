@@ -18,7 +18,7 @@ public class PaymentController {
     }
 
     @PostMapping("{medicalAppointmentId}/{cardId}/{price}")
-    public Mono<PaymentResponseDto> payPrivateInsurance(String medicalAppointmentId, String cardId, double price) {
+    public Mono<PaymentResponseDto> pay(String medicalAppointmentId, String cardId, double price) {
         return paymentService.pay(medicalAppointmentId, cardId, price);
     }
 }
