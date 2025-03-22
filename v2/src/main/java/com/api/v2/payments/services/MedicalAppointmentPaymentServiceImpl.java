@@ -11,6 +11,8 @@ import com.api.v2.payments.utils.PaymentResponseMapper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
+
 @Service
 public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentPaymentService {
 
@@ -29,21 +31,16 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
 
 
     @Override
-    public Mono<PaymentResponseDto> payPrivateInsurance(String customerId, String medicalAppointmentId, String cardId, double price) {
-        return null;
+    public Mono<PaymentResponseDto> payPrivateInsurance(String medicalAppointmentId, String cardId, double price) {
+        return pay(medicalAppointmentId, cardId, price);
     }
 
     @Override
-    public Mono<PaymentResponseDto> payPublicInsurance(String customerId, String medicalAppointmentId, String cardId) {
-        return null;
+    public Mono<PaymentResponseDto> payPaidByPatient(String medicalAppointmentId, String cardId, double price) {
+        return pay(medicalAppointmentId, cardId, price);
     }
 
-    @Override
-    public Mono<PaymentResponseDto> payPaidByPatient(String customerId, String medicalAppointmentId, String cardId, double price) {
-        return null;
-    }
-
-    private Mono<PaymentResponseDto> pay(String customerId, String medicalAppointmentId, String cardId, double price) {
+    private Mono<PaymentResponseDto> pay(String medicalAppointmentId, String cardId, double price) {
         Mono<MedicalAppointment> medicalAppointmentMono = medicalAppointmentFinder.findById(medicalAppointmentId);
         Mono<Card> cardMono = cardFinder.find(cardId);
         return medicalAppointmentMono
@@ -51,7 +48,7 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
                 .flatMap(tuple -> {
             MedicalAppointment medicalAppointment = tuple.getT1();
             Card card = tuple.getT2();
-            Payment payment = Payment.of(card, medicalAppointment);
+            Payment payment = Payment.of(card, medicalAppointment, BigDecimal.valueOf(price));
             return paymentRepository
                     .save(payment)
                     .flatMap(PaymentResponseMapper::mapToMono);

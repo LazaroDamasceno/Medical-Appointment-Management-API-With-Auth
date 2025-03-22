@@ -13,7 +13,8 @@ public final class PaymentResponseMapper {
                 payment.id(),
                 CardResponseMapper.mapToDto(payment.card()),
                 MedicalAppointmentResponseMapper.mapToDto(payment.medicalAppointment()),
-                "%s%s[%s]".formatted(payment.paidAt(), payment.paidAtZoneOffset(), payment.paidAtZoneId())
+                "%s%s[%s]".formatted(payment.paidAt(), payment.paidAtZoneOffset(), payment.paidAtZoneId()),
+                payment.price()
         );
     }
 
