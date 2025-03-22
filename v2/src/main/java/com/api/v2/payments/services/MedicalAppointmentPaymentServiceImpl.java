@@ -43,6 +43,7 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
                 .flatMap(tuple -> {
             MedicalAppointment medicalAppointment = tuple.getT1();
             return onCanceledMedicalAppointment(medicalAppointment)
+                    .then(onIllegalCharging(medicalAppointment))
                     .then(onPaidMedicalAppointment(medicalAppointment))
                     .then(onActiveMedicalAppointment(medicalAppointment))
                     .then(Mono.defer(() -> {
@@ -58,6 +59,16 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
                                 }));
                     }));
         });
+    }
+
+    private Mono<Void> onIllegalCharging(MedicalAppointment medicalAppointment) {
+        if (medicalAppointment.getCompletedAt() != null && medicalAppointment.getCanceledAt() == null) {
+            String message = """
+                        Medical appointment whose id is %s is under the public health national program. It cannot be charged.
+                    """.formatted(medicalAppointment.getId());
+            return Mono.error(new ImmutableMedicalAppointmentException(message));
+        }
+        return Mono.empty();
     }
 
     private Mono<Void> onCanceledMedicalAppointment(MedicalAppointment medicalAppointment) {
