@@ -34,18 +34,8 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
         this.medicalAppointmentRepository = medicalAppointmentRepository;
     }
 
-
     @Override
-    public Mono<PaymentResponseDto> payPrivateInsurance(String medicalAppointmentId, String cardId, double price) {
-        return pay(medicalAppointmentId, cardId, price);
-    }
-
-    @Override
-    public Mono<PaymentResponseDto> payPaidByPatient(String medicalAppointmentId, String cardId, double price) {
-        return pay(medicalAppointmentId, cardId, price);
-    }
-
-    private Mono<PaymentResponseDto> pay(String medicalAppointmentId, String cardId, double price) {
+    public Mono<PaymentResponseDto> pay(String medicalAppointmentId, String cardId, double price) {
         Mono<MedicalAppointment> medicalAppointmentMono = medicalAppointmentFinder.findById(medicalAppointmentId);
         Mono<Card> cardMono = cardFinder.find(cardId);
         return medicalAppointmentMono

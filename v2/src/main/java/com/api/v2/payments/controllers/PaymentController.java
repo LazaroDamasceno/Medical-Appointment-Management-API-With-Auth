@@ -17,13 +17,8 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @PostMapping("private-insurance/{medicalAppointmentId}/{cardId}/{price}")
+    @PostMapping("{medicalAppointmentId}/{cardId}/{price}")
     public Mono<PaymentResponseDto> payPrivateInsurance(String medicalAppointmentId, String cardId, double price) {
-        return paymentService.payPrivateInsurance(medicalAppointmentId, cardId, price);
-    }
-
-    @PostMapping("paid-by-patient/{medicalAppointmentId}/{cardId}/{price}")
-    public Mono<PaymentResponseDto> payPaidByPatient(String medicalAppointmentId, String cardId, double price) {
-        return paymentService.payPaidByPatient(medicalAppointmentId, cardId, price);
+        return paymentService.pay(medicalAppointmentId, cardId, price);
     }
 }
