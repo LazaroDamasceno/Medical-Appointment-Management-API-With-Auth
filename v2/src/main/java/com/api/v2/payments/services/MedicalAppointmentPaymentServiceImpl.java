@@ -4,6 +4,7 @@ import com.api.v2.cards.domain.Card;
 import com.api.v2.cards.utils.CardFinder;
 import com.api.v2.medical_appointments.domain.MedicalAppointment;
 import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
+import com.api.v2.medical_appointments.enums.MedicalAppointmentType;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinder;
 import com.api.v2.payments.domain.Payment;
@@ -62,7 +63,7 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
     }
 
     private Mono<Void> onIllegalCharging(MedicalAppointment medicalAppointment) {
-        if (medicalAppointment.getCompletedAt() != null && medicalAppointment.getCanceledAt() == null) {
+        if (medicalAppointment.getType().equals(MedicalAppointmentType.PUBLIC_INSURANCE)) {
             String message = """
                         Medical appointment whose id is %s is under the public health national program. It cannot be charged.
                     """.formatted(medicalAppointment.getId());
