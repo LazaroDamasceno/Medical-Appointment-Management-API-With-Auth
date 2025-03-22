@@ -7,7 +7,7 @@ import com.api.v2.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v2.medical_appointments.enums.MedicalAppointmentType;
 import com.api.v2.medical_appointments.exceptions.ImmutableMedicalAppointmentException;
 import com.api.v2.medical_appointments.utils.MedicalAppointmentFinder;
-import com.api.v2.payments.IllegalChargingException;
+import com.api.v2.payments.exceptions.IllegalChargingException;
 import com.api.v2.payments.domain.Payment;
 import com.api.v2.payments.domain.PaymentRepository;
 import com.api.v2.payments.dtos.PaymentResponseDto;

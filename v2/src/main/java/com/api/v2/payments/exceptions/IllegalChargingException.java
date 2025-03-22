@@ -1,4 +1,4 @@
-package com.api.v2.payments;
+package com.api.v2.payments.exceptions;
 
 public class IllegalChargingException extends RuntimeException {
     public IllegalChargingException(String id) {
