@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class DoctorHiringTest {
+public class DoctorHiring1Test {
 
     @Autowired
     private WebTestClient webTestClient;
