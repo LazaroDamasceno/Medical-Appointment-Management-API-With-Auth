@@ -1,7 +1,7 @@
 package com.api.v2.cards.utils;
 
 import com.api.v2.cards.domain.Card;
-import com.api.v2.cards.dtos.CardResponseDto;
+import com.api.v2.cards.dtos.exposed.CardResponseDto;
 import reactor.core.publisher.Mono;
 
 public class CardResponseMapper {

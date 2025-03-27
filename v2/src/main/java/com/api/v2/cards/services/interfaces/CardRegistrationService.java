@@ -1,7 +1,7 @@
 package com.api.v2.cards.services.interfaces;
 
 import com.api.v2.cards.dtos.CardRegistrationDto;
-import com.api.v2.cards.dtos.CardResponseDto;
+import com.api.v2.cards.dtos.exposed.CardResponseDto;
 import de.kamillionlabs.hateoflux.model.hal.HalResourceWrapper;
 import reactor.core.publisher.Mono;
 

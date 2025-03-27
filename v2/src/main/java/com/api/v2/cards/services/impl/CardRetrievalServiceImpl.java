@@ -2,7 +2,7 @@ package com.api.v2.cards.services.impl;
 
 import com.api.v2.cards.controller.CardController;
 import com.api.v2.cards.domain.CardRepository;
-import com.api.v2.cards.dtos.CardResponseDto;
+import com.api.v2.cards.dtos.exposed.CardResponseDto;
 import com.api.v2.cards.services.interfaces.CardRetrievalService;
 import com.api.v2.cards.utils.CardFinder;
 import com.api.v2.cards.utils.CardResponseMapper;
