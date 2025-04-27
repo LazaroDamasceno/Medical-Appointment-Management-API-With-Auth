@@ -87,14 +87,14 @@ public class MedicalAppointmentController {
     }
 
     @Operation(summary = "Complete a medical appointment")
-    @PostMapping("medical-license-number/{medicalLicenseNumber}/appointment-id/{appointmentId}/completion")
+    @PatchMapping("medical-license-number/{medicalLicenseNumber}/appointment-id/{appointmentId}/completion")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> complete(@PathVariable String medicalLicenseNumber, @PathVariable String appointmentId) {
         return completionService.complete(medicalLicenseNumber, appointmentId);
     }
 
     @Operation(summary = "Cancel a medical appointment")
-    @PostMapping("customer-id/{customerId}/appointment-id/{appointmentId}/cancellation")
+    @PatchMapping("customer-id/{customerId}/appointment-id/{appointmentId}/cancellation")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> cancel(@PathVariable String customerId, @PathVariable String appointmentId) {
         return cancellationService.cancel(customerId, appointmentId);
