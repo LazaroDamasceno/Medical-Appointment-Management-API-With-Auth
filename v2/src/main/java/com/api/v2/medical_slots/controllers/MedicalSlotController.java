@@ -39,7 +39,7 @@ public class MedicalSlotController {
     }
 
     @Operation(summary = "Cancel a medical slot")
-    @PostMapping("medical-license-number/{medicalLicenseNumber}/id/{id}")
+    @PatchMapping("medical-license-number/{medicalLicenseNumber}/id/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public Mono<Void> cancel(@PathVariable String medicalLicenseNumber, @PathVariable String id) {
         return cancellationService.cancel(medicalLicenseNumber, id);
