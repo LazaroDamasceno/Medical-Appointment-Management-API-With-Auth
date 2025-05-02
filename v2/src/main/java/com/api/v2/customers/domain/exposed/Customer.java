@@ -1,4 +1,4 @@
-package com.api.v2.customers.domain;
+package com.api.v2.customers.domain.exposed;
 
 import com.api.v2.common.Address;
 import com.api.v2.people.domain.exposed.Person;
