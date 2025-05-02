@@ -3,6 +3,7 @@ package com.api.v2.people.services;
 import com.api.v2.people.domain.exposed.Person;
 import com.api.v2.people.domain.PersonRepository;
 import com.api.v2.people.requests.PersonRegistrationDto;
+import com.api.v2.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

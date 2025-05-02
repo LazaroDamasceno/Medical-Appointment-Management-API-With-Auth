@@ -2,11 +2,11 @@ package com.api.v2.customers.services;
 
 import com.api.v2.customers.domain.CustomerRepository;
 import com.api.v2.customers.domain.exposed.Customer;
-import com.api.v2.customers.requests.CustomerRegistrationDto;
 import com.api.v2.customers.responses.CustomerResponseDto;
 import com.api.v2.people.exceptions.DuplicatedEmailException;
 import com.api.v2.people.exceptions.DuplicatedSsnException;
-import com.api.v2.people.services.PersonRegistrationService;
+import com.api.v2.people.requests.PersonRegistrationDto;
+import com.api.v2.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +23,9 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
     private final CustomerRepository customerRepository;
 
     @Override
-    public Mono<ResponseEntity<CustomerResponseDto>> register(@Valid CustomerRegistrationDto registrationDto) {
+    public Mono<ResponseEntity<CustomerResponseDto>> register(@Valid PersonRegistrationDto registrationDto) {
         return validate(registrationDto)
-                .then(personRegistrationService.register(registrationDto.person())
+                .then(personRegistrationService.register(registrationDto)
                 .flatMap(person -> {
                     Customer customer = Customer.of(registrationDto.address(), person);
                     return customerRepository
@@ -40,16 +40,16 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
                 }));
     }
 
-    private Mono<ResponseEntity<CustomerResponseDto>> validate(CustomerRegistrationDto registrationDto) {
+    private Mono<ResponseEntity<CustomerResponseDto>> validate(PersonRegistrationDto registrationDto) {
         return customerRepository
-                .findBySsn(registrationDto.person().ssn())
+                .findBySsn(registrationDto.ssn())
                 .hasElement()
                 .flatMap(exists -> {
                    if (exists) return Mono.error(DuplicatedSsnException::new);
                    return Mono.empty();
                 })
                 .then(customerRepository
-                        .findByEmail(registrationDto.person().email())
+                        .findByEmail(registrationDto.email())
                         .hasElement()
                         .flatMap(exists -> {
                             if (exists) return Mono.error(DuplicatedEmailException::new);
