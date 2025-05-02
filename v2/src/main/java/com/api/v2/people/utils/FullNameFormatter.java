@@ -7,10 +7,13 @@ import lombok.experimental.UtilityClass;
 public class FullNameFormatter {
 
     public String format(Person person) {
+        String firstName = person.getFirstName();
+        String lastName = person.getLastName();
         if (person.getMiddleName() == null) {
-            return String.format("%s %s", person.getFirstName(), person.getLastName());
+            return String.format("%s %s", firstName, lastName);
         }
-        return String.format("%s %s %s", person.getFirstName(), person.getMiddleName(), person.getLastName());
+        String middleName = person.getMiddleName();
+        return String.format("%s %s %s", firstName, middleName, lastName);
     }
 
 }
