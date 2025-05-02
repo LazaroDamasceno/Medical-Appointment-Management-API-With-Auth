@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 
 public record CustomerRegistrationDto(
         @Valid
-        PersonRegistrationDto personRegistrationDto,
+        PersonRegistrationDto person,
         @Valid
         Address address
 ) {

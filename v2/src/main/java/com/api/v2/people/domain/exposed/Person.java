@@ -1,5 +1,6 @@
 package com.api.v2.people.domain.exposed;
 
+import com.api.v2.common.Address;
 import com.api.v2.people.enums.Gender;
 import com.api.v2.people.requests.PersonRegistrationDto;
 import org.springframework.data.annotation.Id;
@@ -21,6 +22,7 @@ public record Person (
     String phoneNumber,
     Gender gender,
     String email,
+    Address address,
     LocalDateTime createdAt
 ) {
 
@@ -35,6 +37,7 @@ public record Person (
                 registrationDto.phoneNumber(),
                 registrationDto.gender(),
                 registrationDto.email(),
+                registrationDto.address(),
                 LocalDateTime.now()
         );
     }

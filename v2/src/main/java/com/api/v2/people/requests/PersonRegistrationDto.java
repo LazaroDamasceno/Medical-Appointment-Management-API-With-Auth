@@ -1,6 +1,8 @@
 package com.api.v2.people.requests;
 
+import com.api.v2.common.Address;
 import com.api.v2.people.enums.Gender;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,6 +28,8 @@ public record PersonRegistrationDto(
         Gender gender,
         @NotBlank
         @Email
-        String email
+        String email,
+        @Valid
+        Address address
 ) {
 }
