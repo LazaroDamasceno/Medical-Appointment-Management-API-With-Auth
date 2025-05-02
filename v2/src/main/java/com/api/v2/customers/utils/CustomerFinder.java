@@ -16,13 +16,7 @@ public class CustomerFinder {
     public Mono<Customer> findById(String id) {
         return customerRepository
                 .findById(id)
-                .singleOptional()
-                .flatMap(optional -> {
-                    if (optional.isEmpty()) {
-                        throw new CustomerNotFoundException(id);
-                    }
-                    return Mono.just(optional.get());
-                });
+                .switchIfEmpty(Mono.error(new CustomerNotFoundException(id)));
     }
 
 }
