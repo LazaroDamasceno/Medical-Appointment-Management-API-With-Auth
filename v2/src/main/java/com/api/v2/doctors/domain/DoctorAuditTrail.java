@@ -1,5 +1,6 @@
-package com.api.v2.doctors;
+package com.api.v2.doctors.domain;
 
+import com.api.v2.doctors.domain.exposed.Doctor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

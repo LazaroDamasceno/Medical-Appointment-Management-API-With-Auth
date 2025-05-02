@@ -1,4 +1,4 @@
-package com.api.v2.doctors;
+package com.api.v2.doctors.domain;
 
 import com.api.v2.common.States;
 import jakarta.validation.constraints.NotBlank;

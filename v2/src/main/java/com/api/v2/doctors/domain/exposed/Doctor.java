@@ -1,5 +1,7 @@
-package com.api.v2.doctors;
+package com.api.v2.doctors.domain.exposed;
 
+import com.api.v2.doctors.enums.DoctorStatus;
+import com.api.v2.doctors.domain.MedicalLicenseNumber;
 import com.api.v2.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;
 
