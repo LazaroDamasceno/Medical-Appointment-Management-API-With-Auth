@@ -3,6 +3,7 @@ package com.api.v2.people.services;
 import com.api.v2.people.domain.exposed.Person;
 import com.api.v2.people.domain.PersonRepository;
 import com.api.v2.people.requests.PersonRegistrationDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -14,7 +15,7 @@ public abstract class PersonRegistrationServiceImpl implements PersonRegistratio
     private final PersonRepository personRepository;
 
     @Override
-    public Mono<Person> register(PersonRegistrationDto registrationDto) {
+    public Mono<Person> register(@Valid PersonRegistrationDto registrationDto) {
         return personRepository
                 .find(registrationDto.ssn(), registrationDto.email())
                 .singleOptional()
