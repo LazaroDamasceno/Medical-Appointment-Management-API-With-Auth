@@ -1,6 +1,7 @@
 package com.api.v2.people.requests;
 
 import com.api.v2.people.enums.Gender;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -22,6 +23,9 @@ public record PersonRegistrationDto(
         @Size(min = 10, max = 10)
         String phoneNumber,
         @NotNull
-        Gender gender
+        Gender gender,
+        @NotBlank
+        @Email
+        String email
 ) {
 }
