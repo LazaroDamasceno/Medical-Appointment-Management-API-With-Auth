@@ -1,7 +1,8 @@
-package com.api.v2.common;
+package com.api.v2.people.dtos;
 
-import jakarta.validation.Valid;
+import com.api.v2.common.States;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record Address(
@@ -9,7 +10,7 @@ public record Address(
         String street,
         @NotBlank
         String city,
-        @Valid
+        @NotNull
         States state,
         @NotBlank
         @Size(min = 5, max = 5)

@@ -1,6 +1,6 @@
 package com.api.v2.people.domain.exposed;
 
-import com.api.v2.common.Address;
+import com.api.v2.people.dtos.Address;
 import com.api.v2.people.enums.Gender;
 import com.api.v2.people.requests.PersonRegistrationDto;
 import org.springframework.data.annotation.Id;

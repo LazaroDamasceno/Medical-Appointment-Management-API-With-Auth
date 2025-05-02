@@ -1,6 +1,6 @@
 package com.api.v2.people.requests;
 
-import com.api.v2.common.Address;
+import com.api.v2.people.dtos.Address;
 import com.api.v2.people.enums.Gender;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
