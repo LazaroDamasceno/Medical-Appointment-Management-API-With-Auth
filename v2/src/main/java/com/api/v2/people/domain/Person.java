@@ -1,5 +1,6 @@
-package com.api.v2.people;
+package com.api.v2.people.domain;
 
+import com.api.v2.people.enums.Gender;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
