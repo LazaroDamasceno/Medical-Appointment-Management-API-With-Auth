@@ -33,7 +33,7 @@ You can create on https://www.mongodb.com/pt-br/cloud/atlas/register. Follow the
 
 1. Get the path of download folder.
 2. Open the CMD.
-3. Type on the CMD ``cd v1``.
+3. Type on the CMD ``cd v2``.
 4. Type on the CMD ``./mvnw clean spring-boot:run``.
 5. Open any browser, then type ``http://localhost:8080/webjars/swagger-ui/index.html``.
 6. Use the Swagger UI.
