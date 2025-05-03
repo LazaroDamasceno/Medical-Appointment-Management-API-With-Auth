@@ -2,7 +2,7 @@ package com.api.v1.doctors.services;
 
 import com.api.v1.doctors.domain.MedicalLicenseNumber;
 import com.api.v1.doctors.domain.exposed.Doctor;
-import com.api.v1.doctors.dtos.DoctorRepository;
+import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
@@ -43,7 +43,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
                 }));
     }
 
-    private Mono<ResponseEntity<DoctorResponseDto>> validate(PersonRegistrationDto personRegistrationDto,
+    private Mono<Object> validate(PersonRegistrationDto personRegistrationDto,
                                                              MedicalLicenseNumber medicalLicenseNumber
     ) {
         return doctorRepository

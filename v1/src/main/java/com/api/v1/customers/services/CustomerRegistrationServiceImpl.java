@@ -40,7 +40,7 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
                 }));
     }
 
-    private Mono<ResponseEntity<CustomerResponseDto>> validate(PersonRegistrationDto registrationDto) {
+    private Mono<Object> validate(PersonRegistrationDto registrationDto) {
         return customerRepository
                 .findBySsn(registrationDto.ssn())
                 .switchIfEmpty(Mono.empty())
