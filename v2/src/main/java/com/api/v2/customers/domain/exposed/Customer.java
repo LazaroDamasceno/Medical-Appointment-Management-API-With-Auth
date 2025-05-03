@@ -14,15 +14,13 @@ import java.util.UUID;
 public record Customer(
         @Id
         String id,
-        Address address,
         Person person,
         LocalDateTime createdAt
 ) {
 
-        public static Customer of(Address address, Person person) {
+        public static Customer of(Person person) {
                 return new Customer(
                         UUID.randomUUID().toString(),
-                        address,
                         person,
                         LocalDateTime.now()
                 );
