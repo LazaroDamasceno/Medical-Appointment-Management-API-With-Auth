@@ -49,6 +49,7 @@ public final class Doctor {
     public DoctorResponseDto toDto() {
         return new DoctorResponseDto(
                 FullNameFormatter.format(person),
+                status,
                 medicalLicenseNumber
         );
     }

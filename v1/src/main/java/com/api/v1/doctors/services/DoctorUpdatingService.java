@@ -1,0 +1,9 @@
+package com.api.v1.doctors.services;
+
+import com.api.v1.people.requests.PersonUpdatingDto;
+import org.springframework.http.ResponseEntity;
+import reactor.core.publisher.Mono;
+
+public interface DoctorUpdatingService {
+    Mono<ResponseEntity<Void>> update(String doctorId, PersonUpdatingDto updatingDto);
+}
