@@ -1,5 +1,6 @@
 package com.api.v1.doctors.controllers;
 
+import com.api.v1.common.EmptyResponse;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorRegistrationService;
@@ -28,7 +29,7 @@ public class DoctorController {
     }
 
     @PatchMapping("{doctorId}")
-    public Mono<ResponseEntity<Void>> update(@PathVariable String doctorId, @Valid @RequestBody PersonUpdatingDto updatingDto) {
+    public Mono<ResponseEntity<EmptyResponse>> update(@PathVariable String doctorId, @Valid @RequestBody PersonUpdatingDto updatingDto) {
         return updatingService.update(doctorId, updatingDto);
     }
 

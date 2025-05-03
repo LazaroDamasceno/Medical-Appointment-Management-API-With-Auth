@@ -1,5 +1,7 @@
 package com.api.v1.doctors.services;
 
+import com.api.v1.common.EmptyResponse;
+import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.DoctorAuditTrail;
 import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v1.doctors.domain.DoctorRepository;
@@ -12,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
+
 @Service
 @RequiredArgsConstructor
 public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
@@ -22,7 +27,7 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
     private final DoctorFinder doctorFinder;
 
     @Override
-    public Mono<ResponseEntity<Void>> update(String doctorId, @Valid PersonUpdatingDto updatingDto) {
+    public Mono<ResponseEntity<EmptyResponse>> update(String doctorId, @Valid PersonUpdatingDto updatingDto) {
         return doctorFinder
                 .findById(doctorId)
                 .flatMap(foundDoctor -> {
@@ -38,8 +43,18 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
                             });
                 })
                 .flatMap(_ -> {
-                    ResponseEntity<Void> responseEntity = ResponseEntity.noContent().build();
-                    return Mono.just(responseEntity);
+                    return linkTo(methodOn(DoctorController.class)
+                            .findById(doctorId))
+                            .withRel("find by id")
+                            .toMono()
+                            .flatMap(link -> {
+                                EmptyResponse emptyResponse = EmptyResponse.empty();
+                                emptyResponse.add(link);
+                                ResponseEntity<EmptyResponse> responseEntity = ResponseEntity
+                                        .noContent()
+                                        .build();
+                                return Mono.just(responseEntity);
+                            });
                 });
     }
 }
