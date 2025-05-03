@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +25,13 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
         return doctorFinder
                 .findById(id)
                 .map(Doctor::toDto)
-                .map(responseDto -> {
-                    return responseDto.add(
-                            linkTo(methodOn(DoctorController.class).findById(id)).withSelfRel(),
-                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find_all")
-                    );
+                .flatMap(responseDto -> {
+                    return Mono.zip(
+                            linkTo(methodOn(DoctorController.class).findById(id)).withSelfRel().toMono(),
+                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
+                    ).map(tuple ->{
+                        return responseDto.add(tuple.getT1(), tuple.getT2());
+                    });
                 });
     }
 
@@ -38,10 +40,11 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
         return doctorRepository
                 .findAll()
                 .map(Doctor::toDto)
-                .map(responseDto -> {
-                    return responseDto.add(
-                            linkTo(methodOn(DoctorController.class).findAll()).withSelfRel()
-                    );
+                .flatMap(responseDto -> {
+                    return linkTo(methodOn(DoctorController.class).findAll())
+                            .withSelfRel()
+                            .toMono()
+                            .map(responseDto::add);
                 });
     }
 }
