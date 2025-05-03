@@ -6,6 +6,7 @@ import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.doctors.utils.DoctorFinder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -21,7 +22,7 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
     private final DoctorFinder doctorFinder;
 
     @Override
-    public Mono<DoctorResponseDto> findById(String id) {
+    public Mono<ResponseEntity<DoctorResponseDto>> findById(String id) {
         return doctorFinder
                 .findById(id)
                 .map(Doctor::toDto)
@@ -29,14 +30,15 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
                     return Mono.zip(
                             linkTo(methodOn(DoctorController.class).findById(id)).withSelfRel().toMono(),
                             linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
-                    ).map(tuple ->{
+                    ).map(tuple -> {
                         return responseDto.add(tuple.getT1(), tuple.getT2());
-                    });
-                });
+                    }).map(ResponseEntity::ok);
+                })
+                .flatMap(Mono::just);
     }
 
     @Override
-    public Flux<DoctorResponseDto> findAll() {
+    public Flux<ResponseEntity<DoctorResponseDto>> findAll() {
         return doctorRepository
                 .findAll()
                 .map(Doctor::toDto)
@@ -44,7 +46,9 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
                     return linkTo(methodOn(DoctorController.class).findAll())
                             .withSelfRel()
                             .toMono()
-                            .map(responseDto::add);
+                            .map(responseDto::add)
+                            .map(ResponseEntity::ok)
+                            .flatMap(Mono::just);
                 });
     }
 }
