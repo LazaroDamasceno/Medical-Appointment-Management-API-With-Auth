@@ -27,7 +27,7 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
         return validate(registrationDto)
                 .then(personRegistrationService.register(registrationDto)
                 .flatMap(person -> {
-                    Customer customer = Customer.of(registrationDto.address(), person);
+                    Customer customer = Customer.of(person);
                     return customerRepository
                             .save(customer)
                             .flatMap(savedCustomer -> {
