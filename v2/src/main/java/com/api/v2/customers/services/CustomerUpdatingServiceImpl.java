@@ -32,8 +32,12 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
                             .save(auditTrail)
                             .then(personUpdatingService.update(foundCustomer.person(), updatingDto))
                             .flatMap(updatedPerson -> {
-                                Customer customer = Customer.of(updatedPerson);
-                                return customerRepository.save(customer);
+                                return customerRepository
+                                        .delete(foundCustomer)
+                                        .flatMap(_ -> {
+                                            Customer customer = Customer.of(updatedPerson);
+                                            return customerRepository.save(customer);
+                                        });
                             });
                 })
                 .then(Mono.defer(() -> {

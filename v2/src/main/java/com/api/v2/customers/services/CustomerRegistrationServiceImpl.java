@@ -44,11 +44,11 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
         return customerRepository
                 .findBySsn(registrationDto.ssn())
                 .switchIfEmpty(Mono.empty())
-                .flatMap(ignored -> Mono.error(DuplicatedSsnException::new))
+                .flatMap(_ -> Mono.error(DuplicatedSsnException::new))
                 .then(customerRepository
                         .findByEmail(registrationDto.email())
                         .switchIfEmpty(Mono.empty())
-                        .flatMap(ignored -> Mono.error(DuplicatedEmailException::new))
+                        .flatMap(_ -> Mono.error(DuplicatedEmailException::new))
                 );
     }
 }

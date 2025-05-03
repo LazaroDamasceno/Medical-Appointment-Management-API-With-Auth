@@ -25,9 +25,13 @@ public class PersonUpdatingServiceImpl implements PersonUpdatingService {
             PersonAuditTrail auditTrail = PersonAuditTrail.of(oldPerson);
             return personAuditTrailRepository
                     .save(auditTrail)
-                    .flatMap(ignored -> {
-                        Person updatedPerson = Person.of(updatingDto, oldPerson.ssn());
-                        return personRepository.save(updatedPerson);
+                    .flatMap(_ -> {
+                        return personRepository
+                                .delete(oldPerson)
+                                .flatMap(_ -> {
+                                    Person updatedPerson = Person.of(updatingDto, oldPerson.ssn());
+                                    return personRepository.save(updatedPerson);
+                                });
                     });
         });
     }
