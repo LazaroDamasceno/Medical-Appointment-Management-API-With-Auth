@@ -5,5 +5,5 @@ import com.api.v1.people.requests.PersonUpdatingDto;
 import reactor.core.publisher.Mono;
 
 public interface PersonUpdatingService {
-    Mono<Person> update(Person oldPerson, PersonUpdatingDto updatingDto);
+    Mono<Person> update(Person currentPerson, PersonUpdatingDto updatingDto);
 }
