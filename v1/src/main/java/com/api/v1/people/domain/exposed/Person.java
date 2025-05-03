@@ -78,6 +78,7 @@ public final class Person {
         this.gender = updatingDto.gender();
         this.email = updatingDto.email();
         this.address = updatingDto.address();
+        this.updatedAt = LocalDateTime.now();
     }
 
 }
