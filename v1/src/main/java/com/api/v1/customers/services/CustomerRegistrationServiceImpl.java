@@ -1,6 +1,7 @@
 package com.api.v1.customers.services;
 
 import com.api.v1.customers.domain.CustomerRepository;
+import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.people.exceptions.DuplicatedEmailException;
 import com.api.v1.people.exceptions.DuplicatedSsnException;

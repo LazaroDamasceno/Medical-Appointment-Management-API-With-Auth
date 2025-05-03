@@ -1,6 +1,8 @@
 package com.api.v1.customers.domain.exposed;
 
+import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.people.domain.exposed.Person;
+import com.api.v1.people.utils.FullNameFormatter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -33,5 +35,12 @@ public final class Customer {
     public void update(Person person) {
         this.person = person;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public CustomerResponseDto toDto() {
+        return new CustomerResponseDto(
+                id,
+                FullNameFormatter.format(person)
+        );
     }
 }
