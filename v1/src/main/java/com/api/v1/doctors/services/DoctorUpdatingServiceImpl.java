@@ -47,14 +47,12 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
                             .findById(doctorId))
                             .withRel("find by id")
                             .toMono()
-                            .flatMap(link -> {
+                            .map(link -> {
                                 EmptyResponse emptyResponse = EmptyResponse.empty();
-                                emptyResponse.add(link);
-                                ResponseEntity<EmptyResponse> responseEntity = ResponseEntity
-                                        .noContent()
-                                        .build();
-                                return Mono.just(responseEntity);
-                            });
+                                return emptyResponse.add(link);
+                            })
+                            .map(ResponseEntity::ok)
+                            .flatMap(Mono::just);
                 });
     }
 }
