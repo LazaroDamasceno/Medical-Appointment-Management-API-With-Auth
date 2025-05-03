@@ -5,29 +5,44 @@ import com.api.v1.doctors.domain.MedicalLicenseNumber;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.utils.FullNameFormatter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record Doctor(
-        @Id
-        String id,
-        MedicalLicenseNumber medicalLicenseNumber,
-        Person person,
-        LocalDateTime createdAAt,
-        DoctorStatus status,
-        LocalDateTime modifiedAt
-) {
+@Document
+@Getter
+@NoArgsConstructor
+public class Doctor {
+
+    @Id
+    private String id;
+    private MedicalLicenseNumber medicalLicenseNumber;
+    private Person person;
+    private LocalDateTime createdAAt;
+    private DoctorStatus status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime terminatedAt;
+
+    private Doctor(MedicalLicenseNumber medicalLicenseNumber,
+                  Person person
+    ) {
+        this.id = UUID.randomUUID().toString();
+        this.medicalLicenseNumber = medicalLicenseNumber;
+        this.person = person;
+        this.createdAAt = LocalDateTime.now();
+        this.status = DoctorStatus.ACTIVE;
+        this.createdAt = LocalDateTime.now();
+    }
 
     public static Doctor of(MedicalLicenseNumber medicalLicenseNumber, Person person) {
         return new Doctor(
-                UUID.randomUUID().toString(),
                 medicalLicenseNumber,
-                person,
-                LocalDateTime.now(),
-                DoctorStatus.ACTIVE,
-                null
+                person
         );
     }
 
@@ -36,6 +51,19 @@ public record Doctor(
                 FullNameFormatter.format(person),
                 medicalLicenseNumber
         );
+    }
+
+    void markAsRehired() {
+        terminatedAt = null;
+    }
+
+    void markAsTerminated() {
+        terminatedAt = LocalDateTime.now();
+    }
+
+    void update(Person person) {
+        this.person = person;
+        updatedAt = LocalDateTime.now();
     }
 
 }
