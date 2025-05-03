@@ -9,6 +9,7 @@ import com.api.v2.people.requests.PersonUpdatingDto;
 import com.api.v2.people.services.exposed.PersonUpdatingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -22,7 +23,7 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
     private final CustomerFinder customerFinder;
 
     @Override
-    public Mono<Void> update(String customerId, @Valid PersonUpdatingDto updatingDto) {
+    public Mono<ResponseEntity<Void>> update(String customerId, @Valid PersonUpdatingDto updatingDto) {
         return customerFinder
                 .findById(customerId)
                 .flatMap(foundCustomer -> {
@@ -35,6 +36,9 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
                                 return customerRepository.save(customer);
                             });
                 })
-                .then();
+                .then(Mono.defer(() -> {
+                    ResponseEntity<Void> responseEntity = ResponseEntity.noContent().build();
+                    return Mono.just(responseEntity);
+                }));
     }
 }
