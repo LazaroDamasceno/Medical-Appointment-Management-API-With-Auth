@@ -53,15 +53,17 @@ public final class Doctor {
         );
     }
 
-    void markAsRehired() {
+    public void markAsRehired() {
         terminatedAt = null;
+        status = DoctorStatus.ACTIVE;
     }
 
-    void markAsTerminated() {
+    public void markAsTerminated() {
         terminatedAt = LocalDateTime.now();
+        status = DoctorStatus.TERMINATE;
     }
 
-    void update(Person person) {
+    public void update(Person person) {
         this.person = person;
         updatedAt = LocalDateTime.now();
     }

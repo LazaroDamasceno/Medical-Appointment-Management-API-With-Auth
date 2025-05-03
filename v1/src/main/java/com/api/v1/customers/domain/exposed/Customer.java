@@ -1,9 +1,8 @@
 package com.api.v1.customers.domain.exposed;
 
-import com.api.v1.people.dtos.Address;
-import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.people.domain.exposed.Person;
-import com.api.v1.people.utils.FullNameFormatter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,26 +10,28 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-public record Customer(
-        @Id
-        String id,
-        Person person,
-        LocalDateTime createdAt
-) {
+@Getter
+@NoArgsConstructor
+public final class Customer {
 
-        public static Customer of(Person person) {
-                return new Customer(
-                        UUID.randomUUID().toString(),
-                        person,
-                        LocalDateTime.now()
-                );
-        }
+    @Id
+    private String id;
+    private Person person;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-        public CustomerResponseDto toDto() {
-                return new CustomerResponseDto(
-                        id,
-                        FullNameFormatter.format(person)
-                );
-        }
+    private Customer(Person person) {
+        this.id = UUID.randomUUID().toString();
+        this.person = person;
+        this.createdAt = LocalDateTime.now();
+    }
 
+    public static Customer of(Person person) {
+        return new Customer(person);
+    }
+
+    public void update(Person person) {
+        this.person = person;
+        this.updatedAt = LocalDateTime.now();
+    }
 }
