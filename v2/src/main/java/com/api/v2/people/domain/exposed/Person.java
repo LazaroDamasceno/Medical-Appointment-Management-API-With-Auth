@@ -3,6 +3,7 @@ package com.api.v2.people.domain.exposed;
 import com.api.v2.people.dtos.Address;
 import com.api.v2.people.enums.Gender;
 import com.api.v2.people.requests.PersonRegistrationDto;
+import com.api.v2.people.requests.PersonUpdatingDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -38,6 +39,22 @@ public record Person (
                 registrationDto.gender(),
                 registrationDto.email(),
                 registrationDto.address(),
+                LocalDateTime.now()
+        );
+    }
+
+    public static Person of(PersonUpdatingDto updatingDto, String ssn) {
+        return new Person(
+                UUID.randomUUID().toString(),
+                updatingDto.firstName(),
+                updatingDto.middleName(),
+                updatingDto.lastName(),
+                ssn,
+                updatingDto.birthDate(),
+                updatingDto.phoneNumber(),
+                updatingDto.gender(),
+                updatingDto.email(),
+                updatingDto.address(),
                 LocalDateTime.now()
         );
     }
