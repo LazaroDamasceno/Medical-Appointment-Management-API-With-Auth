@@ -2,9 +2,11 @@ package com.api.v1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.modulith.core.ApplicationModules;
 
 @SpringBootApplication
+@EnableHypermediaSupport(type = {})
 public class V1Application {
 
 	public static void main(String[] args) {
