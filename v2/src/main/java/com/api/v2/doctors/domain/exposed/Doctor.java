@@ -2,7 +2,9 @@ package com.api.v2.doctors.domain.exposed;
 
 import com.api.v2.doctors.enums.DoctorStatus;
 import com.api.v2.doctors.domain.MedicalLicenseNumber;
+import com.api.v2.doctors.responses.DoctorResponseDto;
 import com.api.v2.people.domain.exposed.Person;
+import com.api.v2.people.utils.FullNameFormatter;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
@@ -26,6 +28,13 @@ public record Doctor(
                 LocalDateTime.now(),
                 DoctorStatus.ACTIVE,
                 null
+        );
+    }
+
+    public DoctorResponseDto toDto() {
+        return new DoctorResponseDto(
+                FullNameFormatter.format(person),
+                medicalLicenseNumber
         );
     }
 
