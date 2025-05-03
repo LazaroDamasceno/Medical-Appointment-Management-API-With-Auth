@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -40,7 +41,7 @@ public class CustomerUpdatingIntegrationTest {
     @Test
     @Order(1)
     void testSuccessfulUpdating() {
-        String id = "2bef5d08-d5ca-47a8-b467-3da1a18a894f";
+        String id = "";
         webTestClient
                 .patch()
                 .uri("api/v1/customers/%s".formatted(id))
@@ -48,6 +49,19 @@ public class CustomerUpdatingIntegrationTest {
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
+    }
+
+    @Test
+    @Order(2)
+    void testUnsuccessfulUpdating_CustomerNotFound() {
+        String id = UUID.randomUUID().toString();
+        webTestClient
+                .patch()
+                .uri("api/v1/customers/%s".formatted(id))
+                .bodyValue(updatingDto)
+                .exchange()
+                .expectStatus()
+                .is5xxServerError();
     }
 
 }
