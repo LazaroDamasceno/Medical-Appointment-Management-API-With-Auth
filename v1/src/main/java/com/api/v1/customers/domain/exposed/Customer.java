@@ -38,9 +38,6 @@ public final class Customer {
     }
 
     public CustomerResponseDto toDto() {
-        return new CustomerResponseDto(
-                id,
-                FullNameFormatter.format(person)
-        );
+        return CustomerResponseDto.from(this);
     }
 }
