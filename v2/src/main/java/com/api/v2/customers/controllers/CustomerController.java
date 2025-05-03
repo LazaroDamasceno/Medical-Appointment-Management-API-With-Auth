@@ -25,7 +25,7 @@ public class CustomerController {
     }
 
     @PatchMapping("{customerId}")
-    public Mono<Void> update(@PathVariable String customerId, @Valid @RequestBody PersonUpdatingDto updatingDto) {
+    public Mono<ResponseEntity<Void>> update(@PathVariable String customerId, @Valid @RequestBody PersonUpdatingDto updatingDto) {
         return updatingService.update(customerId, updatingDto);
     }
 }

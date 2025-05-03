@@ -43,13 +43,12 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
     private Mono<ResponseEntity<CustomerResponseDto>> validate(PersonRegistrationDto registrationDto) {
         return customerRepository
                 .findBySsn(registrationDto.ssn())
-                .switchIfEmpty(Mono.error(DuplicatedSsnException::new))
-                .flatMap(ignored -> Mono.empty())
+                .switchIfEmpty(Mono.empty())
+                .flatMap(ignored -> Mono.error(DuplicatedSsnException::new))
                 .then(customerRepository
                         .findByEmail(registrationDto.email())
-                        .switchIfEmpty(Mono.error(DuplicatedEmailException::new))
-                        .flatMap(ignored -> Mono.empty())
+                        .switchIfEmpty(Mono.empty())
+                        .flatMap(ignored -> Mono.error(DuplicatedEmailException::new))
                 );
     }
-
 }

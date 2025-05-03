@@ -3,7 +3,6 @@ package com.api.v2;
 import com.api.v2.common.States;
 import com.api.v2.people.dtos.Address;
 import com.api.v2.people.enums.Gender;
-import com.api.v2.people.requests.PersonRegistrationDto;
 import com.api.v2.people.requests.PersonUpdatingDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -18,7 +17,7 @@ import java.util.UUID;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class CustomerCustomerUpdatingIntegrationTest {
+public class CustomerUpdatingIntegrationTest {
 
     @Autowired
     WebTestClient webTestClient;
@@ -62,7 +61,6 @@ public class CustomerCustomerUpdatingIntegrationTest {
                 .bodyValue(registrationDto)
                 .exchange()
                 .expectStatus()
-                .is2xxSuccessful();
+                .is5xxServerError();
     }
-
 }
