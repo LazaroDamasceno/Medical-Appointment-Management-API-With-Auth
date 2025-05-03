@@ -1,9 +1,0 @@
-package com.api.v2.people.services.exposed;
-
-import com.api.v2.people.domain.exposed.Person;
-import com.api.v2.people.requests.PersonRegistrationDto;
-import reactor.core.publisher.Mono;
-
-public interface PersonRegistrationService {
-    Mono<Person> register(PersonRegistrationDto registrationDto);
-}
