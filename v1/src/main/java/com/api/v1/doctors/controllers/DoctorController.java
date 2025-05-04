@@ -46,7 +46,7 @@ public class DoctorController {
 
     @GetMapping
     @Operation(summary = "Find all doctors")
-    public Flux<ResponseEntity<DoctorResponseDto>> findAll() {
+    public ResponseEntity<Flux<DoctorResponseDto>> findAll() {
         return retrievalService.findAll();
     }
 

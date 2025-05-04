@@ -23,7 +23,7 @@ public class DoctorTerminationIntegrationTest {
         String id  = "";
         webTestClient
                 .patch()
-                .uri("api/v1/doctors/%s/termination".formatted(id ))
+                .uri("api/v1/doctors/%s/termination".formatted(id))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -35,7 +35,7 @@ public class DoctorTerminationIntegrationTest {
         String id  = UUID.randomUUID().toString();
         webTestClient
                 .patch()
-                .uri("api/v1/doctors/%s/termination".formatted(id ))
+                .uri("api/v1/doctors/%s/termination".formatted(id))
                 .exchange()
                 .expectStatus()
                 .is5xxServerError();
@@ -47,7 +47,7 @@ public class DoctorTerminationIntegrationTest {
         String id  = "";
         webTestClient
                 .patch()
-                .uri("api/v1/doctors/%s/termination".formatted(id ))
+                .uri("api/v1/doctors/%s/termination".formatted(id))
                 .exchange()
                 .expectStatus()
                 .is5xxServerError();
