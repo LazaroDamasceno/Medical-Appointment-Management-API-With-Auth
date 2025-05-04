@@ -40,13 +40,13 @@ public class DoctorController {
 
     @GetMapping("{id}")
     @Operation(summary = "Find a doctor by id")
-    public Mono<DoctorResponseDto> findById(@PathVariable String id) {
+    public Mono<ResponseEntity<DoctorResponseDto>> findById(@PathVariable String id) {
         return retrievalService.findById(id);
     }
 
     @GetMapping
     @Operation(summary = "Find all doctors")
-    public Flux<DoctorResponseDto> findAll() {
+    public Flux<ResponseEntity<DoctorResponseDto>> findAll() {
         return retrievalService.findAll();
     }
 
