@@ -11,9 +11,10 @@ public enum States {
     SD, TN, TX, UT, VT, VA, WA, WV, WI, WY;
 
     public static States from(String state) {
+        States parsedValue = States.valueOf(state);
         return Arrays
                 .stream(States.values())
-                .filter(e -> e.equals(States.valueOf(state)))
+                .filter(e -> e.equals(parsedValue))
                 .findAny()
                 .orElseThrow(StateNotFoundException::new);
     }
