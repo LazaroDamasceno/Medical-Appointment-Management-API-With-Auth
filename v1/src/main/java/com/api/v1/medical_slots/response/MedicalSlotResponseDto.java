@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MedicalSlotResponseDto extends RepresentationModel<MedicalSlotResponseDto> {
 
-    protected String id;
+    private String id;
     private DoctorResponseDto doctor;
     private LocalDateTime availableAt;
     private MedicalSlotStatus status;
