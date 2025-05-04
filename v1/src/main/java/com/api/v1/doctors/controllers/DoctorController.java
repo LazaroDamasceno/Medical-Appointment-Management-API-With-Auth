@@ -53,12 +53,12 @@ public class DoctorController {
     @PatchMapping("{doctorId}/termination")
     @Operation(summary = "Terminate a doctor")
     public Mono<ResponseEntity<EmptyResponse>> terminate(@PathVariable String doctorId) {
-        return null;
+        return managementService.terminate(doctorId);
     }
 
     @PatchMapping("{doctorId}/rehiring")
     @Operation(summary = "Rehire a doctor")
     public Mono<ResponseEntity<EmptyResponse>> rehire(@PathVariable String doctorId) {
-        return null;
+        return managementService.rehire(doctorId);
     }
 }
