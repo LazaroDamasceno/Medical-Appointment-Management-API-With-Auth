@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono;
 
 public interface DoctorRetrievalService {
     Mono<ResponseEntity<DoctorResponseDto>> findById(String id);
-    Flux<ResponseEntity<DoctorResponseDto>> findAll();
+    ResponseEntity<Flux<DoctorResponseDto>> findAll();
 }

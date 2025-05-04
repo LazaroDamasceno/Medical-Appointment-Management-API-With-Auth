@@ -38,17 +38,10 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
     }
 
     @Override
-    public Flux<ResponseEntity<DoctorResponseDto>> findAll() {
-        return doctorRepository
+    public ResponseEntity<Flux<DoctorResponseDto>>findAll() {
+        Flux<DoctorResponseDto> flux = doctorRepository
                 .findAll()
-                .map(Doctor::toDto)
-                .flatMap(responseDto -> {
-                    return linkTo(methodOn(DoctorController.class).findAll())
-                            .withSelfRel()
-                            .toMono()
-                            .map(responseDto::add)
-                            .map(ResponseEntity::ok)
-                            .flatMap(Mono::just);
-                });
+                .map(Doctor::toDto);
+        return ResponseEntity.ok(flux);
     }
 }
