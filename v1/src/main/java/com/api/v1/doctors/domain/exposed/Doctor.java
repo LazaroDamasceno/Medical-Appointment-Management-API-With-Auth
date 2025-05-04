@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -22,7 +21,6 @@ public final class Doctor {
     private String id;
     private MedicalLicenseNumber medicalLicenseNumber;
     private Person person;
-    private LocalDateTime createdAAt;
     private DoctorStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -34,9 +32,8 @@ public final class Doctor {
         this.id = UUID.randomUUID().toString();
         this.medicalLicenseNumber = medicalLicenseNumber;
         this.person = person;
-        this.createdAAt = LocalDateTime.now();
-        this.status = DoctorStatus.ACTIVE;
         this.createdAt = LocalDateTime.now();
+        this.status = DoctorStatus.ACTIVE;
     }
 
     public static Doctor of(MedicalLicenseNumber medicalLicenseNumber, Person person) {
@@ -57,7 +54,7 @@ public final class Doctor {
 
     public void markAsTerminated() {
         terminatedAt = LocalDateTime.now();
-        status = DoctorStatus.TERMINATE;
+        status = DoctorStatus.TERMINATED;
     }
 
     public void update(Person person) {

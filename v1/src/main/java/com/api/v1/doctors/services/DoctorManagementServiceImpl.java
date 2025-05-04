@@ -31,7 +31,7 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
         return doctorFinder
                 .findById(doctorId)
                 .flatMap(foundDoctor -> {
-                    return validate(foundDoctor)
+                    return onTerminatedDoctor(foundDoctor)
                             .then(Mono.defer(() -> {
                                 DoctorAuditTrail doctorAuditTrail = DoctorAuditTrail.of(foundDoctor);
                                 return doctorAuditTrailRepository
@@ -45,8 +45,8 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
                 .flatMap(_ -> {
                     return Mono.zip(
                             linkTo(methodOn(DoctorController.class).terminate(doctorId)).withSelfRel().toMono(),
-                            linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find all").toMono(),
-                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find by id").toMono()
+                            linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find by id").toMono(),
+                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
                     ).map(tuple -> {
                         return EmptyResponse
                                 .empty()
@@ -64,7 +64,7 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
         return doctorFinder
                 .findById(doctorId)
                 .flatMap(foundDoctor -> {
-                    return validate(foundDoctor)
+                    return onActiveDoctor(foundDoctor)
                             .then(Mono.defer(() -> {
                                 DoctorAuditTrail doctorAuditTrail = DoctorAuditTrail.of(foundDoctor);
                                 return doctorAuditTrailRepository
@@ -78,8 +78,8 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
                 .flatMap(_ -> {
                     return Mono.zip(
                             linkTo(methodOn(DoctorController.class).rehire(doctorId)).withSelfRel().toMono(),
-                            linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find all").toMono(),
-                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find by id").toMono()
+                            linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find by id").toMono(),
+                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
                     ).map(tuple -> {
                         return EmptyResponse
                                 .empty()
@@ -92,11 +92,15 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
                 });
     }
 
-    private Mono<Object> validate(Doctor doctor) {
-        if (doctor.getStatus().equals(DoctorStatus.TERMINATE)) {
+    private Mono<Object> onTerminatedDoctor(Doctor doctor) {
+        if (doctor.getStatus().equals(DoctorStatus.TERMINATED)) {
             return Mono.error(new TerminatedDoctorException(doctor.getId()));
         }
-        else if (doctor.getStatus().equals(DoctorStatus.ACTIVE)) {
+        return Mono.empty();
+    }
+
+    private Mono<Object> onActiveDoctor(Doctor doctor) {
+        if (doctor.getStatus().equals(DoctorStatus.ACTIVE)) {
             return Mono.error(new ActiveDoctorException(doctor.getId()));
         }
         return Mono.empty();
