@@ -1,4 +1,4 @@
-package com.api.v1;
+package com.api.v1.doctors;
 
 import com.api.v1.common.States;
 import com.api.v1.doctors.domain.MedicalLicenseNumber;
