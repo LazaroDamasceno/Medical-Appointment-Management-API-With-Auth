@@ -1,7 +1,7 @@
 package com.api.v1.medical_slots.domain;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
-import com.api.v1.medical_slots.MedicalSlotStatus;
+import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
