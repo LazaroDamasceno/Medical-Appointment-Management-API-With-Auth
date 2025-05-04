@@ -43,19 +43,7 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
                             }));
                 })
                 .flatMap(_ -> {
-                    return Mono.zip(
-                            linkTo(methodOn(DoctorController.class).terminate(doctorId)).withSelfRel().toMono(),
-                            linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find by id").toMono(),
-                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
-                    ).map(tuple -> {
-                        return EmptyResponse
-                                .empty()
-                                .add(
-                                        tuple.getT1(),
-                                        tuple.getT2(),
-                                        tuple.getT3()
-                                );
-                    }).map(ResponseEntity::ok);
+                    return hateoas(doctorId);
                 });
     }
 
@@ -76,19 +64,7 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
                             }));
                 })
                 .flatMap(_ -> {
-                    return Mono.zip(
-                            linkTo(methodOn(DoctorController.class).rehire(doctorId)).withSelfRel().toMono(),
-                            linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find by id").toMono(),
-                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
-                    ).map(tuple -> {
-                        return EmptyResponse
-                                .empty()
-                                .add(
-                                        tuple.getT1(),
-                                        tuple.getT2(),
-                                        tuple.getT3()
-                                );
-                    }).map(ResponseEntity::ok);
+                    return hateoas(doctorId);
                 });
     }
 
@@ -104,5 +80,16 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
             return Mono.error(new ActiveDoctorException(doctor.getId()));
         }
         return Mono.empty();
+    }
+
+    private Mono<ResponseEntity<EmptyResponse>> hateoas(String doctorId) {
+        return Mono.zip(
+                linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find by id").toMono(),
+                linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
+        ).map(tuple -> {
+            return EmptyResponse
+                    .empty()
+                    .add(tuple.getT1(), tuple.getT2());
+        }).map(ResponseEntity::ok);
     }
 }
