@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 
 public interface MedicalSlotRepository extends ReactiveMongoRepository<MedicalSlot, String> {
 
-    @Query("{ 'doctor':?0, 'availableAt':?1 }")
+    @Query("{ 'doctor': ?0, 'availableAt': ?1 }")
     Mono<MedicalSlot> find(Doctor doctor, LocalDateTime availableAt);
 }
