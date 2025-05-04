@@ -2,6 +2,7 @@ package com.api.v1.customers.controllers;
 
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRegistrationService;
+import com.api.v1.customers.services.CustomerRetrievalService;
 import com.api.v1.customers.services.CustomerUpdatingService;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
@@ -10,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -19,6 +21,7 @@ public class CustomerController {
 
     private final CustomerRegistrationService registrationService;
     private final CustomerUpdatingService updatingService;
+    private final CustomerRetrievalService retrievalService;
 
     @PostMapping
     @Operation(summary = "Register a new customer")
@@ -30,5 +33,15 @@ public class CustomerController {
     @Operation(summary = "Update a customer")
     public Mono<ResponseEntity<Void>> update(@PathVariable String customerId, @Valid @RequestBody PersonUpdatingDto updatingDto) {
         return updatingService.update(customerId, updatingDto);
+    }
+
+    @GetMapping("{customerId}")
+    public Mono<ResponseEntity<CustomerResponseDto>> findById(@PathVariable String customerId) {
+        return retrievalService.findById(customerId);
+    }
+
+    @GetMapping
+    public ResponseEntity<Flux<CustomerResponseDto>> findAll() {
+        return retrievalService.findAll();
     }
 }
