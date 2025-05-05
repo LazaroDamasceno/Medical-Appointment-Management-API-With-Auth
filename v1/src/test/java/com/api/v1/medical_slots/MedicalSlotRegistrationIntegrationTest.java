@@ -1,4 +1,4 @@
-package com.api.v1;
+package com.api.v1.medical_slots;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
