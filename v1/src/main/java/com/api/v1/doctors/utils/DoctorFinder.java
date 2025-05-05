@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
-public class DoctorFinder {
+public final class DoctorFinder {
 
     private final DoctorRepository doctorRepository;
 

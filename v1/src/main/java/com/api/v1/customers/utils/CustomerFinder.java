@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
-public class CustomerFinder {
+public final class CustomerFinder {
 
     private final CustomerRepository customerRepository;
 

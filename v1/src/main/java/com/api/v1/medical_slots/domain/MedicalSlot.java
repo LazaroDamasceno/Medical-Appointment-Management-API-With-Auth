@@ -14,7 +14,7 @@ import java.util.UUID;
 @Document
 @Getter
 @NoArgsConstructor
-public class MedicalSlot {
+public final class MedicalSlot {
 
     @Id
     private String id;
