@@ -47,7 +47,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
                 .find(doctor, availableAt)
                 .singleOptional()
                 .flatMap(optional -> {
-                    if (optional.isEmpty()) {
+                    if (optional.isPresent()) {
                         String message = "Provided booking date and time is currently in use in another active medical slot.";
                         return Mono.error(new DuplicatedBookingDateTimeException(message));
                     }

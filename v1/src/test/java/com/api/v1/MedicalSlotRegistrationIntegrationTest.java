@@ -22,7 +22,7 @@ public class MedicalSlotRegistrationIntegrationTest {
     @Test
     void testSuccessfulRegistration() {
         String doctorId = "";
-        LocalDateTime availableAt = null;
+        LocalDateTime availableAt = LocalDateTime.of(2025,12,12,12,30,30);
         webTestClient
                 .post()
                 .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))
@@ -35,7 +35,7 @@ public class MedicalSlotRegistrationIntegrationTest {
     @Test
     void testUnsuccessfulRegistration_DoctorNotFound() {
         String doctorId = UUID.randomUUID().toString();
-        LocalDateTime availableAt = null;
+        LocalDateTime availableAt = LocalDateTime.of(2025,12,12,0,0,0);
         webTestClient
                 .post()
                 .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))
@@ -48,7 +48,7 @@ public class MedicalSlotRegistrationIntegrationTest {
     @Test
     void testUnsuccessfulRegistration_DuplicatedBookingDateTime() {
         String doctorId = "";
-        LocalDateTime availableAt = null;
+        LocalDateTime availableAt = LocalDateTime.of(2025,12,12,12,30,30);
         webTestClient
                 .post()
                 .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))
