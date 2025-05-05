@@ -4,6 +4,7 @@ import com.api.v1.doctors.enums.DoctorStatus;
 import com.api.v1.doctors.domain.MedicalLicenseNumber;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -14,8 +15,8 @@ import java.util.UUID;
 
 @Document
 @Getter
-@NoArgsConstructor
-public final class Doctor {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Doctor {
 
     @Id
     private String id;

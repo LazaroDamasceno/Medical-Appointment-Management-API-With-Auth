@@ -4,6 +4,7 @@ import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -15,8 +16,8 @@ import java.util.UUID;
 
 @Document
 @Getter
-@NoArgsConstructor
-public final class Person {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Person {
 
     @Id
     private String id;

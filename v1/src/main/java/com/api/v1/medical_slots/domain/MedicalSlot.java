@@ -3,6 +3,7 @@ package com.api.v1.medical_slots.domain;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import com.api.v1.medical_slots.response.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -13,8 +14,8 @@ import java.util.UUID;
 
 @Document
 @Getter
-@NoArgsConstructor
-public final class MedicalSlot {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class MedicalSlot {
 
     @Id
     private String id;

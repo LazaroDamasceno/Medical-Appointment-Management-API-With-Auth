@@ -3,6 +3,7 @@ package com.api.v1.customers.domain.exposed;
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.utils.FullNameFormatter;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -13,8 +14,8 @@ import java.util.UUID;
 
 @Document
 @Getter
-@NoArgsConstructor
-public final class Customer {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Customer {
 
     @Id
     private String id;
