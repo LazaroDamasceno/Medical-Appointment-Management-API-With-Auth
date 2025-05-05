@@ -2,6 +2,7 @@ package com.api.v1.medical_slots.domain;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
+import com.api.v1.medical_slots.response.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -44,6 +45,16 @@ public class MedicalSlot {
     public void markAsCompleted() {
         status = MedicalSlotStatus.COMPLETED;
         completedAt = LocalDateTime.now();
+    }
+
+    public MedicalSlotResponseDto toDto() {
+        if (status.equals(MedicalSlotStatus.CANCELED)) {
+            return CanceledMedicalSlotResponseDto.from(this);
+        }
+        else if (status.equals(MedicalSlotStatus.COMPLETED)) {
+            return CompletedMedicalSlotResponseDto.from(this);
+        }
+        return MedicalSlotResponseDto.from(this);
     }
 
 }
