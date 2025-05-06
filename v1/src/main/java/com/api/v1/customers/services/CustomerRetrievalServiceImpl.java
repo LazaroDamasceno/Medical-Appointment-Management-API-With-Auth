@@ -26,9 +26,10 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
     }
 
     @Override
-    public Flux<CustomerResponseDto> findAll() {
-        return customerRepository
+    public ResponseEntity<Flux<CustomerResponseDto>> findAll() {
+        var flux = customerRepository
                 .findAll()
                 .map(Customer::toDto);
+        return ResponseEntity.ok(flux);
     }
 }

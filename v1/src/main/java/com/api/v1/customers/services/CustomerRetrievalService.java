@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono;
 
 public interface CustomerRetrievalService {
     Mono<ResponseEntity<CustomerResponseDto>> findById(String customerId);
-    Flux<CustomerResponseDto> findAll();
+    ResponseEntity<Flux<CustomerResponseDto>> findAll();
 }
