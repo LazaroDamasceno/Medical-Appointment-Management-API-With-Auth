@@ -36,11 +36,13 @@ public class CustomerController {
     }
 
     @GetMapping("{customerId}")
+    @Operation(summary = "Find a customer by id")
     public Mono<ResponseEntity<CustomerResponseDto>> findById(@PathVariable String customerId) {
         return retrievalService.findById(customerId);
     }
 
     @GetMapping
+    @Operation(summary = "Find all customers")
     public ResponseEntity<Flux<CustomerResponseDto>> findAll() {
         return retrievalService.findAll();
     }

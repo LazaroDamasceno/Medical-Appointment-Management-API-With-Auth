@@ -5,6 +5,7 @@ import com.api.v1.medical_slots.response.MedicalSlotResponseDto;
 import com.api.v1.medical_slots.services.MedicalSlotManagementService;
 import com.api.v1.medical_slots.services.MedicalSlotRegistrationService;
 import com.api.v1.medical_slots.services.MedicalSlotRetrievalService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class MedicalSlotController {
     private final MedicalSlotRetrievalService retrievalService;
 
     @PostMapping("{doctorId}/{availableAt}")
+    @Operation(summary = "Register a new medical slot")
     public Mono<ResponseEntity<MedicalSlotResponseDto>> register(@PathVariable String doctorId,
                                                                  @NotNull @PathVariable LocalDateTime availableAt
     ) {
@@ -31,26 +33,31 @@ public class MedicalSlotController {
     }
 
     @PatchMapping("{doctorId}/{medicalSlotId}/cancellation")
+    @Operation(summary = "Cancel a medical slot")
     public Mono<ResponseEntity<EmptyResponse>> cancel(@PathVariable String doctorId, @PathVariable String medicalSlotId) {
         return managementService.cancel(doctorId, medicalSlotId);
     }
 
     @PatchMapping("{doctorId}/{medicalSlotId}/completion")
+    @Operation(summary = "Complete a medical slot")
     public Mono<ResponseEntity<EmptyResponse>> complete(@PathVariable String doctorId, @PathVariable String medicalSlotId) {
         return managementService.complete(doctorId, medicalSlotId);
     }
 
     @GetMapping("{doctorId}/{medicalSlotId}")
+    @Operation(summary = "Find a medical slot by doctor and id")
     public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(@PathVariable String doctorId, @PathVariable String medicalSlotId) {
         return retrievalService.findByDoctorAndId(doctorId, medicalSlotId);
     }
 
     @GetMapping("{doctorId}")
+    @Operation(summary = "Find medical slots by doctor")
     public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(@PathVariable String doctorId) {
         return retrievalService.findAllByDoctor(doctorId);
     }
 
     @GetMapping
+    @Operation(summary = "Find all medical slots")
     public ResponseEntity<Flux<MedicalSlotResponseDto>> findAll() {
         return retrievalService.findAll();
     }
