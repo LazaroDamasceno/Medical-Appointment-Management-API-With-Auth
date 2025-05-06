@@ -3,6 +3,7 @@ package com.api.v1.medical_slots.services;
 import com.api.v1.common.EmptyResponse;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
+import com.api.v1.medical_slots.controllers.MedicalSlotController;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrail;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrailRepository;
@@ -15,6 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
 @RequiredArgsConstructor
@@ -43,11 +47,22 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                                 return medicalSlotRepository.save(medicalSlot);
                             });
                 })
-                .map(_ -> {
-                    return EmptyResponse
-                            .empty();
-                })
-                .map(ResponseEntity::ok);
+                .flatMap(_ -> {
+                    return Mono.zip(
+                            linkTo(methodOn(MedicalSlotController.class)
+                                    .findByDoctorAndId(doctorId, medicalSlotId))
+                                    .withRel("find by id")
+                                    .toMono(),
+                            linkTo(methodOn(MedicalSlotController.class)
+                                    .findAllByDoctor(doctorId))
+                                    .withRel("find all")
+                                    .toMono()
+                    ).map(links -> {
+                        return EmptyResponse
+                                .empty()
+                                .add(links.getT1(), links.getT2());
+                    }).map(ResponseEntity::ok);
+                });
     }
 
     @Override
@@ -68,11 +83,22 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                                 return medicalSlotRepository.save(medicalSlot);
                             });
                 })
-                .map(_ -> {
-                    return EmptyResponse
-                            .empty();
-                })
-                .map(ResponseEntity::ok);
+                .flatMap(_ -> {
+                    return Mono.zip(
+                            linkTo(methodOn(MedicalSlotController.class)
+                                    .findByDoctorAndId(doctorId, medicalSlotId))
+                                    .withRel("find by id")
+                                    .toMono(),
+                            linkTo(methodOn(MedicalSlotController.class)
+                                    .findAllByDoctor(doctorId))
+                                    .withRel("find all")
+                                    .toMono()
+                    ).map(links -> {
+                        return EmptyResponse
+                                .empty()
+                                .add(links.getT1(), links.getT2());
+                    }).map(ResponseEntity::ok);
+                });
     }
 
     private Mono<Object> validate(Doctor doctor, MedicalSlot medicalSlot) {
