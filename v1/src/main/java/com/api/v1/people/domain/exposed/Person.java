@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Document
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Person {
 
     @Id

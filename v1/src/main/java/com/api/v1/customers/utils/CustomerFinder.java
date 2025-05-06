@@ -13,10 +13,10 @@ public final class CustomerFinder {
 
     private final CustomerRepository customerRepository;
 
-    public Mono<Customer> findById(String id) {
+    public Mono<Customer> findById(String customerId) {
         return customerRepository
-                .findById(id)
-                .switchIfEmpty(Mono.error(new CustomerNotFoundException(id)));
+                .findById(customerId)
+                .switchIfEmpty(Mono.error(new CustomerNotFoundException(customerId)));
     }
 
 }
