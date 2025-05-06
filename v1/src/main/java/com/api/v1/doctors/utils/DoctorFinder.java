@@ -13,10 +13,10 @@ public final class DoctorFinder {
 
     private final DoctorRepository doctorRepository;
 
-    public Mono<Doctor> findById(String id) {
+    public Mono<Doctor> findById(String doctorId) {
         return doctorRepository
-                .findById(id)
-                .switchIfEmpty(Mono.error(new DoctorNotFoundException(id)));
+                .findById(doctorId)
+                .switchIfEmpty(Mono.error(new DoctorNotFoundException(doctorId)));
     }
 
 }
