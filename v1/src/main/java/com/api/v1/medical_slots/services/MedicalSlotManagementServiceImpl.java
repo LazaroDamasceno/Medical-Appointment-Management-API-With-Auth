@@ -11,6 +11,7 @@ import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import com.api.v1.medical_slots.exceptions.CanceledMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.CompletedMedicalSlotException;
+import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -109,7 +110,7 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
             return Mono.error(new CompletedMedicalSlotException(medicalSlot.getId()));
         }
         else if (!medicalSlot.getDoctor().getId().equals(doctor.getId())) {
-            return Mono.error(new CompletedMedicalSlotException(medicalSlot.getId()));
+            return Mono.error(new InaccessibleMedicalSlot());
         }
         return Mono.empty();
     }
