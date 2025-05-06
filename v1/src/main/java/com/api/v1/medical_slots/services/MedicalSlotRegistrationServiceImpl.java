@@ -44,7 +44,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
 
     private Mono<Object> validate(Doctor doctor,LocalDateTime availableAt) {
         return medicalSlotRepository
-                .find(doctor, availableAt)
+                .findByDoctorAndAvailableAt(doctor, availableAt)
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isPresent()) {

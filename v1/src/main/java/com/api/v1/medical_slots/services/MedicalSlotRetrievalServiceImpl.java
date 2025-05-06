@@ -29,7 +29,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                     Doctor doctor = tuple.getT1();
                     MedicalSlot medicalSlot = tuple.getT2();
                     return medicalSlotRepository
-                            .find(doctor, medicalSlot.getId())
+                            .findByDoctorAndMedicalSlotId(doctor, medicalSlot.getId())
                             .map(MedicalSlot::toDto)
                             .map(ResponseEntity::ok);
                 });
@@ -41,7 +41,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                 .findById(doctorId)
                 .flatMapMany(foundDoctor -> {
                     return medicalSlotRepository
-                            .find(foundDoctor)
+                            .findByDoctor(foundDoctor)
                             .map(MedicalSlot::toDto);
                 });
        return ResponseEntity.ok(flux);

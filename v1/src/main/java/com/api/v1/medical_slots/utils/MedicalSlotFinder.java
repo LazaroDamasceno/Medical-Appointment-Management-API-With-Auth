@@ -23,7 +23,7 @@ public final class MedicalSlotFinder {
 
     public Mono<MedicalSlot> findActiveById(String medicalSlotId) {
         return medicalSlotRepository
-                .findById(medicalSlotId)
+                .findActiveById(medicalSlotId)
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isEmpty()) {
