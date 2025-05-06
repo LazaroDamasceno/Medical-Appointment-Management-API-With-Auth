@@ -7,6 +7,6 @@ import reactor.core.publisher.Mono;
 
 public interface MedicalSlotRetrievalService {
     Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(String doctorId, String medicalSlotId);
-    Flux<MedicalSlotResponseDto> findAllByDoctor(String doctorId);
-    Flux<MedicalSlotResponseDto> findAll();
+    ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(String doctorId);
+    ResponseEntity<Flux<MedicalSlotResponseDto>> findAll();
 }

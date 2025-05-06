@@ -36,20 +36,22 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Flux<MedicalSlotResponseDto> findAllByDoctor(String doctorId) {
-       return doctorFinder
+    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(String doctorId) {
+       var flux = doctorFinder
                 .findById(doctorId)
                 .flatMapMany(foundDoctor -> {
                     return medicalSlotRepository
                             .find(foundDoctor)
                             .map(MedicalSlot::toDto);
                 });
+       return ResponseEntity.ok(flux);
     }
 
     @Override
-    public Flux<MedicalSlotResponseDto> findAll() {
-        return medicalSlotRepository
+    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAll() {
+        var flux = medicalSlotRepository
                 .findAll()
                 .map(MedicalSlot::toDto);
+        return ResponseEntity.ok(flux);
     }
 }

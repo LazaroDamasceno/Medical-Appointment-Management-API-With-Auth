@@ -41,7 +41,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public Flux<CustomerResponseDto> findAll() {
+    public ResponseEntity<Flux<CustomerResponseDto>> findAll() {
         return retrievalService.findAll();
     }
 }

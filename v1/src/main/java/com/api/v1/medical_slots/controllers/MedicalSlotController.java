@@ -46,12 +46,12 @@ public class MedicalSlotController {
     }
 
     @GetMapping("{doctorId}")
-    public Flux<MedicalSlotResponseDto> findAllByDoctor(@PathVariable String doctorId) {
+    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(@PathVariable String doctorId) {
         return retrievalService.findAllByDoctor(doctorId);
     }
 
     @GetMapping
-    public Flux<MedicalSlotResponseDto> findAll() {
+    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAll() {
         return retrievalService.findAll();
     }
 }
