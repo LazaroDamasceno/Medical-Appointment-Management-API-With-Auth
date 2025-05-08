@@ -15,6 +15,7 @@ import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
 import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
     @Override
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(String customerId,
                                                                         String doctorId,
-                                                                        LocalDateTime bookedAt
+                                                                        @NotNull LocalDateTime bookedAt
     ) {
         return Mono.zip(
                 customerFinder.findById(customerId),

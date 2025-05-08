@@ -3,6 +3,7 @@ package com.api.v1.medical_appointments.controllers;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
 import com.api.v1.medical_appointments.services.MedicalAppointmentRegistrationService;
 import com.api.v1.medical_appointments.services.MedicalAppointmentRetrievalService;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class MedicalAppointmentController {
     @PostMapping("{customerId}/{doctorId}/{bookedAt}")
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(@PathVariable String customerId,
                                                                         @PathVariable String doctorId,
-                                                                        @PathVariable LocalDateTime bookedAt) {
+                                                                        @PathVariable @NotNull LocalDateTime bookedAt) {
         return registrationService.register(customerId, doctorId, bookedAt);
     }
 
