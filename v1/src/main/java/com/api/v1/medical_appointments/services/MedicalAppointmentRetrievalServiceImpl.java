@@ -37,7 +37,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                     MedicalAppointment medicalAppointment = tuple.getT2();
                     return onNonAssociatedCustomerWithAppointment(customer, medicalAppointment)
                             .then(Mono.defer(() -> medicalAppointmentRepository
-                                    .findById(customer, medicalAppointment.getId())
+                                    .findById(customer.getId(), medicalAppointment.getId())
                                     .map(MedicalAppointment::toDto)
                                     .flatMap(response -> Mono.zip(                                            linkTo(methodOn(CustomerController.class)
                                                     .findById(customerId))
@@ -59,7 +59,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
         var flux = customerFinder
                 .findById(customerId)
                 .flatMapMany(foundCustomer -> {
-                    return  medicalAppointmentRepository.findAllByCustomer(foundCustomer)
+                    return  medicalAppointmentRepository.findAllByCustomer(foundCustomer.getId())
                             .map(MedicalAppointment::toDto);
                 });
         return ResponseEntity.ok(flux);
@@ -71,7 +71,7 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                 .findById(doctorId)
                 .flatMapMany(foundDoctor -> {
                     return medicalAppointmentRepository
-                            .findAllByDoctor(foundDoctor)
+                            .findAllByDoctor(foundDoctor.getId())
                             .map(MedicalAppointment::toDto);
                 });
         return ResponseEntity.ok(flux);

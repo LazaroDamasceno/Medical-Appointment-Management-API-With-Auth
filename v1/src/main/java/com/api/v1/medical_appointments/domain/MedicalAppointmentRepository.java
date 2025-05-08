@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 
 public interface MedicalAppointmentRepository extends ReactiveMongoRepository<MedicalAppointment, String> {
 
-    @Query("{ 'customer': ?0, '_id': ?1 }")
-    Mono<MedicalAppointment> findById(Customer customer, String appointmentId);
+    @Query("{ 'customer._id': ?0, '_id': ?1 }")
+    Mono<MedicalAppointment> findById(String customerId, String appointmentId);
 
-    @Query("{ 'customer': ?0, 'bookedAt': ?1 }")
-    Mono<MedicalAppointment> findByCustomerAndBookedAt(Customer customer, LocalDateTime bookedAt);
+    @Query("{ 'customer._id': ?0, 'bookedAt': ?1 }")
+    Mono<MedicalAppointment> findByCustomerAndBookedAt(String customerId, LocalDateTime bookedAt);
 
-    @Query("{ 'customer': ?0 }")
-    Flux<MedicalAppointment> findAllByCustomer(Customer customer);
+    @Query("{ 'customer._id': ?0 }")
+    Flux<MedicalAppointment> findAllByCustomer(String customerId);
 
-    @Query("{ 'doctor': ?0 }")
-    Flux<MedicalAppointment> findAllByDoctor(Doctor doctor);
+    @Query("{ 'doctor._id': ?0 }")
+    Flux<MedicalAppointment> findAllByDoctor(String doctorId);
 }
