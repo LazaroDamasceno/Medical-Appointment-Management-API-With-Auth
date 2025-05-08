@@ -45,7 +45,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
     private Mono<Object> validate(Doctor doctor,LocalDateTime availableAt) {
         String message = "Provided booking date and time is currently in use in another active medical slot.";
         return medicalSlotRepository
-                .findActiveByDoctorAndAvailableAt(doctor, availableAt)
+                .findActiveByDoctorAndAvailableAt(doctor.getId(), availableAt)
                 .switchIfEmpty(Mono.empty())
                 .flatMap(_ -> Mono.error(new DuplicatedBookingDateTimeException(message)));
     }

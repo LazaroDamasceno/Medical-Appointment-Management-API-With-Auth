@@ -1,8 +1,7 @@
 package com.api.v1.medical_slots.utils;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
-import com.api.v1.medical_slots.domain.MedicalSlot;
+ import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import com.api.v1.medical_slots.exceptions.CanceledMedicalSlotException;
@@ -28,7 +27,7 @@ public final class MedicalSlotFinder {
 
     public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt) {
         return medicalSlotRepository
-                .findActiveByDoctorAndAvailableAt(doctor, availableAt)
+                .findActiveByDoctorAndAvailableAt(doctor.getId(), availableAt)
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isEmpty()) {
