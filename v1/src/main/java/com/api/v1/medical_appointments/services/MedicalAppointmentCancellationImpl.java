@@ -13,6 +13,8 @@ import com.api.v1.medical_appointments.exceptions.CanceledMedicalAppointmentExce
 import com.api.v1.medical_appointments.exceptions.CompletedMedicalAppointmentException;
 import com.api.v1.medical_appointments.exceptions.InaccessibleMedicalAppointment;
 import com.api.v1.medical_appointments.utils.MedicalAppointmentFinder;
+import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
+import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,8 @@ public class MedicalAppointmentCancellationImpl implements MedicalAppointmentCan
     private final MedicalAppointmentAuditTrailRepository auditTrailRepository;
     private final CustomerFinder customerFinder;
     private final MedicalAppointmentFinder appointmentFinder;
+    private final MedicalSlotFinder medicalSlotFinder;
+    private final MedicalSlotUpdatingService medicalSlotUpdatingService;
 
     @Override
     public Mono<ResponseEntity<EmptyResponse>> cancel(String customerId, String appointmentId) {
@@ -45,7 +49,16 @@ public class MedicalAppointmentCancellationImpl implements MedicalAppointmentCan
                                 .save(auditTrail)
                                 .flatMap(_ -> {
                                    medicalAppointment.markAsCanceled();
-                                   return appointmentRepository.save(medicalAppointment);
+                                   return appointmentRepository
+                                           .save(medicalAppointment)
+                                           .flatMap(_ -> {
+                                               return medicalSlotFinder
+                                                       .findActiveByMedicalAppointment(appointmentId)
+                                                       .flatMap(foundSlot -> {
+                                                           foundSlot.setMedicalAppointment(null);
+                                                           return medicalSlotUpdatingService.update(foundSlot);
+                                                       });
+                                           });
                                 });
                     }));
         }).then(Mono.defer(() -> {

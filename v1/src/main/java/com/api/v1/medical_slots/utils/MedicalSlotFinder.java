@@ -1,6 +1,7 @@
 package com.api.v1.medical_slots.utils;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
+import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
@@ -24,26 +25,33 @@ public final class MedicalSlotFinder {
                 .switchIfEmpty(Mono.error(new MedicalSlotNotFoundException(slotId)));
     }
 
-    public Mono<MedicalSlot> findActiveById(String slotId) {
-        return medicalSlotRepository
-                .findActiveById(slotId)
-                .singleOptional()
-                .flatMap(optional -> {
-                    if (optional.isEmpty()) {
-                        return Mono.error(new MedicalSlotNotFoundException(slotId));
-                    }
-                    MedicalSlot medicalSlot = optional.get();
-                    if (!medicalSlot.getStatus().equals(MedicalSlotStatus.ACTIVE)) {
-                        return Mono.error(new NotActiveMedicalSlotException(slotId));
-                    }
-                    return Mono.just(medicalSlot);
-                });
-    }
-
     public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt) {
         return medicalSlotRepository
                 .findActiveByDoctorAndAvailableAt(doctor, availableAt)
-                .switchIfEmpty(Mono.error(new MedicalSlotNotFoundException(doctor.getId())));
+                .singleOptional()
+                .flatMap(optional -> {
+                    if (optional.isEmpty()) {
+                        return Mono.error(new MedicalSlotNotFoundException());
+                    }
+                    else if (!optional.get().getStatus().equals(MedicalSlotStatus.ACTIVE)) {
+                        return Mono.error(new NotActiveMedicalSlotException());
+                    }
+                    return Mono.just(optional.get());
+                });
     }
 
+    public Mono<MedicalSlot> findActiveByMedicalAppointment(String appointmentId) {
+        return medicalSlotRepository
+                .findByMedicalAppointment(appointmentId)
+                .singleOptional()
+                .flatMap(optional -> {
+                    if (optional.isEmpty()) {
+                        return Mono.error(new MedicalSlotNotFoundException());
+                    }
+                    else if (!optional.get().getStatus().equals(MedicalSlotStatus.ACTIVE)) {
+                        return Mono.error(new NotActiveMedicalSlotException());
+                    }
+                    return Mono.just(optional.get());
+                });
+    }
 }
