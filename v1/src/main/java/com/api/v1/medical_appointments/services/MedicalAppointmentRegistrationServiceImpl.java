@@ -10,6 +10,7 @@ import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
+import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
     private final CustomerFinder customerFinder;
     private final DoctorFinder doctorFinder;
     private final MedicalSlotFinder medicalSlotFinder;
+    private final MedicalSlotUpdatingService medicalSlotUpdatingService;
 
     @Override
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(String customerId,
@@ -48,11 +50,15 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                     MedicalAppointment medicalAppointment = MedicalAppointment.of(customer, doctor, bookedAt);
                                     return medicalAppointmentRepository
                                             .save(medicalAppointment)
-                                            .map(MedicalAppointment::toDto)
-                                            .map(response -> {
-                                                return ResponseEntity
-                                                        .created(URI.create("/api/v1/medical-appointments"))
-                                                        .body(response);
+                                            .flatMap(appointment -> {
+                                                return medicalSlotUpdatingService
+                                                        .update(foundSlot, appointment)
+                                                        .map(_ -> {
+                                                            MedicalAppointmentResponseDto responseDto = appointment.toDto();
+                                                            return ResponseEntity
+                                                                    .created(URI.create("/api/v1/medical-appointment"))
+                                                                    .body(responseDto);
+                                                        });
                                             });
                                 }));
                     });
