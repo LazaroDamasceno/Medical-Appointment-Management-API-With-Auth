@@ -13,7 +13,7 @@ public interface MedicalSlotRepository extends ReactiveMongoRepository<MedicalSl
     @Query("{ 'doctor': ?0, 'availableAt': ?1, 'status': { $eq: 'ACTIVE' } }")
     Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt);
 
-    @Query("{ '_id': ?0, 'status': { $eq: 'ACTIVE' } }")
+    @Query("{ '_id': ?0, 'status': 'ACTIVE' }")
     Mono<MedicalSlot> findActiveById(String medicalSlotId);
 
     @Query("{ 'doctor': ?0, '_id': ?1 }")
