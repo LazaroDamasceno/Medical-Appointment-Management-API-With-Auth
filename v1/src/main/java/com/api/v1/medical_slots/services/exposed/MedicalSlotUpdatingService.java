@@ -5,6 +5,6 @@ import com.api.v1.medical_slots.domain.MedicalSlot;
 import reactor.core.publisher.Mono;
 
 public interface MedicalSlotUpdatingService {
-    Mono<Void> update(MedicalSlot medicalSlot);
-    Mono<Void> update(MedicalSlot medicalSlot, MedicalAppointment medicalAppointment);
+    Mono<MedicalSlot> update(MedicalSlot medicalSlot);
+    Mono<MedicalSlot> update(MedicalSlot medicalSlot, MedicalAppointment medicalAppointment);
 }

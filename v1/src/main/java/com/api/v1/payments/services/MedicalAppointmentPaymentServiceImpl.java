@@ -5,7 +5,10 @@ import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import com.api.v1.medical_appointments.exceptions.ActiveMedicalAppointmentException;
 import com.api.v1.medical_appointments.exceptions.CanceledMedicalAppointmentException;
 import com.api.v1.medical_appointments.exceptions.PaidMedicalAppointmentException;
+import com.api.v1.medical_appointments.services.exposed.MedicalAppointmentUpdatingService;
 import com.api.v1.medical_appointments.utils.MedicalAppointmentFinder;
+import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
+import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import com.api.v1.payments.domain.Payment;
 import com.api.v1.payments.domain.PaymentRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,9 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
 
     private final PaymentRepository paymentRepository;
     private final MedicalAppointmentFinder appointmentFinder;
+    private final MedicalAppointmentUpdatingService medicalAppointmentUpdatingService;
+    private final MedicalSlotFinder medicalSlotFinder;
+    private final MedicalSlotUpdatingService medicalSlotUpdatingService;
 
     @Override
     public Mono<Payment> pay(String appointmentId) {
@@ -26,8 +32,22 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
                 .flatMap(foundAppointment -> {
                     return validate(foundAppointment)
                             .then(Mono.defer(() -> {
-                                Payment payment = Payment.of(foundAppointment);
-                                return paymentRepository.save(payment);
+                                return medicalSlotFinder
+                                        .findActiveOrCompletedByMedicalAppointment(foundAppointment.getId())
+                                        .flatMap(foundSlot -> {
+                                            foundAppointment.markAsPaid();
+                                            return medicalAppointmentUpdatingService
+                                                    .update(foundAppointment)
+                                                    .flatMap(appointment -> {
+                                                        foundSlot.setMedicalAppointment(appointment);
+                                                        return medicalSlotUpdatingService
+                                                                .update(foundSlot, appointment)
+                                                                .flatMap(_ -> {
+                                                                    Payment payment = Payment.of(appointment);
+                                                                    return paymentRepository.save(payment);
+                                                                });
+                                                    });
+                                        });
                             }));
                 });
     }

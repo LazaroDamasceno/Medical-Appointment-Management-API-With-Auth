@@ -19,20 +19,19 @@ public class MedicalSlotUpdatingServiceImpl implements MedicalSlotUpdatingServic
     private final MedicalSlotAuditTrailRepository auditTrailRepository;
 
     @Override
-    public Mono<Void> update(@NotNull MedicalSlot medicalSlot) {
+    public Mono<MedicalSlot> update(@NotNull MedicalSlot medicalSlot) {
         return Mono.defer(() -> {
             MedicalSlotAuditTrail auditTrail = MedicalSlotAuditTrail.of(medicalSlot);
             return auditTrailRepository
                     .save(auditTrail)
                     .flatMap(_ -> {
                         return medicalSlotRepository.save(medicalSlot);
-                    })
-                    .then();
+                    });
         });
     }
 
     @Override
-    public Mono<Void> update(MedicalSlot medicalSlot, MedicalAppointment medicalAppointment) {
+    public Mono<MedicalSlot> update(MedicalSlot medicalSlot, MedicalAppointment medicalAppointment) {
         return Mono.defer(() -> {
             MedicalSlotAuditTrail auditTrail = MedicalSlotAuditTrail.of(medicalSlot);
             return auditTrailRepository
@@ -40,8 +39,7 @@ public class MedicalSlotUpdatingServiceImpl implements MedicalSlotUpdatingServic
                     .flatMap(_ -> {
                         medicalSlot.setMedicalAppointment(medicalAppointment);
                         return medicalSlotRepository.save(medicalSlot);
-                    })
-                    .then();
+                    });
         });
     }
 }

@@ -4,5 +4,5 @@ import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import reactor.core.publisher.Mono;
 
 public interface MedicalAppointmentUpdatingService {
-    Mono<Void> update(MedicalAppointment medicalAppointment);
+    Mono<MedicalAppointment> update(MedicalAppointment medicalAppointment);
 }

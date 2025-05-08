@@ -19,15 +19,14 @@ public class MedicalAppointmentUpdatingServiceImpl implements MedicalAppointment
 
 
     @Override
-    public Mono<Void> update(@NotNull MedicalAppointment medicalAppointment) {
+    public Mono<MedicalAppointment>  update(@NotNull MedicalAppointment medicalAppointment) {
         return Mono.defer(() -> {
             MedicalAppointmentAuditTrail auditTrail = MedicalAppointmentAuditTrail.of(medicalAppointment);
             return auditTrailRepository
                     .save(auditTrail)
                     .flatMap(_ -> {
                         return appointmentRepository.save(medicalAppointment);
-                    })
-                    .then();
+                    });
         });
     }
 }
