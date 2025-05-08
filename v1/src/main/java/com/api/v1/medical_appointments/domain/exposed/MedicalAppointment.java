@@ -3,6 +3,7 @@ package com.api.v1.medical_appointments.domain.exposed;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
+import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -65,5 +66,9 @@ public class MedicalAppointment {
                 status,
                 bookedAt
         );
+    }
+
+    public MedicalAppointmentResponseDto toDto() {
+        return MedicalAppointmentResponseDto.from(this);
     }
 }
