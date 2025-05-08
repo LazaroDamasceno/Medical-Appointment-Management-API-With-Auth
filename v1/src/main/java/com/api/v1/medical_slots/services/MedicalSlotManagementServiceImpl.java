@@ -3,6 +3,8 @@ package com.api.v1.medical_slots.services;
 import com.api.v1.common.EmptyResponse;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
+import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.services.exposed.MedicalAppointmentUpdatingService;
 import com.api.v1.medical_slots.controllers.MedicalSlotController;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrail;
@@ -29,6 +31,7 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
     private final MedicalSlotAuditTrailRepository auditTrailRepository;
     private final DoctorFinder doctorFinder;
     private final MedicalSlotFinder medicalSlotFinder;
+    private final MedicalAppointmentUpdatingService appointmentUpdatingService;
 
     @Override
     public Mono<ResponseEntity<EmptyResponse>> cancel(String doctorId, String slotId) {
@@ -44,6 +47,14 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                                 return auditTrailRepository.save(auditTrail);
                             }))
                             .flatMap(_ -> {
+                                if (medicalSlot.getMedicalAppointment() != null) {
+                                    MedicalAppointment medicalAppointment = medicalSlot.getMedicalAppointment();
+                                    medicalAppointment.markAsCanceled();
+                                    return appointmentUpdatingService.update(medicalAppointment)
+                                            .flatMap(_ -> {
+                                                return medicalSlotRepository.save(medicalSlot);
+                                            });
+                                }
                                 medicalSlot.markAsCanceled();
                                 return medicalSlotRepository.save(medicalSlot);
                             });
@@ -80,8 +91,17 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                                 return auditTrailRepository.save(auditTrail);
                             }))
                             .flatMap(_ -> {
-                                medicalSlot.markAsCompleted();
-                                return medicalSlotRepository.save(medicalSlot);
+                                if (medicalSlot.getMedicalAppointment() == null) {
+                                    return Mono.error(NullPointerException::new);
+                                }
+                                MedicalAppointment medicalAppointment = medicalSlot.getMedicalAppointment();
+                                medicalAppointment.markAsCompleted();
+                                return appointmentUpdatingService
+                                        .update(medicalAppointment)
+                                        .flatMap(_ -> {
+                                            medicalSlot.markAsCompleted();
+                                            return medicalSlotRepository.save(medicalSlot);
+                                        });
                             });
                 })
                 .flatMap(_ -> {

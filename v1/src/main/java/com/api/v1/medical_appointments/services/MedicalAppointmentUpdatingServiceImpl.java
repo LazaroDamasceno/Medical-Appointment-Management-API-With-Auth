@@ -25,10 +25,9 @@ public class MedicalAppointmentUpdatingServiceImpl implements MedicalAppointment
             return auditTrailRepository
                     .save(auditTrail)
                     .flatMap(_ -> {
-                        return appointmentRepository
-                                .save(medicalAppointment)
-                                .then();
-                    });
+                        return appointmentRepository.save(medicalAppointment);
+                    })
+                    .then();
         });
     }
 }
