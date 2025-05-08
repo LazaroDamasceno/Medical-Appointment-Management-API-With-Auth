@@ -59,35 +59,32 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                             .flatMap(appointment -> {
                                                 return medicalSlotUpdatingService
                                                         .update(foundSlot, appointment)
-                                                        .map(_ -> {
-                                                            return Mono.zip(
-                                                                    linkTo(methodOn(CustomerController.class).findById(customerId))
-                                                                            .withRel("find customer")
-                                                                            .toMono(),
-                                                                    linkTo(methodOn(DoctorController.class).findById(doctorId))
-                                                                            .withRel("find doctor")
-                                                                            .toMono(),
-                                                                    linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
-                                                                            .withRel("find all by customer")
-                                                                            .toMono(),
-                                                                    linkTo(methodOn(MedicalAppointmentController.class).findAllByDoctor(doctorId))
-                                                                            .withRel("find all by doctor")
-                                                                            .toMono()
-                                                            ).map(links -> {
-                                                                return appointment
+                                                        .flatMap(_ -> Mono.zip(
+                                                                        linkTo(methodOn(CustomerController.class).findById(customerId))
+                                                                                .withRel("find customer")
+                                                                                .toMono(),
+                                                                        linkTo(methodOn(DoctorController.class).findById(doctorId))
+                                                                                .withRel("find doctor")
+                                                                                .toMono(),
+                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
+                                                                                .withRel("find all by customer")
+                                                                                .toMono(),
+                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByDoctor(doctorId))
+                                                                                .withRel("find all by doctor")
+                                                                                .toMono()
+                                                                ).map(links -> appointment
                                                                         .toDto()
                                                                         .add(
                                                                                 links.getT1(),
                                                                                 links.getT2(),
-                                                                                links.getT4(),
+                                                                                links.getT3(),
                                                                                 links.getT4()
-                                                                        );
-                                                            }).map(response -> {
-                                                                return ResponseEntity
+                                                                        )
+                                                                ).map(response -> ResponseEntity
                                                                         .created(URI.create("/api/v1/medical-appointment"))
-                                                                        .body(response);
-                                                            });
-                                                        });
+                                                                        .body(response)
+                                                                )
+                                                        );
                                             });
                                 }));
                     });
