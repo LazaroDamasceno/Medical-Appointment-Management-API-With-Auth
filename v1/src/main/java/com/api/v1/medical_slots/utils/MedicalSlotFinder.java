@@ -15,23 +15,23 @@ public final class MedicalSlotFinder {
 
     private final MedicalSlotRepository medicalSlotRepository;
 
-    public Mono<MedicalSlot> findById(String medicalSlotId) {
+    public Mono<MedicalSlot> findById(String slotId) {
         return medicalSlotRepository
-                .findById(medicalSlotId)
-                .switchIfEmpty(Mono.error(new MedicalSlotNotFoundException(medicalSlotId)));
+                .findById(slotId)
+                .switchIfEmpty(Mono.error(new MedicalSlotNotFoundException(slotId)));
     }
 
-    public Mono<MedicalSlot> findActiveById(String medicalSlotId) {
+    public Mono<MedicalSlot> findActiveById(String slotId) {
         return medicalSlotRepository
-                .findActiveById(medicalSlotId)
+                .findActiveById(slotId)
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isEmpty()) {
-                        return Mono.error(new MedicalSlotNotFoundException(medicalSlotId));
+                        return Mono.error(new MedicalSlotNotFoundException(slotId));
                     }
                     MedicalSlot medicalSlot = optional.get();
                     if (!medicalSlot.getStatus().equals(MedicalSlotStatus.ACTIVE)) {
-                        return Mono.error(new NotActiveMedicalSlotException(medicalSlotId));
+                        return Mono.error(new NotActiveMedicalSlotException(slotId));
                     }
                     return Mono.just(medicalSlot);
                 });

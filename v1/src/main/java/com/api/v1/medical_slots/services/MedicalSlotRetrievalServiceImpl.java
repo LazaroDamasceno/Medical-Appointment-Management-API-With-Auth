@@ -21,15 +21,15 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     private final MedicalSlotRepository medicalSlotRepository;
 
     @Override
-    public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(String doctorId, String medicalSlotId) {
+    public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(String doctorId, String slotId) {
         return doctorFinder
                 .findById(doctorId)
-                .zipWith(medicalSlotFinder.findById(medicalSlotId))
+                .zipWith(medicalSlotFinder.findById(slotId))
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     MedicalSlot medicalSlot = tuple.getT2();
                     return medicalSlotRepository
-                            .findByDoctorAndMedicalSlotId(doctor, medicalSlot.getId())
+                            .findByDoctorAndslotId(doctor, medicalSlot.getId())
                             .map(MedicalSlot::toDto)
                             .map(ResponseEntity::ok);
                 });
@@ -41,7 +41,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                 .findById(doctorId)
                 .flatMapMany(foundDoctor -> {
                     return medicalSlotRepository
-                            .findByDoctor(foundDoctor)
+                            .findAllByDoctor(foundDoctor)
                             .map(MedicalSlot::toDto);
                 });
        return ResponseEntity.ok(flux);

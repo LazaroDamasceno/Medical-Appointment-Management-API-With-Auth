@@ -3,6 +3,8 @@ package com.api.v1.medical_appointments.domain.exposed;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
+import com.api.v1.medical_appointments.responses.CanceledMedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.CompletedMedicalAppointmentResponseDto;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -69,6 +71,12 @@ public class MedicalAppointment {
     }
 
     public MedicalAppointmentResponseDto toDto() {
+        if (canceledAt != null && completedAt == null) {
+            return CanceledMedicalAppointmentResponseDto.from(this);
+        }
+        else if (canceledAt == null && completedAt != null) {
+            return CompletedMedicalAppointmentResponseDto.from(this);
+        }
         return MedicalAppointmentResponseDto.from(this);
     }
 }

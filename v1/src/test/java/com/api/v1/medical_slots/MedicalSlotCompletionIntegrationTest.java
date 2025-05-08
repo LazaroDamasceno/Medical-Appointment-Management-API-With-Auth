@@ -21,10 +21,10 @@ public class MedicalSlotCompletionIntegrationTest {
     @Test
     void testSuccessfulCompletion() {
         String doctorId = "";
-        String medicalSlotId = "";
+        String slotId = "";
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, medicalSlotId))
+                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -34,10 +34,10 @@ public class MedicalSlotCompletionIntegrationTest {
     @Test
     void testUnsuccessfulCompletion_DoctorNotFound() {
         String doctorId = UUID.randomUUID().toString();
-        String medicalSlotId = UUID.randomUUID().toString();
+        String slotId = UUID.randomUUID().toString();
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, medicalSlotId))
+                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
                 .is5xxServerError();
@@ -47,10 +47,10 @@ public class MedicalSlotCompletionIntegrationTest {
     @Test
     void testUnsuccessfulCompletion_MedicalSlotNotFound() {
         String doctorId = UUID.randomUUID().toString();
-        String medicalSlotId = UUID.randomUUID().toString();
+        String slotId = UUID.randomUUID().toString();
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, medicalSlotId))
+                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
                 .is5xxServerError();
@@ -60,10 +60,10 @@ public class MedicalSlotCompletionIntegrationTest {
     @Test
     void testUnsuccessfulCompletion_NotAssociatedDoctor() {
         String doctorId = "";
-        String medicalSlotId = "";
+        String slotId = "";
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, medicalSlotId))
+                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
                 .is5xxServerError();
@@ -73,10 +73,10 @@ public class MedicalSlotCompletionIntegrationTest {
     @Test
     void testUnsuccessfulCompletion_CanceledMedicalSlot() {
         String doctorId = "";
-        String medicalSlotId = "";
+        String slotId = "";
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, medicalSlotId))
+                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
                 .is5xxServerError();
@@ -86,10 +86,10 @@ public class MedicalSlotCompletionIntegrationTest {
     @Test
     void testUnsuccessfulCompletion_CompletedMedicalSlot() {
         String doctorId = "";
-        String medicalSlotId = "";
+        String slotId = "";
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, medicalSlotId))
+                .uri("api/v1/medical-slots/%s/%s/completion".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
                 .is5xxServerError();

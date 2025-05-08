@@ -32,22 +32,22 @@ public class MedicalSlotController {
         return registrationService.register(doctorId, availableAt);
     }
 
-    @PatchMapping("{doctorId}/{medicalSlotId}/cancellation")
+    @PatchMapping("{doctorId}/{slotId}/cancellation")
     @Operation(summary = "Cancel a medical slot")
-    public Mono<ResponseEntity<EmptyResponse>> cancel(@PathVariable String doctorId, @PathVariable String medicalSlotId) {
-        return managementService.cancel(doctorId, medicalSlotId);
+    public Mono<ResponseEntity<EmptyResponse>> cancel(@PathVariable String doctorId, @PathVariable String slotId) {
+        return managementService.cancel(doctorId, slotId);
     }
 
-    @PatchMapping("{doctorId}/{medicalSlotId}/completion")
+    @PatchMapping("{doctorId}/{slotId}/completion")
     @Operation(summary = "Complete a medical slot")
-    public Mono<ResponseEntity<EmptyResponse>> complete(@PathVariable String doctorId, @PathVariable String medicalSlotId) {
-        return managementService.complete(doctorId, medicalSlotId);
+    public Mono<ResponseEntity<EmptyResponse>> complete(@PathVariable String doctorId, @PathVariable String slotId) {
+        return managementService.complete(doctorId, slotId);
     }
 
-    @GetMapping("{doctorId}/{medicalSlotId}")
+    @GetMapping("{doctorId}/{slotId}")
     @Operation(summary = "Find a medical slot by doctor and id")
-    public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(@PathVariable String doctorId, @PathVariable String medicalSlotId) {
-        return retrievalService.findByDoctorAndId(doctorId, medicalSlotId);
+    public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(@PathVariable String doctorId, @PathVariable String slotId) {
+        return retrievalService.findByDoctorAndId(doctorId, slotId);
     }
 
     @GetMapping("{doctorId}")

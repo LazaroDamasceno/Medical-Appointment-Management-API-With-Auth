@@ -14,12 +14,12 @@ public interface MedicalSlotRepository extends ReactiveMongoRepository<MedicalSl
     Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt);
 
     @Query("{ '_id': ?0, 'status': 'ACTIVE' }")
-    Mono<MedicalSlot> findActiveById(String medicalSlotId);
+    Mono<MedicalSlot> findActiveById(String slotId);
 
     @Query("{ 'doctor': ?0, '_id': ?1 }")
-    Mono<MedicalSlot> findByDoctorAndMedicalSlotId(Doctor doctor, String medicalSlotId);
+    Mono<MedicalSlot> findByDoctorAndslotId(Doctor doctor, String slotId);
 
     @Query("{ 'doctor': ?0 }")
-    Flux<MedicalSlot> findByDoctor(Doctor doctor);
+    Flux<MedicalSlot> findAllByDoctor(Doctor doctor);
 
 }

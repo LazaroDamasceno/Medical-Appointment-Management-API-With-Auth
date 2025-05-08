@@ -31,10 +31,10 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
     private final MedicalSlotFinder medicalSlotFinder;
 
     @Override
-    public Mono<ResponseEntity<EmptyResponse>> cancel(String doctorId, String medicalSlotId) {
+    public Mono<ResponseEntity<EmptyResponse>> cancel(String doctorId, String slotId) {
         return doctorFinder
                 .findById(doctorId)
-                .zipWith(medicalSlotFinder.findById(medicalSlotId))
+                .zipWith(medicalSlotFinder.findById(slotId))
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     MedicalSlot medicalSlot = tuple.getT2();
@@ -51,7 +51,7 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                 .flatMap(_ -> {
                     return Mono.zip(
                             linkTo(methodOn(MedicalSlotController.class)
-                                    .findByDoctorAndId(doctorId, medicalSlotId))
+                                    .findByDoctorAndId(doctorId, slotId))
                                     .withRel("find by id")
                                     .toMono(),
                             linkTo(methodOn(MedicalSlotController.class)
@@ -67,10 +67,10 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
     }
 
     @Override
-    public Mono<ResponseEntity<EmptyResponse>> complete(String doctorId, String medicalSlotId) {
+    public Mono<ResponseEntity<EmptyResponse>> complete(String doctorId, String slotId) {
         return doctorFinder
                 .findById(doctorId)
-                .zipWith(medicalSlotFinder.findById(medicalSlotId))
+                .zipWith(medicalSlotFinder.findById(slotId))
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
                     MedicalSlot medicalSlot = tuple.getT2();
@@ -87,7 +87,7 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                 .flatMap(_ -> {
                     return Mono.zip(
                             linkTo(methodOn(MedicalSlotController.class)
-                                    .findByDoctorAndId(doctorId, medicalSlotId))
+                                    .findByDoctorAndId(doctorId, slotId))
                                     .withRel("find by id")
                                     .toMono(),
                             linkTo(methodOn(MedicalSlotController.class)
