@@ -1,8 +1,6 @@
 package com.api.v1.medical_appointments.domain;
 
-import com.api.v1.customers.domain.exposed.Customer;
-import com.api.v1.doctors.domain.exposed.Doctor;
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.customers.domain.exposed.Customer;import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;
@@ -15,7 +13,7 @@ public interface MedicalAppointmentRepository extends ReactiveMongoRepository<Me
     @Query("{ 'customer._id': ?0, '_id': ?1 }")
     Mono<MedicalAppointment> findById(String customerId, String appointmentId);
 
-    @Query("{ 'customer._id': ?0, 'bookedAt': ?1 }")
+    @Query("{ 'customer._id': ?0, 'bookedAt': ?1, 'status': { $eq: 'ACTIVE' } }")
     Mono<MedicalAppointment> findByCustomerAndBookedAt(String customerId, LocalDateTime bookedAt);
 
     @Query("{ 'customer._id': ?0 }")
