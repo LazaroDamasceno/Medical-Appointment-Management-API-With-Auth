@@ -1,6 +1,8 @@
 package com.api.v1.medical_appointments.controllers;
 
+import com.api.v1.common.EmptyResponse;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.services.MedicalAppointmentCancellation;
 import com.api.v1.medical_appointments.services.MedicalAppointmentRegistrationService;
 import com.api.v1.medical_appointments.services.MedicalAppointmentRetrievalService;
 import jakarta.validation.constraints.NotNull;
@@ -15,16 +17,22 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/medical-appointments")
-public class MedicalAppointmentController {
+public class MedicalAppointmentController implements MedicalAppointmentCancellation {
 
     private final MedicalAppointmentRegistrationService registrationService;
     private final MedicalAppointmentRetrievalService retrievalService;
+    private final MedicalAppointmentCancellation cancellationService;
 
     @PostMapping("{customerId}/{doctorId}/{bookedAt}")
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(@PathVariable String customerId,
                                                                         @PathVariable String doctorId,
                                                                         @PathVariable @NotNull LocalDateTime bookedAt) {
         return registrationService.register(customerId, doctorId, bookedAt);
+    }
+
+    @PatchMapping("{customerId}/{appointmentId}/cancellation")
+    public Mono<ResponseEntity<EmptyResponse>>  cancel(@PathVariable String customerId, @PathVariable String appointmentId) {
+        return cancellationService.cancel(customerId, appointmentId);
     }
 
     @GetMapping("{customerId}/{appointmentId}")
