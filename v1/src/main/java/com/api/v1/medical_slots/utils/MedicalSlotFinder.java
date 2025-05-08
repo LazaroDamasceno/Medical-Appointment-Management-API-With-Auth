@@ -5,6 +5,7 @@ import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
+import com.api.v1.medical_slots.exceptions.CanceledMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.MedicalSlotNotFoundException;
 import com.api.v1.medical_slots.exceptions.NotActiveMedicalSlotException;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,7 @@ public final class MedicalSlotFinder {
                 });
     }
 
-    public Mono<MedicalSlot> findActiveByMedicalAppointment(String appointmentId) {
+    public Mono<MedicalSlot> findActiveOrCompletedByMedicalAppointment(String appointmentId) {
         return medicalSlotRepository
                 .findByMedicalAppointment(appointmentId)
                 .singleOptional()
@@ -48,8 +49,8 @@ public final class MedicalSlotFinder {
                     if (optional.isEmpty()) {
                         return Mono.error(new MedicalSlotNotFoundException());
                     }
-                    else if (!optional.get().getStatus().equals(MedicalSlotStatus.ACTIVE)) {
-                        return Mono.error(new NotActiveMedicalSlotException());
+                    else if (optional.get().getStatus().equals(MedicalSlotStatus.CANCELED)) {
+                        return Mono.error(new CanceledMedicalSlotException());
                     }
                     return Mono.just(optional.get());
                 });
