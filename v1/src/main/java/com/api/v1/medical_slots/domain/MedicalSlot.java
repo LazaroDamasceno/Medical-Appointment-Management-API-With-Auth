@@ -1,11 +1,13 @@
 package com.api.v1.medical_slots.domain;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
+import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import com.api.v1.medical_slots.response.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,6 +27,8 @@ public class MedicalSlot {
     private MedicalSlotStatus status;
     private LocalDateTime canceledAt;
     private LocalDateTime completedAt;
+    @Setter
+    private MedicalAppointment medicalAppointment;
 
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = UUID.randomUUID().toString();
