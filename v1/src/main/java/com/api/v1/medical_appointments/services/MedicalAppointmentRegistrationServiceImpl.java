@@ -1,10 +1,13 @@
 package com.api.v1.medical_appointments.services;
 
 import com.api.v1.common.DuplicatedBookingDateTimeException;
+import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
+import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
+import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
@@ -19,6 +22,9 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.time.LocalDateTime;
+
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
 @RequiredArgsConstructor
@@ -54,10 +60,33 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                                 return medicalSlotUpdatingService
                                                         .update(foundSlot, appointment)
                                                         .map(_ -> {
-                                                            MedicalAppointmentResponseDto responseDto = appointment.toDto();
-                                                            return ResponseEntity
-                                                                    .created(URI.create("/api/v1/medical-appointment"))
-                                                                    .body(responseDto);
+                                                            return Mono.zip(
+                                                                    linkTo(methodOn(CustomerController.class).findById(customerId))
+                                                                            .withRel("find customer")
+                                                                            .toMono(),
+                                                                    linkTo(methodOn(DoctorController.class).findById(doctorId))
+                                                                            .withRel("find doctor")
+                                                                            .toMono(),
+                                                                    linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
+                                                                            .withRel("find all by customer")
+                                                                            .toMono(),
+                                                                    linkTo(methodOn(MedicalAppointmentController.class).findAllByDoctor(doctorId))
+                                                                            .withRel("find all by doctor")
+                                                                            .toMono()
+                                                            ).map(links -> {
+                                                                return appointment
+                                                                        .toDto()
+                                                                        .add(
+                                                                                links.getT1(),
+                                                                                links.getT2(),
+                                                                                links.getT4(),
+                                                                                links.getT4()
+                                                                        );
+                                                            }).map(response -> {
+                                                                return ResponseEntity
+                                                                        .created(URI.create("/api/v1/medical-appointment"))
+                                                                        .body(response);
+                                                            });
                                                         });
                                             });
                                 }));
