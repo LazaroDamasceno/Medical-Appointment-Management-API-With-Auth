@@ -17,7 +17,7 @@ public interface MedicalSlotRepository extends ReactiveMongoRepository<MedicalSl
     Mono<MedicalSlot> findActiveById(String slotId);
 
     @Query("{ 'doctor': ?0, '_id': ?1 }")
-    Mono<MedicalSlot> findByDoctorAndslotId(Doctor doctor, String slotId);
+    Mono<MedicalSlot> findByDoctorAndSlotId(Doctor doctor, String slotId);
 
     @Query("{ 'doctor': ?0 }")
     Flux<MedicalSlot> findAllByDoctor(Doctor doctor);

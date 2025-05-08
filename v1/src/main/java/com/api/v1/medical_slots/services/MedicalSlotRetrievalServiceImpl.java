@@ -1,16 +1,22 @@
 package com.api.v1.medical_slots.services;
 
+import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
+import com.api.v1.medical_slots.controllers.MedicalSlotController;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.response.MedicalSlotResponseDto;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
 @RequiredArgsConstructor
@@ -29,9 +35,25 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                     Doctor doctor = tuple.getT1();
                     MedicalSlot medicalSlot = tuple.getT2();
                     return medicalSlotRepository
-                            .findByDoctorAndslotId(doctor, medicalSlot.getId())
+                            .findByDoctorAndSlotId(doctor, medicalSlot.getId())
                             .map(MedicalSlot::toDto)
-                            .map(ResponseEntity::ok);
+                            .flatMap(response -> {
+                                return linkTo(methodOn(DoctorController.class)
+                                        .findById(doctorId))
+                                        .withRel("find by doctor")
+                                        .toMono()
+                                        .zipWith(linkTo(methodOn(MedicalSlotController.class)
+                                                .findAllByDoctor(doctorId))
+                                                .withRel("find all by doctor").toMono()
+                                        )
+                                        .map(links -> {
+                                            return response.add(
+                                                    links.getT1(),
+                                                    links.getT2()
+                                            );
+                                        })
+                                        .map(ResponseEntity::ok);
+                            });
                 });
     }
 

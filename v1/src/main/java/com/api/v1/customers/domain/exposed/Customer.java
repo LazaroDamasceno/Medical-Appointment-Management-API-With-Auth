@@ -2,7 +2,6 @@ package com.api.v1.customers.domain.exposed;
 
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.people.domain.exposed.Person;
-import com.api.v1.people.utils.FullNameFormatter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

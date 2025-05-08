@@ -13,5 +13,5 @@ public interface MedicalAppointmentRepository extends ReactiveMongoRepository<Me
     Mono<MedicalAppointment> findById(Customer customer, String appointmentId);
 
     @Query("{ 'customer':?0 }")
-    Flux<MedicalAppointment> findByCustomer(Customer customer);
+    Flux<MedicalAppointment> findAllByCustomer(Customer customer);
 }

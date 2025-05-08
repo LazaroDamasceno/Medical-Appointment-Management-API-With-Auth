@@ -7,12 +7,13 @@ import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class MedicalAppointmentResponseDto {
+public class MedicalAppointmentResponseDto extends RepresentationModel<MedicalAppointmentResponseDto> {
 
     private String id;
     private CustomerResponseDto customer;
