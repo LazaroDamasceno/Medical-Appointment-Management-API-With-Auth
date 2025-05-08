@@ -46,26 +46,23 @@ public class MedicalAppointment {
 
     private MedicalAppointment(Customer customer,
                                Doctor doctor,
-                               MedicalAppointmentStatus status,
                                LocalDateTime bookedAt
     ) {
         this.id = UUID.randomUUID().toString();
         this.customer = customer;
         this.doctor = doctor;
-        this.status = status;
+        this.status = MedicalAppointmentStatus.ACTIVE;
         this.bookedAt = bookedAt;
         this.createdAt = LocalDateTime.now();
     }
 
     public static MedicalAppointment of(Customer customer,
                                         Doctor doctor,
-                                        MedicalAppointmentStatus status,
                                         LocalDateTime bookedAt
     ) {
         return new MedicalAppointment(
                 customer,
                 doctor,
-                status,
                 bookedAt
         );
     }

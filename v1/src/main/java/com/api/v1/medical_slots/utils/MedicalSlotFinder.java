@@ -1,5 +1,6 @@
 package com.api.v1.medical_slots.utils;
 
+import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
@@ -8,6 +9,8 @@ import com.api.v1.medical_slots.exceptions.NotActiveMedicalSlotException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -35,6 +38,12 @@ public final class MedicalSlotFinder {
                     }
                     return Mono.just(medicalSlot);
                 });
+    }
+
+    public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(Doctor doctor, LocalDateTime availableAt) {
+        return medicalSlotRepository
+                .findActiveByDoctorAndAvailableAt(doctor, availableAt)
+                .switchIfEmpty(Mono.error(new MedicalSlotNotFoundException(doctor.getId())));
     }
 
 }

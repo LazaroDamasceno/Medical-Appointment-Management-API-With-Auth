@@ -1,22 +1,30 @@
-package com.api.v1.medical_appointments;
+package com.api.v1.medical_appointments.controllers;
 
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.services.MedicalAppointmentRegistrationService;
 import com.api.v1.medical_appointments.services.MedicalAppointmentRetrievalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/medical-appointments")
 public class MedicalAppointmentController {
 
+    private final MedicalAppointmentRegistrationService registrationService;
     private final MedicalAppointmentRetrievalService retrievalService;
+
+    @PostMapping("{customerId}/{doctorId}/{bookedAt}")
+    public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(@PathVariable String customerId,
+                                                                        @PathVariable String doctorId,
+                                                                        @PathVariable LocalDateTime bookedAt) {
+        return registrationService.register(customerId, doctorId, bookedAt);
+    }
 
     @GetMapping("{customerId}/{appointmentId}")
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> findById(@PathVariable String customerId,
@@ -28,6 +36,11 @@ public class MedicalAppointmentController {
     @GetMapping("{customerId}")
     public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByCustomer(@PathVariable String customerId) {
         return retrievalService.findAllByCustomer(customerId);
+    }
+
+    @GetMapping("{doctorId}")
+    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(@PathVariable String doctorId) {
+        return retrievalService.findAllByDoctor(doctorId);
     }
 
     @GetMapping
