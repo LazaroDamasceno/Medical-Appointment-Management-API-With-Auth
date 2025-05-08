@@ -14,7 +14,7 @@ public interface MedicalAppointmentRepository extends ReactiveMongoRepository<Me
     Mono<MedicalAppointment> findById(String customerId, String appointmentId);
 
     @Query("{ 'customer._id': ?0, 'bookedAt': ?1, 'status': { $eq: 'ACTIVE' } }")
-    Mono<MedicalAppointment> findByCustomerAndBookedAt(String customerId, LocalDateTime bookedAt);
+    Mono<MedicalAppointment> findActiveByCustomerAndBookedAt(String customerId, LocalDateTime bookedAt);
 
     @Query("{ 'customer._id': ?0 }")
     Flux<MedicalAppointment> findAllByCustomer(String customerId);

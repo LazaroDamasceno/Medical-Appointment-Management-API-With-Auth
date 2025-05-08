@@ -97,7 +97,7 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
 
     private Mono<Object> onDuplicatedBookingDateTime(Customer customer, LocalDateTime bookedAt) {
         return medicalAppointmentRepository
-                .findByCustomerAndBookedAt(customer.getId(), bookedAt)
+                .findActiveByCustomerAndBookedAt(customer.getId(), bookedAt)
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isEmpty()) {
