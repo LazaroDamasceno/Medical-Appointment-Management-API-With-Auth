@@ -10,9 +10,12 @@ import com.api.v1.doctors.utils.DoctorFinder;
 import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
 import com.api.v1.medical_slots.domain.MedicalSlot;
+import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
+import com.api.v1.medical_slots.exceptions.NotActiveMedicalSlotException;
 import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import jakarta.validation.constraints.NotNull;
@@ -95,10 +98,16 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
     private Mono<Object> onDuplicatedBookingDateTime(Customer customer, LocalDateTime bookedAt) {
         return medicalAppointmentRepository
                 .findByCustomerAndBookedAt(customer.getId(), bookedAt)
-                .switchIfEmpty(Mono.empty())
-                .flatMap(_ -> {
-                    String message = "Provided booking date and time is currently in use in another active medical appointment.";
-                    return Mono.error(new DuplicatedBookingDateTimeException(message));
+                .singleOptional()
+                .flatMap(optional -> {
+                    if (optional.isEmpty()) {
+                        Mono.error(new NullPointerException());
+                    }
+                    else if (optional.get().getStatus().equals(MedicalAppointmentStatus.ACTIVE)) {
+                        String message = "Provided booking date and time is currently in use in another active medical appointment.";
+                        return Mono.error(new DuplicatedBookingDateTimeException(message));
+                    }
+                    return Mono.empty();
                 });
     }
 

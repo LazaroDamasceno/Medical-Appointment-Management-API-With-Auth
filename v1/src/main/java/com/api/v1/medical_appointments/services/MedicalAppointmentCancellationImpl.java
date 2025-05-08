@@ -53,7 +53,7 @@ public class MedicalAppointmentCancellationImpl implements MedicalAppointmentCan
                                            .save(medicalAppointment)
                                            .flatMap(_ -> {
                                                return medicalSlotFinder
-                                                       .findActiveByMedicalAppointment(appointmentId)
+                                                       .findActiveOrCompletedByMedicalAppointment(appointmentId)
                                                        .flatMap(foundSlot -> {
                                                            foundSlot.setMedicalAppointment(null);
                                                            return medicalSlotUpdatingService.update(foundSlot);
