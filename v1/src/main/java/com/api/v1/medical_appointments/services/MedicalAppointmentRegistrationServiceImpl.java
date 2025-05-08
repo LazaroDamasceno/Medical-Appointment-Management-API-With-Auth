@@ -1,21 +1,19 @@
 package com.api.v1.medical_appointments.services;
 
 import com.api.v1.common.DuplicatedBookingDateTimeException;
-import com.api.v1.customers.controllers.CustomerController;
+import com.api.v1.customers.controllers.CustomerControllerImpl;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
-import com.api.v1.doctors.controllers.DoctorController;
+import com.api.v1.doctors.controllers.DoctorControllerImpl;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
+import com.api.v1.medical_appointments.controllers.MedicalAppointmentControllerImpl;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
 import com.api.v1.medical_slots.domain.MedicalSlot;
-import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
-import com.api.v1.medical_slots.exceptions.NotActiveMedicalSlotException;
 import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import jakarta.validation.constraints.NotNull;
@@ -64,16 +62,16 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                                 return medicalSlotUpdatingService
                                                         .update(foundSlot, appointment)
                                                         .flatMap(_ -> Mono.zip(
-                                                                        linkTo(methodOn(CustomerController.class).findById(customerId))
+                                                                        linkTo(methodOn(CustomerControllerImpl.class).findById(customerId))
                                                                                 .withRel("find customer")
                                                                                 .toMono(),
-                                                                        linkTo(methodOn(DoctorController.class).findById(doctorId))
+                                                                        linkTo(methodOn(DoctorControllerImpl.class).findById(doctorId))
                                                                                 .withRel("find doctor")
                                                                                 .toMono(),
-                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
+                                                                        linkTo(methodOn(MedicalAppointmentControllerImpl.class).findAllByCustomer(customerId))
                                                                                 .withRel("find all by customer")
                                                                                 .toMono(),
-                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByDoctor(doctorId))
+                                                                        linkTo(methodOn(MedicalAppointmentControllerImpl.class).findAllByDoctor(doctorId))
                                                                                 .withRel("find all by doctor")
                                                                                 .toMono()
                                                                 ).map(links -> appointment

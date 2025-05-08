@@ -1,7 +1,7 @@
 package com.api.v1.doctors.services;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.doctors.controllers.DoctorController;
+import com.api.v1.doctors.controllers.DoctorControllerImpl;
 import com.api.v1.doctors.domain.DoctorAuditTrail;
 import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v1.doctors.domain.DoctorRepository;
@@ -84,8 +84,8 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
 
     private Mono<ResponseEntity<EmptyResponse>> hateoas(String doctorId) {
         return Mono.zip(
-                linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find by id").toMono(),
-                linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
+                linkTo(methodOn(DoctorControllerImpl.class).findById(doctorId)).withRel("find by id").toMono(),
+                linkTo(methodOn(DoctorControllerImpl.class).findAll()).withRel("find all").toMono()
         ).map(tuple -> {
             return EmptyResponse
                     .empty()

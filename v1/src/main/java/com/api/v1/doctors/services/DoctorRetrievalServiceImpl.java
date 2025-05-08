@@ -1,6 +1,6 @@
 package com.api.v1.doctors.services;
 
-import com.api.v1.doctors.controllers.DoctorController;
+import com.api.v1.doctors.controllers.DoctorControllerImpl;
 import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.responses.DoctorResponseDto;
@@ -28,8 +28,8 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
                 .map(Doctor::toDto)
                 .flatMap(responseDto -> {
                     return Mono.zip(
-                            linkTo(methodOn(DoctorController.class).findById(id)).withSelfRel().toMono(),
-                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
+                            linkTo(methodOn(DoctorControllerImpl.class).findById(id)).withSelfRel().toMono(),
+                            linkTo(methodOn(DoctorControllerImpl.class).findAll()).withRel("find all").toMono()
                     ).map(tuple -> {
                         return responseDto.add(tuple.getT1(), tuple.getT2());
                     }).map(ResponseEntity::ok);

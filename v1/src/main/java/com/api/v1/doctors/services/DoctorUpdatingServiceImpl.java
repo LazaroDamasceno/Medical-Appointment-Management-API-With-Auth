@@ -1,7 +1,7 @@
 package com.api.v1.doctors.services;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.doctors.controllers.DoctorController;
+import com.api.v1.doctors.controllers.DoctorControllerImpl;
 import com.api.v1.doctors.domain.DoctorAuditTrail;
 import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v1.doctors.domain.DoctorRepository;
@@ -43,7 +43,7 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
                             });
                 })
                 .flatMap(_ -> {
-                    return linkTo(methodOn(DoctorController.class)
+                    return linkTo(methodOn(DoctorControllerImpl.class)
                             .findById(doctorId))
                             .withRel("find by id")
                             .toMono()

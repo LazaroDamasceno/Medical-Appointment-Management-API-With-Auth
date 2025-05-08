@@ -1,15 +1,14 @@
 package com.api.v1.medical_slots.services;
 
-import com.api.v1.doctors.controllers.DoctorController;
+import com.api.v1.doctors.controllers.DoctorControllerImpl;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_slots.controllers.MedicalSlotController;
+import com.api.v1.medical_slots.controllers.MedicalSlotControllerImpl;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.response.MedicalSlotResponseDto;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -38,11 +37,11 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .findByDoctorAndSlotId(doctor.getId(), medicalSlot.getId())
                             .map(MedicalSlot::toDto)
                             .flatMap(response -> {
-                                return linkTo(methodOn(DoctorController.class)
+                                return linkTo(methodOn(DoctorControllerImpl.class)
                                         .findById(doctorId))
                                         .withRel("find by doctor")
                                         .toMono()
-                                        .zipWith(linkTo(methodOn(MedicalSlotController.class)
+                                        .zipWith(linkTo(methodOn(MedicalSlotControllerImpl.class)
                                                 .findAllByDoctor(doctorId))
                                                 .withRel("find all by doctor").toMono()
                                         )

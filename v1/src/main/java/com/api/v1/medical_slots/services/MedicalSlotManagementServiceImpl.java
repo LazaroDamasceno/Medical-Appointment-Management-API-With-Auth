@@ -5,7 +5,7 @@ import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.services.exposed.MedicalAppointmentUpdatingService;
-import com.api.v1.medical_slots.controllers.MedicalSlotController;
+import com.api.v1.medical_slots.controllers.MedicalSlotControllerImpl;
 import com.api.v1.medical_slots.domain.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrail;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrailRepository;
@@ -61,11 +61,11 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                 })
                 .flatMap(_ -> {
                     return Mono.zip(
-                            linkTo(methodOn(MedicalSlotController.class)
+                            linkTo(methodOn(MedicalSlotControllerImpl.class)
                                     .findByDoctorAndId(doctorId, slotId))
                                     .withRel("find by id")
                                     .toMono(),
-                            linkTo(methodOn(MedicalSlotController.class)
+                            linkTo(methodOn(MedicalSlotControllerImpl.class)
                                     .findAllByDoctor(doctorId))
                                     .withRel("find all")
                                     .toMono()
@@ -106,11 +106,11 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                 })
                 .flatMap(_ -> {
                     return Mono.zip(
-                            linkTo(methodOn(MedicalSlotController.class)
+                            linkTo(methodOn(MedicalSlotControllerImpl.class)
                                     .findByDoctorAndId(doctorId, slotId))
                                     .withRel("find by id")
                                     .toMono(),
-                            linkTo(methodOn(MedicalSlotController.class)
+                            linkTo(methodOn(MedicalSlotControllerImpl.class)
                                     .findAllByDoctor(doctorId))
                                     .withRel("find all")
                                     .toMono()

@@ -1,10 +1,10 @@
 package com.api.v1.medical_appointments.services;
 
-import com.api.v1.customers.controllers.CustomerController;
+import com.api.v1.customers.controllers.CustomerControllerImpl;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
+import com.api.v1.medical_appointments.controllers.MedicalAppointmentControllerImpl;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.exceptions.InaccessibleMedicalAppointment;
@@ -39,11 +39,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .then(Mono.defer(() -> medicalAppointmentRepository
                                     .findById(customer.getId(), medicalAppointment.getId())
                                     .map(MedicalAppointment::toDto)
-                                    .flatMap(response -> Mono.zip(                                            linkTo(methodOn(CustomerController.class)
+                                    .flatMap(response -> Mono.zip(                                            linkTo(methodOn(CustomerControllerImpl.class)
                                                     .findById(customerId))
                                                     .withRel("find customer")
                                                     .toMono(),
-                                            linkTo(methodOn(MedicalAppointmentController.class)
+                                            linkTo(methodOn(MedicalAppointmentControllerImpl.class)
                                                     .findAllByCustomer(customerId))
                                                     .withRel("find all by customer")
                                                     .toMono(),

@@ -1,10 +1,10 @@
 package com.api.v1.medical_appointments.services;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.customers.controllers.CustomerController;
+import com.api.v1.customers.controllers.CustomerControllerImpl;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
-import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
+import com.api.v1.medical_appointments.controllers.MedicalAppointmentControllerImpl;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentAuditTrail;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentAuditTrailRepository;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
@@ -25,7 +25,7 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.met
 
 @Service
 @RequiredArgsConstructor
-public class MedicalAppointmentCancellationImpl implements MedicalAppointmentCancellation {
+public class MedicalAppointmentCancellationServiceImpl implements MedicalAppointmentCancellationService {
 
     private final MedicalAppointmentRepository appointmentRepository;
     private final MedicalAppointmentAuditTrailRepository auditTrailRepository;
@@ -63,10 +63,10 @@ public class MedicalAppointmentCancellationImpl implements MedicalAppointmentCan
                     }));
         }).then(Mono.defer(() -> {
             return Mono.zip(
-                    linkTo(methodOn(CustomerController.class).findById(customerId))
+                    linkTo(methodOn(CustomerControllerImpl.class).findById(customerId))
                             .withRel("find customer")
                             .toMono(),
-                    linkTo(methodOn(MedicalAppointmentController.class).findById(customerId, appointmentId))
+                    linkTo(methodOn(MedicalAppointmentControllerImpl.class).findById(customerId, appointmentId))
                             .withRel("find medical appointment")
                             .toMono()
             ).map(tuple -> {

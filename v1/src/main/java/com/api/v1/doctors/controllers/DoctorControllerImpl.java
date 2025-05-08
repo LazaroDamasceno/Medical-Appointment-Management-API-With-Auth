@@ -1,6 +1,7 @@
 package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.EmptyResponse;
+import com.api.v1.doctors.controllers.exposed.DoctorController;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorManagementService;
@@ -10,7 +11,6 @@ import com.api.v1.doctors.services.DoctorUpdatingService;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -18,13 +18,9 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("api/v1/doctors")
-@RequiredArgsConstructor
-public class DoctorController {
+public class DoctorControllerImpl extends DoctorController {
 
-    private final DoctorRegistrationService registrationService;
-    private final DoctorUpdatingService updatingService;
-    private final DoctorRetrievalService retrievalService;
-    private final DoctorManagementService managementService;
+
 
     @PostMapping
     @Operation(summary = "Register a new doctor")

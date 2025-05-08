@@ -1,5 +1,6 @@
 package com.api.v1.customers.controllers;
 
+import com.api.v1.customers.controllers.exposed.CustomerController;
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
@@ -16,12 +17,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("api/v1/customers")
-@RequiredArgsConstructor
-public class CustomerController {
-
-    private final CustomerRegistrationService registrationService;
-    private final CustomerUpdatingService updatingService;
-    private final CustomerRetrievalService retrievalService;
+public class CustomerControllerImpl extends CustomerController {
 
     @PostMapping
     @Operation(summary = "Register a new customer")
