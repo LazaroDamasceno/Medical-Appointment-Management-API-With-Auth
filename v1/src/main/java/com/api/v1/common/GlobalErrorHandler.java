@@ -40,7 +40,7 @@ public class GlobalErrorHandler {
 
     @ExceptionHandler(MedicalSlotNotFoundException.class)
     public ResponseEntity<String> handleException(MedicalSlotNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(NotActiveMedicalSlotException.class)
@@ -70,7 +70,7 @@ public class GlobalErrorHandler {
 
     @ExceptionHandler(MedicalAppointmentNotFoundException.class)
     public ResponseEntity<String> handleException(MedicalAppointmentNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(PaidMedicalAppointmentException.class)
@@ -80,7 +80,7 @@ public class GlobalErrorHandler {
 
     @ExceptionHandler(DoctorNotFoundException .class)
     public ResponseEntity<String> handleException(DoctorNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
     @ExceptionHandler(ActiveDoctorException.class)
@@ -100,6 +100,18 @@ public class GlobalErrorHandler {
 
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<String> handleException(CustomerNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DuplicatedBookingDateTimeException.class)
+    public ResponseEntity<String> handleException(DuplicatedBookingDateTimeException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(StateNotFoundException.class)
+    public ResponseEntity<String> handleException(StateNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+
 }
