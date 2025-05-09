@@ -37,7 +37,7 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     void testUnsuccessfulRegistration_CustomerNotFound() {
         String customerId = UUID.randomUUID().toString();
         String doctorId = UUID.randomUUID().toString();
-        LocalDateTime bookedAt = LocalDateTime.of(2025,12,12,12,30,30);
+        LocalDateTime bookedAt = LocalDateTime.now();
         webTestClient
                 .post()
                 .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
@@ -49,9 +49,9 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     @Order(3)
     @Test
     void testUnsuccessfulRegistration_DoctorNotFound() {
-        String customerId = UUID.randomUUID().toString();
+        String customerId = "";
         String doctorId = UUID.randomUUID().toString();
-        LocalDateTime bookedAt = LocalDateTime.of(2025,12,12,12,30,30);
+        LocalDateTime bookedAt = LocalDateTime.now();
         webTestClient
                 .post()
                 .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
@@ -79,7 +79,21 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     void testUnsuccessfulRegistration_NonAssociatedDoctor() {
         String customerId = "";
         String doctorId = "";
-        LocalDateTime bookedAt = LocalDateTime.of(2025,12,12,12,30,30);
+        LocalDateTime bookedAt = LocalDateTime.now();
+        webTestClient
+                .post()
+                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
+                .exchange()
+                .expectStatus()
+                .is4xxClientError();
+    }
+
+    @Order(6)
+    @Test
+    void testUnsuccessfulRegistration_NonExistentBookingDateTime() {
+        String customerId = "";
+        String doctorId = "";
+        LocalDateTime bookedAt = LocalDateTime.now();
         webTestClient
                 .post()
                 .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))

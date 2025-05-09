@@ -35,7 +35,7 @@ public class MedicalSlotRegistrationIntegrationTest {
     @Test
     void testUnsuccessfulRegistration_DoctorNotFound() {
         String doctorId = UUID.randomUUID().toString();
-        LocalDateTime availableAt = LocalDateTime.of(2025,12,12,0,0,0);
+        LocalDateTime availableAt = LocalDateTime.now();
         webTestClient
                 .post()
                 .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))

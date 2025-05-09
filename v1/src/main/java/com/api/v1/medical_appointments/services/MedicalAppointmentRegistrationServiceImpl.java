@@ -1,6 +1,7 @@
 package com.api.v1.medical_appointments.services;
 
 import com.api.v1.common.DuplicatedBookingDateTimeException;
+import com.api.v1.common.NonExistentBookingDateTimeException;
 import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
@@ -61,7 +62,7 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
             Customer customer = tuple.getT1();
             Doctor doctor = tuple.getT2();
             return medicalSlotFinder
-                    .findActiveByDoctorAndAvailableAt(doctor, bookedAt)
+                    .findActiveByDoctorAndAvailableAt(doctor.getId(), bookedAt)
                     .flatMap(foundSlot -> {
                         return validate(customer, doctor, bookedAt, foundSlot)
                                 .then(Mono.defer(() -> {
@@ -123,6 +124,11 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                         return Mono.error(new InaccessibleMedicalSlot());
                     }
                     return Mono.empty();
-                });
+                })
+                .then(medicalSlotFinder
+                        .findActiveByDoctorAndAvailableAt(doctor.getId(), bookedAt)
+                        .switchIfEmpty(Mono.error(new NonExistentBookingDateTimeException()))
+                        .flatMap(_ -> Mono.empty())
+                );
     }
 }
