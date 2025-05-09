@@ -1,6 +1,6 @@
 package com.api.v1.doctors.services;
 
-import com.api.v1.doctors.domain.MedicalLicenseNumber;
+import com.api.v1.doctors.dtos.MedicalLicenseNumber;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.exceptions.DuplicatedMedicalLicenseNumberException;

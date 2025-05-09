@@ -6,7 +6,7 @@ import com.api.v1.doctors.domain.DoctorAuditTrail;
 import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
-import com.api.v1.doctors.enums.DoctorStatus;
+import com.api.v1.common.ProfessionalStatus;
 import com.api.v1.doctors.exceptions.ActiveDoctorException;
 import com.api.v1.doctors.exceptions.TerminatedDoctorException;
 import com.api.v1.doctors.utils.DoctorFinder;
@@ -76,14 +76,14 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
     }
 
     private Mono<Object> onTerminatedDoctor(Doctor doctor) {
-        if (doctor.getStatus().equals(DoctorStatus.TERMINATED)) {
+        if (doctor.getStatus().equals(ProfessionalStatus.TERMINATED)) {
             return Mono.error(new TerminatedDoctorException(doctor.getId()));
         }
         return Mono.empty();
     }
 
     private Mono<Object> onActiveDoctor(Doctor doctor) {
-        if (doctor.getStatus().equals(DoctorStatus.ACTIVE)) {
+        if (doctor.getStatus().equals(ProfessionalStatus.ACTIVE)) {
             return Mono.error(new ActiveDoctorException(doctor.getId()));
         }
         return Mono.empty();

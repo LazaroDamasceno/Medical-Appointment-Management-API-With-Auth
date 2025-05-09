@@ -78,4 +78,8 @@ public class EmergyMedicalAppointment {
     public BigDecimal getPrice() {
         return price;
     }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

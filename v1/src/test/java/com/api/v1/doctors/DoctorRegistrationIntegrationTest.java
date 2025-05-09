@@ -1,7 +1,7 @@
 package com.api.v1.doctors;
 
 import com.api.v1.common.States;
-import com.api.v1.doctors.domain.MedicalLicenseNumber;
+import com.api.v1.doctors.dtos.MedicalLicenseNumber;
 import com.api.v1.doctors.enums.MedicalSpeciality;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.people.dtos.Address;

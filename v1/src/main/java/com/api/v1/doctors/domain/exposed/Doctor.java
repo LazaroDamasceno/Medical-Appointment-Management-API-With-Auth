@@ -1,7 +1,7 @@
 package com.api.v1.doctors.domain.exposed;
 
-import com.api.v1.doctors.enums.DoctorStatus;
-import com.api.v1.doctors.domain.MedicalLicenseNumber;
+import com.api.v1.common.ProfessionalStatus;
+import com.api.v1.doctors.dtos.MedicalLicenseNumber;
 import com.api.v1.doctors.enums.MedicalSpeciality;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
@@ -16,10 +16,10 @@ public class Doctor {
 
     @Id
     private String id;
-    private MedicalLicenseNumber medicalLicenseNumber;
+    private MedicalLicenseNumber licenseNumber;
     private Person person;
     private MedicalSpeciality medicalSpeciality;
-    private DoctorStatus status;
+    private ProfessionalStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime terminatedAt;
@@ -27,21 +27,21 @@ public class Doctor {
     private Doctor() {
     }
 
-    private Doctor(MedicalLicenseNumber medicalLicenseNumber,
+    private Doctor(MedicalLicenseNumber licenseNumber,
                    Person person,
                    MedicalSpeciality medicalSpeciality
     ) {
         this.id = UUID.randomUUID().toString();
-        this.medicalLicenseNumber = medicalLicenseNumber;
+        this.licenseNumber = licenseNumber;
         this.person = person;
         this.medicalSpeciality = medicalSpeciality;
         this.createdAt = LocalDateTime.now();
-        this.status = DoctorStatus.ACTIVE;
+        this.status = ProfessionalStatus.ACTIVE;
     }
 
-    public static Doctor of(MedicalLicenseNumber medicalLicenseNumber, Person person, MedicalSpeciality medicalSpeciality) {
+    public static Doctor of(MedicalLicenseNumber licenseNumber, Person person, MedicalSpeciality medicalSpeciality) {
         return new Doctor(
-                medicalLicenseNumber,
+                licenseNumber,
                 person,
                 medicalSpeciality
         );
@@ -53,12 +53,12 @@ public class Doctor {
 
     public void markAsRehired() {
         terminatedAt = null;
-        status = DoctorStatus.ACTIVE;
+        status = ProfessionalStatus.ACTIVE;
     }
 
     public void markAsTerminated() {
         terminatedAt = LocalDateTime.now();
-        status = DoctorStatus.TERMINATED;
+        status = ProfessionalStatus.TERMINATED;
     }
 
     public void update(Person person) {
@@ -70,8 +70,8 @@ public class Doctor {
         return id;
     }
 
-    public MedicalLicenseNumber getMedicalLicenseNumber() {
-        return medicalLicenseNumber;
+    public MedicalLicenseNumber getLicenseNumber() {
+        return licenseNumber;
     }
 
     public Person getPerson() {
@@ -82,7 +82,7 @@ public class Doctor {
         return medicalSpeciality;
     }
 
-    public DoctorStatus getStatus() {
+    public ProfessionalStatus getStatus() {
         return status;
     }
 

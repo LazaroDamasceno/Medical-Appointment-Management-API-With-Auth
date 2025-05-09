@@ -1,6 +1,7 @@
 package com.api.v1.doctors.domain;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
+import com.api.v1.doctors.dtos.MedicalLicenseNumber;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
