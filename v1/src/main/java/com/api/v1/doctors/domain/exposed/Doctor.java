@@ -2,6 +2,7 @@ package com.api.v1.doctors.domain.exposed;
 
 import com.api.v1.doctors.enums.DoctorStatus;
 import com.api.v1.doctors.domain.MedicalLicenseNumber;
+import com.api.v1.doctors.enums.MedicalSpeciality;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;
@@ -17,6 +18,7 @@ public class Doctor {
     private String id;
     private MedicalLicenseNumber medicalLicenseNumber;
     private Person person;
+    private MedicalSpeciality medicalSpeciality;
     private DoctorStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -26,19 +28,22 @@ public class Doctor {
     }
 
     private Doctor(MedicalLicenseNumber medicalLicenseNumber,
-                   Person person
+                   Person person,
+                   MedicalSpeciality medicalSpeciality
     ) {
         this.id = UUID.randomUUID().toString();
         this.medicalLicenseNumber = medicalLicenseNumber;
         this.person = person;
+        this.medicalSpeciality = medicalSpeciality;
         this.createdAt = LocalDateTime.now();
         this.status = DoctorStatus.ACTIVE;
     }
 
-    public static Doctor of(MedicalLicenseNumber medicalLicenseNumber, Person person) {
+    public static Doctor of(MedicalLicenseNumber medicalLicenseNumber, Person person, MedicalSpeciality medicalSpeciality) {
         return new Doctor(
                 medicalLicenseNumber,
-                person
+                person,
+                medicalSpeciality
         );
     }
 
@@ -71,6 +76,10 @@ public class Doctor {
 
     public Person getPerson() {
         return person;
+    }
+
+    public MedicalSpeciality getMedicalSpeciality() {
+        return medicalSpeciality;
     }
 
     public DoctorStatus getStatus() {
