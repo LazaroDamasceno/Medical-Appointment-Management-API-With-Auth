@@ -1,19 +1,17 @@
 package com.api.v1.medical_slots.response;
 
 import com.api.v1.doctors.responses.DoctorResponseDto;
-import com.api.v1.medical_slots.domain.MedicalSlot;
+import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
 
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CanceledMedicalSlotResponseDto extends MedicalSlotResponseDto {
 
     private LocalDateTime canceledAt;
+
+    CanceledMedicalSlotResponseDto() {}
 
     private CanceledMedicalSlotResponseDto(String id,
                                           DoctorResponseDto doctor,
@@ -33,5 +31,9 @@ public class CanceledMedicalSlotResponseDto extends MedicalSlotResponseDto {
                 medicalSlot.getStatus(),
                 medicalSlot.getCanceledAt()
         );
+    }
+
+    public LocalDateTime getCanceledAt() {
+        return canceledAt;
     }
 }

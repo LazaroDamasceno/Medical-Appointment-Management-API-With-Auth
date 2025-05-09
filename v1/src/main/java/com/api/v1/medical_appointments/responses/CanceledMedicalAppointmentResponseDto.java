@@ -4,17 +4,14 @@ import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
 public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentResponseDto {
 
     private LocalDateTime canceledAt;
+
+    CanceledMedicalAppointmentResponseDto() {}
 
     public CanceledMedicalAppointmentResponseDto(String id,
                                                  CustomerResponseDto customer,
@@ -36,5 +33,9 @@ public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentRes
                 medicalAppointment.getBookedAt(),
                 medicalAppointment.getCanceledAt()
         );
+    }
+
+    public LocalDateTime getCanceledAt() {
+        return canceledAt;
     }
 }

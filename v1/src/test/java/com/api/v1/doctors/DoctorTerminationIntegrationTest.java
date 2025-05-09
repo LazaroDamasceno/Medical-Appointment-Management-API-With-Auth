@@ -38,7 +38,7 @@ public class DoctorTerminationIntegrationTest {
                 .uri("api/v1/doctors/%s/termination".formatted(id))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
     @Test
@@ -50,7 +50,7 @@ public class DoctorTerminationIntegrationTest {
                 .uri("api/v1/doctors/%s/termination".formatted(id))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
 }

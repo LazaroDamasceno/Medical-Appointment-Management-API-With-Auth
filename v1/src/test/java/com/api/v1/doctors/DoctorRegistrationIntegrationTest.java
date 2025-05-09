@@ -90,7 +90,7 @@ class DoctorRegistrationIntegrationTest {
 				.bodyValue(registrationDtoWithDuplicatedSSn)
 				.exchange()
 				.expectStatus()
-				.is5xxServerError();
+				.is4xxClientError();
 	}
 
 	DoctorRegistrationDto registrationDtoWithDuplicatedEmail = new DoctorRegistrationDto(
@@ -125,7 +125,7 @@ class DoctorRegistrationIntegrationTest {
 				.bodyValue(registrationDtoWithDuplicatedEmail)
 				.exchange()
 				.expectStatus()
-				.is5xxServerError();
+				.is4xxClientError();
 	}
 
 	DoctorRegistrationDto registrationDtoWithDuplicatedMedicalLicenseNumber = new DoctorRegistrationDto(
@@ -160,6 +160,6 @@ class DoctorRegistrationIntegrationTest {
 				.bodyValue(registrationDtoWithDuplicatedMedicalLicenseNumber)
 				.exchange()
 				.expectStatus()
-				.is5xxServerError();
+				.is4xxClientError();
 	}
 }

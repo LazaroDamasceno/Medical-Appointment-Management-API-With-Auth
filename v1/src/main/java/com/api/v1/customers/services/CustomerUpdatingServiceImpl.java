@@ -7,19 +7,28 @@ import com.api.v1.customers.utils.CustomerFinder;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import com.api.v1.people.services.exposed.PersonUpdatingService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
 
     private final PersonUpdatingService personUpdatingService;
     private final CustomerRepository customerRepository;
     private final CustomerAuditTrailRepository auditTrailRepository;
     private final CustomerFinder customerFinder;
+
+    public CustomerUpdatingServiceImpl(PersonUpdatingService personUpdatingService,
+                                       CustomerRepository customerRepository,
+                                       CustomerAuditTrailRepository auditTrailRepository,
+                                       CustomerFinder customerFinder
+    ) {
+        this.personUpdatingService = personUpdatingService;
+        this.customerRepository = customerRepository;
+        this.auditTrailRepository = auditTrailRepository;
+        this.customerFinder = customerFinder;
+    }
 
     @Override
     public Mono<ResponseEntity<Void>> update(String customerId, @Valid PersonUpdatingDto updatingDto) {

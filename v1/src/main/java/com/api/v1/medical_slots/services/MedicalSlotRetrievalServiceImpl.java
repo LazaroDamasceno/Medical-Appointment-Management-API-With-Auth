@@ -1,14 +1,13 @@
 package com.api.v1.medical_slots.services;
 
-import com.api.v1.doctors.controllers.DoctorControllerImpl;
+import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_slots.controllers.MedicalSlotControllerImpl;
-import com.api.v1.medical_slots.domain.MedicalSlot;
+import com.api.v1.medical_slots.controllers.MedicalSlotController;
+import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.response.MedicalSlotResponseDto;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -18,12 +17,20 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.lin
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
-@RequiredArgsConstructor
 public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalService {
 
     private final DoctorFinder doctorFinder;
     private final MedicalSlotFinder medicalSlotFinder;
     private final MedicalSlotRepository medicalSlotRepository;
+
+    public MedicalSlotRetrievalServiceImpl(DoctorFinder doctorFinder,
+                                           MedicalSlotFinder medicalSlotFinder,
+                                           MedicalSlotRepository medicalSlotRepository
+    ) {
+        this.doctorFinder = doctorFinder;
+        this.medicalSlotFinder = medicalSlotFinder;
+        this.medicalSlotRepository = medicalSlotRepository;
+    }
 
     @Override
     public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(String doctorId, String slotId) {
@@ -37,11 +44,11 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .findByDoctorAndSlotId(doctor.getId(), medicalSlot.getId())
                             .map(MedicalSlot::toDto)
                             .flatMap(response -> {
-                                return linkTo(methodOn(DoctorControllerImpl.class)
+                                return linkTo(methodOn(DoctorController.class)
                                         .findById(doctorId))
                                         .withRel("find by doctor")
                                         .toMono()
-                                        .zipWith(linkTo(methodOn(MedicalSlotControllerImpl.class)
+                                        .zipWith(linkTo(methodOn(MedicalSlotController.class)
                                                 .findAllByDoctor(doctorId))
                                                 .withRel("find all by doctor").toMono()
                                         )

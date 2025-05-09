@@ -41,7 +41,7 @@ public class MedicalSlotRegistrationIntegrationTest {
                 .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
     @Order(3)
@@ -54,6 +54,6 @@ public class MedicalSlotRegistrationIntegrationTest {
                 .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 }

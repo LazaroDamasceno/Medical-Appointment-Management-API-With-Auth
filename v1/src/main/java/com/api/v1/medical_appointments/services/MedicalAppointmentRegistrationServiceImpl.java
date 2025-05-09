@@ -1,23 +1,22 @@
 package com.api.v1.medical_appointments.services;
 
 import com.api.v1.common.DuplicatedBookingDateTimeException;
-import com.api.v1.customers.controllers.CustomerControllerImpl;
+import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
-import com.api.v1.doctors.controllers.DoctorControllerImpl;
+import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_appointments.controllers.MedicalAppointmentControllerImpl;
+import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
-import com.api.v1.medical_slots.domain.MedicalSlot;
+import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
 import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import jakarta.validation.constraints.NotNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -29,7 +28,6 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.lin
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
-@RequiredArgsConstructor
 public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppointmentRegistrationService {
 
     private final MedicalAppointmentRepository medicalAppointmentRepository;
@@ -37,6 +35,19 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
     private final DoctorFinder doctorFinder;
     private final MedicalSlotFinder medicalSlotFinder;
     private final MedicalSlotUpdatingService medicalSlotUpdatingService;
+
+    public MedicalAppointmentRegistrationServiceImpl(MedicalAppointmentRepository medicalAppointmentRepository,
+                                                     CustomerFinder customerFinder,
+                                                     DoctorFinder doctorFinder,
+                                                     MedicalSlotFinder medicalSlotFinder,
+                                                     MedicalSlotUpdatingService medicalSlotUpdatingService
+    ) {
+        this.medicalAppointmentRepository = medicalAppointmentRepository;
+        this.customerFinder = customerFinder;
+        this.doctorFinder = doctorFinder;
+        this.medicalSlotFinder = medicalSlotFinder;
+        this.medicalSlotUpdatingService = medicalSlotUpdatingService;
+    }
 
     @Override
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(String customerId,
@@ -62,16 +73,16 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                                 return medicalSlotUpdatingService
                                                         .update(foundSlot, appointment)
                                                         .flatMap(_ -> Mono.zip(
-                                                                        linkTo(methodOn(CustomerControllerImpl.class).findById(customerId))
+                                                                        linkTo(methodOn(CustomerController.class).findById(customerId))
                                                                                 .withRel("find customer")
                                                                                 .toMono(),
-                                                                        linkTo(methodOn(DoctorControllerImpl.class).findById(doctorId))
+                                                                        linkTo(methodOn(DoctorController.class).findById(doctorId))
                                                                                 .withRel("find doctor")
                                                                                 .toMono(),
-                                                                        linkTo(methodOn(MedicalAppointmentControllerImpl.class).findAllByCustomer(customerId))
+                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
                                                                                 .withRel("find all by customer")
                                                                                 .toMono(),
-                                                                        linkTo(methodOn(MedicalAppointmentControllerImpl.class).findAllByDoctor(doctorId))
+                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByDoctor(doctorId))
                                                                                 .withRel("find all by doctor")
                                                                                 .toMono()
                                                                 ).map(links -> appointment

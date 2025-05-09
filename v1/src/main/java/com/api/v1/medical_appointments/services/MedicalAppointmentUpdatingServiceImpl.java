@@ -6,17 +6,21 @@ import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.services.exposed.MedicalAppointmentUpdatingService;
 import jakarta.validation.constraints.NotNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class MedicalAppointmentUpdatingServiceImpl implements MedicalAppointmentUpdatingService {
 
     private final MedicalAppointmentRepository appointmentRepository;
     private final MedicalAppointmentAuditTrailRepository auditTrailRepository;
 
+    public MedicalAppointmentUpdatingServiceImpl(MedicalAppointmentRepository appointmentRepository,
+                                                 MedicalAppointmentAuditTrailRepository auditTrailRepository
+    ) {
+        this.appointmentRepository = appointmentRepository;
+        this.auditTrailRepository = auditTrailRepository;
+    }
 
     @Override
     public Mono<MedicalAppointment>  update(@NotNull MedicalAppointment medicalAppointment) {

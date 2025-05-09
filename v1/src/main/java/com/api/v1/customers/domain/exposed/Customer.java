@@ -2,9 +2,6 @@ package com.api.v1.customers.domain.exposed;
 
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.people.domain.exposed.Person;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,8 +9,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-@Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Customer {
 
     @Id
@@ -22,11 +17,15 @@ public class Customer {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    Customer() {
+    }
+
     private Customer(Person person) {
         this.id = UUID.randomUUID().toString();
         this.person = person;
         this.createdAt = LocalDateTime.now();
     }
+
 
     public static Customer of(Person person) {
         return new Customer(person);
@@ -39,5 +38,21 @@ public class Customer {
 
     public CustomerResponseDto toDto() {
         return CustomerResponseDto.from(this);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 }

@@ -4,9 +4,6 @@ import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,8 +12,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-@Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Person {
 
     @Id
@@ -32,6 +27,9 @@ public class Person {
     private Address address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    Person() {
+    }
 
     private Person(String firstName,
                   String middleName,
@@ -82,4 +80,51 @@ public class Person {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getSsn() {
+        return ssn;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 }

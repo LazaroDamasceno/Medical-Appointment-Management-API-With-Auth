@@ -6,17 +6,12 @@ import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import com.api.v1.medical_appointments.responses.CanceledMedicalAppointmentResponseDto;
 import com.api.v1.medical_appointments.responses.CompletedMedicalAppointmentResponseDto;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-@Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class MedicalAppointment {
 
     private String id;
@@ -29,19 +24,7 @@ public class MedicalAppointment {
     private LocalDateTime completedAt;
     private LocalDateTime paidAt;
 
-    public void markAsCanceled() {
-        canceledAt = LocalDateTime.now();
-        status = MedicalAppointmentStatus.CANCELED;
-    }
-
-    public void markAsCompleted() {
-        completedAt = LocalDateTime.now();
-        status = MedicalAppointmentStatus.COMPLETED;
-    }
-
-    public void markAsPaid() {
-        paidAt = LocalDateTime.now();
-        status = MedicalAppointmentStatus.PAID;
+    MedicalAppointment() {
     }
 
     private MedicalAppointment(Customer customer,
@@ -67,6 +50,21 @@ public class MedicalAppointment {
         );
     }
 
+    public void markAsCanceled() {
+        canceledAt = LocalDateTime.now();
+        status = MedicalAppointmentStatus.CANCELED;
+    }
+
+    public void markAsCompleted() {
+        completedAt = LocalDateTime.now();
+        status = MedicalAppointmentStatus.COMPLETED;
+    }
+
+    public void markAsPaid() {
+        paidAt = LocalDateTime.now();
+        status = MedicalAppointmentStatus.PAID;
+    }
+
     public MedicalAppointmentResponseDto toDto() {
         if (canceledAt != null && completedAt == null) {
             return CanceledMedicalAppointmentResponseDto.from(this);
@@ -75,5 +73,41 @@ public class MedicalAppointment {
             return CompletedMedicalAppointmentResponseDto.from(this);
         }
         return MedicalAppointmentResponseDto.from(this);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public MedicalAppointmentStatus getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getBookedAt() {
+        return bookedAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getCanceledAt() {
+        return canceledAt;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public LocalDateTime getPaidAt() {
+        return paidAt;
     }
 }

@@ -1,20 +1,22 @@
 package com.api.v1.medical_slots.utils;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
- import com.api.v1.medical_slots.domain.MedicalSlot;
+ import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.exceptions.MedicalSlotNotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
 @Component
-@RequiredArgsConstructor
 public final class MedicalSlotFinder {
 
     private final MedicalSlotRepository medicalSlotRepository;
+
+    public MedicalSlotFinder(MedicalSlotRepository medicalSlotRepository) {
+        this.medicalSlotRepository = medicalSlotRepository;
+    }
 
     public Mono<MedicalSlot> findById(String slotId) {
         return medicalSlotRepository

@@ -1,6 +1,5 @@
 package com.api.v1.customers.controllers;
 
-import com.api.v1.customers.controllers.exposed.CustomerController;
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
@@ -9,7 +8,6 @@ import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -17,7 +15,20 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("api/v1/customers")
-public class CustomerControllerImpl extends CustomerController {
+public class CustomerController {
+
+    private final CustomerRegistrationService registrationService;
+    private final CustomerRetrievalService retrievalService;
+    private final CustomerUpdatingService updatingService;
+
+    public CustomerController(CustomerRegistrationService registrationService,
+                              CustomerRetrievalService retrievalService,
+                              CustomerUpdatingService updatingService
+    ) {
+        this.registrationService = registrationService;
+        this.retrievalService = retrievalService;
+        this.updatingService = updatingService;
+    }
 
     @PostMapping
     @Operation(summary = "Register a new customer")

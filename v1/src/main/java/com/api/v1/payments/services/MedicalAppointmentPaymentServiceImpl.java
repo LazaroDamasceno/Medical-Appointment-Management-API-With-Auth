@@ -11,12 +11,10 @@ import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
 import com.api.v1.payments.domain.Payment;
 import com.api.v1.payments.domain.PaymentRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-@RequiredArgsConstructor
 public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentPaymentService {
 
     private final PaymentRepository paymentRepository;
@@ -24,6 +22,19 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
     private final MedicalAppointmentUpdatingService medicalAppointmentUpdatingService;
     private final MedicalSlotFinder medicalSlotFinder;
     private final MedicalSlotUpdatingService medicalSlotUpdatingService;
+
+    public MedicalAppointmentPaymentServiceImpl(PaymentRepository paymentRepository,
+                                                MedicalAppointmentFinder appointmentFinder,
+                                                MedicalAppointmentUpdatingService medicalAppointmentUpdatingService,
+                                                MedicalSlotFinder medicalSlotFinder,
+                                                MedicalSlotUpdatingService medicalSlotUpdatingService
+    ) {
+        this.paymentRepository = paymentRepository;
+        this.appointmentFinder = appointmentFinder;
+        this.medicalAppointmentUpdatingService = medicalAppointmentUpdatingService;
+        this.medicalSlotFinder = medicalSlotFinder;
+        this.medicalSlotUpdatingService = medicalSlotUpdatingService;
+    }
 
     @Override
     public Mono<Payment> pay(String appointmentId) {

@@ -3,11 +3,10 @@ package com.api.v1.medical_slots.services;
 import com.api.v1.common.DuplicatedBookingDateTimeException;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_slots.domain.MedicalSlot;
+import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.response.MedicalSlotResponseDto;
 import jakarta.validation.constraints.NotNull;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -16,11 +15,17 @@ import java.net.URI;
 import java.time.LocalDateTime;
 
 @Service
-@RequiredArgsConstructor
 public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrationService {
 
     private final MedicalSlotRepository medicalSlotRepository;
     private final DoctorFinder doctorFinder;
+
+    public MedicalSlotRegistrationServiceImpl(MedicalSlotRepository medicalSlotRepository,
+                                              DoctorFinder doctorFinder
+    ) {
+        this.medicalSlotRepository = medicalSlotRepository;
+        this.doctorFinder = doctorFinder;
+    }
 
     @Override
     public Mono<ResponseEntity<MedicalSlotResponseDto>> register(String doctorId, @NotNull LocalDateTime availableAt) {

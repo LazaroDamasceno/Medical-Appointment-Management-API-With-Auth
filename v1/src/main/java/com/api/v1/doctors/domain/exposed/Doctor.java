@@ -4,9 +4,6 @@ import com.api.v1.doctors.enums.DoctorStatus;
 import com.api.v1.doctors.domain.MedicalLicenseNumber;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,8 +11,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-@Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class Doctor {
 
     @Id
@@ -27,8 +22,11 @@ public class Doctor {
     private LocalDateTime updatedAt;
     private LocalDateTime terminatedAt;
 
+    Doctor() {
+    }
+
     private Doctor(MedicalLicenseNumber medicalLicenseNumber,
-                  Person person
+                   Person person
     ) {
         this.id = UUID.randomUUID().toString();
         this.medicalLicenseNumber = medicalLicenseNumber;
@@ -63,4 +61,31 @@ public class Doctor {
         updatedAt = LocalDateTime.now();
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public MedicalLicenseNumber getMedicalLicenseNumber() {
+        return medicalLicenseNumber;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public DoctorStatus getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime getTerminatedAt() {
+        return terminatedAt;
+    }
 }

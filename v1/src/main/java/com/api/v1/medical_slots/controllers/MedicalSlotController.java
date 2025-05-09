@@ -1,8 +1,10 @@
 package com.api.v1.medical_slots.controllers;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.medical_slots.controllers.exposed.MedicalSlotController;
 import com.api.v1.medical_slots.response.MedicalSlotResponseDto;
+import com.api.v1.medical_slots.services.MedicalSlotManagementService;
+import com.api.v1.medical_slots.services.MedicalSlotRegistrationService;
+import com.api.v1.medical_slots.services.MedicalSlotRetrievalService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,20 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("api/v1/medical-slots")
-public class MedicalSlotControllerImpl extends MedicalSlotController {
+public class MedicalSlotController {
+
+    private final MedicalSlotManagementService managementService;
+    private final MedicalSlotRegistrationService registrationService;
+    private final MedicalSlotRetrievalService retrievalService;
+
+    public MedicalSlotController(MedicalSlotManagementService managementService,
+                                 MedicalSlotRegistrationService registrationService,
+                                 MedicalSlotRetrievalService retrievalService
+    ) {
+        this.managementService = managementService;
+        this.registrationService = registrationService;
+        this.retrievalService = retrievalService;
+    }
 
     @PostMapping("{doctorId}/{availableAt}")
     @Operation(summary = "Register a new medical slot")

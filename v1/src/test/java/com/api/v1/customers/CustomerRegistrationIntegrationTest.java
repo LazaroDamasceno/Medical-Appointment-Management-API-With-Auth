@@ -76,7 +76,7 @@ class CustomerRegistrationIntegrationTest {
 				.bodyValue(registrationDtoWithDuplicatedSSn)
 				.exchange()
 				.expectStatus()
-				.is5xxServerError();
+				.is4xxClientError();
 	}
 
 	PersonRegistrationDto registrationDtoWithDuplicatedEmail = new PersonRegistrationDto(
@@ -105,7 +105,7 @@ class CustomerRegistrationIntegrationTest {
 				.bodyValue(registrationDtoWithDuplicatedEmail)
 				.exchange()
 				.expectStatus()
-				.is5xxServerError();
+				.is4xxClientError();
 	}
 
 }

@@ -3,16 +3,14 @@ package com.api.v1.doctors.responses;
 import com.api.v1.doctors.domain.MedicalLicenseNumber;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.people.utils.FullNameFormatter;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
-@Getter
-@NoArgsConstructor
 public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     private String fullName;
     private MedicalLicenseNumber medicalLicenseNumber;
+
+    DoctorResponseDto() {}
 
     private DoctorResponseDto(String fullName,
                               MedicalLicenseNumber medicalLicenseNumber
@@ -26,5 +24,13 @@ public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
                 FullNameFormatter.format(doctor.getPerson()),
                 doctor.getMedicalLicenseNumber()
         );
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public MedicalLicenseNumber getMedicalLicenseNumber() {
+        return medicalLicenseNumber;
     }
 }

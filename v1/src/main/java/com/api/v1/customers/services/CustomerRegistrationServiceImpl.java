@@ -8,7 +8,6 @@ import com.api.v1.people.exceptions.DuplicatedSsnException;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -16,11 +15,17 @@ import reactor.core.publisher.Mono;
 import java.net.URI;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerRegistrationServiceImpl implements CustomerRegistrationService {
 
     private final PersonRegistrationService personRegistrationService;
     private final CustomerRepository customerRepository;
+
+    public CustomerRegistrationServiceImpl(PersonRegistrationService personRegistrationService,
+                                           CustomerRepository customerRepository
+    ) {
+        this.personRegistrationService = personRegistrationService;
+        this.customerRepository = customerRepository;
+    }
 
     @Override
     public Mono<ResponseEntity<CustomerResponseDto>> register(@Valid PersonRegistrationDto registrationDto) {

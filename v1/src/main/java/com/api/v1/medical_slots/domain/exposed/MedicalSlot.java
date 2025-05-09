@@ -1,13 +1,9 @@
-package com.api.v1.medical_slots.domain;
+package com.api.v1.medical_slots.domain.exposed;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import com.api.v1.medical_slots.response.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,8 +11,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-@Getter
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class MedicalSlot {
 
     @Id
@@ -27,8 +21,10 @@ public class MedicalSlot {
     private MedicalSlotStatus status;
     private LocalDateTime canceledAt;
     private LocalDateTime completedAt;
-    @Setter
     private MedicalAppointment medicalAppointment;
+
+    private MedicalSlot() {
+    }
 
     private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
         this.id = UUID.randomUUID().toString();
@@ -62,4 +58,39 @@ public class MedicalSlot {
         return MedicalSlotResponseDto.from(this);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public LocalDateTime getAvailableAt() {
+        return availableAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public MedicalSlotStatus getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getCanceledAt() {
+        return canceledAt;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
+
+    public MedicalAppointment getMedicalAppointment() {
+        return medicalAppointment;
+    }
+
+    public void setMedicalAppointment(MedicalAppointment medicalAppointment) {
+        this.medicalAppointment = medicalAppointment;
+    }
 }

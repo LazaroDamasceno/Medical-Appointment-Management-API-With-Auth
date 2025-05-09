@@ -61,7 +61,7 @@ public class CustomerUpdatingIntegrationTest {
                 .bodyValue(updatingDto)
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
 }

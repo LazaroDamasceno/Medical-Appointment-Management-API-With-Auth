@@ -1,8 +1,10 @@
 package com.api.v1.medical_appointments.controllers;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.medical_appointments.controllers.exposed.MedicalAppointmentController;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.services.MedicalAppointmentCancellationService;
+import com.api.v1.medical_appointments.services.MedicalAppointmentRegistrationService;
+import com.api.v1.medical_appointments.services.MedicalAppointmentRetrievalService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +15,20 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("api/v1/medical-appointments")
-public class MedicalAppointmentControllerImpl extends MedicalAppointmentController {
+public class MedicalAppointmentController {
+
+    private final MedicalAppointmentCancellationService cancellationService;
+    private final MedicalAppointmentRegistrationService registrationService;
+    private final MedicalAppointmentRetrievalService retrievalService;
+
+    public MedicalAppointmentController(MedicalAppointmentCancellationService cancellationService,
+                                        MedicalAppointmentRegistrationService registrationService,
+                                        MedicalAppointmentRetrievalService retrievalService
+    ) {
+        this.cancellationService = cancellationService;
+        this.registrationService = registrationService;
+        this.retrievalService = retrievalService;
+    }
 
     @PostMapping("{customerId}/{doctorId}/{bookedAt}")
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(@PathVariable String customerId,

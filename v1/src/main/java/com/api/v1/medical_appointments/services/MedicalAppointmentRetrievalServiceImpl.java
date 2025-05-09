@@ -1,16 +1,15 @@
 package com.api.v1.medical_appointments.services;
 
-import com.api.v1.customers.controllers.CustomerControllerImpl;
+import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_appointments.controllers.MedicalAppointmentControllerImpl;
+import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.exceptions.InaccessibleMedicalAppointment;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
 import com.api.v1.medical_appointments.utils.MedicalAppointmentFinder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -20,13 +19,23 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.lin
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
-@RequiredArgsConstructor
 public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmentRetrievalService {
 
     private final CustomerFinder customerFinder;
     private final DoctorFinder doctorFinder;
     private final MedicalAppointmentFinder medicalAppointmentFinder;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
+
+    public MedicalAppointmentRetrievalServiceImpl(CustomerFinder customerFinder,
+                                                  DoctorFinder doctorFinder,
+                                                  MedicalAppointmentFinder medicalAppointmentFinder,
+                                                  MedicalAppointmentRepository medicalAppointmentRepository
+    ) {
+        this.customerFinder = customerFinder;
+        this.doctorFinder = doctorFinder;
+        this.medicalAppointmentFinder = medicalAppointmentFinder;
+        this.medicalAppointmentRepository = medicalAppointmentRepository;
+    }
 
     @Override
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> findById(String customerId, String appointmentId) {
@@ -39,11 +48,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .then(Mono.defer(() -> medicalAppointmentRepository
                                     .findById(customer.getId(), medicalAppointment.getId())
                                     .map(MedicalAppointment::toDto)
-                                    .flatMap(response -> Mono.zip(                                            linkTo(methodOn(CustomerControllerImpl.class)
+                                    .flatMap(response -> Mono.zip(                                            linkTo(methodOn(CustomerController.class)
                                                     .findById(customerId))
                                                     .withRel("find customer")
                                                     .toMono(),
-                                            linkTo(methodOn(MedicalAppointmentControllerImpl.class)
+                                            linkTo(methodOn(MedicalAppointmentController.class)
                                                     .findAllByCustomer(customerId))
                                                     .withRel("find all by customer")
                                                     .toMono(),

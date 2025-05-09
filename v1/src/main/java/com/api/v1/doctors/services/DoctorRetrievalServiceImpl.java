@@ -1,11 +1,10 @@
 package com.api.v1.doctors.services;
 
-import com.api.v1.doctors.controllers.DoctorControllerImpl;
+import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.doctors.utils.DoctorFinder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -15,11 +14,17 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.lin
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
-@RequiredArgsConstructor
 public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
 
     private final DoctorRepository doctorRepository;
     private final DoctorFinder doctorFinder;
+
+    public DoctorRetrievalServiceImpl(DoctorRepository doctorRepository,
+                                      DoctorFinder doctorFinder
+    ) {
+        this.doctorRepository = doctorRepository;
+        this.doctorFinder = doctorFinder;
+    }
 
     @Override
     public Mono<ResponseEntity<DoctorResponseDto>> findById(String id) {
@@ -28,8 +33,8 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
                 .map(Doctor::toDto)
                 .flatMap(responseDto -> {
                     return Mono.zip(
-                            linkTo(methodOn(DoctorControllerImpl.class).findById(id)).withSelfRel().toMono(),
-                            linkTo(methodOn(DoctorControllerImpl.class).findAll()).withRel("find all").toMono()
+                            linkTo(methodOn(DoctorController.class).findById(id)).withSelfRel().toMono(),
+                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
                     ).map(tuple -> {
                         return responseDto.add(tuple.getT1(), tuple.getT2());
                     }).map(ResponseEntity::ok);

@@ -4,15 +4,10 @@ import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
 public class MedicalAppointmentResponseDto extends RepresentationModel<MedicalAppointmentResponseDto> {
 
     private String id;
@@ -20,6 +15,8 @@ public class MedicalAppointmentResponseDto extends RepresentationModel<MedicalAp
     private DoctorResponseDto doctor;
     private MedicalAppointmentStatus status;
     private LocalDateTime bookedAt;
+
+    MedicalAppointmentResponseDto() {}
 
     protected MedicalAppointmentResponseDto(String id,
                                           CustomerResponseDto customer,
@@ -42,5 +39,25 @@ public class MedicalAppointmentResponseDto extends RepresentationModel<MedicalAp
                 medicalAppointment.getStatus(),
                 medicalAppointment.getBookedAt()
         );
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public CustomerResponseDto getCustomer() {
+        return customer;
+    }
+
+    public DoctorResponseDto getDoctor() {
+        return doctor;
+    }
+
+    public MedicalAppointmentStatus getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getBookedAt() {
+        return bookedAt;
     }
 }

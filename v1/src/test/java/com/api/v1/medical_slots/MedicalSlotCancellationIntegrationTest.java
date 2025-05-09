@@ -40,7 +40,7 @@ public class MedicalSlotCancellationIntegrationTest {
                 .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
     @Order(3)
@@ -53,7 +53,7 @@ public class MedicalSlotCancellationIntegrationTest {
                 .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
     @Order(4)
@@ -66,7 +66,7 @@ public class MedicalSlotCancellationIntegrationTest {
                 .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
     @Order(5)
@@ -79,7 +79,7 @@ public class MedicalSlotCancellationIntegrationTest {
                 .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
     @Order(6)
@@ -92,7 +92,7 @@ public class MedicalSlotCancellationIntegrationTest {
                 .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
 }

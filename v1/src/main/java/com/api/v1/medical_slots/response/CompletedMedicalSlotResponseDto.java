@@ -1,19 +1,16 @@
 package com.api.v1.medical_slots.response;
 
 import com.api.v1.doctors.responses.DoctorResponseDto;
-import com.api.v1.medical_slots.domain.MedicalSlot;
+import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
 
     private LocalDateTime completedAt;
+
+    CompletedMedicalSlotResponseDto() {}
 
     private CompletedMedicalSlotResponseDto(String id,
                                             DoctorResponseDto doctor,
@@ -33,5 +30,9 @@ public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
                 medicalSlot.getStatus(),
                 medicalSlot.getCompletedAt()
         );
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
     }
 }

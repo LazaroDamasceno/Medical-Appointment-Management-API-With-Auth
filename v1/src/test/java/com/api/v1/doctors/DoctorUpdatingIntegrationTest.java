@@ -61,7 +61,7 @@ public class DoctorUpdatingIntegrationTest {
                 .bodyValue(updatingDto)
                 .exchange()
                 .expectStatus()
-                .is5xxServerError();
+                .is4xxClientError();
     }
 
 }

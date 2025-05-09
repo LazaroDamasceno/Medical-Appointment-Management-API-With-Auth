@@ -1,7 +1,6 @@
 package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.doctors.controllers.exposed.DoctorController;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorManagementService;
@@ -18,9 +17,24 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("api/v1/doctors")
-public class DoctorControllerImpl extends DoctorController {
+public class DoctorController {
 
 
+    private final DoctorManagementService managementService;
+    private final DoctorRegistrationService registrationService;
+    private final DoctorRetrievalService retrievalService;
+    private final DoctorUpdatingService updatingService;
+
+    public DoctorController(DoctorManagementService managementService,
+                            DoctorRegistrationService registrationService,
+                            DoctorRetrievalService retrievalService,
+                            DoctorUpdatingService updatingService
+    ) {
+        this.managementService = managementService;
+        this.registrationService = registrationService;
+        this.retrievalService = retrievalService;
+        this.updatingService = updatingService;
+    }
 
     @PostMapping
     @Operation(summary = "Register a new doctor")

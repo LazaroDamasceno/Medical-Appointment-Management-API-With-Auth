@@ -1,7 +1,7 @@
 package com.api.v1.doctors.services;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.doctors.controllers.DoctorControllerImpl;
+import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.DoctorAuditTrail;
 import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v1.doctors.domain.DoctorRepository;
@@ -10,7 +10,6 @@ import com.api.v1.doctors.enums.DoctorStatus;
 import com.api.v1.doctors.exceptions.ActiveDoctorException;
 import com.api.v1.doctors.exceptions.TerminatedDoctorException;
 import com.api.v1.doctors.utils.DoctorFinder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -19,12 +18,20 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.lin
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
-@RequiredArgsConstructor
 public class DoctorManagementServiceImpl implements DoctorManagementService {
 
     private final DoctorRepository doctorRepository;
     private final DoctorAuditTrailRepository doctorAuditTrailRepository;
     private final DoctorFinder doctorFinder;
+
+    public DoctorManagementServiceImpl(DoctorRepository doctorRepository,
+                                       DoctorAuditTrailRepository doctorAuditTrailRepository,
+                                       DoctorFinder doctorFinder
+    ) {
+        this.doctorRepository = doctorRepository;
+        this.doctorAuditTrailRepository = doctorAuditTrailRepository;
+        this.doctorFinder = doctorFinder;
+    }
 
     @Override
     public Mono<ResponseEntity<EmptyResponse>> terminate(String doctorId) {
@@ -84,8 +91,8 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
 
     private Mono<ResponseEntity<EmptyResponse>> hateoas(String doctorId) {
         return Mono.zip(
-                linkTo(methodOn(DoctorControllerImpl.class).findById(doctorId)).withRel("find by id").toMono(),
-                linkTo(methodOn(DoctorControllerImpl.class).findAll()).withRel("find all").toMono()
+                linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find by id").toMono(),
+                linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
         ).map(tuple -> {
             return EmptyResponse
                     .empty()

@@ -1,23 +1,20 @@
 package com.api.v1.medical_slots.response;
 
 import com.api.v1.doctors.responses.DoctorResponseDto;
-import com.api.v1.medical_slots.domain.MedicalSlot;
+import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MedicalSlotResponseDto extends RepresentationModel<MedicalSlotResponseDto> {
 
     private String id;
     private DoctorResponseDto doctor;
     private LocalDateTime availableAt;
     private MedicalSlotStatus status;
+
+    MedicalSlotResponseDto() {}
 
     protected MedicalSlotResponseDto(String id,
                                    DoctorResponseDto doctor,

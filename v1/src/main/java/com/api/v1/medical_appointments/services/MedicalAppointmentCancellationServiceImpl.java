@@ -1,10 +1,10 @@
 package com.api.v1.medical_appointments.services;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.customers.controllers.CustomerControllerImpl;
+import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
-import com.api.v1.medical_appointments.controllers.MedicalAppointmentControllerImpl;
+import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentAuditTrail;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentAuditTrailRepository;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
@@ -15,7 +15,6 @@ import com.api.v1.medical_appointments.exceptions.InaccessibleMedicalAppointment
 import com.api.v1.medical_appointments.utils.MedicalAppointmentFinder;
 import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -24,7 +23,6 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.lin
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
-@RequiredArgsConstructor
 public class MedicalAppointmentCancellationServiceImpl implements MedicalAppointmentCancellationService {
 
     private final MedicalAppointmentRepository appointmentRepository;
@@ -33,6 +31,21 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
     private final MedicalAppointmentFinder appointmentFinder;
     private final MedicalSlotFinder medicalSlotFinder;
     private final MedicalSlotUpdatingService medicalSlotUpdatingService;
+
+    public MedicalAppointmentCancellationServiceImpl(MedicalAppointmentRepository appointmentRepository,
+                                                     MedicalAppointmentAuditTrailRepository auditTrailRepository,
+                                                     CustomerFinder customerFinder,
+                                                     MedicalAppointmentFinder appointmentFinder,
+                                                     MedicalSlotFinder medicalSlotFinder,
+                                                     MedicalSlotUpdatingService medicalSlotUpdatingService
+    ) {
+        this.appointmentRepository = appointmentRepository;
+        this.auditTrailRepository = auditTrailRepository;
+        this.customerFinder = customerFinder;
+        this.appointmentFinder = appointmentFinder;
+        this.medicalSlotFinder = medicalSlotFinder;
+        this.medicalSlotUpdatingService = medicalSlotUpdatingService;
+    }
 
     @Override
     public Mono<ResponseEntity<EmptyResponse>> cancel(String customerId, String appointmentId) {
@@ -63,10 +76,10 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                     }));
         }).then(Mono.defer(() -> {
             return Mono.zip(
-                    linkTo(methodOn(CustomerControllerImpl.class).findById(customerId))
+                    linkTo(methodOn(CustomerController.class).findById(customerId))
                             .withRel("find customer")
                             .toMono(),
-                    linkTo(methodOn(MedicalAppointmentControllerImpl.class).findById(customerId, appointmentId))
+                    linkTo(methodOn(MedicalAppointmentController.class).findById(customerId, appointmentId))
                             .withRel("find medical appointment")
                             .toMono()
             ).map(tuple -> {

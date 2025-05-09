@@ -5,8 +5,8 @@ import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.services.exposed.MedicalAppointmentUpdatingService;
-import com.api.v1.medical_slots.controllers.MedicalSlotControllerImpl;
-import com.api.v1.medical_slots.domain.MedicalSlot;
+import com.api.v1.medical_slots.controllers.MedicalSlotController;
+import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrail;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrailRepository;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
@@ -15,7 +15,6 @@ import com.api.v1.medical_slots.exceptions.CanceledMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.CompletedMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -24,7 +23,6 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.lin
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
-@RequiredArgsConstructor
 public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementService {
 
     private final MedicalSlotRepository medicalSlotRepository;
@@ -32,6 +30,19 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
     private final DoctorFinder doctorFinder;
     private final MedicalSlotFinder medicalSlotFinder;
     private final MedicalAppointmentUpdatingService appointmentUpdatingService;
+
+    public MedicalSlotManagementServiceImpl(MedicalSlotRepository medicalSlotRepository,
+                                            MedicalSlotAuditTrailRepository auditTrailRepository,
+                                            DoctorFinder doctorFinder,
+                                            MedicalSlotFinder medicalSlotFinder,
+                                            MedicalAppointmentUpdatingService appointmentUpdatingService
+    ) {
+        this.medicalSlotRepository = medicalSlotRepository;
+        this.auditTrailRepository = auditTrailRepository;
+        this.doctorFinder = doctorFinder;
+        this.medicalSlotFinder = medicalSlotFinder;
+        this.appointmentUpdatingService = appointmentUpdatingService;
+    }
 
     @Override
     public Mono<ResponseEntity<EmptyResponse>> cancel(String doctorId, String slotId) {
@@ -61,11 +72,11 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                 })
                 .flatMap(_ -> {
                     return Mono.zip(
-                            linkTo(methodOn(MedicalSlotControllerImpl.class)
+                            linkTo(methodOn(MedicalSlotController.class)
                                     .findByDoctorAndId(doctorId, slotId))
                                     .withRel("find by id")
                                     .toMono(),
-                            linkTo(methodOn(MedicalSlotControllerImpl.class)
+                            linkTo(methodOn(MedicalSlotController.class)
                                     .findAllByDoctor(doctorId))
                                     .withRel("find all")
                                     .toMono()
@@ -106,11 +117,11 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                 })
                 .flatMap(_ -> {
                     return Mono.zip(
-                            linkTo(methodOn(MedicalSlotControllerImpl.class)
+                            linkTo(methodOn(MedicalSlotController.class)
                                     .findByDoctorAndId(doctorId, slotId))
                                     .withRel("find by id")
                                     .toMono(),
-                            linkTo(methodOn(MedicalSlotControllerImpl.class)
+                            linkTo(methodOn(MedicalSlotController.class)
                                     .findAllByDoctor(doctorId))
                                     .withRel("find all")
                                     .toMono()
