@@ -35,7 +35,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
         return validate(registrationDto.person(), registrationDto.medicalLicenseNumber())
                 .then(personRegistrationService.register(registrationDto.person())
                 .flatMap(person -> {
-                    Doctor doctor = Doctor.of(registrationDto.medicalLicenseNumber(), person);
+                    Doctor doctor = Doctor.of(registrationDto.medicalLicenseNumber(), person, registrationDto.medicalSpeciality());
                     return doctorRepository
                             .save(doctor)
                             .flatMap(savedDoctor -> {
@@ -52,7 +52,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
                                                              MedicalLicenseNumber medicalLicenseNumber
     ) {
         return doctorRepository
-                .findBySsn(personRegistrationDto.ssn())
+                .findBySsn(personRegistrationDto.sin())
                 .switchIfEmpty(Mono.empty())
                 .flatMap(_ -> Mono.error(DuplicatedSsnException::new))
                 .then(doctorRepository

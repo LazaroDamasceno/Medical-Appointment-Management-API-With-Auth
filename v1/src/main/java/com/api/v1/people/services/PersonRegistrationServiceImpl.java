@@ -20,7 +20,7 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
     @Override
     public Mono<Person> register(@Valid PersonRegistrationDto registrationDto) {
         return personRepository
-                .find(registrationDto.ssn(), registrationDto.email())
+                .find(registrationDto.sin(), registrationDto.email())
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isPresent()) {

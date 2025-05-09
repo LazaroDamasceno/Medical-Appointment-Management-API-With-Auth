@@ -18,8 +18,8 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @PostMapping("{appointmentId}")
-    public Mono<Payment> pay(@PathVariable String appointmentId) {
-        return paymentService.pay(appointmentId);
+    @PostMapping("{appointmentId}/{price}")
+    public Mono<Payment> pay(@PathVariable String appointmentId, @PathVariable double price) {
+        return paymentService.pay(appointmentId, price);
     }
 }

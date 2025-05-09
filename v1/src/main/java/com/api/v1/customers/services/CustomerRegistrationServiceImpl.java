@@ -47,7 +47,7 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
 
     private Mono<Object> validate(PersonRegistrationDto registrationDto) {
         return customerRepository
-                .findBySsn(registrationDto.ssn())
+                .findBySsn(registrationDto.sin())
                 .switchIfEmpty(Mono.empty())
                 .flatMap(_ -> Mono.error(DuplicatedSsnException::new))
                 .then(customerRepository

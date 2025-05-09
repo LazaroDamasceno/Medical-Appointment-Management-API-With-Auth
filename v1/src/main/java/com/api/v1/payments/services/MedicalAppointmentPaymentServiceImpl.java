@@ -37,7 +37,7 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
     }
 
     @Override
-    public Mono<Payment> pay(String appointmentId) {
+    public Mono<Payment> pay(String appointmentId, double price) {
         return appointmentFinder
                 .findById(appointmentId)
                 .flatMap(foundAppointment -> {
@@ -54,7 +54,7 @@ public class MedicalAppointmentPaymentServiceImpl implements MedicalAppointmentP
                                                         return medicalSlotUpdatingService
                                                                 .update(foundSlot, appointment)
                                                                 .flatMap(_ -> {
-                                                                    Payment payment = Payment.of(appointment);
+                                                                    Payment payment = Payment.of(appointment, price);
                                                                     return paymentRepository.save(payment);
                                                                 });
                                                     });
