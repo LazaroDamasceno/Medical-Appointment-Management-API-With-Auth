@@ -18,7 +18,7 @@ public final class DoctorFinder {
     public Mono<Doctor> findById(String doctorId) {
         return doctorRepository
                 .findById(doctorId)
-                .switchIfEmpty(Mono.error(new DoctorNotFoundException(doctorId)));
+                .switchIfEmpty(Mono.error(new DoctorNotFoundException()));
     }
 
 }
