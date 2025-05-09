@@ -1,5 +1,6 @@
-package com.api.v1.medical_appointments.domain.exposed;
+package com.api.v1.medical_appointments.domain;
 
+import com.api.v1.medical_appointments.domain.exposed.EmergyMedicalAppointment;
 import org.springframework.data.annotation.Id;
 import org.springframework.stereotype.Service;
 
