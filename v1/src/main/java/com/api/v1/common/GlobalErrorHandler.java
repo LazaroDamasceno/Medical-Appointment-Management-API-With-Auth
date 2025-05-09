@@ -1,9 +1,10 @@
 package com.api.v1.common;
 
-import com.api.v1.customers.exceptions.CustomerNotFoundException;
+import com.api.v1.customers.exceptions.*;
 import com.api.v1.doctors.exceptions.*;
 import com.api.v1.medical_appointments.exceptions.*;
 import com.api.v1.medical_slots.exceptions.*;
+import com.api.v1.nurses.exceptions.*;
 import com.api.v1.people.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -115,6 +116,16 @@ public class GlobalErrorHandler {
 
     @ExceptionHandler(NonExistentBookingDateTimeException.class)
     public ResponseEntity<String> handleException(NonExistentBookingDateTimeException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DuplicatedNurseLicenseNumberException.class)
+    public ResponseEntity<String> handleException(DuplicatedNurseLicenseNumberException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(NurseNotFoundException.class)
+    public ResponseEntity<String> handleException(NurseNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 

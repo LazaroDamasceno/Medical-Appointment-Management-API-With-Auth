@@ -1,6 +1,5 @@
 package com.api.v1.medical_slots.utils;
 
-import com.api.v1.doctors.domain.exposed.Doctor;
  import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotRepository;
 import com.api.v1.medical_slots.exceptions.MedicalSlotNotFoundException;

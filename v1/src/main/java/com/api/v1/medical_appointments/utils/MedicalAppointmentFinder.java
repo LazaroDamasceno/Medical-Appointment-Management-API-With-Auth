@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class MedicalAppointmentFinder {
+public final class MedicalAppointmentFinder {
 
     private final MedicalAppointmentRepository medicalAppointmentRepository;
 
