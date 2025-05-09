@@ -1,4 +1,4 @@
-package com.api.v1.nurses;
+package com.api.v1.nurses.dtos;
 
 import com.api.v1.common.States;
 import jakarta.validation.constraints.NotBlank;

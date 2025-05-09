@@ -12,6 +12,6 @@ public record DoctorRegistrationDto(
         @NotNull
         MedicalSpeciality medicalSpeciality,
         @Valid
-        MedicalLicenseNumber medicalLicenseNumber
+        MedicalLicenseNumber licenseNumber
 ) {
 }

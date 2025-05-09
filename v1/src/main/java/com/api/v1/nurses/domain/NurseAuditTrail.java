@@ -1,5 +1,6 @@
-package com.api.v1.nurses;
+package com.api.v1.nurses.domain;
 
+import com.api.v1.nurses.domain.exposed.Nurse;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;

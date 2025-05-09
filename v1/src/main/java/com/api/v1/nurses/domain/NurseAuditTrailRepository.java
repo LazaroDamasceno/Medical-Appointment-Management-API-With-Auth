@@ -1,4 +1,4 @@
-package com.api.v1.nurses;
+package com.api.v1.nurses.domain;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 

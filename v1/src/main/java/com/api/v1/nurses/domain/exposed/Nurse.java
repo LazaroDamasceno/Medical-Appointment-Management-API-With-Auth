@@ -1,6 +1,7 @@
-package com.api.v1.nurses;
+package com.api.v1.nurses.domain.exposed;
 
 import com.api.v1.common.ProfessionalStatus;
+import com.api.v1.nurses.dtos.NurseLicenseNumber;
 import com.api.v1.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
