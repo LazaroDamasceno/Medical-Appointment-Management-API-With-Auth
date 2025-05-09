@@ -55,7 +55,7 @@ public class MedicalAppointmentPaymentIntegrationTest {
 
     @Order(4)
     @Test
-    void testUnsuccessful_CompletedMedicalAppointment() {
+    void testUnsuccessful_ActiveMedicalAppointment() {
         String appointmentId = "";
         webTestClient
                 .post()
@@ -65,4 +65,15 @@ public class MedicalAppointmentPaymentIntegrationTest {
                 .is4xxClientError();
     }
 
+    @Order(5)
+    @Test
+    void testUnsuccessful_PaidMedicalAppointment() {
+        String appointmentId = "";
+        webTestClient
+                .post()
+                .uri("api/v1/payments/%s".formatted(appointmentId))
+                .exchange()
+                .expectStatus()
+                .is4xxClientError();
+    }
 }
