@@ -16,7 +16,7 @@ public enum States {
                 .stream(States.values())
                 .filter(e -> e.equals(parsedValue))
                 .findAny()
-                .orElseThrow(StateNotFoundException::new);
+                .orElseThrow(NonExistentStateNotFound::new);
     }
 
 }

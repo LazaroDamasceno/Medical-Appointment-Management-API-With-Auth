@@ -2,6 +2,7 @@ package com.api.v1.doctors;
 
 import com.api.v1.common.States;
 import com.api.v1.doctors.domain.MedicalLicenseNumber;
+import com.api.v1.doctors.enums.MedicalSpeciality;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
@@ -40,6 +41,7 @@ class DoctorRegistrationIntegrationTest {
 						"90012"
 				)
 		),
+		MedicalSpeciality.ALLERGY_IMMUNOLOGY,
 		new MedicalLicenseNumber(
 				"12345678",
 				States.CA
@@ -75,6 +77,7 @@ class DoctorRegistrationIntegrationTest {
 							"90012"
 					)
 			),
+			MedicalSpeciality.ALLERGY_IMMUNOLOGY,
 			new MedicalLicenseNumber(
 					"12345678",
 					States.CA
@@ -110,6 +113,7 @@ class DoctorRegistrationIntegrationTest {
 							"90012"
 					)
 			),
+			MedicalSpeciality.ALLERGY_IMMUNOLOGY,
 			new MedicalLicenseNumber(
 					"12345678",
 					States.CA
@@ -145,6 +149,7 @@ class DoctorRegistrationIntegrationTest {
 							"90012"
 					)
 			),
+			MedicalSpeciality.ALLERGY_IMMUNOLOGY,
 			new MedicalLicenseNumber(
 					"12345678",
 					States.CA

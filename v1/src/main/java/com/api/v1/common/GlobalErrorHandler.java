@@ -108,8 +108,8 @@ public class GlobalErrorHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
-    @ExceptionHandler(StateNotFoundException.class)
-    public ResponseEntity<String> handleException(StateNotFoundException ex) {
+    @ExceptionHandler(NonExistentStateNotFound.class)
+    public ResponseEntity<String> handleException(NonExistentStateNotFound ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
