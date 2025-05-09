@@ -22,7 +22,7 @@ public class Doctor {
     private LocalDateTime updatedAt;
     private LocalDateTime terminatedAt;
 
-    Doctor() {
+    private Doctor() {
     }
 
     private Doctor(MedicalLicenseNumber medicalLicenseNumber,

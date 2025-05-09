@@ -14,7 +14,7 @@ public class MedicalSlotResponseDto extends RepresentationModel<MedicalSlotRespo
     private LocalDateTime availableAt;
     private MedicalSlotStatus status;
 
-    MedicalSlotResponseDto() {}
+    protected MedicalSlotResponseDto() {}
 
     protected MedicalSlotResponseDto(String id,
                                    DoctorResponseDto doctor,

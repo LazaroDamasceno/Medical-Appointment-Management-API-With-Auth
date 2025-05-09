@@ -11,7 +11,7 @@ public class CompletedMedicalAppointmentResponseDto extends MedicalAppointmentRe
 
     private LocalDateTime completedAt;
 
-    CompletedMedicalAppointmentResponseDto() {}
+    private CompletedMedicalAppointmentResponseDto() {}
 
     private CompletedMedicalAppointmentResponseDto(String id,
                                                   CustomerResponseDto customer,

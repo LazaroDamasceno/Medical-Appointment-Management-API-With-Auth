@@ -57,8 +57,8 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
                             .withRel("find by id")
                             .toMono()
                             .map(link -> {
-                                EmptyResponse emptyResponse = EmptyResponse.empty();
-                                return emptyResponse.add(link);
+                                EmptyResponse response = EmptyResponse.empty();
+                                return response.add(link);
                             })
                             .map(ResponseEntity::ok)
                             .flatMap(Mono::just);

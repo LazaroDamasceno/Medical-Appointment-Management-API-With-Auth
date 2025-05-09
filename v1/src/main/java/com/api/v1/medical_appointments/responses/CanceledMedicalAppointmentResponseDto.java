@@ -11,7 +11,7 @@ public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentRes
 
     private LocalDateTime canceledAt;
 
-    CanceledMedicalAppointmentResponseDto() {}
+    private CanceledMedicalAppointmentResponseDto() {}
 
     public CanceledMedicalAppointmentResponseDto(String id,
                                                  CustomerResponseDto customer,

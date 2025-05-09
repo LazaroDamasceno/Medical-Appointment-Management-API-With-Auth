@@ -24,7 +24,7 @@ public class MedicalAppointment {
     private LocalDateTime completedAt;
     private LocalDateTime paidAt;
 
-    MedicalAppointment() {
+    private MedicalAppointment() {
     }
 
     private MedicalAppointment(Customer customer,

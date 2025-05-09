@@ -17,7 +17,7 @@ public class Customer {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    Customer() {
+    private Customer() {
     }
 
     private Customer(Person person) {

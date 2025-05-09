@@ -10,7 +10,7 @@ public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
 
     private LocalDateTime completedAt;
 
-    CompletedMedicalSlotResponseDto() {}
+    private CompletedMedicalSlotResponseDto() {}
 
     private CompletedMedicalSlotResponseDto(String id,
                                             DoctorResponseDto doctor,

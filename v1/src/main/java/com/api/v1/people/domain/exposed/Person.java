@@ -28,7 +28,7 @@ public class Person {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    Person() {
+    private Person() {
     }
 
     private Person(String firstName,

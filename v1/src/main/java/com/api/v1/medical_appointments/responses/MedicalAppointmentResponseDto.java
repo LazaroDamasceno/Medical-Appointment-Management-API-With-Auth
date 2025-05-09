@@ -16,7 +16,7 @@ public class MedicalAppointmentResponseDto extends RepresentationModel<MedicalAp
     private MedicalAppointmentStatus status;
     private LocalDateTime bookedAt;
 
-    MedicalAppointmentResponseDto() {}
+    protected MedicalAppointmentResponseDto() {}
 
     protected MedicalAppointmentResponseDto(String id,
                                           CustomerResponseDto customer,

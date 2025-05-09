@@ -11,7 +11,7 @@ public class CanceledMedicalSlotResponseDto extends MedicalSlotResponseDto {
 
     private LocalDateTime canceledAt;
 
-    CanceledMedicalSlotResponseDto() {}
+    private CanceledMedicalSlotResponseDto() {}
 
     private CanceledMedicalSlotResponseDto(String id,
                                           DoctorResponseDto doctor,
