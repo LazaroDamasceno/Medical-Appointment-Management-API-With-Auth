@@ -3,6 +3,8 @@ package com.api.v1.medical_appointments.domain.exposed;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
+import com.api.v1.medical_appointments.responses.CompletedEmergencyMedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.EmergencyMedicalAppointmentResponseDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -40,6 +42,13 @@ public class EmergyMedicalAppointment {
     void markAsCompleted() {
         status = MedicalAppointmentStatus.COMPLETED;
         completedAt = LocalDateTime.now();
+    }
+
+    public EmergencyMedicalAppointmentResponseDto toDto() {
+        if (completedAt != null) {
+            return CompletedEmergencyMedicalAppointmentResponseDto.from(this);
+        }
+        return EmergencyMedicalAppointmentResponseDto.from(this);
     }
 
     public String getId() {
