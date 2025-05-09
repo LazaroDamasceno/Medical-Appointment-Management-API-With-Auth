@@ -113,5 +113,9 @@ public class GlobalErrorHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler(NonExistentBookingDateTimeException.class)
+    public ResponseEntity<String> handleException(NonExistentBookingDateTimeException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 
 }
