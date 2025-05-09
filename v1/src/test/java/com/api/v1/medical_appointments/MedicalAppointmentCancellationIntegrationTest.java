@@ -69,4 +69,30 @@ public class MedicalAppointmentCancellationIntegrationTest {
                 .is4xxClientError();
     }
 
+    @Order(5)
+    @Test
+    void testUnsuccessfulRegistration_CanceledAppointment() {
+        String customerId = "";
+        String slotId = "";
+        webTestClient
+                .patch()
+                .uri("api/v1/medical-appointments/%s/%s/cancellation".formatted(customerId, slotId))
+                .exchange()
+                .expectStatus()
+                .is4xxClientError();
+    }
+
+    @Order(6)
+    @Test
+    void testUnsuccessfulRegistration_CompletedAppointment() {
+        String customerId = "";
+        String slotId = "";
+        webTestClient
+                .patch()
+                .uri("api/v1/medical-appointments/%s/%s/cancellation".formatted(customerId, slotId))
+                .exchange()
+                .expectStatus()
+                .is4xxClientError();
+    }
+
 }
