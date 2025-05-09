@@ -17,7 +17,7 @@ public record PersonRegistrationDto(
         @NotBlank
         String lastName,
         @NotBlank
-        @Size(min = 9, max = 9)
+        @Size(min = 10, max = 10)
         // SIN = Single Identification Number
         String sin,
         @NotNull
