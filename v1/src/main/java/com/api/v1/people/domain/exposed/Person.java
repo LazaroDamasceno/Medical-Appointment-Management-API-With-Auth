@@ -19,7 +19,8 @@ public class Person {
     private String firstName;
     private String middleName;
     private String lastName;
-    private String ssn;
+    // SIN = Single Identification Number
+    private String sin;
     private LocalDate birthDate;
     private String phoneNumber;
     private Gender gender;
@@ -34,7 +35,7 @@ public class Person {
     private Person(String firstName,
                   String middleName,
                   String lastName,
-                  String ssn,
+                  String sin,
                   LocalDate birthDate,
                   String phoneNumber,
                   Gender gender,
@@ -45,7 +46,7 @@ public class Person {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
-        this.ssn = ssn;
+        this.sin = sin;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
@@ -59,7 +60,7 @@ public class Person {
                 registrationDto.firstName(),
                 registrationDto.middleName(),
                 registrationDto.lastName(),
-                registrationDto.ssn(),
+                registrationDto.sin(),
                 registrationDto.birthDate(),
                 registrationDto.phoneNumber(),
                 registrationDto.gender(),
@@ -96,8 +97,8 @@ public class Person {
         return lastName;
     }
 
-    public String getSsn() {
-        return ssn;
+    public String getSin() {
+        return sin;
     }
 
     public LocalDate getBirthDate() {

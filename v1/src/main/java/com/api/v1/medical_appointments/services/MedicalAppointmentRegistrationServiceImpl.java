@@ -63,8 +63,7 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
             return medicalSlotFinder
                     .findActiveByDoctorAndAvailableAt(doctor, bookedAt)
                     .flatMap(foundSlot -> {
-                        return onDuplicatedBookingDateTime(customer, bookedAt)
-                                .then(onNonAssociatedDoctorWithMedicalSlot(doctor, foundSlot))
+                        return validate(customer, doctor, bookedAt, foundSlot)
                                 .then(Mono.defer(() -> {
                                     MedicalAppointment medicalAppointment = MedicalAppointment.of(customer, doctor, bookedAt);
                                     return medicalAppointmentRepository
@@ -104,7 +103,11 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
         });
     }
 
-    private Mono<Object> onDuplicatedBookingDateTime(Customer customer, LocalDateTime bookedAt) {
+    private Mono<Object> validate(Customer customer,
+                                                     Doctor doctor,
+                                                     LocalDateTime bookedAt,
+                                                     MedicalSlot medicalSlot
+    ) {
         return medicalAppointmentRepository
                 .findActiveByCustomerAndBookedAt(customer.getId(), bookedAt)
                 .singleOptional()
@@ -116,14 +119,10 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                         String message = "Provided booking date and time is currently in use in another active medical appointment.";
                         return Mono.error(new DuplicatedBookingDateTimeException(message));
                     }
+                    else if (doctor.getId().equals(medicalSlot.getDoctor().getId())) {
+                        return Mono.error(new InaccessibleMedicalSlot());
+                    }
                     return Mono.empty();
                 });
-    }
-
-    private Mono<Object> onNonAssociatedDoctorWithMedicalSlot(Doctor doctor, MedicalSlot medicalSlot) {
-        if (doctor.getId().equals(medicalSlot.getDoctor().getId())) {
-            return Mono.error(new InaccessibleMedicalSlot());
-        }
-        return Mono.empty();
     }
 }
