@@ -1,4 +1,4 @@
-# Reactive-Medical-Appointments-API-V2
+# Reactive-Medical-Appointments-Management-API
 
 ## Java's version
 
