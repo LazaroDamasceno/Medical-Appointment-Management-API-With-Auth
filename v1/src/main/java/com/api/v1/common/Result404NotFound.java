@@ -1,5 +1,8 @@
 package com.api.v1.common;
 
+import lombok.Getter;
+
+@Getter
 public final class Result404NotFound extends Result {
 
     private final String message;
@@ -13,7 +16,4 @@ public final class Result404NotFound extends Result {
         return new Result404NotFound(Constants.STATUS_NOT_FOUND, message);
     }
 
-    public String getMessage() {
-        return message;
-    }
 }

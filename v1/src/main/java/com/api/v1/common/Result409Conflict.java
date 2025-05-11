@@ -1,5 +1,8 @@
 package com.api.v1.common;
 
+import lombok.Getter;
+
+@Getter
 public final class Result409Conflict extends Result {
 
     private final String message;
@@ -13,7 +16,4 @@ public final class Result409Conflict extends Result {
         return new Result409Conflict(Constants.STATUS_CONFLICT, message);
     }
 
-    public String getMessage() {
-        return message;
-    }
 }

@@ -1,11 +1,12 @@
 package com.api.v1.people.requests;
 
+import com.api.v1.people.enums.Gender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record PersonRegistrationDto(
         @NotBlank
@@ -17,9 +18,11 @@ public record PersonRegistrationDto(
         @Size(min = 10, max = 10)
         String sin,
         @NotNull
-        LocalDateTime birthDate,
+        LocalDate birthDate,
         @NotBlank
         @Email
-        String email
+        String email,
+        @NotNull
+        Gender gender
 ) {
 }

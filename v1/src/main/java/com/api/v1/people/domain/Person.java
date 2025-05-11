@@ -1,10 +1,12 @@
 package com.api.v1.people.domain;
 
+import com.api.v1.people.enums.Gender;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,8 +18,9 @@ public record Person(
         String middleName,
         String lastName,
         String sin,
-        LocalDateTime birthDate,
+        LocalDate birthDate,
         String email,
+        Gender gender,
         LocalDateTime createdAt
 ) {
 
@@ -30,6 +33,7 @@ public record Person(
                 registrationDto.sin(),
                 registrationDto.birthDate(),
                 registrationDto.email(),
+                registrationDto.gender(),
                 LocalDateTime.now()
         );
     }
@@ -43,6 +47,7 @@ public record Person(
                 sin,
                 updatingDto.birthDate(),
                 updatingDto.email(),
+                updatingDto.gender(),
                 LocalDateTime.now()
         );
     }

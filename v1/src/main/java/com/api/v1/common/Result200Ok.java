@@ -1,5 +1,8 @@
 package com.api.v1.common;
 
+import lombok.Getter;
+
+@Getter
 public final class Result200Ok<T> extends Result {
 
     private final T body;
@@ -13,7 +16,4 @@ public final class Result200Ok<T> extends Result {
         return new Result200Ok<>(Constants.STATUS_OK, body);
     }
 
-    public T getBody() {
-        return body;
-    }
 }

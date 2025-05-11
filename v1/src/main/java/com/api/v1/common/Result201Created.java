@@ -1,5 +1,8 @@
 package com.api.v1.common;
 
+import lombok.Getter;
+
+@Getter
 public final class Result201Created<T> extends Result {
 
     private final T body;
@@ -11,10 +14,6 @@ public final class Result201Created<T> extends Result {
 
     public static <T> Result201Created<T> from(T body) {
         return new Result201Created<>(Constants.STATUS_CREATED, body);
-    }
-
-    public T getBody() {
-        return body;
     }
 
 }

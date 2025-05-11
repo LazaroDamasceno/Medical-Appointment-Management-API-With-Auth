@@ -1,5 +1,8 @@
 package com.api.v1.common;
 
+import lombok.Getter;
+
+@Getter
 public sealed class Result permits Result200Ok, Result201Created, Result404NotFound, Result409Conflict {
 
     private int statusCode;
@@ -7,7 +10,7 @@ public sealed class Result permits Result200Ok, Result201Created, Result404NotFo
     protected Result() {
     }
 
-    protected Result(int statusCode) {
+    public Result(int statusCode) {
         this.statusCode = statusCode;
     }
 
@@ -15,7 +18,4 @@ public sealed class Result permits Result200Ok, Result201Created, Result404NotFo
         return new Result();
     }
 
-    public int getStatusCode() {
-        return statusCode;
-    }
 }
