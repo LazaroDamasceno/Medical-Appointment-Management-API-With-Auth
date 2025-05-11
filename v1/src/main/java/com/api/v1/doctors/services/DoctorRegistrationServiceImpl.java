@@ -6,7 +6,7 @@ import com.api.v1.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.people.exceptions.DuplicatedEmailException;
-import com.api.v1.people.exceptions.DuplicatedSsnException;
+import com.api.v1.people.exceptions.DuplicatedSinException;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
@@ -53,7 +53,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
         return doctorRepository
                 .findBySsn(personRegistrationDto.sin())
                 .switchIfEmpty(Mono.empty())
-                .flatMap(_ -> Mono.error(DuplicatedSsnException::new))
+                .flatMap(_ -> Mono.error(DuplicatedSinException::new))
                 .then(doctorRepository
                         .findByEmail(personRegistrationDto.email())
                         .switchIfEmpty(Mono.empty())

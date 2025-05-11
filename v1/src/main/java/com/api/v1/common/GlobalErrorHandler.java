@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalErrorHandler {
 
-    @ExceptionHandler(DuplicatedSsnException.class)
-    public ResponseEntity<String> handleException(DuplicatedSsnException ex) {
+    @ExceptionHandler(DuplicatedSinException.class)
+    public ResponseEntity<String> handleException(DuplicatedSinException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 

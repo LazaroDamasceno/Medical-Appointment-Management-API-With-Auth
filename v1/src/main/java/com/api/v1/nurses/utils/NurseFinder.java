@@ -14,9 +14,9 @@ public final class NurseFinder {
     public NurseFinder(NurseRepository nurseRepository) {
         this.nurseRepository = nurseRepository;
     }
-    public Mono<Nurse> findById(String nurseId) {
+    public Mono<Nurse> findByLicenseNumber(String licenseNumber) {
         return nurseRepository
-                .findById(nurseId)
+                .findByLicenseNumber(licenseNumber)
                 .switchIfEmpty(Mono.error(new NurseNotFoundException()));
     }
 }

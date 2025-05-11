@@ -4,7 +4,7 @@ import com.api.v1.customers.domain.CustomerRepository;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.people.exceptions.DuplicatedEmailException;
-import com.api.v1.people.exceptions.DuplicatedSsnException;
+import com.api.v1.people.exceptions.DuplicatedSinException;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
@@ -49,7 +49,7 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
         return customerRepository
                 .findBySsn(registrationDto.sin())
                 .switchIfEmpty(Mono.empty())
-                .flatMap(_ -> Mono.error(DuplicatedSsnException::new))
+                .flatMap(_ -> Mono.error(DuplicatedSinException::new))
                 .then(customerRepository
                         .findByEmail(registrationDto.email())
                         .switchIfEmpty(Mono.empty())

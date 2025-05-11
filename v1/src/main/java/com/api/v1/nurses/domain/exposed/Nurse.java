@@ -22,19 +22,16 @@ public class Nurse {
 
     private Nurse() {}
 
-    private Nurse(Person person, String licenseNumber, ProfessionalStatus status) {
+    private Nurse(Person person, String licenseNumber) {
         this.id = UUID.randomUUID().toString();
         this.licenseNumber = licenseNumber;
         this.person = person;
-        this.status = status;
+        this.status = ProfessionalStatus.ACTIVE;
         this.createdAt = LocalDateTime.now();
     }
 
-    public static Nurse of(Person person,
-                           String licenseNumber,
-                           ProfessionalStatus status
-    ) {
-        return new Nurse(person, licenseNumber, status);
+    public static Nurse of(Person person, String licenseNumber) {
+        return new Nurse(person, licenseNumber);
     }
 
     public NurseResponseDto toDto() {

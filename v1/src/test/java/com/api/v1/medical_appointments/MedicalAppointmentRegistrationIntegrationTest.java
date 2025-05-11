@@ -90,6 +90,20 @@ public class MedicalAppointmentRegistrationIntegrationTest {
 
     @Order(6)
     @Test
+    void testUnsuccessfulRegistration_SelfAppointment() {
+        String customerId = "";
+        String doctorLicenseNumber = "";
+        LocalDateTime bookedAt = LocalDateTime.now();
+        webTestClient
+                .post()
+                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorLicenseNumber, bookedAt))
+                .exchange()
+                .expectStatus()
+                .is4xxClientError();
+    }
+
+    @Order(7)
+    @Test
     void testUnsuccessfulRegistration_NonExistentBookingDateTime() {
         String customerId = "";
         String doctorLicenseNumber = "";

@@ -141,7 +141,7 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
             return Mono.error(new CompletedMedicalSlotException(medicalSlot.getId()));
         }
         else if (!medicalSlot.getDoctor().getId().equals(doctor.getId())) {
-            return Mono.error(new InaccessibleMedicalSlot());
+            return Mono.error(new InaccessibleMedicalSlot(doctor.getLicenseNumber()));
         }
         return Mono.empty();
     }

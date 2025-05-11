@@ -12,6 +12,7 @@ import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
+import com.api.v1.medical_appointments.exceptions.SelfBookingAppointmentException;
 import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
 import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
@@ -105,9 +106,9 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
     }
 
     private Mono<Object> validate(Customer customer,
-                                                     Doctor doctor,
-                                                     LocalDateTime bookedAt,
-                                                     MedicalSlot medicalSlot
+                                  Doctor doctor,
+                                  LocalDateTime bookedAt,
+                                  MedicalSlot medicalSlot
     ) {
         return medicalAppointmentRepository
                 .findActiveByCustomerAndBookedAt(customer.getId(), bookedAt)
@@ -120,8 +121,11 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                         String message = "Provided booking date and time is currently in use in another active medical appointment.";
                         return Mono.error(new DuplicatedBookingDateTimeException(message));
                     }
-                    else if (doctor.getId().equals(medicalSlot.getDoctor().getId())) {
-                        return Mono.error(new InaccessibleMedicalSlot());
+                    else if (customer.getPerson().getId().equals(medicalSlot.getDoctor().getPerson().getId())) {
+                        return Mono.error(new SelfBookingAppointmentException(doctor.getLicenseNumber()));
+                    }
+                    else if (!doctor.getId().equals(medicalSlot.getDoctor().getId())) {
+                        return Mono.error(new InaccessibleMedicalSlot(doctor.getLicenseNumber()));
                     }
                     return Mono.empty();
                 })
