@@ -4,23 +4,26 @@ import java.util.List;
 
 public final class PaginationResult<T> {
 
-    private final List<T> items;
-    private final long total;
+    private List<T> items;
+    private long size;
 
-    private PaginationResult(List<T> items, long total) {
-        this.items = items;
-        this.total = total;
+    public PaginationResult() {
     }
 
-    public static <T> PaginationResult<T> of(List<T> items, long total) {
-        return new PaginationResult<>(items, total);
+    private PaginationResult(List<T> items, long size) {
+        this.items = items;
+        this.size = size;
+    }
+
+    public static <T> PaginationResult<T> of(List<T> items, long size) {
+        return new PaginationResult<>(items, size);
     }
 
     public List<T> getItems() {
         return items;
     }
 
-    public long getTotal() {
-        return total;
+    public long getSize() {
+        return size;
     }
 }

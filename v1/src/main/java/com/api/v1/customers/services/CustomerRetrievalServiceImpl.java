@@ -1,5 +1,6 @@
 package com.api.v1.customers.services;
 
+import com.api.v1.common.PaginationResult;
 import com.api.v1.customers.domain.CustomerRepository;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.responses.CustomerResponseDto;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.stream.Stream;
 
 @Service
 public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
@@ -31,10 +34,12 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
     }
 
     @Override
-    public ResponseEntity<Flux<CustomerResponseDto>> findAll() {
-        var flux = customerRepository
+    public Mono<ResponseEntity<PaginationResult<CustomerResponseDto>>> findAll(long size) {
+        return customerRepository
                 .findAll()
-                .map(Customer::toDto);
-        return ResponseEntity.ok(flux);
+                .map(Customer::toDto)
+                .take(size)
+                .collectList()
+                .map(list -> ResponseEntity.ok(PaginationResult.of(list, size)));
     }
 }

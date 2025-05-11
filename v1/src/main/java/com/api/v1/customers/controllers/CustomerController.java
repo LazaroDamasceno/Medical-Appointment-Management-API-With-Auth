@@ -1,5 +1,6 @@
 package com.api.v1.customers.controllers;
 
+import com.api.v1.common.PaginationResult;
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
@@ -48,9 +49,9 @@ public class CustomerController {
         return retrievalService.findById(customerId);
     }
 
-    @GetMapping
+    @GetMapping("size/{size}")
     @Operation(summary = "Find all customers")
-    public ResponseEntity<Flux<CustomerResponseDto>> findAll() {
-        return retrievalService.findAll();
+    public Mono<ResponseEntity<PaginationResult<CustomerResponseDto>>> findAll(@PathVariable long size) {
+        return retrievalService.findAll(size);
     }
 }

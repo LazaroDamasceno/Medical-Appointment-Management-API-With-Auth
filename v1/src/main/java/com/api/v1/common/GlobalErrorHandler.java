@@ -124,4 +124,13 @@ public class GlobalErrorHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler(SelfBookingAppointmentException.class)
+    public ResponseEntity<String> handleException(SelfBookingAppointmentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(EmptyCollectionException.class)
+    public ResponseEntity<String> handleException(EmptyCollectionException ex) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
+    }
 }
