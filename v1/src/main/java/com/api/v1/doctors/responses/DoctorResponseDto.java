@@ -5,7 +5,7 @@ import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.people.utils.FullNameFormatter;
 import org.springframework.hateoas.RepresentationModel;
 
-public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
+public final class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     private String fullName;
     private ProfessionalStatus status;
@@ -15,7 +15,7 @@ public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     private DoctorResponseDto(String fullName,
                               ProfessionalStatus status,
-                              String medicalLicenseNumber
+                              String licenseNumber
     ) {
         this.fullName = fullName;
         this.status = status;

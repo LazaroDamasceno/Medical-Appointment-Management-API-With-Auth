@@ -7,7 +7,7 @@ import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 
 import java.time.LocalDateTime;
 
-public class CompletedEmergencyMedicalAppointmentResponseDto extends EmergencyMedicalAppointmentResponseDto {
+public final class CompletedEmergencyMedicalAppointmentResponseDto extends EmergencyMedicalAppointmentResponseDto {
 
     private LocalDateTime completedAt;
 

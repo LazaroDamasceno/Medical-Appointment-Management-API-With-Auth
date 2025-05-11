@@ -7,7 +7,7 @@ import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 
 import java.time.LocalDateTime;
 
-public class CanceledMedicalSlotResponseDto extends MedicalSlotResponseDto {
+public final class CanceledMedicalSlotResponseDto extends MedicalSlotResponseDto {
 
     private LocalDateTime canceledAt;
 

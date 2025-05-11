@@ -4,6 +4,9 @@ import com.api.v1.people.domain.exposed.Person;
 
 public final class FullNameFormatter {
 
+    private FullNameFormatter() {
+    }
+
     public static String format(Person person) {
         if (person.getMiddleName() == null) {
             return String.format("%s %s", person.getFirstName(), person.getLastName());

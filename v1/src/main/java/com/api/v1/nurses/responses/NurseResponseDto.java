@@ -5,7 +5,7 @@ import com.api.v1.nurses.domain.exposed.Nurse;
 import com.api.v1.people.utils.FullNameFormatter;
 import org.springframework.hateoas.RepresentationModel;
 
-public class NurseResponseDto extends RepresentationModel<NurseResponseDto> {
+public final class NurseResponseDto extends RepresentationModel<NurseResponseDto> {
 
     private String fullName;
     private ProfessionalStatus status;

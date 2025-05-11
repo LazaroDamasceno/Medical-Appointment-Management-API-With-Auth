@@ -6,7 +6,7 @@ import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 
 import java.time.LocalDateTime;
 
-public class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
+public final class CompletedMedicalSlotResponseDto extends MedicalSlotResponseDto {
 
     private LocalDateTime completedAt;
 

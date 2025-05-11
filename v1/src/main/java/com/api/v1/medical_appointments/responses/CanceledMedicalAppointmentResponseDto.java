@@ -7,7 +7,7 @@ import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 
 import java.time.LocalDateTime;
 
-public class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentResponseDto {
+public final class CanceledMedicalAppointmentResponseDto extends MedicalAppointmentResponseDto {
 
     private LocalDateTime canceledAt;
 
