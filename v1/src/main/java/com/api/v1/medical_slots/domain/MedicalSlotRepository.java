@@ -11,15 +11,15 @@ import java.time.LocalDateTime;
 public interface MedicalSlotRepository extends ReactiveMongoRepository<MedicalSlot, String> {
 
     @Query("{ 'doctor._id': ?0, 'availableAt': ?1, 'status': { $eq: 'ACTIVE' } }")
-    Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(String doctorId, LocalDateTime availableAt);
+    Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(String doctorLicenseNumber, LocalDateTime availableAt);
 
     @Query("{ 'doctor._id': ?0, '_id': ?1 }")
-    Mono<MedicalSlot> findByDoctorAndSlotId(String doctorId, String slotId);
+    Mono<MedicalSlot> findByDoctorAndSlotId(String doctorLicenseNumber, String slotId);
 
     @Query("{ 'medicalAppointment._id': ?0 }")
     Mono<MedicalSlot> findByMedicalAppointment(String appointmentId);
 
     @Query("{ 'doctor._id': ?0 }")
-    Flux<MedicalSlot> findAllByDoctor(String doctorId);
+    Flux<MedicalSlot> findAllByDoctor(String doctorLicenseNumber);
 
 }

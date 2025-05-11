@@ -33,9 +33,9 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(String doctorId, String slotId) {
+    public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(String doctorLicenseNumber, String slotId) {
         return doctorFinder
-                .findById(doctorId)
+                .findByLicenseNumber(doctorLicenseNumber)
                 .zipWith(medicalSlotFinder.findById(slotId))
                 .flatMap(tuple -> {
                     Doctor doctor = tuple.getT1();
@@ -45,11 +45,11 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .map(MedicalSlot::toDto)
                             .flatMap(response -> {
                                 return linkTo(methodOn(DoctorController.class)
-                                        .findById(doctorId))
-                                        .withRel("find by doctor")
+                                        .findByLicenseNumber(doctorLicenseNumber))
+                                        .withRel("find by doctor license number")
                                         .toMono()
                                         .zipWith(linkTo(methodOn(MedicalSlotController.class)
-                                                .findAllByDoctor(doctorId))
+                                                .findAllByDoctor(doctorLicenseNumber))
                                                 .withRel("find all by doctor").toMono()
                                         )
                                         .map(links -> {
@@ -64,9 +64,9 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(String doctorId) {
+    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(String doctorLicenseNumber) {
        var flux = doctorFinder
-                .findById(doctorId)
+                .findByLicenseNumber(doctorLicenseNumber)
                 .flatMapMany(foundDoctor -> {
                     return medicalSlotRepository
                             .findAllByDoctor(foundDoctor.getId())

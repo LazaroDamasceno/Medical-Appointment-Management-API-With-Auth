@@ -1,6 +1,5 @@
 package com.api.v1.doctors.services;
 
-import com.api.v1.doctors.dtos.MedicalLicenseNumber;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
@@ -32,10 +31,10 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
 
     @Override
     public Mono<ResponseEntity<DoctorResponseDto>> register(@Valid DoctorRegistrationDto registrationDto) {
-        return validate(registrationDto.person(), registrationDto.medicalLicenseNumber())
+        return validate(registrationDto.person(), registrationDto.licenseNumber())
                 .then(personRegistrationService.register(registrationDto.person())
                 .flatMap(person -> {
-                    Doctor doctor = Doctor.of(registrationDto.medicalLicenseNumber(), person, registrationDto.medicalSpeciality());
+                    Doctor doctor = Doctor.of(registrationDto.licenseNumber(), person, registrationDto.medicalSpeciality());
                     return doctorRepository
                             .save(doctor)
                             .flatMap(savedDoctor -> {
@@ -49,7 +48,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
     }
 
     private Mono<Object> validate(PersonRegistrationDto personRegistrationDto,
-                                                             MedicalLicenseNumber medicalLicenseNumber
+                                  String licenseNumber
     ) {
         return doctorRepository
                 .findBySsn(personRegistrationDto.sin())
@@ -61,7 +60,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
                         .flatMap(_ -> Mono.error(DuplicatedEmailException::new))
                 )
                 .then(doctorRepository
-                        .findByMedicalLicenseNumber(medicalLicenseNumber)
+                        .findByLicenseNumber(licenseNumber)
                         .switchIfEmpty(Mono.empty())
                         .flatMap(_ -> Mono.error(DuplicatedMedicalLicenseNumberException::new))
                 );

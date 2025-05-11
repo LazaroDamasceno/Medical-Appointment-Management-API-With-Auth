@@ -8,6 +8,6 @@ import reactor.core.publisher.Mono;
 public interface MedicalAppointmentRetrievalService {
     Mono<ResponseEntity<MedicalAppointmentResponseDto>> findById(String customerId, String appointmentId);
     ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByCustomer(String customerId);
-    ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(String doctorId);
+    ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(String doctorLicenseNumber);
     ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAll();
 }

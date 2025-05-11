@@ -75,9 +75,9 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
     }
 
     @Override
-    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(String doctorId) {
+    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(String doctorLicenseNumber) {
         var flux = doctorFinder
-                .findById(doctorId)
+                .findByLicenseNumber(doctorLicenseNumber)
                 .flatMapMany(foundDoctor -> {
                     return medicalAppointmentRepository
                             .findAllByDoctor(foundDoctor.getId())

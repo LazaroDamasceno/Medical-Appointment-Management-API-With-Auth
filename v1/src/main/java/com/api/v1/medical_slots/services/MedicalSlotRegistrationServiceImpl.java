@@ -28,9 +28,9 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
     }
 
     @Override
-    public Mono<ResponseEntity<MedicalSlotResponseDto>> register(String doctorId, @NotNull LocalDateTime availableAt) {
+    public Mono<ResponseEntity<MedicalSlotResponseDto>> register(String doctorLicenseNumber, @NotNull LocalDateTime availableAt) {
         return doctorFinder
-                .findById(doctorId)
+                .findByLicenseNumber(doctorLicenseNumber)
                 .flatMap(foundDoctor -> {
                     return validate(foundDoctor, availableAt)
                             .then(Mono.defer(() -> {

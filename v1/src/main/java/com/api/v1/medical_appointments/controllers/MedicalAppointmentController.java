@@ -30,11 +30,11 @@ public class MedicalAppointmentController {
         this.retrievalService = retrievalService;
     }
 
-    @PostMapping("{customerId}/{doctorId}/{bookedAt}")
+    @PostMapping("{customerId}/{doctorLicenseNumber}/{bookedAt}")
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(@PathVariable String customerId,
-                                                                        @PathVariable String doctorId,
+                                                                        @PathVariable String doctorLicenseNumber,
                                                                         @PathVariable @NotNull LocalDateTime bookedAt) {
-        return registrationService.register(customerId, doctorId, bookedAt);
+        return registrationService.register(customerId, doctorLicenseNumber, bookedAt);
     }
 
     @PatchMapping("{customerId}/{appointmentId}/cancellation")
@@ -54,9 +54,9 @@ public class MedicalAppointmentController {
         return retrievalService.findAllByCustomer(customerId);
     }
 
-    @GetMapping("{doctorId}")
-    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(@PathVariable String doctorId) {
-        return retrievalService.findAllByDoctor(doctorId);
+    @GetMapping("{doctorLicenseNumber}")
+    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(@PathVariable String doctorLicenseNumber) {
+        return retrievalService.findAllByDoctor(doctorLicenseNumber);
     }
 
     @GetMapping

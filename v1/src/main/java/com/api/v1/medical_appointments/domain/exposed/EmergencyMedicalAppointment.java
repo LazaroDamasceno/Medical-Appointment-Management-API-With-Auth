@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-public class EmergyMedicalAppointment {
+public class EmergencyMedicalAppointment {
 
     @Id
     private String id;
@@ -24,9 +24,9 @@ public class EmergyMedicalAppointment {
     private LocalDateTime completedAt;
     private BigDecimal price;
 
-    private EmergyMedicalAppointment() {}
+    private EmergencyMedicalAppointment() {}
 
-    private EmergyMedicalAppointment(Customer customer, Doctor doctor, BigDecimal price) {
+    private EmergencyMedicalAppointment(Customer customer, Doctor doctor, BigDecimal price) {
         this.id = UUID.randomUUID().toString();
         this.customer = customer;
         this.doctor = doctor;
@@ -35,8 +35,8 @@ public class EmergyMedicalAppointment {
         this.status = MedicalAppointmentStatus.ACTIVE;
     }
 
-    public static EmergyMedicalAppointment of(Customer customer, Doctor doctor, double price) {
-        return new EmergyMedicalAppointment(customer, doctor, BigDecimal.valueOf(price));
+    public static EmergencyMedicalAppointment of(Customer customer, Doctor doctor, double price) {
+        return new EmergencyMedicalAppointment(customer, doctor, BigDecimal.valueOf(price));
     }
 
     void markAsCompleted() {

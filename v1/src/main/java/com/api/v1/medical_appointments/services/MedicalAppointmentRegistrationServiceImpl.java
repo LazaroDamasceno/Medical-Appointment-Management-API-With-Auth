@@ -52,12 +52,12 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
 
     @Override
     public Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(String customerId,
-                                                                        String doctorId,
+                                                                        String doctorLicenseNumber,
                                                                         @NotNull LocalDateTime bookedAt
     ) {
         return Mono.zip(
                 customerFinder.findById(customerId),
-                doctorFinder.findById(doctorId)
+                doctorFinder.findByLicenseNumber(doctorLicenseNumber)
         ).flatMap(tuple -> {
             Customer customer = tuple.getT1();
             Doctor doctor = tuple.getT2();
@@ -76,13 +76,13 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                                                         linkTo(methodOn(CustomerController.class).findById(customerId))
                                                                                 .withRel("find customer")
                                                                                 .toMono(),
-                                                                        linkTo(methodOn(DoctorController.class).findById(doctorId))
+                                                                        linkTo(methodOn(DoctorController.class).findByLicenseNumber(doctorLicenseNumber))
                                                                                 .withRel("find doctor")
                                                                                 .toMono(),
                                                                         linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
                                                                                 .withRel("find all by customer")
                                                                                 .toMono(),
-                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByDoctor(doctorId))
+                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByDoctor(doctorLicenseNumber))
                                                                                 .withRel("find all by doctor")
                                                                                 .toMono()
                                                                 ).map(links -> appointment

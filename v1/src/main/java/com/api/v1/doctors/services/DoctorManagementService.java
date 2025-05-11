@@ -5,6 +5,6 @@ import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 public interface DoctorManagementService {
-    Mono<ResponseEntity<EmptyResponse>> terminate(String doctorId);
-    Mono<ResponseEntity<EmptyResponse>> rehire(String doctorId);
+    Mono<ResponseEntity<EmptyResponse>> terminate(String doctorLicenseNumber);
+    Mono<ResponseEntity<EmptyResponse>> rehire(String doctorLicenseNumber);
 }

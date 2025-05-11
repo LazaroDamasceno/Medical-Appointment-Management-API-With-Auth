@@ -34,9 +34,9 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
     }
 
     @Override
-    public Mono<ResponseEntity<EmptyResponse>> terminate(String doctorId) {
+    public Mono<ResponseEntity<EmptyResponse>> terminate(String doctorLicenseNumber) {
         return doctorFinder
-                .findById(doctorId)
+                .findByLicenseNumber(doctorLicenseNumber)
                 .flatMap(foundDoctor -> {
                     return onTerminatedDoctor(foundDoctor)
                             .then(Mono.defer(() -> {
@@ -50,14 +50,14 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
                             }));
                 })
                 .flatMap(_ -> {
-                    return hateoas(doctorId);
+                    return hateoas(doctorLicenseNumber);
                 });
     }
 
     @Override
-    public Mono<ResponseEntity<EmptyResponse>> rehire(String doctorId) {
+    public Mono<ResponseEntity<EmptyResponse>> rehire(String doctorLicenseNumber) {
         return doctorFinder
-                .findById(doctorId)
+                .findByLicenseNumber(doctorLicenseNumber)
                 .flatMap(foundDoctor -> {
                     return onActiveDoctor(foundDoctor)
                             .then(Mono.defer(() -> {
@@ -71,7 +71,7 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
                             }));
                 })
                 .flatMap(_ -> {
-                    return hateoas(doctorId);
+                    return hateoas(doctorLicenseNumber);
                 });
     }
 
@@ -89,10 +89,14 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
         return Mono.empty();
     }
 
-    private Mono<ResponseEntity<EmptyResponse>> hateoas(String doctorId) {
+    private Mono<ResponseEntity<EmptyResponse>> hateoas(String doctorLicenseNumber) {
         return Mono.zip(
-                linkTo(methodOn(DoctorController.class).findById(doctorId)).withRel("find by id").toMono(),
-                linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
+                linkTo(methodOn(DoctorController.class).findByLicenseNumber(doctorLicenseNumber))
+                        .withRel("find by doctor license number")
+                        .toMono(),
+                linkTo(methodOn(DoctorController.class).findAll())
+                        .withRel("find all")
+                        .toMono()
         ).map(tuple -> {
             return EmptyResponse
                     .empty()

@@ -23,9 +23,9 @@ public final class MedicalSlotFinder {
                 .switchIfEmpty(Mono.error(new MedicalSlotNotFoundException(slotId)));
     }
 
-    public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(String doctorId, LocalDateTime availableAt) {
+    public Mono<MedicalSlot> findActiveByDoctorAndAvailableAt(String doctorLicenseNumber, LocalDateTime availableAt) {
         return medicalSlotRepository
-                .findActiveByDoctorAndAvailableAt(doctorId, availableAt)
+                .findActiveByDoctorAndAvailableAt(doctorLicenseNumber, availableAt)
                 .singleOptional()
                 .flatMap(optional -> {
                     if (optional.isEmpty()) {

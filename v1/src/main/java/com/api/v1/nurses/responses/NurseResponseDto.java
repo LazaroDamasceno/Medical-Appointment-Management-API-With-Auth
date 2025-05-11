@@ -2,7 +2,6 @@ package com.api.v1.nurses.responses;
 
 import com.api.v1.common.ProfessionalStatus;
 import com.api.v1.nurses.domain.exposed.Nurse;
-import com.api.v1.nurses.dtos.NurseLicenseNumber;
 import com.api.v1.people.utils.FullNameFormatter;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -10,13 +9,13 @@ public class NurseResponseDto extends RepresentationModel<NurseResponseDto> {
 
     private String fullName;
     private ProfessionalStatus status;
-    private NurseLicenseNumber licenseNumber;
+    private String licenseNumber;
 
     private NurseResponseDto() {}
 
     private NurseResponseDto(String fullName,
                              ProfessionalStatus status,
-                             NurseLicenseNumber licenseNumber
+                             String licenseNumber
     ) {
         this.fullName = fullName;
         this.status = status;
@@ -39,7 +38,7 @@ public class NurseResponseDto extends RepresentationModel<NurseResponseDto> {
         return status;
     }
 
-    public NurseLicenseNumber getLicenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 }

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public interface MedicalAppointmentRegistrationService {
     Mono<ResponseEntity<MedicalAppointmentResponseDto>> register(String customerId,
-                                                                 String doctorId,
+                                                                 String doctorLicenseNumber,
                                                                  LocalDateTime bookedAt
     );
 }

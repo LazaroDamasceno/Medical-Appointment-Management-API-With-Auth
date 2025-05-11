@@ -2,7 +2,7 @@ package com.api.v1.medical_appointments.responses;
 
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
-import com.api.v1.medical_appointments.domain.exposed.EmergyMedicalAppointment;
+import com.api.v1.medical_appointments.domain.exposed.EmergencyMedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class CompletedEmergencyMedicalAppointmentResponseDto extends EmergencyMe
         this.completedAt = completedAt;
     }
 
-    public static CompletedEmergencyMedicalAppointmentResponseDto from(EmergyMedicalAppointment appointment) {
+    public static CompletedEmergencyMedicalAppointmentResponseDto from(EmergencyMedicalAppointment appointment) {
         return new CompletedEmergencyMedicalAppointmentResponseDto(
                 appointment.getId(),
                 appointment.getCustomer().toDto(),

@@ -7,5 +7,5 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 
 public interface MedicalSlotRegistrationService {
-    Mono<ResponseEntity<MedicalSlotResponseDto>> register(String doctorId, LocalDateTime availableAt);
+    Mono<ResponseEntity<MedicalSlotResponseDto>> register(String doctorLicenseNumber, LocalDateTime availableAt);
 }

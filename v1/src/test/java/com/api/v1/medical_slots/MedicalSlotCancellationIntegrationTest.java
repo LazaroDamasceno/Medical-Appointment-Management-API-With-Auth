@@ -20,11 +20,11 @@ public class MedicalSlotCancellationIntegrationTest {
     @Order(1)
     @Test
     void testSuccessfulCancellation() {
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         String slotId = "";
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
+                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorLicenseNumber, slotId))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -33,11 +33,11 @@ public class MedicalSlotCancellationIntegrationTest {
     @Order(2)
     @Test
     void testUnsuccessfulCancellation_DoctorNotFound() {
-        String doctorId = UUID.randomUUID().toString();
+        String doctorLicenseNumber = UUID.randomUUID().toString();
         String slotId = UUID.randomUUID().toString();
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
+                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorLicenseNumber, slotId))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -46,11 +46,11 @@ public class MedicalSlotCancellationIntegrationTest {
     @Order(3)
     @Test
     void testUnsuccessfulCancellation_MedicalSlotNotFound() {
-        String doctorId = UUID.randomUUID().toString();
+        String doctorLicenseNumber = UUID.randomUUID().toString();
         String slotId = UUID.randomUUID().toString();
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
+                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorLicenseNumber, slotId))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -59,11 +59,11 @@ public class MedicalSlotCancellationIntegrationTest {
     @Order(4)
     @Test
     void testUnsuccessfulCancellation_NotAssociatedDoctor() {
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         String slotId = "";
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
+                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorLicenseNumber, slotId))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -72,11 +72,11 @@ public class MedicalSlotCancellationIntegrationTest {
     @Order(5)
     @Test
     void testUnsuccessfulCancellation_CanceledMedicalSlot() {
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         String slotId = "";
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
+                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorLicenseNumber, slotId))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -85,11 +85,11 @@ public class MedicalSlotCancellationIntegrationTest {
     @Order(6)
     @Test
     void testUnsuccessfulCancellation_CompletedMedicalSlot() {
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         String slotId = "";
         webTestClient
                 .patch()
-                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorId, slotId))
+                .uri("api/v1/medical-slots/%s/%s/cancellation".formatted(doctorLicenseNumber, slotId))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();

@@ -31,36 +31,36 @@ public class MedicalSlotController {
         this.retrievalService = retrievalService;
     }
 
-    @PostMapping("{doctorId}/{availableAt}")
+    @PostMapping("{doctorLicenseNumber}/{availableAt}")
     @Operation(summary = "Register a new medical slot")
-    public Mono<ResponseEntity<MedicalSlotResponseDto>> register(@PathVariable String doctorId,
+    public Mono<ResponseEntity<MedicalSlotResponseDto>> register(@PathVariable String doctorLicenseNumber,
                                                                  @NotNull @PathVariable LocalDateTime availableAt
     ) {
-        return registrationService.register(doctorId, availableAt);
+        return registrationService.register(doctorLicenseNumber, availableAt);
     }
 
-    @PatchMapping("{doctorId}/{slotId}/cancellation")
+    @PatchMapping("{doctorLicenseNumber}/{slotId}/cancellation")
     @Operation(summary = "Cancel a medical slot")
-    public Mono<ResponseEntity<EmptyResponse>> cancel(@PathVariable String doctorId, @PathVariable String slotId) {
-        return managementService.cancel(doctorId, slotId);
+    public Mono<ResponseEntity<EmptyResponse>> cancel(@PathVariable String doctorLicenseNumber, @PathVariable String slotId) {
+        return managementService.cancel(doctorLicenseNumber, slotId);
     }
 
-    @PatchMapping("{doctorId}/{slotId}/completion")
+    @PatchMapping("{doctorLicenseNumber}/{slotId}/completion")
     @Operation(summary = "Complete a medical slot")
-    public Mono<ResponseEntity<EmptyResponse>> complete(@PathVariable String doctorId, @PathVariable String slotId) {
-        return managementService.complete(doctorId, slotId);
+    public Mono<ResponseEntity<EmptyResponse>> complete(@PathVariable String doctorLicenseNumber, @PathVariable String slotId) {
+        return managementService.complete(doctorLicenseNumber, slotId);
     }
 
-    @GetMapping("{doctorId}/{slotId}")
+    @GetMapping("{doctorLicenseNumber}/{slotId}")
     @Operation(summary = "Find a medical slot by doctor and id")
-    public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(@PathVariable String doctorId, @PathVariable String slotId) {
-        return retrievalService.findByDoctorAndId(doctorId, slotId);
+    public Mono<ResponseEntity<MedicalSlotResponseDto>> findByDoctorAndId(@PathVariable String doctorLicenseNumber, @PathVariable String slotId) {
+        return retrievalService.findByDoctorAndId(doctorLicenseNumber, slotId);
     }
 
-    @GetMapping("{doctorId}")
+    @GetMapping("{doctorLicenseNumber}")
     @Operation(summary = "Find medical slots by doctor")
-    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(@PathVariable String doctorId) {
-        return retrievalService.findAllByDoctor(doctorId);
+    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(@PathVariable String doctorLicenseNumber) {
+        return retrievalService.findAllByDoctor(doctorLicenseNumber);
     }
 
     @GetMapping

@@ -6,6 +6,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface DoctorRetrievalService {
-    Mono<ResponseEntity<DoctorResponseDto>> findById(String id);
+    Mono<ResponseEntity<DoctorResponseDto>> findByLicenseNumber(String id);
     ResponseEntity<Flux<DoctorResponseDto>> findAll();
 }

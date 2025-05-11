@@ -6,5 +6,5 @@ import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 
 public interface DoctorUpdatingService {
-    Mono<ResponseEntity<EmptyResponse>> update(String doctorId, PersonUpdatingDto updatingDto);
+    Mono<ResponseEntity<EmptyResponse>> update(String doctorLicenseNumber, PersonUpdatingDto updatingDto);
 }

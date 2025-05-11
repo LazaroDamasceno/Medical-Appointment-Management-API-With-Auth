@@ -2,7 +2,7 @@ package com.api.v1.medical_appointments.responses;
 
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
-import com.api.v1.medical_appointments.domain.exposed.EmergyMedicalAppointment;
+import com.api.v1.medical_appointments.domain.exposed.EmergencyMedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -32,7 +32,7 @@ public class EmergencyMedicalAppointmentResponseDto extends RepresentationModel<
         this.createdAt = createdAt;
     }
 
-    public static EmergencyMedicalAppointmentResponseDto from(EmergyMedicalAppointment appointment) {
+    public static EmergencyMedicalAppointmentResponseDto from(EmergencyMedicalAppointment appointment) {
         return new EmergencyMedicalAppointmentResponseDto(
                 appointment.getId(),
                 appointment.getCustomer().toDto(),

@@ -36,9 +36,9 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
     }
 
     @Override
-    public Mono<ResponseEntity<EmptyResponse>> update(String doctorId, @Valid PersonUpdatingDto updatingDto) {
+    public Mono<ResponseEntity<EmptyResponse>> update(String doctorLicenseNumber, @Valid PersonUpdatingDto updatingDto) {
         return doctorFinder
-                .findById(doctorId)
+                .findByLicenseNumber(doctorLicenseNumber)
                 .flatMap(foundDoctor -> {
                     return personUpdatingService.update(foundDoctor.getPerson(), updatingDto)
                             .flatMap(updatedPerson -> {
@@ -53,8 +53,8 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
                 })
                 .flatMap(_ -> {
                     return linkTo(methodOn(DoctorController.class)
-                            .findById(doctorId))
-                            .withRel("find by id")
+                            .findByLicenseNumber(doctorLicenseNumber))
+                            .withRel("find by doctor license number")
                             .toMono()
                             .map(link -> {
                                 EmptyResponse response = EmptyResponse.empty();

@@ -1,7 +1,6 @@
 package com.api.v1.doctors.responses;
 
 import com.api.v1.common.ProfessionalStatus;
-import com.api.v1.doctors.dtos.MedicalLicenseNumber;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.people.utils.FullNameFormatter;
 import org.springframework.hateoas.RepresentationModel;
@@ -10,17 +9,17 @@ public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     private String fullName;
     private ProfessionalStatus status;
-    private MedicalLicenseNumber licenseNumber;
+    private String licenseNumber;
 
     DoctorResponseDto() {}
 
     private DoctorResponseDto(String fullName,
                               ProfessionalStatus status,
-                              MedicalLicenseNumber medicalLicenseNumber
+                              String medicalLicenseNumber
     ) {
         this.fullName = fullName;
         this.status = status;
-        this.licenseNumber = medicalLicenseNumber;
+        this.licenseNumber = licenseNumber;
     }
 
     public static DoctorResponseDto from(Doctor doctor) {
@@ -39,7 +38,7 @@ public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
         return status;
     }
 
-    public MedicalLicenseNumber getLicenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 }

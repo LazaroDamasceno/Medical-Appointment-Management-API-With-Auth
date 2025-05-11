@@ -109,11 +109,6 @@ public class GlobalErrorHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 
-    @ExceptionHandler(NonExistentStateNotFound.class)
-    public ResponseEntity<String> handleException(NonExistentStateNotFound ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-    }
-
     @ExceptionHandler(NonExistentBookingDateTimeException.class)
     public ResponseEntity<String> handleException(NonExistentBookingDateTimeException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());

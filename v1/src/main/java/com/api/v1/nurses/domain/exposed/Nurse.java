@@ -1,7 +1,6 @@
 package com.api.v1.nurses.domain.exposed;
 
 import com.api.v1.common.ProfessionalStatus;
-import com.api.v1.nurses.dtos.NurseLicenseNumber;
 import com.api.v1.nurses.responses.NurseResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;
@@ -16,14 +15,14 @@ public class Nurse {
     @Id
     private String id;
     private Person person;
-    private NurseLicenseNumber licenseNumber;
+    private String licenseNumber;
     private ProfessionalStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime terminatedAt;
 
     private Nurse() {}
 
-    private Nurse(Person person, NurseLicenseNumber licenseNumber, ProfessionalStatus status) {
+    private Nurse(Person person, String licenseNumber, ProfessionalStatus status) {
         this.id = UUID.randomUUID().toString();
         this.licenseNumber = licenseNumber;
         this.person = person;
@@ -32,7 +31,7 @@ public class Nurse {
     }
 
     public static Nurse of(Person person,
-                           NurseLicenseNumber licenseNumber,
+                           String licenseNumber,
                            ProfessionalStatus status
     ) {
         return new Nurse(person, licenseNumber, status);
@@ -60,7 +59,7 @@ public class Nurse {
         return person;
     }
 
-    public NurseLicenseNumber getLicenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 

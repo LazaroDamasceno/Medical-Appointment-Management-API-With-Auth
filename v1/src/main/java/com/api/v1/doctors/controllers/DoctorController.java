@@ -42,16 +42,16 @@ public class DoctorController {
         return registrationService.register(registrationDto);
     }
 
-    @PatchMapping("{doctorId}")
+    @PatchMapping("{doctorLicenseNumber}")
     @Operation(summary = "Update a new doctor")
-    public Mono<ResponseEntity<EmptyResponse>> update(@PathVariable String doctorId, @Valid @RequestBody PersonUpdatingDto updatingDto) {
-        return updatingService.update(doctorId, updatingDto);
+    public Mono<ResponseEntity<EmptyResponse>> update(@PathVariable String doctorLicenseNumber, @Valid @RequestBody PersonUpdatingDto updatingDto) {
+        return updatingService.update(doctorLicenseNumber, updatingDto);
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "Find a doctor by id")
-    public Mono<ResponseEntity<DoctorResponseDto>> findById(@PathVariable String id) {
-        return retrievalService.findById(id);
+    @Operation(summary = "Find a doctor by license number")
+    public Mono<ResponseEntity<DoctorResponseDto>> findByLicenseNumber(@PathVariable String licenseNumber) {
+        return retrievalService.findByLicenseNumber(licenseNumber);
     }
 
     @GetMapping
@@ -60,15 +60,15 @@ public class DoctorController {
         return retrievalService.findAll();
     }
 
-    @PatchMapping("{doctorId}/termination")
+    @PatchMapping("{doctorLicenseNumber}/termination")
     @Operation(summary = "Terminate a doctor")
-    public Mono<ResponseEntity<EmptyResponse>> terminate(@PathVariable String doctorId) {
-        return managementService.terminate(doctorId);
+    public Mono<ResponseEntity<EmptyResponse>> terminate(@PathVariable String doctorLicenseNumber) {
+        return managementService.terminate(doctorLicenseNumber);
     }
 
-    @PatchMapping("{doctorId}/rehiring")
+    @PatchMapping("{doctorLicenseNumber}/rehiring")
     @Operation(summary = "Rehire a doctor")
-    public Mono<ResponseEntity<EmptyResponse>> rehire(@PathVariable String doctorId) {
-        return managementService.rehire(doctorId);
+    public Mono<ResponseEntity<EmptyResponse>> rehire(@PathVariable String doctorLicenseNumber) {
+        return managementService.rehire(doctorLicenseNumber);
     }
 }

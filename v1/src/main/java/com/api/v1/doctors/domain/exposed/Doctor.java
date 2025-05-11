@@ -1,7 +1,6 @@
 package com.api.v1.doctors.domain.exposed;
 
 import com.api.v1.common.ProfessionalStatus;
-import com.api.v1.doctors.dtos.MedicalLicenseNumber;
 import com.api.v1.doctors.enums.MedicalSpeciality;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
@@ -16,7 +15,7 @@ public class Doctor {
 
     @Id
     private String id;
-    private MedicalLicenseNumber licenseNumber;
+    private String licenseNumber;
     private Person person;
     private MedicalSpeciality medicalSpeciality;
     private ProfessionalStatus status;
@@ -27,7 +26,7 @@ public class Doctor {
     private Doctor() {
     }
 
-    private Doctor(MedicalLicenseNumber licenseNumber,
+    private Doctor(String licenseNumber,
                    Person person,
                    MedicalSpeciality medicalSpeciality
     ) {
@@ -39,7 +38,7 @@ public class Doctor {
         this.status = ProfessionalStatus.ACTIVE;
     }
 
-    public static Doctor of(MedicalLicenseNumber licenseNumber, Person person, MedicalSpeciality medicalSpeciality) {
+    public static Doctor of(String licenseNumber, Person person, MedicalSpeciality medicalSpeciality) {
         return new Doctor(
                 licenseNumber,
                 person,
@@ -70,7 +69,7 @@ public class Doctor {
         return id;
     }
 
-    public MedicalLicenseNumber getLicenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 

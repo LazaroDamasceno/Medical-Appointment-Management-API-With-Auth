@@ -15,9 +15,9 @@ public final class DoctorFinder {
         this.doctorRepository = doctorRepository;
     }
 
-    public Mono<Doctor> findById(String doctorId) {
+    public Mono<Doctor> findByLicenseNumber(String licenseNumber) {
         return doctorRepository
-                .findById(doctorId)
+                .findByLicenseNumber(licenseNumber)
                 .switchIfEmpty(Mono.error(new DoctorNotFoundException()));
     }
 

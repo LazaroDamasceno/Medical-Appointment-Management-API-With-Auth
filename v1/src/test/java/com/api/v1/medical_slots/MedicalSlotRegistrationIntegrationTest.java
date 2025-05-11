@@ -21,11 +21,11 @@ public class MedicalSlotRegistrationIntegrationTest {
     @Order(1)
     @Test
     void testSuccessfulRegistration() {
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         LocalDateTime availableAt = LocalDateTime.of(2025,12,12,12,30,30);
         webTestClient
                 .post()
-                .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))
+                .uri("api/v1/medical-slots/%s/%s".formatted(doctorLicenseNumber, availableAt))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -34,11 +34,11 @@ public class MedicalSlotRegistrationIntegrationTest {
     @Order(2)
     @Test
     void testUnsuccessfulRegistration_DoctorNotFound() {
-        String doctorId = UUID.randomUUID().toString();
+        String doctorLicenseNumber = UUID.randomUUID().toString();
         LocalDateTime availableAt = LocalDateTime.now();
         webTestClient
                 .post()
-                .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))
+                .uri("api/v1/medical-slots/%s/%s".formatted(doctorLicenseNumber, availableAt))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -47,11 +47,11 @@ public class MedicalSlotRegistrationIntegrationTest {
     @Order(3)
     @Test
     void testUnsuccessfulRegistration_DuplicatedBookingDateTime() {
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         LocalDateTime availableAt = LocalDateTime.of(2025,12,12,12,30,30);
         webTestClient
                 .post()
-                .uri("api/v1/medical-slots/%s/%s".formatted(doctorId, availableAt))
+                .uri("api/v1/medical-slots/%s/%s".formatted(doctorLicenseNumber, availableAt))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();

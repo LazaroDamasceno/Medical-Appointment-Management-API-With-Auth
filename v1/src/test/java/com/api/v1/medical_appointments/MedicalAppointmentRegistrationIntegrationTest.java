@@ -22,11 +22,11 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     @Test
     void testSuccessfulRegistration() {
         String customerId = "";
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         LocalDateTime bookedAt = LocalDateTime.of(2025,12,12,12,30,30);
         webTestClient
                 .post()
-                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
+                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorLicenseNumber, bookedAt))
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -36,11 +36,11 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     @Test
     void testUnsuccessfulRegistration_CustomerNotFound() {
         String customerId = UUID.randomUUID().toString();
-        String doctorId = UUID.randomUUID().toString();
+        String doctorLicenseNumber = UUID.randomUUID().toString();
         LocalDateTime bookedAt = LocalDateTime.now();
         webTestClient
                 .post()
-                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
+                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorLicenseNumber, bookedAt))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -50,11 +50,11 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     @Test
     void testUnsuccessfulRegistration_DoctorNotFound() {
         String customerId = "";
-        String doctorId = UUID.randomUUID().toString();
+        String doctorLicenseNumber = UUID.randomUUID().toString();
         LocalDateTime bookedAt = LocalDateTime.now();
         webTestClient
                 .post()
-                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
+                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorLicenseNumber, bookedAt))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -64,11 +64,11 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     @Test
     void testUnsuccessfulRegistration_DuplicatedBookingDateTime() {
         String customerId = "";
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         LocalDateTime bookedAt = LocalDateTime.of(2025,12,12,12,30,30);
         webTestClient
                 .post()
-                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
+                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorLicenseNumber, bookedAt))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -78,11 +78,11 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     @Test
     void testUnsuccessfulRegistration_NonAssociatedDoctor() {
         String customerId = "";
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         LocalDateTime bookedAt = LocalDateTime.now();
         webTestClient
                 .post()
-                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
+                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorLicenseNumber, bookedAt))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
@@ -92,11 +92,11 @@ public class MedicalAppointmentRegistrationIntegrationTest {
     @Test
     void testUnsuccessfulRegistration_NonExistentBookingDateTime() {
         String customerId = "";
-        String doctorId = "";
+        String doctorLicenseNumber = "";
         LocalDateTime bookedAt = LocalDateTime.now();
         webTestClient
                 .post()
-                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorId, bookedAt))
+                .uri("api/v1/medical-appointments/%s/%s/%s".formatted(customerId, doctorLicenseNumber, bookedAt))
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
