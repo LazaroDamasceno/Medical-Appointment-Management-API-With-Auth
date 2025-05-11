@@ -2,12 +2,12 @@ package com.api.v1.common;
 
 public class Result {
 
-    private String statusCode;
+    private int statusCode;
 
-    private Result() {
+    protected Result() {
     }
 
-    protected Result(String statusCode) {
+    protected Result(int statusCode) {
         this.statusCode = statusCode;
     }
 
@@ -15,7 +15,7 @@ public class Result {
         return new Result();
     }
 
-    public String getStatusCode() {
+    public int getStatusCode() {
         return statusCode;
     }
 }
