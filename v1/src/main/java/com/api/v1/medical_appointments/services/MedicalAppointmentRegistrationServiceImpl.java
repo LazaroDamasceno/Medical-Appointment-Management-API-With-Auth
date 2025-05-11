@@ -2,9 +2,11 @@ package com.api.v1.medical_appointments.services;
 
 import com.api.v1.common.DuplicatedBookingDateTimeException;
 import com.api.v1.common.NonExistentBookingDateTimeException;
+import com.api.v1.common.ProfessionalStatus;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
 import com.api.v1.doctors.domain.exposed.Doctor;
+import com.api.v1.doctors.exceptions.TerminatedDoctorException;
 import com.api.v1.doctors.utils.DoctorFinder;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
@@ -100,6 +102,9 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                     }
                     else if (!doctor.getId().equals(medicalSlot.getDoctor().getId())) {
                         return Mono.error(new InaccessibleMedicalSlot(doctor.getLicenseNumber()));
+                    }
+                    else if (doctor.getStatus().equals(ProfessionalStatus.TERMINATED)) {
+                        return Mono.error(new TerminatedDoctorException(doctor.getLicenseNumber()));
                     }
                     return Mono.empty();
                 })

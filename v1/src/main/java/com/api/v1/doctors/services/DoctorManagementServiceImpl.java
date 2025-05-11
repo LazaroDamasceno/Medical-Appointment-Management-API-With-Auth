@@ -90,17 +90,14 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
     }
 
     private Mono<ResponseEntity<EmptyResponse>> hateoas(String doctorLicenseNumber) {
-        return Mono.zip(
-                linkTo(methodOn(DoctorController.class).findByLicenseNumber(doctorLicenseNumber))
-                        .withRel("find by license number")
-                        .toMono(),
-                linkTo(methodOn(DoctorController.class).findAll())
-                        .withRel("find all")
-                        .toMono()
-        ).map(tuple -> {
-            return EmptyResponse
-                    .empty()
-                    .add(tuple.getT1(), tuple.getT2());
-        }).map(ResponseEntity::ok);
+        return linkTo(methodOn(DoctorController.class).findByLicenseNumber(doctorLicenseNumber))
+                    .withRel("find by license number")
+                    .toMono()
+                .map(link -> {
+                    return EmptyResponse
+                        .empty()
+                        .add(link);
+                })
+                .map(ResponseEntity::ok);
     }
 }
