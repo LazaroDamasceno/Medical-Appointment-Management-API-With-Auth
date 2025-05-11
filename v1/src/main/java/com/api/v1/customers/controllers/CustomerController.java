@@ -1,6 +1,5 @@
 package com.api.v1.customers.controllers;
 
-import com.api.v1.common.PaginationResult;
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
