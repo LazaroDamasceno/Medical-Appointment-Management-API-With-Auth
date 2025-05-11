@@ -1,6 +1,7 @@
 package com.api.v1.people.domain;
 
 import com.api.v1.people.requests.PersonRegistrationDto;
+import com.api.v1.people.requests.PersonUpdatingDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -29,6 +30,19 @@ public record Person(
                 registrationDto.sin(),
                 registrationDto.birthDate(),
                 registrationDto.email(),
+                LocalDateTime.now()
+        );
+    }
+
+    public static Person from(PersonUpdatingDto updatingDto, String sin) {
+        return new Person(
+                UUID.randomUUID().toString(),
+                updatingDto.firstName(),
+                updatingDto.middleName(),
+                updatingDto.lastName(),
+                sin,
+                updatingDto.birthDate(),
+                updatingDto.email(),
                 LocalDateTime.now()
         );
     }
