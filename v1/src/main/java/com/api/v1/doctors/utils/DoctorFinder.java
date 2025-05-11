@@ -18,7 +18,7 @@ public final class DoctorFinder {
     public Mono<Doctor> findByLicenseNumber(String licenseNumber) {
         return doctorRepository
                 .findByLicenseNumber(licenseNumber)
-                .switchIfEmpty(Mono.error(new DoctorNotFoundException()));
+                .switchIfEmpty(Mono.error(new DoctorNotFoundException(licenseNumber)));
     }
 
 }

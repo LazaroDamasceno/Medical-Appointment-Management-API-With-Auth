@@ -1,7 +1,7 @@
 package com.api.v1.doctors.services;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.doctors.controllers.DoctorController;
+import com.api.v1.doctors.controllers.exposed.DoctorController;
 import com.api.v1.doctors.domain.DoctorAuditTrail;
 import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v1.doctors.domain.DoctorRepository;
@@ -92,7 +92,7 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
     private Mono<ResponseEntity<EmptyResponse>> hateoas(String doctorLicenseNumber) {
         return Mono.zip(
                 linkTo(methodOn(DoctorController.class).findByLicenseNumber(doctorLicenseNumber))
-                        .withRel("find by doctor license number")
+                        .withRel("find by license number")
                         .toMono(),
                 linkTo(methodOn(DoctorController.class).findAll())
                         .withRel("find all")

@@ -38,12 +38,12 @@ public class Nurse {
         return NurseResponseDto.from(this);
     }
 
-    void markAsTerminated() {
+    public void markAsTerminated() {
         status = ProfessionalStatus.TERMINATED;
         terminatedAt = LocalDateTime.now();
     }
 
-    void markAsRehired() {
+    public void markAsRehired() {
         status = ProfessionalStatus.ACTIVE;
         terminatedAt = null;
     }

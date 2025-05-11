@@ -76,11 +76,11 @@ public class MedicalAppointmentCancellationServiceImpl implements MedicalAppoint
                     }));
         }).then(Mono.defer(() -> {
             return Mono.zip(
-                    linkTo(methodOn(CustomerController.class).findById(customerId))
-                            .withRel("find customer")
-                            .toMono(),
                     linkTo(methodOn(MedicalAppointmentController.class).findById(customerId, appointmentId))
                             .withRel("find medical appointment")
+                            .toMono(),
+                    linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
+                            .withRel("find all medical appointment by customer")
                             .toMono()
             ).map(tuple -> {
                 return EmptyResponse
