@@ -1,4 +1,4 @@
-package com.api.v1.people.people.requests;
+package com.api.v1.people.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
