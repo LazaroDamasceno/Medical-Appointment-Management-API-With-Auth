@@ -5,6 +5,7 @@ import com.api.v1.people.domain.PersonAuditTrail;
 import com.api.v1.people.domain.PersonAuditTrailRepository;
 import com.api.v1.people.domain.PersonRepository;
 import com.api.v1.people.requests.PersonUpdatingDto;
+import com.api.v1.people.services.exposed.PersonUpdatingService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
