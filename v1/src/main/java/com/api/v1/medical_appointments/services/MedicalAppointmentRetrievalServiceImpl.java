@@ -48,38 +48,38 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .then(Mono.defer(() -> medicalAppointmentRepository
                                     .findById(customer.getId(), medicalAppointment.getId())
                                     .map(MedicalAppointment::toDto)
-                                    .flatMap(response -> Mono.zip(
-                                            linkTo(methodOn(MedicalAppointmentController.class).findById(customerId, appointmentId))
-                                                    .withSelfRel()
-                                                    .toMono(),
-                                            linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
-                                                    .withRel("find all by customer")
-                                                    .toMono(),
-                                            response::add
-                                    ))
+                                    .flatMap(response -> {
+                                        return linkTo(methodOn(MedicalAppointmentController.class).findById(customerId, appointmentId))
+                                                .withSelfRel()
+                                                .toMono()
+                                                .map(response::add)
+                                                .map(ResponseEntity::ok);
+                                    })
                             ));
-                })
-                .map(ResponseEntity::ok);
+                });
     }
 
     @Override
-    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByCustomer(String customerId) {
+    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByCustomer(String customerId, long size) {
         var flux = customerFinder
                 .findById(customerId)
                 .flatMapMany(foundCustomer -> {
-                    return  medicalAppointmentRepository.findAllByCustomer(foundCustomer.getId())
+                    return  medicalAppointmentRepository
+                            .findAllByCustomer(foundCustomer.getId())
+                            .take(size)
                             .map(MedicalAppointment::toDto);
                 });
         return ResponseEntity.ok(flux);
     }
 
     @Override
-    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(String doctorLicenseNumber) {
+    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(String doctorLicenseNumber, long size) {
         var flux = doctorFinder
                 .findByLicenseNumber(doctorLicenseNumber)
                 .flatMapMany(foundDoctor -> {
                     return medicalAppointmentRepository
                             .findAllByDoctor(foundDoctor.getId())
+                            .take(size)
                             .map(MedicalAppointment::toDto);
                 });
         return ResponseEntity.ok(flux);

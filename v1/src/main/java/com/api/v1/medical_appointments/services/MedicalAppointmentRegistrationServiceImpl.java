@@ -6,7 +6,6 @@ import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
 import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
 import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
@@ -23,9 +22,6 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.time.LocalDateTime;
-
-import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @Service
 public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppointmentRegistrationService {
@@ -71,24 +67,12 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                             .flatMap(appointment -> {
                                                 return medicalSlotUpdatingService
                                                         .update(foundSlot, appointment)
-                                                        .flatMap(_ -> Mono.zip(
-                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
-                                                                                .withRel("find all by customer")
-                                                                                .toMono(),
-                                                                        linkTo(methodOn(MedicalAppointmentController.class).findAllByDoctor(doctorLicenseNumber))
-                                                                                .withRel("find all by doctor")
-                                                                                .toMono()
-                                                                ).map(links -> appointment
-                                                                        .toDto()
-                                                                        .add(
-                                                                                links.getT1(),
-                                                                                links.getT2()
-                                                                        )
-                                                                ).map(response -> ResponseEntity
-                                                                        .created(URI.create("/api/v1/medical-appointment"))
-                                                                        .body(response)
-                                                                )
-                                                        );
+                                                        .map((_ -> {
+                                                            MedicalAppointmentResponseDto responseDto = appointment.toDto();
+                                                            return ResponseEntity
+                                                                    .created(URI.create("/api/v1/medical-appointments"))
+                                                                    .body(responseDto);
+                                                        }));
                                             });
                                 }));
                     });

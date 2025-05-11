@@ -57,10 +57,12 @@ public class MedicalSlotController {
         return retrievalService.findByDoctorAndId(doctorLicenseNumber, slotId);
     }
 
-    @GetMapping("{doctorLicenseNumber}")
+    @GetMapping("{doctorLicenseNumber}/{size}")
     @Operation(summary = "Find medical slots by doctor")
-    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(@PathVariable String doctorLicenseNumber) {
-        return retrievalService.findAllByDoctor(doctorLicenseNumber);
+    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(@PathVariable String doctorLicenseNumber,
+                                                                        @PathVariable long size
+    ) {
+        return retrievalService.findAllByDoctor(doctorLicenseNumber, size);
     }
 
     @GetMapping

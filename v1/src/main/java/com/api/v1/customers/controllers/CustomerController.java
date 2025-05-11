@@ -51,7 +51,7 @@ public class CustomerController {
 
     @GetMapping("size/{size}")
     @Operation(summary = "Find all customers")
-    public Flux<CustomerResponseDto> findAll(@PathVariable long size) {
+    public ResponseEntity<Flux<CustomerResponseDto>> findAll(long size) {
         return retrievalService.findAll(size);
     }
 }

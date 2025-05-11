@@ -55,8 +55,8 @@ public class DoctorController {
 
     @GetMapping
     @Operation(summary = "Find all doctors")
-    public ResponseEntity<Flux<DoctorResponseDto>> findAll() {
-        return retrievalService.findAll();
+    public ResponseEntity<Flux<DoctorResponseDto>> findAll(long size) {
+        return retrievalService.findAll(size);
     }
 
     @PatchMapping("{doctorLicenseNumber}/termination")

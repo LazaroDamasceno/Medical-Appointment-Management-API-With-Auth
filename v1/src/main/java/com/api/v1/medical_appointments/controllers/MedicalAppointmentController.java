@@ -49,14 +49,18 @@ public class MedicalAppointmentController {
         return retrievalService.findById(customerId, appointmentId);
     }
 
-    @GetMapping("{customerId}")
-    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByCustomer(@PathVariable String customerId) {
-        return retrievalService.findAllByCustomer(customerId);
+    @GetMapping("{customerId}/{size}")
+    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByCustomer(@PathVariable String customerId,
+                                                                                 @PathVariable long size
+    ) {
+        return retrievalService.findAllByCustomer(customerId, size);
     }
 
-    @GetMapping("{doctorLicenseNumber}")
-    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(@PathVariable String doctorLicenseNumber) {
-        return retrievalService.findAllByDoctor(doctorLicenseNumber);
+    @GetMapping("{doctorLicenseNumber}/{size}")
+    public ResponseEntity<Flux<MedicalAppointmentResponseDto>> findAllByDoctor(@PathVariable String doctorLicenseNumber,
+                                                                               @PathVariable long size
+    ) {
+        return retrievalService.findAllByDoctor(doctorLicenseNumber, size);
     }
 
     @GetMapping

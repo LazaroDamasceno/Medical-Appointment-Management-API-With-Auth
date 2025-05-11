@@ -71,20 +71,14 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                             });
                 })
                 .flatMap(_ -> {
-                    return Mono.zip(
-                            linkTo(methodOn(MedicalSlotController.class)
-                                    .findByDoctorAndId(doctorLicenseNumber, slotId))
-                                    .withRel("find by id")
-                                    .toMono(),
-                            linkTo(methodOn(MedicalSlotController.class)
-                                    .findAllByDoctor(doctorLicenseNumber))
-                                    .withRel("find all")
-                                    .toMono()
-                    ).map(links -> {
-                        return EmptyResponse
-                                .empty()
-                                .add(links.getT1(), links.getT2());
-                    }).map(ResponseEntity::ok);
+                    return linkTo(methodOn(MedicalSlotController.class)
+                                .findByDoctorAndId(doctorLicenseNumber, slotId))
+                            .withRel("find by id")
+                            .toMono()
+                            .map(link -> {
+                                return EmptyResponse.empty().add(link);
+                            })
+                            .map(ResponseEntity::ok);
                 });
     }
 
@@ -116,20 +110,14 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
                             });
                 })
                 .flatMap(_ -> {
-                    return Mono.zip(
-                            linkTo(methodOn(MedicalSlotController.class)
-                                    .findByDoctorAndId(doctorLicenseNumber, slotId))
-                                    .withRel("find by id")
-                                    .toMono(),
-                            linkTo(methodOn(MedicalSlotController.class)
-                                    .findAllByDoctor(doctorLicenseNumber))
-                                    .withRel("find all")
-                                    .toMono()
-                    ).map(links -> {
-                        return EmptyResponse
-                                .empty()
-                                .add(links.getT1(), links.getT2());
-                    }).map(ResponseEntity::ok);
+                    return linkTo(methodOn(MedicalSlotController.class)
+                                .findByDoctorAndId(doctorLicenseNumber, slotId))
+                                .withRel("find by id")
+                                .toMono()
+                                .map(link -> {
+                                    return EmptyResponse.empty().add(link);
+                                })
+                                .map(ResponseEntity::ok);
                 });
     }
 

@@ -32,25 +32,21 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
                 .findByLicenseNumber(licenseNumber)
                 .map(Doctor::toDto)
                 .flatMap(responseDto -> {
-                    return Mono.zip(
-                            linkTo(methodOn(DoctorController.class).findByLicenseNumber(licenseNumber))
-                                    .withSelfRel()
-                                    .toMono(),
-                            linkTo(methodOn(DoctorController.class).findAll())
-                                    .withRel("find all")
-                                    .toMono()
-                    ).map(tuple -> {
-                        return responseDto.add(tuple.getT1(), tuple.getT2());
-                    }).map(ResponseEntity::ok);
+                    return linkTo(methodOn(DoctorController.class).findByLicenseNumber(licenseNumber))
+                            .withSelfRel()
+                            .toMono()
+                            .map(responseDto::add)
+                            .map(ResponseEntity::ok);
                 })
                 .flatMap(Mono::just);
     }
 
     @Override
-    public ResponseEntity<Flux<DoctorResponseDto>>findAll() {
+    public ResponseEntity<Flux<DoctorResponseDto>>findAll(long size) {
         Flux<DoctorResponseDto> flux = doctorRepository
                 .findAll()
-                .map(Doctor::toDto);
+                .map(Doctor::toDto)
+                .take(size);
         return ResponseEntity.ok(flux);
     }
 }

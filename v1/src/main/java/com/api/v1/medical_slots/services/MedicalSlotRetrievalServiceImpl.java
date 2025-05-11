@@ -44,34 +44,24 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .findByDoctorAndSlotId(doctor.getId(), medicalSlot.getId())
                             .map(MedicalSlot::toDto)
                             .flatMap(response -> {
-                                return Mono.zip(
-                                        linkTo(methodOn(MedicalSlotController.class)
-                                                .findByDoctorAndId(doctorLicenseNumber, slotId))
-                                                .withSelfRel()
-                                                .toMono(),
-                                        linkTo(methodOn(MedicalSlotController.class)
-                                                .findAllByDoctor(doctorLicenseNumber))
-                                                .withRel("find all by doctor")
-                                                .toMono()
-                                        )
-                                        .map(links -> {
-                                            return response.add(
-                                                    links.getT1(),
-                                                    links.getT2()
-                                            );
-                                        })
+                                return linkTo(methodOn(MedicalSlotController.class)
+                                        .findByDoctorAndId(doctorLicenseNumber, slotId))
+                                        .withSelfRel()
+                                        .toMono()
+                                        .map(response::add)
                                         .map(ResponseEntity::ok);
                             });
                 });
     }
 
     @Override
-    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(String doctorLicenseNumber) {
+    public ResponseEntity<Flux<MedicalSlotResponseDto>> findAllByDoctor(String doctorLicenseNumber, long size) {
        var flux = doctorFinder
                 .findByLicenseNumber(doctorLicenseNumber)
                 .flatMapMany(foundDoctor -> {
                     return medicalSlotRepository
                             .findAllByDoctor(foundDoctor.getId())
+                            .take(size)
                             .map(MedicalSlot::toDto);
                 });
        return ResponseEntity.ok(flux);
