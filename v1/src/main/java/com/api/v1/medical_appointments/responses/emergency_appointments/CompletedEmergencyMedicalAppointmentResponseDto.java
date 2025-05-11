@@ -1,8 +1,8 @@
-package com.api.v1.medical_appointments.responses;
+package com.api.v1.medical_appointments.responses.emergency_appointments;
 
 import com.api.v1.customers.responses.CustomerResponseDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
-import com.api.v1.medical_appointments.domain.exposed.EmergencyMedicalAppointment;
+import com.api.v1.medical_appointments.domain.emergency_appointments.exposed.EmergencyMedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 
 import java.time.LocalDateTime;

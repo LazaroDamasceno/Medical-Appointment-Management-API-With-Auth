@@ -1,7 +1,7 @@
 package com.api.v1.medical_slots.domain.exposed;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed.MedicalAppointment;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import com.api.v1.medical_slots.response.*;
 import org.springframework.data.annotation.Id;

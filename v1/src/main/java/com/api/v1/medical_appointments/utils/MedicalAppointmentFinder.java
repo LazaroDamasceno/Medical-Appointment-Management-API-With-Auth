@@ -1,7 +1,7 @@
 package com.api.v1.medical_appointments.utils;
 
-import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.MedicalAppointmentRepository;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.exceptions.MedicalAppointmentNotFoundException;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

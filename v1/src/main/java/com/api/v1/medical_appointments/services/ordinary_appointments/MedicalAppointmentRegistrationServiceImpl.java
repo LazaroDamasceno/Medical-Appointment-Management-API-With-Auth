@@ -1,4 +1,4 @@
-package com.api.v1.medical_appointments.services;
+package com.api.v1.medical_appointments.services.ordinary_appointments;
 
 import com.api.v1.common.DuplicatedBookingDateTimeException;
 import com.api.v1.common.NonExistentBookingDateTimeException;
@@ -8,11 +8,11 @@ import com.api.v1.customers.utils.CustomerFinder;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.exceptions.TerminatedDoctorException;
 import com.api.v1.doctors.utils.DoctorFinder;
-import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.MedicalAppointmentRepository;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import com.api.v1.medical_appointments.exceptions.SelfBookingAppointmentException;
-import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.ordinary_appointments.MedicalAppointmentResponseDto;
 import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlot;
 import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;

@@ -1,10 +1,10 @@
 package com.api.v1.medical_appointments.controllers;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
-import com.api.v1.medical_appointments.services.MedicalAppointmentCancellationService;
-import com.api.v1.medical_appointments.services.MedicalAppointmentRegistrationService;
-import com.api.v1.medical_appointments.services.MedicalAppointmentRetrievalService;
+import com.api.v1.medical_appointments.responses.ordinary_appointments.MedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.services.ordinary_appointments.MedicalAppointmentCancellationService;
+import com.api.v1.medical_appointments.services.ordinary_appointments.MedicalAppointmentRegistrationService;
+import com.api.v1.medical_appointments.services.ordinary_appointments.MedicalAppointmentRetrievalService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

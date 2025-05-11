@@ -1,6 +1,6 @@
 package com.api.v1.medical_slots.services;
 
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed.MedicalAppointment;
 import com.api.v1.medical_slots.domain.exposed.MedicalSlot;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrail;
 import com.api.v1.medical_slots.domain.MedicalSlotAuditTrailRepository;

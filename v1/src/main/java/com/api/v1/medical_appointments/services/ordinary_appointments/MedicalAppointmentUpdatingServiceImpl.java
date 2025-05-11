@@ -1,10 +1,10 @@
-package com.api.v1.medical_appointments.services;
+package com.api.v1.medical_appointments.services.ordinary_appointments;
 
-import com.api.v1.medical_appointments.domain.MedicalAppointmentAuditTrail;
-import com.api.v1.medical_appointments.domain.MedicalAppointmentAuditTrailRepository;
-import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
-import com.api.v1.medical_appointments.services.exposed.MedicalAppointmentUpdatingService;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.MedicalAppointmentAuditTrail;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.MedicalAppointmentAuditTrailRepository;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.MedicalAppointmentRepository;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.services.ordinary_appointments.exposed.MedicalAppointmentUpdatingService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

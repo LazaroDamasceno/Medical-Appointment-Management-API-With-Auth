@@ -1,11 +1,11 @@
 package com.api.v1.payments.services;
 
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
 import com.api.v1.medical_appointments.exceptions.ActiveMedicalAppointmentException;
 import com.api.v1.medical_appointments.exceptions.CanceledMedicalAppointmentException;
 import com.api.v1.medical_appointments.exceptions.PaidMedicalAppointmentException;
-import com.api.v1.medical_appointments.services.exposed.MedicalAppointmentUpdatingService;
+import com.api.v1.medical_appointments.services.ordinary_appointments.exposed.MedicalAppointmentUpdatingService;
 import com.api.v1.medical_appointments.utils.MedicalAppointmentFinder;
 import com.api.v1.medical_slots.services.exposed.MedicalSlotUpdatingService;
 import com.api.v1.medical_slots.utils.MedicalSlotFinder;

@@ -1,6 +1,6 @@
-package com.api.v1.medical_appointments.services;
+package com.api.v1.medical_appointments.services.ordinary_appointments;
 
-import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.ordinary_appointments.MedicalAppointmentResponseDto;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

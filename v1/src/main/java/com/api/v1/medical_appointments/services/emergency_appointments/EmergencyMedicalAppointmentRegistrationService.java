@@ -1,6 +1,6 @@
-package com.api.v1.medical_appointments.services;
+package com.api.v1.medical_appointments.services.emergency_appointments;
 
-import com.api.v1.medical_appointments.responses.EmergencyMedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.emergency_appointments.EmergencyMedicalAppointmentResponseDto;
 import org.springframework.http.ResponseEntity;
 import reactor.core.publisher.Mono;
 

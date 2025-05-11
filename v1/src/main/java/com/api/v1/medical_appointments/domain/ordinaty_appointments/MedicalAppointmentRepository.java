@@ -1,6 +1,6 @@
-package com.api.v1.medical_appointments.domain;
+package com.api.v1.medical_appointments.domain.ordinaty_appointments;
 
-import com.api.v1.customers.domain.exposed.Customer;import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed.MedicalAppointment;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Flux;

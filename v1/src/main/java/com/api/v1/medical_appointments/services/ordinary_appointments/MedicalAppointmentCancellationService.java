@@ -1,4 +1,4 @@
-package com.api.v1.medical_appointments.services;
+package com.api.v1.medical_appointments.services.ordinary_appointments;
 
 import com.api.v1.common.EmptyResponse;
 import org.springframework.http.ResponseEntity;

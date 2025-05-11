@@ -1,11 +1,11 @@
-package com.api.v1.medical_appointments.domain.exposed;
+package com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed;
 
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.medical_appointments.enums.MedicalAppointmentStatus;
-import com.api.v1.medical_appointments.responses.CanceledMedicalAppointmentResponseDto;
-import com.api.v1.medical_appointments.responses.CompletedMedicalAppointmentResponseDto;
-import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.ordinary_appointments.CanceledMedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.ordinary_appointments.CompletedMedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.ordinary_appointments.MedicalAppointmentResponseDto;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;

@@ -1,14 +1,13 @@
-package com.api.v1.medical_appointments.services;
+package com.api.v1.medical_appointments.services.ordinary_appointments;
 
-import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
 import com.api.v1.doctors.utils.DoctorFinder;
 import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
-import com.api.v1.medical_appointments.domain.MedicalAppointmentRepository;
-import com.api.v1.medical_appointments.domain.exposed.MedicalAppointment;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.MedicalAppointmentRepository;
+import com.api.v1.medical_appointments.domain.ordinaty_appointments.exposed.MedicalAppointment;
 import com.api.v1.medical_appointments.exceptions.InaccessibleMedicalAppointment;
-import com.api.v1.medical_appointments.responses.MedicalAppointmentResponseDto;
+import com.api.v1.medical_appointments.responses.ordinary_appointments.MedicalAppointmentResponseDto;
 import com.api.v1.medical_appointments.utils.MedicalAppointmentFinder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
