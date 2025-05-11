@@ -1,6 +1,6 @@
 package com.api.v1.common;
 
-public class Result201Created<T> extends Result {
+public final class Result201Created<T> extends Result {
 
     private final T body;
 

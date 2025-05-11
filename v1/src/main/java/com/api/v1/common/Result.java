@@ -1,6 +1,6 @@
 package com.api.v1.common;
 
-public class Result {
+public sealed class Result permits Result200Ok, Result201Created, Result404NotFound, Result409Conflict {
 
     private int statusCode;
 
