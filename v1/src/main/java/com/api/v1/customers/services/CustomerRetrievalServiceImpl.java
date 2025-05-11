@@ -34,12 +34,11 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
     }
 
     @Override
-    public Mono<ResponseEntity<PaginationResult<CustomerResponseDto>>> findAll(long size) {
-        return customerRepository
+    public ResponseEntity<Flux<CustomerResponseDto>> findAll(long size) {
+        var flux = customerRepository
                 .findAll()
                 .map(Customer::toDto)
-                .take(size)
-                .collectList()
-                .map(list -> ResponseEntity.ok(PaginationResult.of(list, size)));
+                .take(size);
+        return ResponseEntity.ok(flux);
     }
 }

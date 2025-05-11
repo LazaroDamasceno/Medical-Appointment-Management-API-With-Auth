@@ -51,7 +51,7 @@ public class CustomerController {
 
     @GetMapping("size/{size}")
     @Operation(summary = "Find all customers")
-    public Mono<ResponseEntity<PaginationResult<CustomerResponseDto>>> findAll(@PathVariable long size) {
+    public Flux<CustomerResponseDto> findAll(@PathVariable long size) {
         return retrievalService.findAll(size);
     }
 }
