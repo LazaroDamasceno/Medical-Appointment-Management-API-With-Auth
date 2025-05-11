@@ -44,13 +44,15 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                             .findByDoctorAndSlotId(doctor.getId(), medicalSlot.getId())
                             .map(MedicalSlot::toDto)
                             .flatMap(response -> {
-                                return linkTo(methodOn(DoctorController.class)
-                                        .findByLicenseNumber(doctorLicenseNumber))
-                                        .withRel("find by doctor license number")
-                                        .toMono()
-                                        .zipWith(linkTo(methodOn(MedicalSlotController.class)
+                                return Mono.zip(
+                                        linkTo(methodOn(MedicalSlotController.class)
+                                                .findByDoctorAndId(doctorLicenseNumber, slotId))
+                                                .withSelfRel()
+                                                .toMono(),
+                                        linkTo(methodOn(MedicalSlotController.class)
                                                 .findAllByDoctor(doctorLicenseNumber))
-                                                .withRel("find all by doctor").toMono()
+                                                .withRel("find all by doctor")
+                                                .toMono()
                                         )
                                         .map(links -> {
                                             return response.add(

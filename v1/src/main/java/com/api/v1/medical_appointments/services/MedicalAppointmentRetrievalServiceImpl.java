@@ -48,12 +48,11 @@ public class MedicalAppointmentRetrievalServiceImpl implements MedicalAppointmen
                             .then(Mono.defer(() -> medicalAppointmentRepository
                                     .findById(customer.getId(), medicalAppointment.getId())
                                     .map(MedicalAppointment::toDto)
-                                    .flatMap(response -> Mono.zip(                                            linkTo(methodOn(CustomerController.class)
-                                                    .findById(customerId))
-                                                    .withRel("find customer")
+                                    .flatMap(response -> Mono.zip(
+                                            linkTo(methodOn(MedicalAppointmentController.class).findById(customerId, appointmentId))
+                                                    .withSelfRel()
                                                     .toMono(),
-                                            linkTo(methodOn(MedicalAppointmentController.class)
-                                                    .findAllByCustomer(customerId))
+                                            linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
                                                     .withRel("find all by customer")
                                                     .toMono(),
                                             response::add

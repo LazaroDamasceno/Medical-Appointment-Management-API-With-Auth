@@ -2,10 +2,8 @@ package com.api.v1.medical_appointments.services;
 
 import com.api.v1.common.DuplicatedBookingDateTimeException;
 import com.api.v1.common.NonExistentBookingDateTimeException;
-import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.utils.CustomerFinder;
-import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.DoctorFinder;
 import com.api.v1.medical_appointments.controllers.MedicalAppointmentController;
@@ -74,12 +72,6 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                                 return medicalSlotUpdatingService
                                                         .update(foundSlot, appointment)
                                                         .flatMap(_ -> Mono.zip(
-                                                                        linkTo(methodOn(CustomerController.class).findById(customerId))
-                                                                                .withRel("find customer")
-                                                                                .toMono(),
-                                                                        linkTo(methodOn(DoctorController.class).findByLicenseNumber(doctorLicenseNumber))
-                                                                                .withRel("find doctor")
-                                                                                .toMono(),
                                                                         linkTo(methodOn(MedicalAppointmentController.class).findAllByCustomer(customerId))
                                                                                 .withRel("find all by customer")
                                                                                 .toMono(),
@@ -90,9 +82,7 @@ public class MedicalAppointmentRegistrationServiceImpl implements MedicalAppoint
                                                                         .toDto()
                                                                         .add(
                                                                                 links.getT1(),
-                                                                                links.getT2(),
-                                                                                links.getT3(),
-                                                                                links.getT4()
+                                                                                links.getT2()
                                                                         )
                                                                 ).map(response -> ResponseEntity
                                                                         .created(URI.create("/api/v1/medical-appointment"))

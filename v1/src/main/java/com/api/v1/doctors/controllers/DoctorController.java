@@ -1,7 +1,6 @@
 package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.doctors.controllers.exposed.DoctorController;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorManagementService;
@@ -18,7 +17,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("api/v1/doctors")
-public class DoctorController implements DoctorController {
+public class DoctorController {
 
     private final DoctorManagementService managementService;
     private final DoctorRegistrationService registrationService;

@@ -27,14 +27,18 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
     }
 
     @Override
-    public Mono<ResponseEntity<DoctorResponseDto>> findByLicenseNumber(String id) {
+    public Mono<ResponseEntity<DoctorResponseDto>> findByLicenseNumber(String licenseNumber) {
         return doctorFinder
-                .findByLicenseNumber(id)
+                .findByLicenseNumber(licenseNumber)
                 .map(Doctor::toDto)
                 .flatMap(responseDto -> {
                     return Mono.zip(
-                            linkTo(methodOn(DoctorController.class).findByLicenseNumber(id)).withSelfRel().toMono(),
-                            linkTo(methodOn(DoctorController.class).findAll()).withRel("find all").toMono()
+                            linkTo(methodOn(DoctorController.class).findByLicenseNumber(licenseNumber))
+                                    .withSelfRel()
+                                    .toMono(),
+                            linkTo(methodOn(DoctorController.class).findAll())
+                                    .withRel("find all")
+                                    .toMono()
                     ).map(tuple -> {
                         return responseDto.add(tuple.getT1(), tuple.getT2());
                     }).map(ResponseEntity::ok);

@@ -1,7 +1,7 @@
 package com.api.v1.doctors.services;
 
 import com.api.v1.common.EmptyResponse;
-import com.api.v1.doctors.controllers.exposed.DoctorController;
+import com.api.v1.doctors.controllers.DoctorController;
 import com.api.v1.doctors.domain.DoctorAuditTrail;
 import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
 import com.api.v1.doctors.domain.DoctorRepository;
