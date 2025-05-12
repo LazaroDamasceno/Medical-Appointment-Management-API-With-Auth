@@ -3,7 +3,7 @@ package com.api.v1.common;
 import lombok.Getter;
 
 @Getter
-public final class Result40X extends Result {
+public final class Result40X<T> extends Result<T> {
 
     private final String message;
     private static final int NOT_FOUND = 404;
@@ -14,11 +14,11 @@ public final class Result40X extends Result {
         this.message = message;
     }
 
-    public static Result40X generate404(String message) {
-        return new Result40X(NOT_FOUND, message);
+    public static <T> Result40X<T> generate404(String message) {
+        return new Result40X<>(NOT_FOUND, message);
     }
 
-    public static Result40X generate409(String message) {
-        return new Result40X(CONFLICT, message);
+    public static <T> Result40X<T> generate409(String message) {
+        return new Result40X<>(CONFLICT, message);
     }
 }

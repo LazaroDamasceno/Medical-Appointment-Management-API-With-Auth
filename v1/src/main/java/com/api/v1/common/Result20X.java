@@ -3,7 +3,7 @@ package com.api.v1.common;
 import lombok.Getter;
 
 @Getter
-public final class Result20X<T> extends Result {
+public final class Result20X<T> extends Result<T> {
 
     private final T body;
     private static final int OK = 200;
