@@ -4,7 +4,7 @@
 
 | Version | Where it's available |
 |:-------:|:--------------------:|
-|   21   |             https://docs.aws.amazon.com/corretto/latest/corretto-24-ug/downloads-list.html        |
+|   21   |             https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/downloads-list.html        |
 
 ## Database
 
