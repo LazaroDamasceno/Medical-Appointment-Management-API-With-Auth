@@ -2,6 +2,8 @@ package com.api.v1.customers.services;
 
 import com.api.v1.common.ObjectId;
 import com.api.v1.common.Result;
+import com.api.v1.common.StatusCodes;
+import com.api.v1.customers.CustomerFinder;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerRepository;
 import com.api.v1.customers.dtos.CustomerResponseDto;
@@ -16,10 +18,15 @@ import org.springframework.stereotype.Service;
 public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
 
     private final CustomerRepository repository;
+    private final CustomerFinder finder;
 
     @Override
-    public ResponseEntity<Result<CustomerResponseDto>> findById(@ObjectId String id) {
-        return null;
+    public ResponseEntity<Result<Customer, CustomerResponseDto>> findById(@ObjectId String id) {
+        Result<Customer, CustomerResponseDto> foundCustomer = finder.findById(id);
+        if (foundCustomer.getStatusCode() == StatusCodes.NOT_FOUND) {
+            return ResponseEntity.status(foundCustomer.getStatusCode()).body(foundCustomer);
+        }
+        return ResponseEntity.ok(foundCustomer);
     }
 
     @Override
