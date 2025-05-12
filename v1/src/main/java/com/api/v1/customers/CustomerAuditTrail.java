@@ -1,0 +1,25 @@
+package com.api.v1.customers;
+
+import com.api.v1.people.domain.Person;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Document
+public record CustomerAuditTrail(
+        @Id
+        String id,
+        Person person,
+        LocalDateTime createdAt
+) {
+
+    public static CustomerAuditTrail of(Person person) {
+        return new CustomerAuditTrail(
+                UUID.randomUUID().toString(),
+                person,
+                LocalDateTime.now()
+        );
+    }
+}
