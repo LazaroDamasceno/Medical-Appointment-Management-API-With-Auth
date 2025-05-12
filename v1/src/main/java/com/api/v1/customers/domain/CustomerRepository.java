@@ -14,6 +14,4 @@ public interface CustomerRepository extends MongoRepository<Customer, String> {
 
     @Query("{ 'email': ?0 }")
     Optional<Customer> findByEmail(String email);
-
-    Page<Customer> findAllBy(Pageable pageable);
 }

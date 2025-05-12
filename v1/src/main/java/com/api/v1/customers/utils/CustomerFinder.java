@@ -17,7 +17,7 @@ public final class CustomerFinder {
 
     private final CustomerRepository repository;
 
-    public Result findById(@MongoId String id) {
+    public Result<Customer> findById(@MongoId String id) {
         Optional<Customer> optional = repository.findById(id);
         if (optional.isEmpty()) {
             String message = "Customer whose id is %s was not found.".formatted(id);
