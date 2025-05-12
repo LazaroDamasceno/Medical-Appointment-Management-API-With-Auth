@@ -1,9 +1,6 @@
-package com.api.v1.customers.utils;
+package com.api.v1.customers;
 
-import com.api.v1.common.MongoId;
-import com.api.v1.common.Result;
-import com.api.v1.common.Result20X;
-import com.api.v1.common.Result40X;
+import com.api.v1.common.*;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,17 +10,17 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public final class CustomerFinder {
+public class CustomerFinder {
 
     private final CustomerRepository repository;
 
-    public Result<Customer> findById(@MongoId String id) {
+    public Result<Customer> find(@ObjectId String id) {
         Optional<Customer> optional = repository.findById(id);
         if (optional.isEmpty()) {
-            String message = "Customer whose id is %s was not found.".formatted(id);
+            String message = ErrorMessages.customerNotFoundMessage(id);
             return Result40X.generate404(message);
         }
-        Customer customer = optional.get();
-        return Result20X.generate200(customer);
+        Customer dto = optional.get();
+        return Result20X.generate200(dto);
     }
 }
