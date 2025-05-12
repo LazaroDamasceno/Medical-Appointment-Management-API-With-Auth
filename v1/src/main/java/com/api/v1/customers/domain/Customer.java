@@ -1,5 +1,6 @@
 package com.api.v1.customers.domain;
 
+import com.api.v1.customers.dtos.CustomerResponseDto;
 import com.api.v1.people.domain.Person;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -34,5 +35,9 @@ public class Customer {
     public void update(Person person) {
         this.person = person;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public CustomerResponseDto toDto() {
+        return CustomerResponseDto.from(this);
     }
 }
