@@ -4,6 +4,7 @@ import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -32,45 +33,24 @@ public class Person {
     private Person() {
     }
 
-    private Person(String id,
-                   String firstName,
-                   String middleName,
-                   String lastName,
-                   String sin,
-                   LocalDate birthDate,
-                   String email,
-                   Gender gender,
-                   Address address,
-                   LocalDateTime createdAt
-    ) {
-        this.id = id;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.sin = sin;
-        this.birthDate = birthDate;
-        this.email = email;
-        this.gender = gender;
-        this.address = address;
-        this.createdAt = createdAt;
+    private Person(@Valid PersonRegistrationDto registrationDto) {
+        this.id = UUID.randomUUID().toString();
+        this.firstName = registrationDto.firstName();
+        this.middleName = registrationDto.middleName();
+        this.lastName = registrationDto.lastName();
+        this.sin = registrationDto.sin();
+        this.birthDate = registrationDto.birthDate();
+        this.email = registrationDto.email();
+        this.gender = registrationDto.gender();
+        this.address = registrationDto.address();
+        this.createdAt = LocalDateTime.now();
     }
 
-    public static Person of(PersonRegistrationDto registrationDto) {
-        return new Person(
-                UUID.randomUUID().toString(),
-                registrationDto.firstName(),
-                registrationDto.middleName(),
-                registrationDto.lastName(),
-                registrationDto.sin(),
-                registrationDto.birthDate(),
-                registrationDto.email(),
-                registrationDto.gender(),
-                registrationDto.address(),
-                LocalDateTime.now()
-        );
+    public static Person of(@Valid PersonRegistrationDto registrationDto) {
+        return new Person(registrationDto);
     }
 
-    public void update(PersonUpdatingDto updatingDto) {
+    public void update(@Valid PersonUpdatingDto updatingDto) {
         this.firstName = updatingDto.firstName();
         this.middleName = updatingDto.middleName();
         this.lastName = updatingDto.lastName();

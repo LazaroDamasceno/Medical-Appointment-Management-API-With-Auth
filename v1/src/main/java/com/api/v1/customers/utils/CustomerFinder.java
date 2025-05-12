@@ -1,5 +1,6 @@
 package com.api.v1.customers.utils;
 
+import com.api.v1.common.MongoId;
 import com.api.v1.common.Result;
 import com.api.v1.common.Result20X;
 import com.api.v1.common.Result40X;
@@ -16,7 +17,7 @@ public final class CustomerFinder {
 
     private final CustomerRepository repository;
 
-    public Result findById(String id) {
+    public Result findById(@MongoId String id) {
         Optional<Customer> optional = repository.findById(id);
         if (optional.isEmpty()) {
             String message = "Customer whose id is %s was not found.".formatted(id);
