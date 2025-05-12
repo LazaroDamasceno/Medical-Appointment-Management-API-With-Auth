@@ -1,5 +1,7 @@
 package com.api.v1.customers.domain;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -12,4 +14,6 @@ public interface CustomerRepository extends MongoRepository<Customer, String> {
 
     @Query("{ 'email': ?0 }")
     Optional<Customer> findByEmail(String email);
+
+    Page<Customer> findAllBy(Pageable pageable);
 }
