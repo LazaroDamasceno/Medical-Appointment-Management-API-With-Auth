@@ -24,15 +24,14 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
     private final CustomerFinder customerFinder;
 
     @Override
-    public ResponseEntity<EntityModel<CustomerResponseDto>> findById(@ObjectId String id) {
+    public ResponseEntity<CustomerResponseDto> findById(@ObjectId String id) {
         Customer foundCustomer = customerFinder.findById(id);
-        CustomerResponseDto responseDto = foundCustomer.toDto();
-        EntityModel<CustomerResponseDto> entityModel = EntityModel
-                .of(responseDto)
+        CustomerResponseDto responseDto = foundCustomer
+                .toDto()
                 .add(
                         linkTo(methodOn(CustomerController.class).findById(id)).withSelfRel()
                 );
-        return ResponseEntity.ok(entityModel);
+        return ResponseEntity.ok(responseDto);
     }
 
     @Override

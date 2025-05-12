@@ -7,6 +7,6 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 
 public interface CustomerRetrievalService {
-    ResponseEntity<EntityModel<CustomerResponseDto>> findById(String id);
+    ResponseEntity<CustomerResponseDto> findById(String id);
     ResponseEntity<Page<CustomerResponseDto>> findAll(Pageable pageable);
 }
