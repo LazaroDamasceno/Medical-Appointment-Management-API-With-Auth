@@ -1,6 +1,6 @@
 package com.api.v1.people.services;
 
-import com.api.v1.people.domain.Person;
+import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.domain.PersonRepository;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.services.exposed.PersonRegistrationService;

@@ -1,6 +1,6 @@
 package com.api.v1.people.utils;
 
-import com.api.v1.people.domain.Person;
+import com.api.v1.people.domain.exposed.Person;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

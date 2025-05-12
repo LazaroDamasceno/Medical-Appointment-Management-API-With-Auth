@@ -1,7 +1,7 @@
 package com.api.v1.customers.domain;
 
 import com.api.v1.customers.dtos.CustomerResponseDto;
-import com.api.v1.people.domain.Person;
+import com.api.v1.people.domain.exposed.Person;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

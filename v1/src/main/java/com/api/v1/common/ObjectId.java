@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
 @NotNull
-@Size(min = 128, max = 128)
-public @interface MongoId {
-    String message() default "Invalid MongoDB ID format. Please enter a 10-digit ID.";
+@Size(min = 36, max = 36)
+public @interface ObjectId {
+    String message() default "Invalid ID format. Please enter a 36-digit ID.";
 }
