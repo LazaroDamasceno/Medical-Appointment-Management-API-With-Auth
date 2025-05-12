@@ -1,5 +1,6 @@
 package com.api.v1.people.domain;
 
+import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
@@ -24,6 +25,7 @@ public class Person {
     private LocalDate birthDate;
     private String email;
     private Gender gender;
+    private Address address;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -38,6 +40,7 @@ public class Person {
                    LocalDate birthDate,
                    String email,
                    Gender gender,
+                   Address address,
                    LocalDateTime createdAt
     ) {
         this.id = id;
@@ -48,6 +51,7 @@ public class Person {
         this.birthDate = birthDate;
         this.email = email;
         this.gender = gender;
+        this.address = address;
         this.createdAt = createdAt;
     }
 
@@ -61,6 +65,7 @@ public class Person {
                 registrationDto.birthDate(),
                 registrationDto.email(),
                 registrationDto.gender(),
+                registrationDto.address(),
                 LocalDateTime.now()
         );
     }
@@ -72,6 +77,7 @@ public class Person {
         this.birthDate = updatingDto.birthDate();
         this.email = updatingDto.email();
         this.gender = updatingDto.gender();
+        this.address = updatingDto.address();
         this.updatedAt = LocalDateTime.now();
     }
 }

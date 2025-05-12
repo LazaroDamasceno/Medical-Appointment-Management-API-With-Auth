@@ -1,4 +1,4 @@
-package com.api.v1.common;
+package com.api.v1.people.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
