@@ -1,14 +1,16 @@
 package com.api.v1.people.services;
 
-import com.api.v1.people.domain.exposed.Person;
+import org.springframework.stereotype.Service;
+
 import com.api.v1.people.domain.PersonAuditTrail;
 import com.api.v1.people.domain.PersonAuditTrailRepository;
 import com.api.v1.people.domain.PersonRepository;
+import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import com.api.v1.people.services.exposed.PersonUpdatingService;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PersonUpdatingServiceImpl implements PersonUpdatingService {
