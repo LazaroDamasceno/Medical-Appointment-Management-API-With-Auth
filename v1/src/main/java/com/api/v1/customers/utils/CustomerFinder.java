@@ -1,6 +1,7 @@
 package com.api.v1.customers.utils;
 
 import com.api.v1.common.*;
+import com.api.v1.customers.CustomerNotFoundException;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +15,11 @@ public class CustomerFinder {
 
     private final CustomerRepository repository;
 
-    public Result<Customer> findById(@ObjectId String id) {
+    public Customer findById(@ObjectId String id) {
         Optional<Customer> optional = repository.findById(id);
         if (optional.isEmpty()) {
-            String message = ErrorMessages.customerNotFoundMessage(id);
-            return Result.generate404(message);
+            throw new CustomerNotFoundException(id);
         }
-        return Result.generate200(optional.get());
+        return optional.get();
     }
 }
