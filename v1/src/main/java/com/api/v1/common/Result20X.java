@@ -6,19 +6,25 @@ import lombok.Getter;
 public final class Result20X<T> extends Result<T> {
 
     private final T body;
-    private static final int OK = 200;
-    private static final int CREATED = 201;
 
-    private Result20X(int statusCode, T body) {
-        super(statusCode);
+    private Result20X(StatusCode statusCode, HttpMethods httpMethod, T body) {
+        super(statusCode, httpMethod);
         this.body = body;
     }
 
     public static <T> Result20X<T> generate200(T body) {
-        return new Result20X<>(OK, body);
+        return new Result20X<>(
+                StatusCode.OK_200,
+                HttpMethods.GET,
+                body
+        );
     }
 
     public static <T> Result20X<T> generate201(T body) {
-        return new Result20X<>(CREATED, body);
+        return new Result20X<>(
+                StatusCode.CREATED_201,
+                HttpMethods.GET,
+                body
+        );
     }
 }

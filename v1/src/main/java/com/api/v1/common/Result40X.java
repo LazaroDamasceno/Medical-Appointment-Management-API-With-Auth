@@ -6,19 +6,25 @@ import lombok.Getter;
 public final class Result40X<T> extends Result<T> {
 
     private final String message;
-    private static final int NOT_FOUND = 404;
-    private static final int CONFLICT = 409;
 
-    private Result40X(int statusCode, String message) {
-        super(statusCode);
+    private Result40X(StatusCode statusCode, HttpMethods httpMethod, String message) {
+        super(statusCode, httpMethod);
         this.message = message;
     }
 
     public static <T> Result40X<T> generate404(String message) {
-        return new Result40X<>(NOT_FOUND, message);
+        return new Result40X<>(
+                StatusCode.NOT_FOUND_404,
+                HttpMethods.GET,
+                message
+        );
     }
 
-    public static <T> Result40X<T> generate409(String message) {
-        return new Result40X<>(CONFLICT, message);
+    public static <T> Result40X<T> generate409(HttpMethods httpMethod, String message) {
+        return new Result40X<>(
+                StatusCode.CONFLICT_409,
+                httpMethod,
+                message
+        );
     }
 }

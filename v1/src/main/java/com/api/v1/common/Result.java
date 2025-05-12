@@ -1,22 +1,23 @@
 package com.api.v1.common;
 
 import lombok.Getter;
-import org.springframework.hateoas.RepresentationModel;
 
 @Getter
-public sealed class Result<T> extends RepresentationModel<Result<T>> permits Result20X, Result40X {
+public sealed class Result<T> permits Result20X, Result40X {
 
-    private int statusCode;
+    private StatusCode statusCode;
+    private HttpMethods httpMethod;
 
     protected Result() {
     }
 
-    public Result(int statusCode) {
+    public Result(StatusCode statusCode, HttpMethods httpMethod) {
         this.statusCode = statusCode;
+        this.httpMethod = httpMethod;
     }
 
-    public static Result empty() {
-        return new Result();
+    public static <T> Result<T> empty() {
+        return new Result<>();
     }
 
 }
