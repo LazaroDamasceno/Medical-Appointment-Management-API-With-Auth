@@ -1,8 +1,6 @@
 package com.api.v1.customers.controllers;
 
 import com.api.v1.common.ObjectId;
-import com.api.v1.common.Result;
-import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.dtos.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRetrievalService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +18,7 @@ public class CustomerController {
     private final CustomerRetrievalService retrievalService;
 
     @GetMapping("{id}")
-    public ResponseEntity<Result<Customer, CustomerResponseDto>> findById(@ObjectId @PathVariable String id) {
+    public ResponseEntity<CustomerResponseDto> findById(@ObjectId @PathVariable String id) {
         return retrievalService.findById(id);
     }
 
