@@ -28,12 +28,12 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
     public ResponseEntity<Result<CustomerResponseDto>> register(@Valid PersonRegistrationDto registrationDto) {
         Optional<Customer> foundCustomerBySin = customerRepository.findBySin(registrationDto.sin());
         if (foundCustomerBySin.isPresent()) {
-            Result<CustomerResponseDto> error = Result.error(ErrorMessages.duplicatedSin());
+            Result<CustomerResponseDto> error = Result.error(ErrorMessages.DUPLICATED_SIN.getValue());
             return ResponseEntity.status(StatusCode.CONFLICT.getCode()).body(error);
         }
         Optional<Customer> foundCustomerByEmail = customerRepository.findByEmail(registrationDto.email());
         if (foundCustomerByEmail.isPresent()) {
-            Result<CustomerResponseDto> error = Result.error(ErrorMessages.duplicatedEmail());
+            Result<CustomerResponseDto> error = Result.error(ErrorMessages.DUPLICATED_EMAIL.getValue());
             return ResponseEntity.status(StatusCode.CONFLICT.getCode()).body(error);
         }
         Person savedPerson = personRegistrationService.register(registrationDto);

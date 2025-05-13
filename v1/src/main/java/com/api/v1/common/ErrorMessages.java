@@ -1,16 +1,17 @@
 package com.api.v1.common;
 
-public class ErrorMessages {
+import lombok.Getter;
 
-    public static String customerNotFound() {
-        return "Customer was not found.";
-    }
+@Getter
+public enum ErrorMessages {
 
-    public static String duplicatedSin() {
-        return "Provided Single Identification Number is currently in use.";
-    }
+    CUSTOMER_NOT_FOUND("Customer was not found."),
+    DUPLICATED_SIN("Provided SIN is already in use."),
+    DUPLICATED_EMAIL("Provided email is already in use.");
 
-    public static String duplicatedEmail() {
-        return "Provided email is currently in use.";
+    private final String value;
+
+    ErrorMessages(String value) {
+        this.value = value;
     }
 }
