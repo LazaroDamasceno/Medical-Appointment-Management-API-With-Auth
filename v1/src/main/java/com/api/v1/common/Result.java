@@ -9,19 +9,17 @@ public final class Result<T> {
     private String message;
     private T body;
 
-    private Result() {
-    }
+    private Result() {}
 
     private Result(ResultStatus status, T body) {
         this.status = status;
-        this.message = "";
+        this.message = "Successful operation.";
         this.body = body;
     }
 
     private Result(ResultStatus status, String message) {
         this.status = status;
         this.message = message;
-        this.body = null;
     }
 
     public static Result<Void> empty() {
@@ -37,9 +35,8 @@ public final class Result<T> {
 
     public static <T>  Result<T> error(String message) {
         return new Result<>(
-                ResultStatus.SUCCESSFUL,
+                ResultStatus.ERROR,
                 message
         );
     }
-
 }

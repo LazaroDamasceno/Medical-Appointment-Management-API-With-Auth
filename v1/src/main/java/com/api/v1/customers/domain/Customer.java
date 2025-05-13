@@ -19,8 +19,7 @@ public class Customer {
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 
-    private Customer() {
-    }
+    private Customer() {}
 
     private Customer(Person person) {
         this.id = UUID.randomUUID().toString();

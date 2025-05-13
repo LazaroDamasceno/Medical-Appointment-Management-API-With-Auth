@@ -30,8 +30,7 @@ public class Person {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private Person() {
-    }
+    private Person() {}
 
     private Person(@Valid PersonRegistrationDto registrationDto) {
         this.id = UUID.randomUUID().toString();
