@@ -30,7 +30,7 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
         Optional<Customer> foundCustomer = customerRepository.findById(customerId);
         if (foundCustomer.isEmpty()) {
             Result<Void> error = Result.error(ErrorMessages.customerNotFound());
-            return ResponseEntity.status(StatusCodes.NOT_FOUND).body(error);
+            return ResponseEntity.status(StatusCode.NOT_FOUND.getCode()).body(error);
         }
         Customer customer = foundCustomer.get();
         CustomerAuditTrail auditTrail = CustomerAuditTrail.of(customer);

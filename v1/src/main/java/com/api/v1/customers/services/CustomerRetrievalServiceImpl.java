@@ -27,7 +27,7 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
         Optional<Customer> foundCustomer = customerRepository.findById(id);
         if (foundCustomer.isEmpty()) {
             Result<CustomerResponseDto> error = Result.error(ErrorMessages.customerNotFound());
-            return ResponseEntity.status(StatusCodes.NOT_FOUND).body(error);
+            return ResponseEntity.status(StatusCode.NOT_FOUND.getCode()).body(error);
         }
         CustomerResponseDto responseDto = foundCustomer
                 .get()
