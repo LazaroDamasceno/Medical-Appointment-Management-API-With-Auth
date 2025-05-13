@@ -2,7 +2,10 @@ package com.api.v1.customers.controllers;
 
 import com.api.v1.common.ObjectId;
 import com.api.v1.customers.dtos.CustomerResponseDto;
+import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
+import com.api.v1.people.requests.PersonRegistrationDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerController {
 
     private final CustomerRetrievalService retrievalService;
+    private final CustomerRegistrationService registrationService;
 
     @GetMapping("{id}")
     public ResponseEntity<CustomerResponseDto> findById(@ObjectId @PathVariable String id) {
@@ -25,5 +29,10 @@ public class CustomerController {
     @GetMapping
     public ResponseEntity<Page<CustomerResponseDto>> findAll(@ParameterObject Pageable pageable) {
         return retrievalService.findAll(pageable);
+    }
+
+    @PostMapping
+    public CustomerResponseDto register(@RequestBody @Valid PersonRegistrationDto registrationDto) {
+        return registrationService.register(registrationDto);
     }
 }
