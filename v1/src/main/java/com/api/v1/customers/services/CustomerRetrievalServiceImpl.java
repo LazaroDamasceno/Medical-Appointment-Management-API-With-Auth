@@ -9,6 +9,7 @@ import com.api.v1.customers.utils.CustomerFinder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +31,11 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
             Result<CustomerResponseDto> error = Result.error(ErrorMessages.customerNotFound());
             return ResponseEntity.status(StatusCodes.NOT_FOUND).body(error);
         }
-        CustomerResponseDto responseDto = foundCustomer.get().toDto();
-        Result<CustomerResponseDto> success = Result
-                .success(responseDto)
+        CustomerResponseDto responseDto = foundCustomer
+                .get()
+                .toDto()
                 .add(linkTo(methodOn(CustomerController.class).findById(id)).withSelfRel());
+        Result<CustomerResponseDto> success = Result.success(responseDto);
         return ResponseEntity.ok(success);
     }
 

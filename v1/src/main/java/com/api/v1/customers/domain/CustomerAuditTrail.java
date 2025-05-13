@@ -1,6 +1,5 @@
 package com.api.v1.customers.domain;
 
-import com.api.v1.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,14 +10,14 @@ import java.util.UUID;
 public record CustomerAuditTrail(
         @Id
         String id,
-        Person person,
+        Customer customer,
         LocalDateTime createdAt
 ) {
 
-    public static CustomerAuditTrail of(Person person) {
+    public static CustomerAuditTrail of(Customer customer) {
         return new CustomerAuditTrail(
                 UUID.randomUUID().toString(),
-                person,
+                customer,
                 LocalDateTime.now()
         );
     }

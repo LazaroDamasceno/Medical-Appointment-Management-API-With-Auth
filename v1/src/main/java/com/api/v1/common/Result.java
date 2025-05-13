@@ -1,26 +1,27 @@
 package com.api.v1.common;
 
 import lombok.Getter;
-import org.springframework.hateoas.RepresentationModel;
 
 @Getter
-public class Result<T> extends RepresentationModel<Result<T>> {
+public final class Result<T> {
 
     private ResultStatus status;
     private String message;
     private T body;
 
-    protected Result() {
+    private Result() {
     }
 
-    protected Result(ResultStatus status, String message) {
+    private Result(ResultStatus status, T body) {
+        this.status = status;
+        this.message = "";
+        this.body = body;
+    }
+
+    private Result(ResultStatus status, String message) {
         this.status = status;
         this.message = message;
-    }
-
-    protected Result(ResultStatus status, T body) {
-        this.status = status;
-        this.body = body;
+        this.body = null;
     }
 
     public static Result<Void> empty() {
@@ -40,4 +41,5 @@ public class Result<T> extends RepresentationModel<Result<T>> {
                 message
         );
     }
+
 }

@@ -1,10 +1,13 @@
 package com.api.v1.customers.controllers;
 
 import com.api.v1.common.ObjectId;
+import com.api.v1.common.Result;
 import com.api.v1.customers.dtos.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
+import com.api.v1.customers.services.CustomerUpdatingService;
 import com.api.v1.people.requests.PersonRegistrationDto;
+import com.api.v1.people.requests.PersonUpdatingDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -16,13 +19,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/customers")
-public class CustomerController {
+public class CustomerController  {
 
     private final CustomerRetrievalService retrievalService;
     private final CustomerRegistrationService registrationService;
+    private final CustomerUpdatingService updatingService;
 
     @GetMapping("{id}")
-    public ResponseEntity<CustomerResponseDto> findById(@ObjectId @PathVariable String id) {
+    public ResponseEntity<Result<CustomerResponseDto>> findById(@ObjectId @PathVariable String id) {
         return retrievalService.findById(id);
     }
 
@@ -32,7 +36,14 @@ public class CustomerController {
     }
 
     @PostMapping
-    public CustomerResponseDto register(@RequestBody @Valid PersonRegistrationDto registrationDto) {
+    public ResponseEntity<Result<CustomerResponseDto>> register(@RequestBody @Valid PersonRegistrationDto registrationDto) {
         return registrationService.register(registrationDto);
+    }
+
+    @PatchMapping("{customerId}")
+    public ResponseEntity<Result<Void>> update(@ObjectId @PathVariable String customerId,
+                                               @RequestBody PersonUpdatingDto personUpdatingDto
+    ) {
+        return updatingService.update(customerId, personUpdatingDto);
     }
 }
