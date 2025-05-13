@@ -1,8 +1,10 @@
 package com.api.v1.customers.services;
 
+import com.api.v1.common.Result;
 import com.api.v1.customers.dtos.CustomerResponseDto;
 import com.api.v1.people.requests.PersonRegistrationDto;
+import org.springframework.http.ResponseEntity;
 
 public interface CustomerRegistrationService {
-    CustomerResponseDto register(PersonRegistrationDto registrationDto);
+    ResponseEntity<Result<CustomerResponseDto>> register(PersonRegistrationDto registrationDto);
 }
