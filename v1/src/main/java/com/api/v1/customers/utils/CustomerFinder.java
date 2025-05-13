@@ -17,12 +17,4 @@ public class CustomerFinder {
     public Optional<Customer> findOptionalById(@ObjectId String id) {
         return repository.findById(id);
     }
-
-    public Optional<Customer> findOptionalBySin(@ObjectId String sin) {
-        return repository.findBySin(sin);
-    }
-
-    public Optional<Customer> findOptionalByEmail(@ObjectId String email) {
-        return repository.findByEmail(email);
-    }
 }

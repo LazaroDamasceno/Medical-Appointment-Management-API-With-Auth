@@ -24,16 +24,15 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
 
     private final CustomerRepository customerRepository;
     private final PersonRegistrationService personRegistrationService;
-    private final CustomerFinder customerFinder;
 
     @Override
     public ResponseEntity<Result<CustomerResponseDto>> register(@Valid PersonRegistrationDto registrationDto) {
-        Optional<Customer> foundCustomerBySin = customerFinder.findOptionalBySin(registrationDto.sin());
+        Optional<Customer> foundCustomerBySin = customerRepository.findBySin(registrationDto.sin());
         if (foundCustomerBySin.isPresent()) {
             Result<CustomerResponseDto> error = Result.error(ErrorMessages.duplicatedSin());
             return ResponseEntity.status(StatusCodes.CONFLICT).body(error);
         }
-        Optional<Customer> foundCustomerByEmail = customerFinder.findOptionalByEmail(registrationDto.email());
+        Optional<Customer> foundCustomerByEmail = customerRepository.findByEmail(registrationDto.email());
         if (foundCustomerByEmail.isPresent()) {
             Result<CustomerResponseDto> error = Result.error(ErrorMessages.duplicatedEmail());
             return ResponseEntity.status(StatusCodes.CONFLICT).body(error);

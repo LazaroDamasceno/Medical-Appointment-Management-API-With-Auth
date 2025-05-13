@@ -22,11 +22,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
 
     private final CustomerRepository customerRepository;
-    private final CustomerFinder customerFinder;
 
     @Override
     public ResponseEntity<Result<CustomerResponseDto>> findById(@ObjectId String id) {
-        Optional<Customer> foundCustomer = customerFinder.findOptionalById(id);
+        Optional<Customer> foundCustomer = customerRepository.findById(id);
         if (foundCustomer.isEmpty()) {
             Result<CustomerResponseDto> error = Result.error(ErrorMessages.customerNotFound());
             return ResponseEntity.status(StatusCodes.NOT_FOUND).body(error);
