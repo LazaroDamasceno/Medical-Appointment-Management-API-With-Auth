@@ -1,6 +1,6 @@
 package com.api.v1.customers.services;
 
-import com.api.v1.common.ObjectId;
+import com.api.v1.common.*;
 import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerRepository;
@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -23,14 +25,17 @@ public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
     private final CustomerFinder customerFinder;
 
     @Override
-    public ResponseEntity<CustomerResponseDto> findById(@ObjectId String id) {
-        Customer foundCustomer = customerFinder.findById(id);
-        CustomerResponseDto responseDto = foundCustomer
-                .toDto()
-                .add(
-                        linkTo(methodOn(CustomerController.class).findById(id)).withSelfRel()
-                );
-        return ResponseEntity.ok(responseDto);
+    public ResponseEntity<Result<CustomerResponseDto>> findById(@ObjectId String id) {
+        Optional<Customer> foundCustomer = customerFinder.findOptionalById(id);
+        if (foundCustomer.isEmpty()) {
+            Result<CustomerResponseDto> error = Result.error(ErrorMessages.customerNotFound());
+            return ResponseEntity.status(StatusCodes.NOT_FOUND).body(error);
+        }
+        CustomerResponseDto responseDto = foundCustomer.get().toDto();
+        Result<CustomerResponseDto> success = Result
+                .success(responseDto)
+                .add(linkTo(methodOn(CustomerController.class).findById(id)).withSelfRel());
+        return ResponseEntity.ok(success);
     }
 
     @Override
