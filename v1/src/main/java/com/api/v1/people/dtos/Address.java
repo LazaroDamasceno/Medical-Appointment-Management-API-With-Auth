@@ -9,7 +9,7 @@ public record Address(
         @NotBlank
         String city,
         @NotBlank
-        @Size(min = 10, max = 10)
+        @Size(min = 5, max = 5)
         String zipcode
 ) {
 }
