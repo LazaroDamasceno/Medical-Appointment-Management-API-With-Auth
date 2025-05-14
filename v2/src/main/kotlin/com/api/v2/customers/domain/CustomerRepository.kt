@@ -6,8 +6,8 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 interface CustomerRepository: CoroutineCrudRepository<Customer, String> {
 
     @Query("{ 'person.sin': ?0 }")
-    fun findBySin(sin: String): Customer?
+    suspend fun findBySin(sin: String): Customer?
 
     @Query("{ 'person.email': ?0 }")
-    fun findByEmail(email: String): Customer?
+    suspend fun findByEmail(email: String): Customer?
 }
