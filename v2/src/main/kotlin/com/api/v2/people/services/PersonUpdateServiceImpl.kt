@@ -5,8 +5,8 @@ import com.api.v2.people.domain.PersonAuditTrail
 import com.api.v2.people.domain.PersonAuditTrailRepository
 import com.api.v2.people.domain.PersonRepository
 import com.api.v2.people.requests.PersonUpdatingDto
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import jakarta.validation.Valid
+import org.jetbrains.annotations.NotNull
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,14 +16,12 @@ class PersonUpdateServiceImpl(
 ) : PersonUpdateService {
 
     override suspend fun update(
-        person: Person,
-        updatingDto: PersonUpdatingDto
+        @NotNull person: Person,
+        @Valid updatingDto: PersonUpdatingDto
     ): Person {
-        return withContext(Dispatchers.IO) {
-            val auditTrail = PersonAuditTrail.of(person)
-            personAuditTrail.save(auditTrail)
-            person.update(updatingDto)
-            repository.save(person)
-        }
+        val auditTrail = PersonAuditTrail.of(person)
+        personAuditTrail.save(auditTrail)
+        person.update(updatingDto)
+        return repository.save(person)
     }
 }
