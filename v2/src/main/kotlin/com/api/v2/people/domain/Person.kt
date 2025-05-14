@@ -1,6 +1,9 @@
-package com.api.v2.people
+package com.api.v2.people.domain
 
-import com.api.v2.common.formatFullName
+import com.api.v2.people.dtos.Address
+import com.api.v2.people.enums.Gender
+import com.api.v2.people.requests.PersonRegistrationDto
+import com.api.v2.people.requests.PersonUpdatingDto
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate

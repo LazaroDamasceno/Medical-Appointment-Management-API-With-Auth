@@ -1,4 +1,4 @@
-package com.api.v2.people
+package com.api.v2.people.dtos
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size

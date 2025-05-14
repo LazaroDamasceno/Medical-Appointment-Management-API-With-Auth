@@ -1,10 +1,10 @@
-package com.api.v2.people
+package com.api.v2.people.enums
 
 enum class Gender {
     MALE,
     FEMALE,
-    CIS_MALE,
-    CIS_FEMALE,
+    TRANS_MALE,
+    TRANS_FEMALE,
     QUEER,
     NON_BINARY,
     OTHER
