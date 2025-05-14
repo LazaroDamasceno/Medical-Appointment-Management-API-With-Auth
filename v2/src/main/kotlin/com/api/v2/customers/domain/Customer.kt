@@ -1,5 +1,6 @@
 package com.api.v2.customers.domain
 
+import com.api.v2.customers.response.CustomerResponseDto
 import com.api.v2.people.domain.Person
 import org.springframework.data.annotation.Id
 import java.time.LocalDateTime
@@ -23,5 +24,9 @@ class Customer private constructor(
     fun update(person: Person) {
         this.person = person
         this.updatedAt = LocalDateTime.now()
+    }
+
+    fun toDto(): CustomerResponseDto {
+        return CustomerResponseDto.from(this)
     }
 }
