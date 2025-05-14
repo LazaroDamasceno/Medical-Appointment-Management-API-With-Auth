@@ -6,13 +6,13 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class Customer private constructor(
-    private var person: Person
+    var person: Person
 ) {
 
     @Id
-    private var id: String = UUID.randomUUID().toString()
-    private val createdAt: LocalDateTime = LocalDateTime.now()
-    private var updatedAt: LocalDateTime? = null
+    var id: String = UUID.randomUUID().toString()
+    val createdAt: LocalDateTime = LocalDateTime.now()
+    var updatedAt: LocalDateTime? = null
 
     companion object {
         fun of(person: Person): Customer {

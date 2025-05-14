@@ -1,30 +1,30 @@
 package com.api.v2.common
 
-class Result<T> private constructor(
+class ResultData<T> private constructor(
     val status: ResultStatus,
     val message: String,
     val body: T?
 ) {
 
     companion object {
-        fun <T> success(body: T): Result<T> {
-            return Result(
+        fun <T> success(body: T): ResultData<T> {
+            return ResultData(
                 ResultStatus.SUCCESSFUL,
                 "Successful operation.",
                 body
             )
         }
 
-        fun <T> created(body: T): Result<T> {
-            return Result(
+        fun <T> created(body: T): ResultData<T> {
+            return ResultData(
                 ResultStatus.SUCCESSFUL,
                 "Resource created.",
                 body
             )
         }
 
-        fun <T> error(message: String): Result<T> {
-            return Result(
+        fun <T> error(message: String): ResultData<T> {
+            return ResultData(
                 ResultStatus.ERROR,
                 message,
                 null
