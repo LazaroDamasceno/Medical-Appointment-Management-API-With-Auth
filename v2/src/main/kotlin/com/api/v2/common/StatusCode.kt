@@ -1,6 +1,6 @@
 package com.api.v2.common
 
-enum class StatusCode(value: Int) {
+enum class StatusCode(val value: Int) {
     NOT_FOUND(404),
     CONFLICT(409);
 }
