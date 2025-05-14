@@ -12,21 +12,21 @@ import java.util.UUID
 
 @Document
 class Person private constructor(
-    var firstName: String,
-    var middleName: String?,
-    var lastName: String,
-    val sin: String,
-    var birthDate: LocalDate,
-    var gender: Gender,
-    var address: Address,
-    var email: String,
-    var phoneNumber: String
+    private var firstName: String,
+    private var middleName: String?,
+    private var lastName: String,
+    private val sin: String,
+    private var birthDate: LocalDate,
+    private var gender: Gender,
+    private var address: Address,
+    private var email: String,
+    private var phoneNumber: String
 ) {
 
     @Id
-    val id: String = UUID.randomUUID().toString();
-    val createdAt: LocalDateTime = LocalDateTime.now();
-    var updatedAt: LocalDateTime? = null
+    private var id: String = UUID.randomUUID().toString()
+    private val createdAt: LocalDateTime = LocalDateTime.now()
+    private var updatedAt: LocalDateTime? = null
 
     companion object {
         fun of(registrationDto: PersonRegistrationDto): Person {
@@ -55,4 +55,6 @@ class Person private constructor(
         phoneNumber = updatingDto.phoneNumber
         updatedAt = LocalDateTime.now()
     }
+
+
 }
