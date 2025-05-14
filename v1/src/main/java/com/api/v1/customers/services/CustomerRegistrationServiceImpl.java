@@ -40,7 +40,7 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
         Customer newCustomer = Customer.of(savedPerson);
         Customer savedCustomer = customerRepository.save(newCustomer);
         CustomerResponseDto responseDto = savedCustomer.toDto();
-        Result<CustomerResponseDto> success = Result.success(responseDto);
+        Result<CustomerResponseDto> success = Result.created(responseDto);
         return ResponseEntity.created(URI.create("/api/v1/customers")).body(success);
     }
 }

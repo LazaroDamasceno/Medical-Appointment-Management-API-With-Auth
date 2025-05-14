@@ -11,9 +11,9 @@ public final class Result<T> {
 
     private Result() {}
 
-    private Result(ResultStatus status, T body) {
+    private Result(ResultStatus status, String message, T body) {
         this.status = status;
-        this.message = "Successful operation.";
+        this.message = message;
         this.body = body;
     }
 
@@ -29,6 +29,15 @@ public final class Result<T> {
     public static <T>  Result<T> success(T body) {
         return new Result<>(
                 ResultStatus.SUCCESSFUL,
+                "Successful operation.",
+                body
+        );
+    }
+
+    public static <T>  Result<T> created(T body) {
+        return new Result<>(
+                ResultStatus.SUCCESSFUL,
+                "Resource created.",
                 body
         );
     }
