@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size
 
 data class Address(
     @NotBlank
-    val string: String,
+    val street: String,
     @NotBlank
     val city: String,
     @NotBlank

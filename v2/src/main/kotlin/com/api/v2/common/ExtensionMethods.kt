@@ -1,9 +1,9 @@
 package com.api.v2.common
 
-import com.api.v2.people.domain.Person
+import com.api.v2.people.domain.exposed.Person
 
 fun Person.fullName(): String {
-    if (this.middleName ==  null) {
+    if (this.middleName.isNullOrBlank()) {
         return "${this.firstName} ${this.lastName}"
     }
     return "${this.firstName} ${this.middleName} ${this.lastName}"

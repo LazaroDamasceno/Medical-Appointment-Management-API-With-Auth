@@ -1,5 +1,6 @@
 package com.api.v2.people.domain
 
+import com.api.v2.people.domain.exposed.Person
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime

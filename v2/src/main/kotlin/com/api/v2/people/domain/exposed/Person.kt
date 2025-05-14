@@ -1,4 +1,4 @@
-package com.api.v2.people.domain
+package com.api.v2.people.domain.exposed
 
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
@@ -55,6 +55,4 @@ class Person private constructor(
         phoneNumber = updatingDto.phoneNumber
         updatedAt = LocalDateTime.now()
     }
-
-
 }

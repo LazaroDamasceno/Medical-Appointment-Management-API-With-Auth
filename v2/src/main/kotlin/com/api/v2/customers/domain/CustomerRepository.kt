@@ -2,12 +2,13 @@ package com.api.v2.customers.domain
 
 import org.springframework.data.mongodb.repository.Query
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
+import java.util.Optional
 
 interface CustomerRepository: CoroutineCrudRepository<Customer, String> {
 
     @Query("{ 'person.sin': ?0 }")
-    suspend fun findBySin(sin: String): Customer?
+    fun findBySin(sin: String): Optional<Customer>
 
     @Query("{ 'person.email': ?0 }")
-    suspend fun findByEmail(email: String): Customer?
+    fun findByEmail(email: String): Optional<Customer>
 }

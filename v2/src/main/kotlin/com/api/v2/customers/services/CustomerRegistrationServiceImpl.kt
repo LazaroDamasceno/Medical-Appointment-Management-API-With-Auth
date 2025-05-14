@@ -7,7 +7,7 @@ import com.api.v2.customers.domain.Customer
 import com.api.v2.customers.domain.CustomerRepository
 import com.api.v2.customers.response.CustomerResponseDto
 import com.api.v2.people.requests.PersonRegistrationDto
-import com.api.v2.people.services.PersonRegistrationService
+import com.api.v2.people.services.exposed.PersonRegistrationService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
@@ -21,12 +21,12 @@ class CustomerRegistrationServiceImpl(
 
     override suspend fun register(registrationDto: @Valid PersonRegistrationDto): ResponseEntity<ResultData<CustomerResponseDto>> {
         val foundCustomerBySin = repository.findBySin(registrationDto.sin)
-        if (foundCustomerBySin != null) {
+        if (foundCustomerBySin.isPresent) {
             val error = ResultData.error<CustomerResponseDto>(ErrorMessages.DUPLICATED_SIN.value)
             return ResponseEntity.status(StatusCode.CONFLICT.value).body(error)
         }
         val foundCustomerByEmail = repository.findByEmail(registrationDto.email)
-        if (foundCustomerByEmail != null) {
+        if (foundCustomerByEmail.isPresent) {
             val error = ResultData.error<CustomerResponseDto>(ErrorMessages.DUPLICATED_EMAIL.value)
             return ResponseEntity.status(StatusCode.CONFLICT.value).body(error)
         }
