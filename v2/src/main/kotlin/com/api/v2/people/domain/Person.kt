@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Document
-class Person(
+class Person private constructor(
     var firstName: String,
     var middleName: String?,
     var lastName: String,

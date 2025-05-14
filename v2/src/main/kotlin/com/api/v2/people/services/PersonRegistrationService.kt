@@ -1,5 +1,8 @@
 package com.api.v2.people.services
 
+import com.api.v2.people.domain.Person
+import com.api.v2.people.requests.PersonRegistrationDto
+
 interface PersonRegistrationService {
-    suspend fun
+    suspend fun register(registrationDto: PersonRegistrationDto): Person
 }
