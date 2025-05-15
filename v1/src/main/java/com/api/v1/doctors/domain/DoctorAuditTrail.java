@@ -1,4 +1,4 @@
-package com.api.v1.doctors;
+package com.api.v1.doctors.domain;
 
 import com.api.v1.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;

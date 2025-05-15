@@ -2,7 +2,7 @@ package com.api.v1.customers.controllers;
 
 import com.api.v1.common.ObjectId;
 import com.api.v1.common.Result;
-import com.api.v1.customers.dtos.CustomerResponseDto;
+import com.api.v1.customers.response.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
 import com.api.v1.customers.services.CustomerUpdatingService;

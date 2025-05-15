@@ -1,4 +1,4 @@
-package com.api.v1.customers.dtos;
+package com.api.v1.customers.response;
 
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.people.utils.FullNameFormatter;

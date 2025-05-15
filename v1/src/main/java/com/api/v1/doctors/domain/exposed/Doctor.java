@@ -1,7 +1,8 @@
-package com.api.v1.doctors;
+package com.api.v1.doctors.domain.exposed;
 
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.common.ProfessionalStatus;
+import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -57,5 +58,9 @@ public class Doctor {
     public void markedAsRehired() {
         this.terminatedAt = null;
         this.status = ProfessionalStatus.ACTIVE;
+    }
+
+    public DoctorResponseDto toDto() {
+        return DoctorResponseDto.from(this);
     }
 }

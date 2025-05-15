@@ -5,7 +5,7 @@ import com.api.v1.common.Result;
 import com.api.v1.common.StatusCode;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerRepository;
-import com.api.v1.customers.dtos.CustomerResponseDto;
+import com.api.v1.customers.response.CustomerResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.services.exposed.PersonRegistrationService;

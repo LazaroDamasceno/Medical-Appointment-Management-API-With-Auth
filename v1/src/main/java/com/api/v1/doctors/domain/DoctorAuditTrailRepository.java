@@ -1,4 +1,4 @@
-package com.api.v1.doctors;
+package com.api.v1.doctors.domain;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

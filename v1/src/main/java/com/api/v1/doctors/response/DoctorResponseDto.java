@@ -1,6 +1,7 @@
-package com.api.v1.doctors;
+package com.api.v1.doctors.response;
 
 import com.api.v1.common.LicenseNumber;
+import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.people.utils.FullNameFormatter;
 import lombok.Getter;
 import org.springframework.hateoas.RepresentationModel;

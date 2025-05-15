@@ -4,7 +4,7 @@ import com.api.v1.common.*;
 import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerRepository;
-import com.api.v1.customers.dtos.CustomerResponseDto;
+import com.api.v1.customers.response.CustomerResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
