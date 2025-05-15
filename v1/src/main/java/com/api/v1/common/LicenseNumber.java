@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public record LicenseNumber(
         @NotNull
-        HealthJob job,
+        Job job,
         @NotBlank
         @Size(min = 10, max = 10)
         String number

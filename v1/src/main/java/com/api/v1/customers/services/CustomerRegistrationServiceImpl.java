@@ -26,8 +26,8 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
 
     @Override
     public ResponseEntity<Result<CustomerResponseDto>> register(@Valid PersonRegistrationDto registrationDto) {
-        Optional<Customer> foundCustomerBySin = customerRepository.findBySIN(registrationDto.sin());
-        if (foundCustomerBySin.isPresent()) {
+        Optional<Customer> foundCustomerBySIN = customerRepository.findBySIN(registrationDto.sin());
+        if (foundCustomerBySIN.isPresent()) {
             Result<CustomerResponseDto> error = Result.error(ErrorMessages.DUPLICATED_SIN.getValue());
             return ResponseEntity.status(StatusCode.CONFLICT.getCode()).body(error);
         }
