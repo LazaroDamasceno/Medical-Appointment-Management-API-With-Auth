@@ -5,14 +5,16 @@ import com.api.v1.people.domain.PersonRepository;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class PersonRegistrationServiceImpl implements PersonRegistrationService {
 
     private final PersonRepository repository;
+
+    public PersonRegistrationServiceImpl(PersonRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Person register(@Valid PersonRegistrationDto registrationDto) {

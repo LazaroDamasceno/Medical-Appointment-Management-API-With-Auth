@@ -1,8 +1,5 @@
 package com.api.v1.common;
 
-import lombok.Getter;
-
-@Getter
 public enum StatusCode {
 
     NOT_FOUND(404),
@@ -12,5 +9,9 @@ public enum StatusCode {
 
     StatusCode(int code) {
         this.code = code;
+    }
+
+    public int code() {
+        return code;
     }
 }

@@ -9,7 +9,6 @@ import com.api.v1.customers.services.CustomerUpdatingService;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,13 +16,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("api/v1/customers")
 public class CustomerController  {
 
     private final CustomerRetrievalService retrievalService;
     private final CustomerRegistrationService registrationService;
     private final CustomerUpdatingService updatingService;
+
+    public CustomerController(CustomerRetrievalService retrievalService,
+                              CustomerRegistrationService registrationService,
+                              CustomerUpdatingService updatingService
+    ) {
+        this.retrievalService = retrievalService;
+        this.registrationService = registrationService;
+        this.updatingService = updatingService;
+    }
 
     @GetMapping("{id}")
     public ResponseEntity<Result<CustomerResponseDto>> findById(@ObjectId @PathVariable String id) {

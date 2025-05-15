@@ -1,8 +1,5 @@
 package com.api.v1.common;
 
-import lombok.Getter;
-
-@Getter
 public enum ErrorMessages {
 
     CUSTOMER_NOT_FOUND("Customer was not found."),
@@ -14,5 +11,9 @@ public enum ErrorMessages {
 
     ErrorMessages(String value) {
         this.value = value;
+    }
+
+    public String value() {
+        return value;
     }
 }

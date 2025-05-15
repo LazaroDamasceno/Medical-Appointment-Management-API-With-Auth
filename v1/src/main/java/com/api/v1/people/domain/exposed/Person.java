@@ -5,7 +5,6 @@ import com.api.v1.people.enums.Gender;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-@Getter
 public class Person {
 
     @Id
@@ -58,5 +56,65 @@ public class Person {
         this.gender = updatingDto.gender();
         this.address = updatingDto.address();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String id() {
+        return id;
+    }
+
+    public String firstName() {
+        return firstName;
+    }
+
+    public String middleName() {
+        return middleName;
+    }
+
+    public String lastName() {
+        return lastName;
+    }
+
+    public String sin() {
+        return sin;
+    }
+
+    public LocalDate birthDate() {
+        return birthDate;
+    }
+
+    public String email() {
+        return email;
+    }
+
+    public Gender gender() {
+        return gender;
+    }
+
+    public Address address() {
+        return address;
+    }
+
+    public LocalDateTime createdAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime updatedAt() {
+        return updatedAt;
     }
 }

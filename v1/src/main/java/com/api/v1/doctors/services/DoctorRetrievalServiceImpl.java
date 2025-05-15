@@ -3,11 +3,9 @@ package com.api.v1.doctors.services;
 import com.api.v1.common.ErrorMessages;
 import com.api.v1.common.Result;
 import com.api.v1.common.StatusCode;
-import com.api.v1.customers.response.CustomerResponseDto;
 import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.response.DoctorResponseDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +14,20 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
 
     private final DoctorRepository doctorRepository;
+
+    public DoctorRetrievalServiceImpl(DoctorRepository doctorRepository) {
+        this.doctorRepository = doctorRepository;
+    }
 
     @Override
     public ResponseEntity<Result<DoctorResponseDto>> findByLicenseNumber(String licenseNumber) {
         Optional<Doctor> optional = doctorRepository.findByLicenseNumber(licenseNumber);
         if (optional.isEmpty()) {
-            Result<DoctorResponseDto> error = Result.error(ErrorMessages.DOCTOR_NOT_FOUND.getValue());
-            return ResponseEntity.status(StatusCode.NOT_FOUND.getCode()).body(error);
+            Result<DoctorResponseDto> error = Result.error(ErrorMessages.DOCTOR_NOT_FOUND.value());
+            return ResponseEntity.status(StatusCode.NOT_FOUND.code()).body(error);
         }
         Doctor doctor = optional.get();
         DoctorResponseDto responseDto = doctor.toDto();

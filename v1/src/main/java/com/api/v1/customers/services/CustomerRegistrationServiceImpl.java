@@ -10,7 +10,6 @@ import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonRegistrationDto;
 import com.api.v1.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +17,29 @@ import java.net.URI;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerRegistrationServiceImpl implements CustomerRegistrationService {
 
     private final CustomerRepository customerRepository;
     private final PersonRegistrationService personRegistrationService;
 
+    public CustomerRegistrationServiceImpl(CustomerRepository customerRepository,
+                                           PersonRegistrationService personRegistrationService
+    ) {
+        this.customerRepository = customerRepository;
+        this.personRegistrationService = personRegistrationService;
+    }
+
     @Override
     public ResponseEntity<Result<CustomerResponseDto>> register(@Valid PersonRegistrationDto registrationDto) {
         Optional<Customer> foundCustomerBySIN = customerRepository.findBySIN(registrationDto.sin());
         if (foundCustomerBySIN.isPresent()) {
-            Result<CustomerResponseDto> error = Result.error(ErrorMessages.DUPLICATED_SIN.getValue());
-            return ResponseEntity.status(StatusCode.CONFLICT.getCode()).body(error);
+            Result<CustomerResponseDto> error = Result.error(ErrorMessages.DUPLICATED_SIN.value());
+            return ResponseEntity.status(StatusCode.CONFLICT.code()).body(error);
         }
         Optional<Customer> foundCustomerByEmail = customerRepository.findByEmail(registrationDto.email());
         if (foundCustomerByEmail.isPresent()) {
-            Result<CustomerResponseDto> error = Result.error(ErrorMessages.DUPLICATED_EMAIL.getValue());
-            return ResponseEntity.status(StatusCode.CONFLICT.getCode()).body(error);
+            Result<CustomerResponseDto> error = Result.error(ErrorMessages.DUPLICATED_EMAIL.value());
+            return ResponseEntity.status(StatusCode.CONFLICT.code()).body(error);
         }
         Person savedPerson = personRegistrationService.register(registrationDto);
         Customer newCustomer = Customer.of(savedPerson);

@@ -2,7 +2,6 @@ package com.api.v1.customers.domain;
 
 import com.api.v1.customers.response.CustomerResponseDto;
 import com.api.v1.people.domain.exposed.Person;
-import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-@Getter
 public class Customer {
 
     @Id
@@ -38,5 +36,21 @@ public class Customer {
 
     public CustomerResponseDto toDto() {
         return CustomerResponseDto.from(this);
+    }
+
+    public String id() {
+        return id;
+    }
+
+    public Person person() {
+        return person;
+    }
+
+    public LocalDateTime createdAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime updatedAt() {
+        return updatedAt;
     }
 }

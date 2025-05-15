@@ -1,12 +1,13 @@
 package com.api.v1.people.utils;
 
 import com.api.v1.people.domain.exposed.Person;
-import lombok.experimental.UtilityClass;
 
-@UtilityClass
-public class FullNameFormatter {
+public final class FullNameFormatter {
 
-    public String format(Person person) {
+    private FullNameFormatter() {
+    }
+
+    public static String format(Person person) {
         String firstName = person.getFirstName();
         String lastName = person.getLastName();
         if  (person.getMiddleName() == null) {

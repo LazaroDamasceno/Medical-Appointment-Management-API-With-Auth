@@ -3,10 +3,8 @@ package com.api.v1.doctors.response;
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.people.utils.FullNameFormatter;
-import lombok.Getter;
 import org.springframework.hateoas.RepresentationModel;
 
-@Getter
 public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     private String fullName;
@@ -22,8 +20,16 @@ public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     public static DoctorResponseDto from(Doctor doctor) {
         return new DoctorResponseDto(
-                FullNameFormatter.format(doctor.getPerson()),
-                doctor.getLicenseNumber()
+                FullNameFormatter.format(doctor.person()),
+                doctor.licenseNumber()
         );
+    }
+
+    public String fullName() {
+        return fullName;
+    }
+
+    public LicenseNumber licenseNumber() {
+        return licenseNumber;
     }
 }

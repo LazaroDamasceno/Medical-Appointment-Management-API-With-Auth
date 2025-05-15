@@ -9,19 +9,26 @@ import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import com.api.v1.people.services.exposed.PersonUpdatingService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
 
     private final CustomerRepository customerRepository;
     private final CustomerAuditTrailRepository auditTrailRepository;
     private final PersonUpdatingService personUpdatingService;
+
+    public CustomerUpdatingServiceImpl(CustomerRepository customerRepository,
+                                       CustomerAuditTrailRepository auditTrailRepository,
+                                       PersonUpdatingService personUpdatingService
+    ) {
+        this.customerRepository = customerRepository;
+        this.auditTrailRepository = auditTrailRepository;
+        this.personUpdatingService = personUpdatingService;
+    }
 
     @Override
     public ResponseEntity<Result<Void>> update(@ObjectId String customerId,
@@ -29,13 +36,13 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
     ) {
         Optional<Customer> foundCustomer = customerRepository.findById(customerId);
         if (foundCustomer.isEmpty()) {
-            Result<Void> error = Result.error(ErrorMessages.CUSTOMER_NOT_FOUND.getValue());
-            return ResponseEntity.status(StatusCode.NOT_FOUND.getCode()).body(error);
+            Result<Void> error = Result.error(ErrorMessages.CUSTOMER_NOT_FOUND.value());
+            return ResponseEntity.status(StatusCode.NOT_FOUND.code()).body(error);
         }
         Customer customer = foundCustomer.get();
         CustomerAuditTrail auditTrail = CustomerAuditTrail.of(customer);
         CustomerAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdatingService.update(customer.getPerson(), personUpdatingDto);
+        Person updatedPerson = personUpdatingService.update(customer.person(), personUpdatingDto);
         customer.update(updatedPerson);
         Customer updatedCustomer = customerRepository.save(customer);
         Result<Void> empty = Result.empty();

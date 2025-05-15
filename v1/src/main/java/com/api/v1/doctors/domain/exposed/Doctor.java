@@ -4,7 +4,6 @@ import com.api.v1.common.LicenseNumber;
 import com.api.v1.common.ProfessionalStatus;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
-import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,7 +11,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document
-@Getter
 public class Doctor {
 
     @Id
@@ -62,5 +60,33 @@ public class Doctor {
 
     public DoctorResponseDto toDto() {
         return DoctorResponseDto.from(this);
+    }
+
+    public String id() {
+        return id;
+    }
+
+    public Person person() {
+        return person;
+    }
+
+    public LicenseNumber licenseNumber() {
+        return licenseNumber;
+    }
+
+    public ProfessionalStatus status() {
+        return status;
+    }
+
+    public LocalDateTime createdAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime updatedAt() {
+        return updatedAt;
+    }
+
+    public LocalDateTime terminatedAt() {
+        return terminatedAt;
     }
 }

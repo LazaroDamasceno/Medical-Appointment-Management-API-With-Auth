@@ -1,8 +1,5 @@
 package com.api.v1.common;
 
-import lombok.Getter;
-
-@Getter
 public final class Result<T> {
 
     private ResultStatus status;
@@ -47,5 +44,17 @@ public final class Result<T> {
                 ResultStatus.ERROR,
                 message
         );
+    }
+
+    public ResultStatus status() {
+        return status;
+    }
+
+    public String message() {
+        return message;
+    }
+
+    public T body() {
+        return body;
     }
 }

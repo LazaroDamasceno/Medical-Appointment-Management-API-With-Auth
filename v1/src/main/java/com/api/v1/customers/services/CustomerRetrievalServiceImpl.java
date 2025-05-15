@@ -5,7 +5,6 @@ import com.api.v1.customers.controllers.CustomerController;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerRepository;
 import com.api.v1.customers.response.CustomerResponseDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +16,20 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
-@RequiredArgsConstructor
 public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
 
     private final CustomerRepository customerRepository;
+
+    public CustomerRetrievalServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
     public ResponseEntity<Result<CustomerResponseDto>> findById(@ObjectId String id) {
         Optional<Customer> foundCustomer = customerRepository.findById(id);
         if (foundCustomer.isEmpty()) {
-            Result<CustomerResponseDto> error = Result.error(ErrorMessages.CUSTOMER_NOT_FOUND.getValue());
-            return ResponseEntity.status(StatusCode.NOT_FOUND.getCode()).body(error);
+            Result<CustomerResponseDto> error = Result.error(ErrorMessages.CUSTOMER_NOT_FOUND.value());
+            return ResponseEntity.status(StatusCode.NOT_FOUND.code()).body(error);
         }
         CustomerResponseDto responseDto = foundCustomer
                 .get()
