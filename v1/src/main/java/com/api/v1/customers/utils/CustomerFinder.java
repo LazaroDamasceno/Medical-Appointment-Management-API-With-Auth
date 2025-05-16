@@ -1,25 +1,9 @@
 package com.api.v1.customers.utils;
 
-import com.api.v1.common.*;
 import com.api.v1.customers.domain.Customer;
-import com.api.v1.customers.domain.CustomerRepository;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component
-public final class CustomerFinder {
-
-    public CustomerFinder() {
-    }
-
-    private CustomerRepository repository;
-
-    private CustomerFinder(CustomerRepository repository) {
-        this.repository = repository;
-    }
-
-    public Optional<Customer> findOptionalById(@ObjectId String id) {
-        return repository.findById(id);
-    }
+public interface CustomerFinder {
+    Optional<Customer> findOptionalById(String id);
 }
