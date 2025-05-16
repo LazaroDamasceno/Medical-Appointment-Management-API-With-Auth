@@ -5,6 +5,7 @@ import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerAuditTrail;
 import com.api.v1.customers.domain.CustomerAuditTrailRepository;
 import com.api.v1.customers.domain.CustomerRepository;
+import com.api.v1.customers.response.CustomerResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonUpdatingDto;
 import com.api.v1.people.services.exposed.PersonUpdatingService;
@@ -31,12 +32,12 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
     }
 
     @Override
-    public ResponseEntity<Result<Void>> update(@ObjectId String customerId,
-                                              @Valid PersonUpdatingDto personUpdatingDto
+    public ResponseEntity<Result<CustomerResponseDto>> update(@ObjectId String customerId,
+                                                              @Valid PersonUpdatingDto personUpdatingDto
     ) {
         Optional<Customer> foundCustomer = customerRepository.findById(customerId);
         if (foundCustomer.isEmpty()) {
-            Result<Void> error = Result.error(ErrorMessages.CUSTOMER_NOT_FOUND.value());
+            Result<CustomerResponseDto> error = Result.error(ErrorMessages.CUSTOMER_NOT_FOUND.value());
             return ResponseEntity.status(StatusCode.NOT_FOUND.code()).body(error);
         }
         Customer customer = foundCustomer.get();
@@ -45,7 +46,8 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
         Person updatedPerson = personUpdatingService.update(customer.person(), personUpdatingDto);
         customer.update(updatedPerson);
         Customer updatedCustomer = customerRepository.save(customer);
-        Result<Void> empty = Result.empty();
+        CustomerResponseDto responseDto = updatedCustomer.toDto();
+        Result<CustomerResponseDto> empty = Result.success(responseDto);
         return ResponseEntity.ok(empty);
     }
 }
