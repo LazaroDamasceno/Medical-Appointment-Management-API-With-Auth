@@ -1,7 +1,6 @@
 package com.api.v1.customers.controllers;
 
 import com.api.v1.common.ObjectId;
-import com.api.v1.common.Result;
 import com.api.v1.customers.response.CustomerResponseDto;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
@@ -33,7 +32,7 @@ public class CustomerController  {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Result<CustomerResponseDto>> findById(@ObjectId @PathVariable String id) {
+    public ResponseEntity<CustomerResponseDto> findById(@ObjectId @PathVariable String id) {
         return retrievalService.findById(id);
     }
 
@@ -43,12 +42,12 @@ public class CustomerController  {
     }
 
     @PostMapping
-    public ResponseEntity<Result<CustomerResponseDto>> register(@RequestBody @Valid PersonRegistrationDto registrationDto) {
+    public ResponseEntity<CustomerResponseDto> register(@RequestBody @Valid PersonRegistrationDto registrationDto) {
         return registrationService.register(registrationDto);
     }
 
     @PatchMapping("{customerId}")
-    public ResponseEntity<Result<CustomerResponseDto>> update(@ObjectId @PathVariable String customerId,
+    public ResponseEntity<CustomerResponseDto> update(@ObjectId @PathVariable String customerId,
                                                @RequestBody PersonUpdatingDto personUpdatingDto
     ) {
         return updatingService.update(customerId, personUpdatingDto);

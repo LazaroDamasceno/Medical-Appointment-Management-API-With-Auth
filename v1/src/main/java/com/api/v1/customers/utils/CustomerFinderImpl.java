@@ -3,6 +3,7 @@ package com.api.v1.customers.utils;
 import com.api.v1.common.*;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerRepository;
+import com.api.v1.customers.exceptions.CustomerNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -16,7 +17,11 @@ public final class CustomerFinderImpl implements CustomerFinder {
         this.repository = repository;
     }
 
-    public Optional<Customer> findOptionalById(@ObjectId String id) {
-        return repository.findById(id);
+    public Customer findOptionalById(@ObjectId String id) {
+        Optional<Customer> optional = repository.findById(id);
+        if (optional.isEmpty()) {
+            throw new CustomerNotFoundException(id);
+        }
+        return optional.get();
     }
 }

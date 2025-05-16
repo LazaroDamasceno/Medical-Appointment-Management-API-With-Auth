@@ -1,7 +1,6 @@
 package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.LicenseNumber;
-import com.api.v1.common.Result;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorManagementService;
@@ -31,27 +30,27 @@ public class DoctorController {
     }
 
     @PatchMapping("{licenseNumber}/termination")
-    public ResponseEntity<Result<DoctorResponseDto>> terminate(@PathVariable @LicenseNumber String licenseNumber) {
+    public ResponseEntity<DoctorResponseDto> terminate(@PathVariable @LicenseNumber String licenseNumber) {
         return managementService.terminate(licenseNumber);
     }
 
     @PatchMapping("{licenseNumber}/rehiring")
-    public ResponseEntity<Result<DoctorResponseDto>> rehire(@PathVariable @LicenseNumber String licenseNumber) {
+    public ResponseEntity<DoctorResponseDto> rehire(@PathVariable @LicenseNumber String licenseNumber) {
         return managementService.rehire(licenseNumber);
     }
 
     @PostMapping
-    public ResponseEntity<Result<DoctorResponseDto>> register(@RequestBody @Valid DoctorRegistrationDto registrationDto) {
+    public ResponseEntity<DoctorResponseDto> register(@RequestBody @Valid DoctorRegistrationDto registrationDto) {
         return registrationService.register(registrationDto);
     }
 
     @GetMapping("{licenseNumber}")
-    public ResponseEntity<Result<DoctorResponseDto>> findByLicenseNumber(@PathVariable @LicenseNumber String licenseNumber) {
+    public ResponseEntity<DoctorResponseDto> findByLicenseNumber(@PathVariable @LicenseNumber String licenseNumber) {
         return retrievalService.findByLicenseNumber(licenseNumber);
     }
 
     @GetMapping
-    public ResponseEntity<Result<Page<DoctorResponseDto>>> findAll(@RequestBody Pageable pageable) {
+    public ResponseEntity<Page<DoctorResponseDto>> findAll(@RequestBody Pageable pageable) {
         return retrievalService.findAll(pageable);
     }
 }
