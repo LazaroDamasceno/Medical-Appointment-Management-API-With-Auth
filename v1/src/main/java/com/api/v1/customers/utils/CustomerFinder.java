@@ -8,11 +8,14 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class CustomerFinder {
+public final class CustomerFinder {
 
-    private final CustomerRepository repository;
+    public CustomerFinder() {
+    }
 
-    public CustomerFinder(CustomerRepository repository) {
+    private CustomerRepository repository;
+
+    private CustomerFinder(CustomerRepository repository) {
         this.repository = repository;
     }
 
