@@ -1,8 +1,9 @@
 package com.api.v2.people.services
 
-import com.api.v2.people.domain.Person
+import com.api.v2.people.domain.exposed.Person
 import com.api.v2.people.domain.PersonRepository
 import com.api.v2.people.requests.PersonRegistrationDTO
+import com.api.v2.people.services.exposed.PersonRegistrationService
 import jakarta.validation.Valid
 import org.springframework.stereotype.Service
 
