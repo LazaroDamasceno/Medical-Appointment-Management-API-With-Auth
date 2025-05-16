@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.time.LocalDate
 
-data class PersonRegistrationDto(
+data class PersonUpdatingDTO(
     @NotBlank
     val firstName: String,
     val middleName: String?,
@@ -17,9 +17,6 @@ data class PersonRegistrationDto(
     val lastName: String,
     @NotNull
     val birthDate: LocalDate,
-    @NotBlank
-    @Size(min = 10, max = 10)
-    val sin: String,
     @NotBlank
     @Email
     val email: String,

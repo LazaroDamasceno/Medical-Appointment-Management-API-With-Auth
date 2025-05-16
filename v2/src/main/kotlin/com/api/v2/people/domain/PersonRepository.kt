@@ -5,9 +5,6 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
 interface PersonRepository: CoroutineCrudRepository<Person, String> {
 
-    @Query("{ 'sin': ?0 }")
-    suspend fun findBySIN(sin: String): Person?
-
-    @Query("{ 'email': ?0 }")
-    suspend fun findByEmail(email: String): Person?
+    @Query("{ '\$or': [ { 'sin': ?0, 'email': ?1 } ] }")
+    suspend fun findBySINOrEmail(sin: String, email: String): Person?
 }

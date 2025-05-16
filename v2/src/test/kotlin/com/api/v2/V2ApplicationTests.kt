@@ -2,7 +2,7 @@ package com.api.v2
 
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
-import com.api.v2.people.requests.PersonRegistrationDto
+import com.api.v2.people.requests.PersonRegistrationDTO
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -19,7 +19,7 @@ class V2ApplicationTests {
 	@Autowired
 	lateinit var webTestClient: WebTestClient
 
-	val registrationDto = PersonRegistrationDto(
+	val registrationDto = PersonRegistrationDTO(
 		"Leo",
 		"",
 		"Silva",
