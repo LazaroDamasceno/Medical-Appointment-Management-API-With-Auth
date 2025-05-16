@@ -1,8 +1,9 @@
-package com.api.v2.people.domain
+package com.api.v2.people.domain.exposed
 
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
 import com.api.v2.people.requests.PersonRegistrationDTO
+import com.api.v2.people.requests.PersonUpdatingDTO
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -23,7 +24,7 @@ class Person private constructor(
 
     var id = UUID.randomUUID().toString();
     val createdAt: LocalDateTime = LocalDateTime.now()
-    val updatedAt: LocalDateTime? = null
+    var updatedAt: LocalDateTime? = null
 
     companion object {
         fun of(registrationDto: PersonRegistrationDTO): Person {
@@ -39,5 +40,17 @@ class Person private constructor(
                 registrationDto.address
             )
         }
+    }
+
+    fun update(updatingDTO: PersonUpdatingDTO) {
+        firstName = updatingDTO.firstName
+        middleName = updatingDTO.middleName
+        lastName = updatingDTO.lastName
+        birthDate = updatingDTO.birthDate
+        email = updatingDTO.email
+        phoneNumber = updatingDTO.phoneNumber
+        gender = updatingDTO.gender
+        address = updatingDTO.address
+        updatedAt = LocalDateTime.now()
     }
 }
