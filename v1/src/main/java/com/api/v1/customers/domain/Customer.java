@@ -12,10 +12,10 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    String id;
-    Person person;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
+    private String id;
+    private Person person;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     private Customer() {}
 
