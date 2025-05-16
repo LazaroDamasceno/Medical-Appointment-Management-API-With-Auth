@@ -5,7 +5,8 @@ public enum ErrorMessages {
     CUSTOMER_NOT_FOUND("Customer was not found."),
     DUPLICATED_SIN("Provided SIN is already in use."),
     DUPLICATED_EMAIL("Provided email is already in use."),
-    DOCTOR_NOT_FOUND("Doctor was not found.");
+    DOCTOR_NOT_FOUND("Doctor was not found."),
+    DUPLICATED_LICENSE_NUMBER("Provided license number is already in use.");
 
     private final String value;
 

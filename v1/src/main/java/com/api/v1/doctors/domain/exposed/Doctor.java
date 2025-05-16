@@ -1,6 +1,5 @@
 package com.api.v1.doctors.domain.exposed;
 
-import com.api.v1.common.LicenseNumber;
 import com.api.v1.common.ProfessionalStatus;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
@@ -16,7 +15,7 @@ public class Doctor {
     @Id
     private String id;
     private Person person;
-    private LicenseNumber licenseNumber;
+    private String licenseNumber;
     private ProfessionalStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -26,21 +25,19 @@ public class Doctor {
     }
 
     private Doctor(Person person,
-                  LicenseNumber licenseNumber,
-                  ProfessionalStatus status
+                  String licenseNumber
     ) {
         this.id = UUID.randomUUID().toString();
         this.person = person;
         this.licenseNumber = licenseNumber;
-        this.status = status;
+        this.status = ProfessionalStatus.ACTIVE;
         this.createdAt = LocalDateTime.now();
     }
 
     public static Doctor of(Person person,
-                         LicenseNumber licenseNumber,
-                         ProfessionalStatus status
+                         String licenseNumber
     ) {
-        return new Doctor(person, licenseNumber, status);
+        return new Doctor(person, licenseNumber);
     }
 
     public void update(Person person) {
@@ -70,7 +67,7 @@ public class Doctor {
         return person;
     }
 
-    public LicenseNumber licenseNumber() {
+    public String licenseNumber() {
         return licenseNumber;
     }
 

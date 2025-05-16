@@ -1,6 +1,5 @@
 package com.api.v1.doctors.response;
 
-import com.api.v1.common.LicenseNumber;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.people.utils.FullNameFormatter;
 import org.springframework.hateoas.RepresentationModel;
@@ -8,12 +7,12 @@ import org.springframework.hateoas.RepresentationModel;
 public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     private String fullName;
-    private LicenseNumber licenseNumber;
+    private String licenseNumber;
 
     private DoctorResponseDto() {
     }
 
-    private DoctorResponseDto(String fullName, LicenseNumber licenseNumber) {
+    private DoctorResponseDto(String fullName, String licenseNumber) {
         this.fullName = fullName;
         this.licenseNumber = licenseNumber;
     }
@@ -29,7 +28,7 @@ public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
         return fullName;
     }
 
-    public LicenseNumber licenseNumber() {
+    public String licenseNumber() {
         return licenseNumber;
     }
 }
