@@ -1,6 +1,6 @@
 package com.api.v1.doctors.domain;
 
-import com.api.v1.people.domain.exposed.Person;
+import com.api.v1.doctors.domain.exposed.Doctor;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
@@ -9,14 +9,14 @@ import java.util.UUID;
 public record DoctorAuditTrail(
         @Id
         String id,
-        Person person,
+        Doctor doctor,
         LocalDateTime createdAt
 ) {
 
-    public static DoctorAuditTrail of(Person person) {
+    public static DoctorAuditTrail of(Doctor doctor) {
         return new DoctorAuditTrail(
                 UUID.randomUUID().toString(),
-                person,
+                doctor,
                 LocalDateTime.now()
         );
     }

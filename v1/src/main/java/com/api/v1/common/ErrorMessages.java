@@ -6,7 +6,9 @@ public enum ErrorMessages {
     DUPLICATED_SIN("Provided SIN is already in use."),
     DUPLICATED_EMAIL("Provided email is already in use."),
     DOCTOR_NOT_FOUND("Doctor was not found."),
-    DUPLICATED_LICENSE_NUMBER("Provided license number is already in use.");
+    DUPLICATED_LICENSE_NUMBER("Provided license number is already in use."),
+    TERMINATED_DOCTOR("Doctor is currently terminated."),
+    ACTIVE_DOCTOR("Doctor is currently active.");
 
     private final String value;
 

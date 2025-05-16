@@ -16,4 +16,10 @@ public interface DoctorRepository extends MongoRepository<Doctor, String> {
 
     @Query("{ 'licenseNumber': ?0 }")
     Optional<Doctor> findByLicenseNumber(String licenseNumber);
+
+    @Query("{ 'licenseNumber': ?0, 'status': 'TERMINATED' }")
+    Optional<Doctor> findTerminatedByLicenseNumber(String licenseNumber);
+
+    @Query("{ 'licenseNumber': ?0, 'status': 'ACTIVE' }")
+    Optional<Doctor> findActiveByLicenseNumber(String licenseNumber);
 }

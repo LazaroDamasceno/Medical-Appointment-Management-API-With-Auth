@@ -19,10 +19,6 @@ public final class Result<T> {
         this.message = message;
     }
 
-    public static Result<Void> empty() {
-        return new Result<>();
-    }
-
     public static <T>  Result<T> success(T body) {
         return new Result<>(
                 ResultStatus.SUCCESSFUL,
