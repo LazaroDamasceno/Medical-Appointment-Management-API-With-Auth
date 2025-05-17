@@ -1,6 +1,8 @@
 package com.api.v2.customers.domain
 
+import com.api.v2.customers.responses.CustomerResponseDTO
 import com.api.v2.people.domain.exposed.Person
+import com.api.v2.people.extension_methods.fullName
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import java.util.UUID
@@ -23,5 +25,12 @@ class Customer private constructor(
     fun update(person: Person) {
         this.person = person
         this.updatedAt = LocalDateTime.now()
+    }
+
+    fun toDTO(): CustomerResponseDTO {
+        return CustomerResponseDTO(
+            id,
+            person.fullName()
+        )
     }
 }
