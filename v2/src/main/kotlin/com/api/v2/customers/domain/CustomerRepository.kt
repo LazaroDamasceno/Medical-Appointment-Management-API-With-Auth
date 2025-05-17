@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.repository.Query
 interface CustomerRepository: MongoRepository<Customer, String> {
 
     @Query("{ 'person.sin': ?0 }")
-    suspend fun findBySIN(sin: String)
+    suspend fun findBySIN(sin: String): Customer?
 
     @Query("{ 'person.email': ?0 }")
-    suspend fun findByEmail(email: String)
+    suspend fun findByEmail(email: String): Customer?
 }
