@@ -2,8 +2,8 @@ package com.api.v1.people.domain.exposed;
 
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
-import com.api.v1.people.requests.PersonRegistrationDto;
-import com.api.v1.people.requests.PersonUpdatingDto;
+import com.api.v1.people.requests.PersonRegistrationDTO;
+import com.api.v1.people.requests.PersonUpdatingDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,7 +30,7 @@ public class Person {
 
     private Person() {}
 
-    private Person(@Valid PersonRegistrationDto registrationDto) {
+    private Person(@Valid PersonRegistrationDTO registrationDto) {
         this.id = UUID.randomUUID().toString();
         this.firstName = registrationDto.firstName();
         this.middleName = registrationDto.middleName();
@@ -43,11 +43,11 @@ public class Person {
         this.createdAt = LocalDateTime.now();
     }
 
-    public static Person of(@Valid PersonRegistrationDto registrationDto) {
+    public static Person of(@Valid PersonRegistrationDTO registrationDto) {
         return new Person(registrationDto);
     }
 
-    public void update(@Valid PersonUpdatingDto updatingDto) {
+    public void update(@Valid PersonUpdatingDTO updatingDto) {
         this.firstName = updatingDto.firstName();
         this.middleName = updatingDto.middleName();
         this.lastName = updatingDto.lastName();

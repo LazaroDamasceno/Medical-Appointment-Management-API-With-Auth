@@ -2,8 +2,7 @@ package com.api.v1.integration_tests;
 
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
-import com.api.v1.people.requests.PersonRegistrationDto;
-import com.api.v1.people.requests.PersonUpdatingDto;
+import com.api.v1.people.requests.PersonUpdatingDTO;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -22,7 +21,7 @@ public class CustomerUpdatingTest {
     @Autowired
     WebTestClient webTestClient;
 
-    PersonUpdatingDto customerDto  = new PersonUpdatingDto(
+    PersonUpdatingDTO customerDto  = new PersonUpdatingDTO(
             "Leonard",
             "Campbell",
             "Smith",

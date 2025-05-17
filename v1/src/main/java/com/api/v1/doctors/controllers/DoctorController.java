@@ -2,13 +2,13 @@ package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.common.ObjectId;
-import com.api.v1.doctors.requests.DoctorRegistrationDto;
+import com.api.v1.doctors.requests.DoctorRegistrationDTO;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorManagementService;
 import com.api.v1.doctors.services.DoctorRegistrationService;
 import com.api.v1.doctors.services.DoctorRetrievalService;
 import com.api.v1.doctors.services.DoctorUpdatingService;
-import com.api.v1.people.requests.PersonUpdatingDto;
+import com.api.v1.people.requests.PersonUpdatingDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,7 +46,7 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<DoctorResponseDto> register(@RequestBody @Valid DoctorRegistrationDto registrationDto) {
+    public ResponseEntity<DoctorResponseDto> register(@RequestBody @Valid DoctorRegistrationDTO registrationDto) {
         return registrationService.register(registrationDto);
     }
 
@@ -61,7 +61,7 @@ public class DoctorController {
     }
 
     @PatchMapping("{licenseNumber}/updating")
-    public ResponseEntity<Void> update(@PathVariable @ObjectId String licenseNumber, @Valid PersonUpdatingDto personUpdatingDto) {
+    public ResponseEntity<Void> update(@PathVariable @ObjectId String licenseNumber, @Valid PersonUpdatingDTO personUpdatingDto) {
         return updatingService.update(licenseNumber, personUpdatingDto);
     }
 }

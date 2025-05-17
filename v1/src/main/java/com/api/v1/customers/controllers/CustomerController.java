@@ -1,12 +1,12 @@
 package com.api.v1.customers.controllers;
 
 import com.api.v1.common.ObjectId;
-import com.api.v1.customers.response.CustomerResponseDto;
+import com.api.v1.customers.response.CustomerResponseDTO;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
 import com.api.v1.customers.services.CustomerUpdatingService;
-import com.api.v1.people.requests.PersonRegistrationDto;
-import com.api.v1.people.requests.PersonUpdatingDto;
+import com.api.v1.people.requests.PersonRegistrationDTO;
+import com.api.v1.people.requests.PersonUpdatingDTO;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -32,23 +32,23 @@ public class CustomerController  {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<CustomerResponseDto> findById(@ObjectId @PathVariable String id) {
+    public ResponseEntity<CustomerResponseDTO> findById(@ObjectId @PathVariable String id) {
         return retrievalService.findById(id);
     }
 
     @GetMapping
-    public ResponseEntity<Page<CustomerResponseDto>> findAll(@ParameterObject Pageable pageable) {
+    public ResponseEntity<Page<CustomerResponseDTO>> findAll(@ParameterObject Pageable pageable) {
         return retrievalService.findAll(pageable);
     }
 
     @PostMapping
-    public ResponseEntity<CustomerResponseDto> register(@RequestBody @Valid PersonRegistrationDto registrationDto) {
+    public ResponseEntity<CustomerResponseDTO> register(@RequestBody @Valid PersonRegistrationDTO registrationDto) {
         return registrationService.register(registrationDto);
     }
 
     @PatchMapping("{customerId}")
     public ResponseEntity<Void> update(@ObjectId @PathVariable String customerId,
-                                               @RequestBody PersonUpdatingDto personUpdatingDto
+                                               @RequestBody PersonUpdatingDTO personUpdatingDto
     ) {
         return updatingService.update(customerId, personUpdatingDto);
     }

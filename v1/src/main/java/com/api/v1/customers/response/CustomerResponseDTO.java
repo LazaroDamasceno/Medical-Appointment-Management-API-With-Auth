@@ -5,21 +5,21 @@ import com.api.v1.people.utils.FullNameFormatter;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.hateoas.RepresentationModel;
 
-public final class CustomerResponseDto extends RepresentationModel<CustomerResponseDto> {
+public final class CustomerResponseDTO extends RepresentationModel<CustomerResponseDTO> {
 
     private String id;
     private String fullName;
 
-    private CustomerResponseDto() {
+    private CustomerResponseDTO() {
     }
 
-    private CustomerResponseDto(String id, String fullName) {
+    private CustomerResponseDTO(String id, String fullName) {
         this.id = id;
         this.fullName = fullName;
     }
 
-    public static CustomerResponseDto from(@NotNull Customer customer) {
-        return new CustomerResponseDto(
+    public static CustomerResponseDTO from(@NotNull Customer customer) {
+        return new CustomerResponseDTO(
                 customer.id(),
                 FullNameFormatter.format(customer.person())
         );

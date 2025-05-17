@@ -1,13 +1,13 @@
 package com.api.v1.doctors.requests;
 
 import com.api.v1.common.LicenseNumber;
-import com.api.v1.people.requests.PersonRegistrationDto;
+import com.api.v1.people.requests.PersonRegistrationDTO;
 import jakarta.validation.Valid;
 
-public record DoctorRegistrationDto(
+public record DoctorRegistrationDTO(
         @LicenseNumber
         String licenseNumber,
         @Valid
-        PersonRegistrationDto person
+        PersonRegistrationDTO person
 ) {
 }

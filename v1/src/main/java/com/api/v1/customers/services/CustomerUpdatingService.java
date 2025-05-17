@@ -1,9 +1,8 @@
 package com.api.v1.customers.services;
 
-import com.api.v1.customers.response.CustomerResponseDto;
-import com.api.v1.people.requests.PersonUpdatingDto;
+import com.api.v1.people.requests.PersonUpdatingDTO;
 import org.springframework.http.ResponseEntity;
 
 public interface CustomerUpdatingService {
-    ResponseEntity<Void> update(String customerId, PersonUpdatingDto personUpdatingDto);
+    ResponseEntity<Void> update(String customerId, PersonUpdatingDTO personUpdatingDto);
 }

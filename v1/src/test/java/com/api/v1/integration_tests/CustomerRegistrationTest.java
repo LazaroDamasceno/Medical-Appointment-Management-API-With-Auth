@@ -2,7 +2,7 @@ package com.api.v1.integration_tests;
 
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
-import com.api.v1.people.requests.PersonRegistrationDto;
+import com.api.v1.people.requests.PersonRegistrationDTO;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class CustomerRegistrationTest {
     @Autowired
     WebTestClient webTestClient;
 
-    PersonRegistrationDto customerDto  = new PersonRegistrationDto(
+    PersonRegistrationDTO customerDto  = new PersonRegistrationDTO(
             "Leonard",
             "",
             "Smith",
@@ -59,7 +59,7 @@ public class CustomerRegistrationTest {
                 .is4xxClientError();
     }
 
-    PersonRegistrationDto duplicateEmailDto = new PersonRegistrationDto(
+    PersonRegistrationDTO duplicateEmailDto = new PersonRegistrationDTO(
             "Leonard",
             "",
             "Smith",

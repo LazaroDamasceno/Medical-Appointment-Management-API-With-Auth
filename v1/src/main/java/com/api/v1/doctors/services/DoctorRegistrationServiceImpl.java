@@ -3,7 +3,7 @@ package com.api.v1.doctors.services;
 import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
-import com.api.v1.doctors.requests.DoctorRegistrationDto;
+import com.api.v1.doctors.requests.DoctorRegistrationDTO;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.exceptions.DuplicatedSINException;
@@ -29,7 +29,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
     }
 
     @Override
-    public ResponseEntity<DoctorResponseDto> register(@Valid DoctorRegistrationDto registrationDto) {
+    public ResponseEntity<DoctorResponseDto> register(@Valid DoctorRegistrationDTO registrationDto) {
         validate(registrationDto);
         Person savedPerson = personRegistrationService.register(registrationDto.person());
         Doctor newDoctor = Doctor.of(savedPerson, registrationDto.licenseNumber());
@@ -41,7 +41,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
                 .body(responseDto);
     }
 
-    private void validate(DoctorRegistrationDto registrationDto) {
+    private void validate(DoctorRegistrationDTO registrationDto) {
         if (repository.findByLicenseNumber(registrationDto.licenseNumber()).isPresent()) {
             throw new DuplicatedMedicalLicenseNumberException(registrationDto.licenseNumber());
         }

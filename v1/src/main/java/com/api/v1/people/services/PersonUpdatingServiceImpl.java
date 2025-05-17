@@ -6,7 +6,7 @@ import com.api.v1.people.domain.PersonAuditTrail;
 import com.api.v1.people.domain.PersonAuditTrailRepository;
 import com.api.v1.people.domain.PersonRepository;
 import com.api.v1.people.domain.exposed.Person;
-import com.api.v1.people.requests.PersonUpdatingDto;
+import com.api.v1.people.requests.PersonUpdatingDTO;
 import com.api.v1.people.services.exposed.PersonUpdatingService;
 
 import jakarta.validation.Valid;
@@ -24,7 +24,7 @@ public class PersonUpdatingServiceImpl implements PersonUpdatingService {
     }
 
     @Override
-    public Person update(@NotNull Person person, @Valid PersonUpdatingDto updatingDto) {
+    public Person update(@NotNull Person person, @Valid PersonUpdatingDTO updatingDto) {
         PersonAuditTrail auditTrail = PersonAuditTrail.of(person);
         PersonAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
         person.update(updatingDto);

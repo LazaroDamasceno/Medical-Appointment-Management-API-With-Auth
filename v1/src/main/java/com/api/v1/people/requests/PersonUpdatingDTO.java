@@ -6,19 +6,16 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-public record PersonRegistrationDto(
+public record PersonUpdatingDTO(
         @NotBlank
         String firstName,
         String middleName,
         @NotBlank
         String lastName,
         @NotBlank
-        @Size(min = 10, max = 10)
-        String sin,
         @NotNull
         LocalDate birthDate,
         @NotBlank

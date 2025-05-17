@@ -1,6 +1,6 @@
 package com.api.v1.customers.domain;
 
-import com.api.v1.customers.response.CustomerResponseDto;
+import com.api.v1.customers.response.CustomerResponseDTO;
 import com.api.v1.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -34,8 +34,8 @@ public class Customer {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public CustomerResponseDto toDto() {
-        return CustomerResponseDto.from(this);
+    public CustomerResponseDTO toDto() {
+        return CustomerResponseDTO.from(this);
     }
 
     public String id() {

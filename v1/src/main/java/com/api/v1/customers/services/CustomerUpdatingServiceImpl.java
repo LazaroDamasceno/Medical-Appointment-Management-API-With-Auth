@@ -5,10 +5,9 @@ import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerAuditTrail;
 import com.api.v1.customers.domain.CustomerAuditTrailRepository;
 import com.api.v1.customers.domain.CustomerRepository;
-import com.api.v1.customers.response.CustomerResponseDto;
 import com.api.v1.customers.utils.exposed.CustomerFinder;
 import com.api.v1.people.domain.exposed.Person;
-import com.api.v1.people.requests.PersonUpdatingDto;
+import com.api.v1.people.requests.PersonUpdatingDTO;
 import com.api.v1.people.services.exposed.PersonUpdatingService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,7 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
     }
 
     @Override
-    public ResponseEntity<Void> update(@ObjectId String customerId, @Valid PersonUpdatingDto personUpdatingDto) {
+    public ResponseEntity<Void> update(@ObjectId String customerId, @Valid PersonUpdatingDTO personUpdatingDto) {
         Customer foundCustomer = finder.findById(customerId);
         CustomerAuditTrail auditTrail = CustomerAuditTrail.of(foundCustomer);
         CustomerAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);

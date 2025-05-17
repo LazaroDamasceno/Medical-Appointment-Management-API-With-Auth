@@ -2,7 +2,7 @@ package com.api.v1.people.services;
 
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.domain.PersonRepository;
-import com.api.v1.people.requests.PersonRegistrationDto;
+import com.api.v1.people.requests.PersonRegistrationDTO;
 import com.api.v1.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
     }
 
     @Override
-    public Person register(@Valid PersonRegistrationDto registrationDto) {
+    public Person register(@Valid PersonRegistrationDTO registrationDto) {
         return repository
                 .findBySinOrEmail(registrationDto.sin(), registrationDto.email())
                 .orElseGet(() -> {
