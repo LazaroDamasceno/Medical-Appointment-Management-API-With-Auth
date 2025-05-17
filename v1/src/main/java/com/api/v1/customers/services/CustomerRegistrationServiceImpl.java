@@ -29,9 +29,9 @@ public class CustomerRegistrationServiceImpl implements CustomerRegistrationServ
     }
 
     @Override
-    public ResponseEntity<CustomerResponseDTO> register(@Valid PersonRegistrationDTO registrationDto) {
-        validate(registrationDto);
-        Person savedPerson = personRegistrationService.register(registrationDto);
+    public ResponseEntity<CustomerResponseDTO> register(@Valid PersonRegistrationDTO registrationDTO) {
+        validate(registrationDTO);
+        Person savedPerson = personRegistrationService.register(registrationDTO);
         Customer newCustomer = Customer.of(savedPerson);
         Customer savedCustomer = repository.save(newCustomer);
         CustomerResponseDTO responseDto = savedCustomer.toDto();

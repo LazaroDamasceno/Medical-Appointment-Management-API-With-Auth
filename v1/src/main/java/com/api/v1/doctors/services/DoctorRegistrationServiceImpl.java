@@ -29,10 +29,10 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
     }
 
     @Override
-    public ResponseEntity<DoctorResponseDto> register(@Valid DoctorRegistrationDTO registrationDto) {
-        validate(registrationDto);
-        Person savedPerson = personRegistrationService.register(registrationDto.person());
-        Doctor newDoctor = Doctor.of(savedPerson, registrationDto.licenseNumber());
+    public ResponseEntity<DoctorResponseDto> register(@Valid DoctorRegistrationDTO registrationDTO) {
+        validate(registrationDTO);
+        Person savedPerson = personRegistrationService.register(registrationDTO.person());
+        Doctor newDoctor = Doctor.of(savedPerson, registrationDTO.licenseNumber());
         Doctor savedDoctor = repository.save(newDoctor);
         DoctorResponseDto responseDto = savedDoctor.toDto();
         return ResponseEntity

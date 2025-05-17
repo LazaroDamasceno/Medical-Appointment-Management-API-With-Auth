@@ -4,5 +4,5 @@ import com.api.v1.people.requests.PersonUpdatingDTO;
 import org.springframework.http.ResponseEntity;
 
 public interface DoctorUpdatingService {
-    ResponseEntity<Void> update(String licenseNumber, PersonUpdatingDTO personUpdatingDto);
+    ResponseEntity<Void> update(String licenseNumber, PersonUpdatingDTO personUpdatingDTO);
 }

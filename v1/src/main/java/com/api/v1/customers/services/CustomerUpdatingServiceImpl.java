@@ -33,11 +33,11 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
     }
 
     @Override
-    public ResponseEntity<Void> update(@ObjectId String customerId, @Valid PersonUpdatingDTO personUpdatingDto) {
+    public ResponseEntity<Void> update(@ObjectId String customerId, @Valid PersonUpdatingDTO personUpdatingDTO) {
         Customer foundCustomer = finder.findById(customerId);
         CustomerAuditTrail auditTrail = CustomerAuditTrail.of(foundCustomer);
         CustomerAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdatingService.update(foundCustomer.person(), personUpdatingDto);
+        Person updatedPerson = personUpdatingService.update(foundCustomer.person(), personUpdatingDTO);
         foundCustomer.update(updatedPerson);
         Customer updatedCustomer = repository.save(foundCustomer);
         return ResponseEntity.noContent().build();

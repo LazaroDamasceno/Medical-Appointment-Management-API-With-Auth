@@ -33,11 +33,11 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
     }
 
     @Override
-    public ResponseEntity<Void> update(@ObjectId String licenseNumber, @Valid PersonUpdatingDTO personUpdatingDto) {
+    public ResponseEntity<Void> update(@ObjectId String licenseNumber, @Valid PersonUpdatingDTO personUpdatingDTO) {
         Doctor foundDoctor = finder.findByLicenseNumber(licenseNumber);
         DoctorAuditTrail auditTrail = DoctorAuditTrail.of(foundDoctor);
         DoctorAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdatingService.update(foundDoctor.person(), personUpdatingDto);
+        Person updatedPerson = personUpdatingService.update(foundDoctor.person(), personUpdatingDTO);
         foundDoctor.update(updatedPerson);
         Doctor updatedDoctor = repository.save(foundDoctor);
         return ResponseEntity.noContent().build();

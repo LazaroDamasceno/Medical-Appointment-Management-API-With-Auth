@@ -5,5 +5,5 @@ import com.api.v1.doctors.response.DoctorResponseDto;
 import org.springframework.http.ResponseEntity;
 
 public interface DoctorRegistrationService {
-    ResponseEntity<DoctorResponseDto> register(DoctorRegistrationDTO registrationDto);
+    ResponseEntity<DoctorResponseDto> register(DoctorRegistrationDTO registrationDTO);
 }
