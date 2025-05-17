@@ -4,6 +4,7 @@ import com.api.v1.common.LicenseNumber;
 import com.api.v1.doctors.domain.DoctorRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.exceptions.DoctorNotFoundException;
+import com.api.v1.doctors.utils.exposed.DoctorFinder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
