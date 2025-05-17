@@ -18,6 +18,7 @@ public final class DoctorFinderImpl implements DoctorFinder {
         this.doctorRepository = doctorRepository;
     }
 
+    @Override
     public Doctor findByLicenseNumber(@LicenseNumber String licenseNumber) {
         Optional<Doctor> optional = doctorRepository.findByLicenseNumber(licenseNumber);
         if (optional.isEmpty()) {
