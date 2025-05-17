@@ -47,7 +47,7 @@ public class CustomerController  {
     }
 
     @PatchMapping("{customerId}")
-    public ResponseEntity<CustomerResponseDto> update(@ObjectId @PathVariable String customerId,
+    public ResponseEntity<Void> update(@ObjectId @PathVariable String customerId,
                                                @RequestBody PersonUpdatingDto personUpdatingDto
     ) {
         return updatingService.update(customerId, personUpdatingDto);

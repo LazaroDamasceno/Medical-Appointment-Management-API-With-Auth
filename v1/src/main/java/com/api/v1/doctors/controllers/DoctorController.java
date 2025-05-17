@@ -1,11 +1,14 @@
 package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.LicenseNumber;
+import com.api.v1.common.ObjectId;
 import com.api.v1.doctors.requests.DoctorRegistrationDto;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorManagementService;
 import com.api.v1.doctors.services.DoctorRegistrationService;
 import com.api.v1.doctors.services.DoctorRetrievalService;
+import com.api.v1.doctors.services.DoctorUpdatingService;
+import com.api.v1.people.requests.PersonUpdatingDto;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,23 +22,26 @@ public class DoctorController {
     private final DoctorRegistrationService registrationService;
     private final DoctorRetrievalService retrievalService;
     private final DoctorManagementService managementService;
+    private final DoctorUpdatingService updatingService;
 
     public DoctorController(DoctorRegistrationService registrationService,
                             DoctorRetrievalService retrievalService,
-                            DoctorManagementService managementService
+                            DoctorManagementService managementService,
+                            DoctorUpdatingService updatingService
     ) {
         this.registrationService = registrationService;
         this.retrievalService = retrievalService;
         this.managementService = managementService;
+        this.updatingService = updatingService;
     }
 
     @PatchMapping("{licenseNumber}/termination")
-    public ResponseEntity<DoctorResponseDto> terminate(@PathVariable @LicenseNumber String licenseNumber) {
+    public ResponseEntity<Void> terminate(@PathVariable @LicenseNumber String licenseNumber) {
         return managementService.terminate(licenseNumber);
     }
 
     @PatchMapping("{licenseNumber}/rehiring")
-    public ResponseEntity<DoctorResponseDto> rehire(@PathVariable @LicenseNumber String licenseNumber) {
+    public ResponseEntity<Void> rehire(@PathVariable @LicenseNumber String licenseNumber) {
         return managementService.rehire(licenseNumber);
     }
 
@@ -52,5 +58,10 @@ public class DoctorController {
     @GetMapping
     public ResponseEntity<Page<DoctorResponseDto>> findAll(@RequestBody Pageable pageable) {
         return retrievalService.findAll(pageable);
+    }
+
+    @PatchMapping("{licenseNumber}")
+    public ResponseEntity<Void> update(@PathVariable @ObjectId String licenseNumber, @Valid PersonUpdatingDto personUpdatingDto) {
+        return updatingService.update(licenseNumber, personUpdatingDto);
     }
 }
