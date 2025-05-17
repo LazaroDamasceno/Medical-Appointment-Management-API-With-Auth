@@ -60,7 +60,7 @@ public class DoctorController {
         return retrievalService.findAll(pageable);
     }
 
-    @PatchMapping("{licenseNumber}")
+    @PatchMapping("{licenseNumber}/updating")
     public ResponseEntity<Void> update(@PathVariable @ObjectId String licenseNumber, @Valid PersonUpdatingDto personUpdatingDto) {
         return updatingService.update(licenseNumber, personUpdatingDto);
     }
