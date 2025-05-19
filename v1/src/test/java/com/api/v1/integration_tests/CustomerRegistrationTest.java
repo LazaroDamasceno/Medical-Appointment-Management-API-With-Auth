@@ -3,22 +3,31 @@ package com.api.v1.integration_tests;
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
 import com.api.v1.people.requests.PersonRegistrationDTO;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 public class CustomerRegistrationTest {
 
     @Autowired
-    WebTestClient webTestClient;
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     PersonRegistrationDTO customerDTO  = new PersonRegistrationDTO(
             "Leonard",
@@ -35,28 +44,6 @@ public class CustomerRegistrationTest {
             )
     );
 
-    @Test
-    @Order(1)
-    void shouldReturnSuccessWhenCustomerIsRegistered() {
-        webTestClient.post()
-                .uri("/api/v1/customers")
-                .bodyValue(customerDTO)
-                .exchange()
-                .expectStatus()
-                .is2xxSuccessful();
-    }
-
-    @Test
-    @Order(2)
-    void shouldReturnConflictWhenSinIsDuplicated() {
-        webTestClient.post()
-                .uri("/api/v1/customers")
-                .bodyValue(customerDTO)
-                .exchange()
-                .expectStatus()
-                .is4xxClientError();
-    }
-
     PersonRegistrationDTO duplicateEmailDTO = new PersonRegistrationDTO(
             "Leonard",
             "",
@@ -72,14 +59,44 @@ public class CustomerRegistrationTest {
             )
     );
 
+    private Instant startTime;
+
+    @BeforeEach
+    void startTimer() {
+        startTime = Instant.now();
+    }
+
+    @AfterEach
+    void endTimer(TestInfo testInfo) {
+        Instant endTime = Instant.now();
+        Duration duration = Duration.between(startTime, endTime);
+        System.out.printf("Test '%s' took: %d ms%n", testInfo.getDisplayName(), duration.toMillis());
+    }
+
+    @Test
+    @Order(1)
+    void shouldReturnCreatedWhenCustomerIsRegistered() throws Exception {
+        mockMvc.perform(post("/api/v1/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customerDTO)))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    @Order(2)
+    void shouldReturnConflictWhenSinIsDuplicated() throws Exception {
+        mockMvc.perform(post("/api/v1/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(customerDTO)))
+                .andExpect(status().isConflict());
+    }
+
     @Test
     @Order(3)
-    void shouldReturnConflictWhenEmailIsDuplicated() {
-        webTestClient.post()
-                .uri("/api/v1/customers")
-                .bodyValue(duplicateEmailDTO)
-                .exchange()
-                .expectStatus()
-                .is4xxClientError();
+    void shouldReturnConflictWhenEmailIsDuplicated() throws Exception {
+        mockMvc.perform(post("/api/v1/customers")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(duplicateEmailDTO)))
+                .andExpect(status().isConflict());
     }
 }
