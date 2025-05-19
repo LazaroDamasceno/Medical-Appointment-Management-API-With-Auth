@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/doctors")
+@RequestMapping("/api/v1/doctors")
 public class DoctorController {
 
     private final DoctorRegistrationService registrationService;
@@ -35,12 +35,12 @@ public class DoctorController {
         this.updatingService = updatingService;
     }
 
-    @PatchMapping("{licenseNumber}/termination")
+    @PatchMapping("/{licenseNumber}/termination")
     public ResponseEntity<Void> terminate(@PathVariable @LicenseNumber String licenseNumber) {
         return managementService.terminate(licenseNumber);
     }
 
-    @PatchMapping("{licenseNumber}/rehiring")
+    @PatchMapping("/{licenseNumber}/rehiring")
     public ResponseEntity<Void> rehire(@PathVariable @LicenseNumber String licenseNumber) {
         return managementService.rehire(licenseNumber);
     }
@@ -50,7 +50,7 @@ public class DoctorController {
         return registrationService.register(registrationDto);
     }
 
-    @GetMapping("{licenseNumber}")
+    @GetMapping("/{licenseNumber}")
     public ResponseEntity<DoctorResponseDto> findByLicenseNumber(@PathVariable @LicenseNumber String licenseNumber) {
         return retrievalService.findByLicenseNumber(licenseNumber);
     }
@@ -60,7 +60,7 @@ public class DoctorController {
         return retrievalService.findAll(pageable);
     }
 
-    @PatchMapping("{licenseNumber}/updating")
+    @PatchMapping("/{licenseNumber}/updating")
     public ResponseEntity<Void> update(@PathVariable @ObjectId String licenseNumber, @Valid PersonUpdatingDTO personUpdatingDto) {
         return updatingService.update(licenseNumber, personUpdatingDto);
     }

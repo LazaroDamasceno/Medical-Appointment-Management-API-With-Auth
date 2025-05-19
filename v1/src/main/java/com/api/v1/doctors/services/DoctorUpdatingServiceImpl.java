@@ -37,7 +37,7 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
         Doctor foundDoctor = finder.findByLicenseNumber(licenseNumber);
         DoctorAuditTrail auditTrail = DoctorAuditTrail.of(foundDoctor);
         DoctorAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdatingService.update(foundDoctor.person(), personUpdatingDTO);
+        Person updatedPerson = personUpdatingService.update(foundDoctor.getPerson(), personUpdatingDTO);
         foundDoctor.update(updatedPerson);
         Doctor updatedDoctor = repository.save(foundDoctor);
         return ResponseEntity.noContent().build();

@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/customers")
+@RequestMapping("/api/v1/customers")
 public class CustomerController  {
 
     private final CustomerRetrievalService retrievalService;
@@ -31,7 +31,7 @@ public class CustomerController  {
         this.updatingService = updatingService;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDTO> findById(@ObjectId @PathVariable String id) {
         return retrievalService.findById(id);
     }
@@ -46,7 +46,7 @@ public class CustomerController  {
         return registrationService.register(registrationDto);
     }
 
-    @PatchMapping("{customerId}")
+    @PatchMapping("/{customerId}")
     public ResponseEntity<Void> update(@ObjectId @PathVariable String customerId,
                                                @RequestBody PersonUpdatingDTO personUpdatingDto
     ) {

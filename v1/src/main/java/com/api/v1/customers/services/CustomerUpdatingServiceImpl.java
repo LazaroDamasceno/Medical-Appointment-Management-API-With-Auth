@@ -37,7 +37,7 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
         Customer foundCustomer = finder.findById(customerId);
         CustomerAuditTrail auditTrail = CustomerAuditTrail.of(foundCustomer);
         CustomerAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdatingService.update(foundCustomer.person(), personUpdatingDTO);
+        Person updatedPerson = personUpdatingService.update(foundCustomer.getPerson(), personUpdatingDTO);
         foundCustomer.update(updatedPerson);
         Customer updatedCustomer = repository.save(foundCustomer);
         return ResponseEntity.noContent().build();

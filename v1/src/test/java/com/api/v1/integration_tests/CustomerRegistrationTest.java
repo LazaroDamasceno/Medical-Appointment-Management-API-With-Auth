@@ -20,7 +20,7 @@ public class CustomerRegistrationTest {
     @Autowired
     WebTestClient webTestClient;
 
-    PersonRegistrationDTO customerDto  = new PersonRegistrationDTO(
+    PersonRegistrationDTO customerDTO  = new PersonRegistrationDTO(
             "Leonard",
             "",
             "Smith",
@@ -38,10 +38,9 @@ public class CustomerRegistrationTest {
     @Test
     @Order(1)
     void shouldReturnSuccessWhenCustomerIsRegistered() {
-        webTestClient
-                .post()
-                .uri("api/v1/customers")
-                .bodyValue(customerDto)
+        webTestClient.post()
+                .uri("/api/v1/customers")
+                .bodyValue(customerDTO)
                 .exchange()
                 .expectStatus()
                 .is2xxSuccessful();
@@ -50,16 +49,15 @@ public class CustomerRegistrationTest {
     @Test
     @Order(2)
     void shouldReturnConflictWhenSinIsDuplicated() {
-        webTestClient
-                .post()
-                .uri("api/v1/customers")
-                .bodyValue(customerDto)
+        webTestClient.post()
+                .uri("/api/v1/customers")
+                .bodyValue(customerDTO)
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();
     }
 
-    PersonRegistrationDTO duplicateEmailDto = new PersonRegistrationDTO(
+    PersonRegistrationDTO duplicateEmailDTO = new PersonRegistrationDTO(
             "Leonard",
             "",
             "Smith",
@@ -77,10 +75,9 @@ public class CustomerRegistrationTest {
     @Test
     @Order(3)
     void shouldReturnConflictWhenEmailIsDuplicated() {
-        webTestClient
-                .post()
-                .uri("api/v1/customers")
-                .bodyValue(duplicateEmailDto)
+        webTestClient.post()
+                .uri("/api/v1/customers")
+                .bodyValue(duplicateEmailDTO)
                 .exchange()
                 .expectStatus()
                 .is4xxClientError();

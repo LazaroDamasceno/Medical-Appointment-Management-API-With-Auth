@@ -38,19 +38,19 @@ public class Customer {
         return CustomerResponseDTO.from(this);
     }
 
-    public String id() {
+    public String getId() {
         return id;
     }
 
-    public Person person() {
+    public Person getPerson() {
         return person;
     }
 
-    public LocalDateTime createdAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDateTime updatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 }

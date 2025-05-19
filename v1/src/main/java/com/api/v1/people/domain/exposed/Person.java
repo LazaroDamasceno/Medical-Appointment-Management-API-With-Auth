@@ -74,47 +74,31 @@ public class Person {
         return lastName;
     }
 
-    public String id() {
-        return id;
-    }
-
-    public String firstName() {
-        return firstName;
-    }
-
-    public String middleName() {
-        return middleName;
-    }
-
-    public String lastName() {
-        return lastName;
-    }
-
-    public String sin() {
+    public String getSin() {
         return sin;
     }
 
-    public LocalDate birthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public String email() {
+    public String getEmail() {
         return email;
     }
 
-    public Gender gender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public Address address() {
+    public Address getAddress() {
         return address;
     }
 
-    public LocalDateTime createdAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDateTime updatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 }

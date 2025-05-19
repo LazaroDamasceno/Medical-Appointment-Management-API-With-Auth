@@ -40,8 +40,8 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
     }
 
     private void onCurrentlyTerminatedDoctor(Doctor doctor) {
-        if (doctor.status().equals(ProfessionalStatus.TERMINATED)) {
-            throw new TerminatedDoctorException(doctor.licenseNumber());
+        if (doctor.getStatus().equals(ProfessionalStatus.TERMINATED)) {
+            throw new TerminatedDoctorException(doctor.getLicenseNumber());
         }
     }
 
@@ -57,8 +57,8 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
     }
 
     private void onCurrentlyActiveDoctor(Doctor doctor) {
-        if (doctor.status().equals(ProfessionalStatus.ACTIVE)) {
-            throw new TerminatedDoctorException(doctor.licenseNumber());
+        if (doctor.getStatus().equals(ProfessionalStatus.ACTIVE)) {
+            throw new TerminatedDoctorException(doctor.getLicenseNumber());
         }
     }
 }

@@ -19,16 +19,16 @@ public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     public static DoctorResponseDto from(Doctor doctor) {
         return new DoctorResponseDto(
-                FullNameFormatter.format(doctor.person()),
-                doctor.licenseNumber()
+                FullNameFormatter.format(doctor.getPerson()),
+                doctor.getLicenseNumber()
         );
     }
 
-    public String fullName() {
+    public String getFullName() {
         return fullName;
     }
 
-    public String licenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 }

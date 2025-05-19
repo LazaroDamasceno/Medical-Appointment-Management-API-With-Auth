@@ -59,31 +59,31 @@ public class Doctor {
         return DoctorResponseDto.from(this);
     }
 
-    public String id() {
+    public String getId() {
         return id;
     }
 
-    public Person person() {
+    public Person getPerson() {
         return person;
     }
 
-    public String licenseNumber() {
+    public String getLicenseNumber() {
         return licenseNumber;
     }
 
-    public ProfessionalStatus status() {
+    public ProfessionalStatus getStatus() {
         return status;
     }
 
-    public LocalDateTime createdAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDateTime updatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public LocalDateTime terminatedAt() {
+    public LocalDateTime getTerminatedAt() {
         return terminatedAt;
     }
 }
