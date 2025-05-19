@@ -61,18 +61,6 @@ public class CustomerRegistrationTest {
 
     private Instant startTime;
 
-    @BeforeEach
-    void startTimer() {
-        startTime = Instant.now();
-    }
-
-    @AfterEach
-    void endTimer(TestInfo testInfo) {
-        Instant endTime = Instant.now();
-        Duration duration = Duration.between(startTime, endTime);
-        System.out.printf("Test '%s' took: %d ms%n", testInfo.getDisplayName(), duration.toMillis());
-    }
-
     @Test
     @Order(1)
     void shouldReturnCreatedWhenCustomerIsRegistered() throws Exception {

@@ -4,6 +4,7 @@ import com.api.v1.common.ProfessionalStatus;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class Doctor {
     @Id
     private String id;
     private Person person;
+    @Indexed(unique = true)
     private String licenseNumber;
     private ProfessionalStatus status;
     private LocalDateTime createdAt;

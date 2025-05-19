@@ -6,6 +6,7 @@ import com.api.v1.people.requests.PersonRegistrationDTO;
 import com.api.v1.people.requests.PersonUpdatingDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -20,8 +21,10 @@ public class Person {
     private String firstName;
     private String middleName;
     private String lastName;
+    @Indexed(unique = true)
     private String sin;
     private LocalDate birthDate;
+    @Indexed(unique = true)
     private String email;
     private Gender gender;
     private Address address;
