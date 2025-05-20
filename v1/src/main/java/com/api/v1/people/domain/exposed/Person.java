@@ -28,6 +28,7 @@ public class Person {
     private String email;
     private Gender gender;
     private Address address;
+    private String phoneNumber;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -43,6 +44,7 @@ public class Person {
         this.email = registrationDto.email();
         this.gender = registrationDto.gender();
         this.address = registrationDto.address();
+        this.phoneNumber = registrationDto.phoneNumber();
         this.createdAt = LocalDateTime.now();
     }
 
@@ -58,6 +60,7 @@ public class Person {
         this.email = updatingDto.email();
         this.gender = updatingDto.gender();
         this.address = updatingDto.address();
+        this.phoneNumber = updatingDto.phoneNumber();
         this.updatedAt = LocalDateTime.now();
     }
 
@@ -103,5 +106,9 @@ public class Person {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

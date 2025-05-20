@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -24,6 +25,9 @@ public record PersonUpdatingDTO(
         @NotNull
         Gender gender,
         @Valid
-        Address address
+        Address address,
+        @NotBlank
+        @Size(min = 10, max = 10)
+        String phoneNumber
 ) {
 }

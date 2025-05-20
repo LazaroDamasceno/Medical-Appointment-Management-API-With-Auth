@@ -27,6 +27,9 @@ public record PersonRegistrationDTO(
         @NotNull
         Gender gender,
         @Valid
-        Address address
+        Address address,
+        @NotBlank
+        @Size(min = 10, max = 10)
+        String phoneNumber
 ) {
 }
