@@ -4,7 +4,7 @@ import com.api.v1.common.ObjectId;
 import com.api.v1.customers.response.CustomerResponseDTO;
 import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
-import com.api.v1.customers.services.CustomerUpdatingService;
+import com.api.v1.customers.services.CustomerUpdateService;
 import com.api.v1.people.requests.PersonRegistrationDTO;
 import com.api.v1.people.requests.PersonUpdatingDTO;
 import jakarta.validation.Valid;
@@ -20,11 +20,11 @@ public class CustomerController  {
 
     private final CustomerRetrievalService retrievalService;
     private final CustomerRegistrationService registrationService;
-    private final CustomerUpdatingService updatingService;
+    private final CustomerUpdateService updatingService;
 
     public CustomerController(CustomerRetrievalService retrievalService,
                               CustomerRegistrationService registrationService,
-                              CustomerUpdatingService updatingService
+                              CustomerUpdateService updatingService
     ) {
         this.retrievalService = retrievalService;
         this.registrationService = registrationService;

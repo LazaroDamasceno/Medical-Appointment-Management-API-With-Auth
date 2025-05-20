@@ -7,18 +7,18 @@ import com.api.v1.people.domain.PersonAuditRepository;
 import com.api.v1.people.domain.PersonCrudRepository;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonUpdatingDTO;
-import com.api.v1.people.services.exposed.PersonUpdatingService;
+import com.api.v1.people.services.exposed.PersonUpdateService;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 @Service
-public class PersonUpdatingServiceImpl implements PersonUpdatingService {
+public class PersonUpdateServiceImpl implements PersonUpdateService {
 
     private final PersonCrudRepository repository;
     private final PersonAuditRepository auditTrailRepository;
 
-    public PersonUpdatingServiceImpl(PersonCrudRepository repository, PersonAuditRepository auditTrailRepository) {
+    public PersonUpdateServiceImpl(PersonCrudRepository repository, PersonAuditRepository auditTrailRepository) {
         this.repository = repository;
         this.auditTrailRepository = auditTrailRepository;
     }

@@ -7,7 +7,7 @@ import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorManagementService;
 import com.api.v1.doctors.services.DoctorRegistrationService;
 import com.api.v1.doctors.services.DoctorRetrievalService;
-import com.api.v1.doctors.services.DoctorUpdatingService;
+import com.api.v1.doctors.services.DoctorUpdateService;
 import com.api.v1.people.requests.PersonUpdatingDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -22,12 +22,12 @@ public class DoctorController {
     private final DoctorRegistrationService registrationService;
     private final DoctorRetrievalService retrievalService;
     private final DoctorManagementService managementService;
-    private final DoctorUpdatingService updatingService;
+    private final DoctorUpdateService updatingService;
 
     public DoctorController(DoctorRegistrationService registrationService,
                             DoctorRetrievalService retrievalService,
                             DoctorManagementService managementService,
-                            DoctorUpdatingService updatingService
+                            DoctorUpdateService updatingService
     ) {
         this.registrationService = registrationService;
         this.retrievalService = retrievalService;

@@ -8,28 +8,28 @@ import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.exposed.DoctorFinder;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonUpdatingDTO;
-import com.api.v1.people.services.exposed.PersonUpdatingService;
+import com.api.v1.people.services.exposed.PersonUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
+public class DoctorUpdateServiceImpl implements DoctorUpdateService {
 
     private final DoctorCrudRepository repository;
     private final DoctorAuditRepository auditTrailRepository;
     private final DoctorFinder finder;
-    private final PersonUpdatingService personUpdatingService;
+    private final PersonUpdateService personUpdateService;
 
-    public DoctorUpdatingServiceImpl(DoctorCrudRepository repository,
-                                     DoctorAuditRepository auditTrailRepository,
-                                     DoctorFinder finder,
-                                     PersonUpdatingService personUpdatingService
+    public DoctorUpdateServiceImpl(DoctorCrudRepository repository,
+                                   DoctorAuditRepository auditTrailRepository,
+                                   DoctorFinder finder,
+                                   PersonUpdateService personUpdateService
     ) {
         this.repository = repository;
         this.auditTrailRepository = auditTrailRepository;
         this.finder = finder;
-        this.personUpdatingService = personUpdatingService;
+        this.personUpdateService = personUpdateService;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
         Doctor foundDoctor = finder.findByLicenseNumber(licenseNumber);
         DoctorAuditTrail auditTrail = DoctorAuditTrail.of(foundDoctor);
         DoctorAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdatingService.update(foundDoctor.getPerson(), personUpdatingDTO);
+        Person updatedPerson = personUpdateService.update(foundDoctor.getPerson(), personUpdatingDTO);
         foundDoctor.update(updatedPerson);
         Doctor updatedDoctor = repository.save(foundDoctor);
         return ResponseEntity.noContent().build();

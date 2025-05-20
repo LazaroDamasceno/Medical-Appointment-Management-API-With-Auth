@@ -8,28 +8,28 @@ import com.api.v1.customers.domain.CustomerCrudRepository;
 import com.api.v1.customers.utils.exposed.CustomerFinder;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonUpdatingDTO;
-import com.api.v1.people.services.exposed.PersonUpdatingService;
+import com.api.v1.people.services.exposed.PersonUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
+public class CustomerUpdateServiceImpl implements CustomerUpdateService {
 
     private final CustomerFinder finder;
     private final CustomerCrudRepository repository;
     private final CustomerAuditRepository auditTrailRepository;
-    private final PersonUpdatingService personUpdatingService;
+    private final PersonUpdateService personUpdateService;
 
-    public CustomerUpdatingServiceImpl(CustomerFinder finder,
-                                       CustomerCrudRepository repository,
-                                       CustomerAuditRepository auditTrailRepository,
-                                       PersonUpdatingService personUpdatingService
+    public CustomerUpdateServiceImpl(CustomerFinder finder,
+                                     CustomerCrudRepository repository,
+                                     CustomerAuditRepository auditTrailRepository,
+                                     PersonUpdateService personUpdateService
     ) {
         this.finder = finder;
         this.repository = repository;
         this.auditTrailRepository = auditTrailRepository;
-        this.personUpdatingService = personUpdatingService;
+        this.personUpdateService = personUpdateService;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
         Customer foundCustomer = finder.findById(customerId);
         CustomerAuditTrail auditTrail = CustomerAuditTrail.of(foundCustomer);
         CustomerAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdatingService.update(foundCustomer.getPerson(), personUpdatingDTO);
+        Person updatedPerson = personUpdateService.update(foundCustomer.getPerson(), personUpdatingDTO);
         foundCustomer.update(updatedPerson);
         Customer updatedCustomer = repository.save(foundCustomer);
         return ResponseEntity.noContent().build();
