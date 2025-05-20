@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -47,19 +47,19 @@ public class CustomerUpdatingTest {
 
     @Test
     @Order(1)
-    void shouldReturnCreatedWhenCustomerIsRegistered() throws Exception {
+    void shouldReturnNoContentWhenCustomerIsRegistered() throws Exception {
         String customerId = "";
-        mockMvc.perform(post("/api/v1/customers/%s".formatted(customerId))
+        mockMvc.perform(patch("/api/v1/customers/%s".formatted(customerId))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerDTO)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isNoContent());
     }
 
     @Test
     @Order(2)
     void shouldReturnNotFoundWhenCustomerWasNotFound() throws Exception {
         String randomId = UUID.randomUUID().toString();
-        mockMvc.perform(post("/api/v1/customers/%s".formatted(randomId))
+        mockMvc.perform(patch("/api/v1/customers/%s".formatted(randomId))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerDTO)))
                 .andExpect(status().isNotFound());
