@@ -2,8 +2,8 @@ package com.api.v1.doctors.services;
 
 import com.api.v1.common.ObjectId;
 import com.api.v1.doctors.domain.DoctorAuditTrail;
-import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
-import com.api.v1.doctors.domain.DoctorRepository;
+import com.api.v1.doctors.domain.DoctorAuditRepository;
+import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.exposed.DoctorFinder;
 import com.api.v1.people.domain.exposed.Person;
@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class DoctorUpdatingServiceImpl implements DoctorUpdatingService {
 
-    private final DoctorRepository repository;
-    private final DoctorAuditTrailRepository auditTrailRepository;
+    private final DoctorCrudRepository repository;
+    private final DoctorAuditRepository auditTrailRepository;
     private final DoctorFinder finder;
     private final PersonUpdatingService personUpdatingService;
 
-    public DoctorUpdatingServiceImpl(DoctorRepository repository,
-                                     DoctorAuditTrailRepository auditTrailRepository,
+    public DoctorUpdatingServiceImpl(DoctorCrudRepository repository,
+                                     DoctorAuditRepository auditTrailRepository,
                                      DoctorFinder finder,
                                      PersonUpdatingService personUpdatingService
     ) {

@@ -1,7 +1,7 @@
 package com.api.v1.doctors.services;
 
 import com.api.v1.common.LicenseNumber;
-import com.api.v1.doctors.domain.DoctorRepository;
+import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.doctors.utils.exposed.DoctorFinder;
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
 
     private final DoctorFinder finder;
-    private final DoctorRepository repository;
+    private final DoctorCrudRepository repository;
 
-    public DoctorRetrievalServiceImpl(DoctorFinder finder, DoctorRepository repository) {
+    public DoctorRetrievalServiceImpl(DoctorFinder finder, DoctorCrudRepository repository) {
         this.finder = finder;
         this.repository = repository;
     }

@@ -1,6 +1,6 @@
 package com.api.v1.doctors.services;
 
-import com.api.v1.doctors.domain.DoctorRepository;
+import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v1.doctors.requests.DoctorRegistrationDTO;
@@ -18,10 +18,10 @@ import java.net.URI;
 @Service
 public class DoctorRegistrationServiceImpl implements DoctorRegistrationService {
 
-    private final DoctorRepository repository;
+    private final DoctorCrudRepository repository;
     private final PersonRegistrationService personRegistrationService;
 
-    public DoctorRegistrationServiceImpl(DoctorRepository repository,
+    public DoctorRegistrationServiceImpl(DoctorCrudRepository repository,
                                          PersonRegistrationService personRegistrationService
     ) {
         this.repository = repository;

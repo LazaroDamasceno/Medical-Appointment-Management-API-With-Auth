@@ -2,7 +2,7 @@ package com.api.v1.customers.services;
 
 import com.api.v1.common.ObjectId;
 import com.api.v1.customers.domain.Customer;
-import com.api.v1.customers.domain.CustomerRepository;
+import com.api.v1.customers.domain.CustomerCrudRepository;
 import com.api.v1.customers.response.CustomerResponseDTO;
 import com.api.v1.customers.utils.exposed.CustomerFinder;
 import org.springframework.data.domain.Page;
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 public class CustomerRetrievalServiceImpl implements CustomerRetrievalService {
 
     private final CustomerFinder finder;
-    private final CustomerRepository repository;
+    private final CustomerCrudRepository repository;
 
-    public CustomerRetrievalServiceImpl(CustomerFinder finder, CustomerRepository repository) {
+    public CustomerRetrievalServiceImpl(CustomerFinder finder, CustomerCrudRepository repository) {
         this.finder = finder;
         this.repository = repository;
     }

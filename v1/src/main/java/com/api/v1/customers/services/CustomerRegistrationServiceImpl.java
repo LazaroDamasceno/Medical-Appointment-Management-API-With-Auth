@@ -1,7 +1,7 @@
 package com.api.v1.customers.services;
 
 import com.api.v1.customers.domain.Customer;
-import com.api.v1.customers.domain.CustomerRepository;
+import com.api.v1.customers.domain.CustomerCrudRepository;
 import com.api.v1.customers.response.CustomerResponseDTO;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.exceptions.DuplicatedEmailException;
@@ -18,10 +18,10 @@ import java.net.URI;
 @Service
 public class CustomerRegistrationServiceImpl implements CustomerRegistrationService {
 
-    private final CustomerRepository repository;
+    private final CustomerCrudRepository repository;
     private final PersonRegistrationService personRegistrationService;
 
-    public CustomerRegistrationServiceImpl(CustomerRepository repository,
+    public CustomerRegistrationServiceImpl(CustomerCrudRepository repository,
                                            PersonRegistrationService personRegistrationService
     ) {
         this.repository = repository;

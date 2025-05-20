@@ -3,8 +3,8 @@ package com.api.v1.customers.services;
 import com.api.v1.common.ObjectId;
 import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerAuditTrail;
-import com.api.v1.customers.domain.CustomerAuditTrailRepository;
-import com.api.v1.customers.domain.CustomerRepository;
+import com.api.v1.customers.domain.CustomerAuditRepository;
+import com.api.v1.customers.domain.CustomerCrudRepository;
 import com.api.v1.customers.utils.exposed.CustomerFinder;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonUpdatingDTO;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 public class CustomerUpdatingServiceImpl implements CustomerUpdatingService {
 
     private final CustomerFinder finder;
-    private final CustomerRepository repository;
-    private final CustomerAuditTrailRepository auditTrailRepository;
+    private final CustomerCrudRepository repository;
+    private final CustomerAuditRepository auditTrailRepository;
     private final PersonUpdatingService personUpdatingService;
 
     public CustomerUpdatingServiceImpl(CustomerFinder finder,
-                                       CustomerRepository repository,
-                                       CustomerAuditTrailRepository auditTrailRepository,
+                                       CustomerCrudRepository repository,
+                                       CustomerAuditRepository auditTrailRepository,
                                        PersonUpdatingService personUpdatingService
     ) {
         this.finder = finder;

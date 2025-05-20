@@ -3,8 +3,8 @@ package com.api.v1.people.services;
 import org.springframework.stereotype.Service;
 
 import com.api.v1.people.domain.PersonAuditTrail;
-import com.api.v1.people.domain.PersonAuditTrailRepository;
-import com.api.v1.people.domain.PersonRepository;
+import com.api.v1.people.domain.PersonAuditRepository;
+import com.api.v1.people.domain.PersonCrudRepository;
 import com.api.v1.people.domain.exposed.Person;
 import com.api.v1.people.requests.PersonUpdatingDTO;
 import com.api.v1.people.services.exposed.PersonUpdatingService;
@@ -15,10 +15,10 @@ import jakarta.validation.constraints.NotNull;
 @Service
 public class PersonUpdatingServiceImpl implements PersonUpdatingService {
 
-    private final PersonRepository repository;
-    private final PersonAuditTrailRepository auditTrailRepository;
+    private final PersonCrudRepository repository;
+    private final PersonAuditRepository auditTrailRepository;
 
-    public PersonUpdatingServiceImpl(PersonRepository repository, PersonAuditTrailRepository auditTrailRepository) {
+    public PersonUpdatingServiceImpl(PersonCrudRepository repository, PersonAuditRepository auditTrailRepository) {
         this.repository = repository;
         this.auditTrailRepository = auditTrailRepository;
     }

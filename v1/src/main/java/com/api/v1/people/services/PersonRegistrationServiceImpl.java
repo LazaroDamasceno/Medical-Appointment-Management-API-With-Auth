@@ -1,7 +1,7 @@
 package com.api.v1.people.services;
 
 import com.api.v1.people.domain.exposed.Person;
-import com.api.v1.people.domain.PersonRepository;
+import com.api.v1.people.domain.PersonCrudRepository;
 import com.api.v1.people.requests.PersonRegistrationDTO;
 import com.api.v1.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonRegistrationServiceImpl implements PersonRegistrationService {
 
-    private final PersonRepository repository;
+    private final PersonCrudRepository repository;
 
-    public PersonRegistrationServiceImpl(PersonRepository repository) {
+    public PersonRegistrationServiceImpl(PersonCrudRepository repository) {
         this.repository = repository;
     }
 

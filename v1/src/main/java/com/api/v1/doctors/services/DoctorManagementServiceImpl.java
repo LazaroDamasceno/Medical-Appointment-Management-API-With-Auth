@@ -3,11 +3,10 @@ package com.api.v1.doctors.services;
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.common.ProfessionalStatus;
 import com.api.v1.doctors.domain.DoctorAuditTrail;
-import com.api.v1.doctors.domain.DoctorAuditTrailRepository;
-import com.api.v1.doctors.domain.DoctorRepository;
+import com.api.v1.doctors.domain.DoctorAuditRepository;
+import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.exceptions.TerminatedDoctorException;
-import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.doctors.utils.exposed.DoctorFinder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,12 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class DoctorManagementServiceImpl implements DoctorManagementService {
 
-    private final DoctorRepository repository;
-    private final DoctorAuditTrailRepository auditTrailRepository;
+    private final DoctorCrudRepository repository;
+    private final DoctorAuditRepository auditTrailRepository;
     private final DoctorFinder finder;
 
-    public DoctorManagementServiceImpl(DoctorRepository repository,
-                                       DoctorAuditTrailRepository auditTrailRepository,
+    public DoctorManagementServiceImpl(DoctorCrudRepository repository,
+                                       DoctorAuditRepository auditTrailRepository,
                                        DoctorFinder finder
     ) {
         this.repository = repository;

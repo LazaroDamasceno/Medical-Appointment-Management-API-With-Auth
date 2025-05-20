@@ -2,7 +2,7 @@ package com.api.v1.customers.utils;
 
 import com.api.v1.common.*;
 import com.api.v1.customers.domain.Customer;
-import com.api.v1.customers.domain.CustomerRepository;
+import com.api.v1.customers.domain.CustomerCrudRepository;
 import com.api.v1.customers.exceptions.CustomerNotFoundException;
 import com.api.v1.customers.utils.exposed.CustomerFinder;
 import org.springframework.stereotype.Component;
@@ -12,9 +12,9 @@ import java.util.Optional;
 @Component
 public final class CustomerFinderImpl implements CustomerFinder {
 
-    private final CustomerRepository repository;
+    private final CustomerCrudRepository repository;
 
-    public CustomerFinderImpl(CustomerRepository repository) {
+    public CustomerFinderImpl(CustomerCrudRepository repository) {
         this.repository = repository;
     }
 

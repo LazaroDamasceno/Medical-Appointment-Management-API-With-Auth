@@ -1,7 +1,7 @@
 package com.api.v1.doctors.utils;
 
 import com.api.v1.common.LicenseNumber;
-import com.api.v1.doctors.domain.DoctorRepository;
+import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.exceptions.DoctorNotFoundException;
 import com.api.v1.doctors.utils.exposed.DoctorFinder;
@@ -12,15 +12,15 @@ import java.util.Optional;
 @Component
 public final class DoctorFinderImpl implements DoctorFinder {
 
-    private final DoctorRepository doctorRepository;
+    private final DoctorCrudRepository doctorCrudRepository;
 
-    public DoctorFinderImpl(DoctorRepository doctorRepository) {
-        this.doctorRepository = doctorRepository;
+    public DoctorFinderImpl(DoctorCrudRepository doctorCrudRepository) {
+        this.doctorCrudRepository = doctorCrudRepository;
     }
 
     @Override
     public Doctor findByLicenseNumber(@LicenseNumber String licenseNumber) {
-        Optional<Doctor> optional = doctorRepository.findByLicenseNumber(licenseNumber);
+        Optional<Doctor> optional = doctorCrudRepository.findByLicenseNumber(licenseNumber);
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(licenseNumber);
         }
@@ -28,7 +28,7 @@ public final class DoctorFinderImpl implements DoctorFinder {
     }
 
     public Doctor findActiveByLicenseNumber(@LicenseNumber String licenseNumber) {
-        Optional<Doctor> optional = doctorRepository.findActiveByLicenseNumber(licenseNumber);
+        Optional<Doctor> optional = doctorCrudRepository.findActiveByLicenseNumber(licenseNumber);
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(licenseNumber);
         }
@@ -36,7 +36,7 @@ public final class DoctorFinderImpl implements DoctorFinder {
     }
 
     public Doctor findTerminatedByLicenseNumber(@LicenseNumber String licenseNumber) {
-        Optional<Doctor> optional = doctorRepository.findTerminatedByLicenseNumber(licenseNumber);
+        Optional<Doctor> optional = doctorCrudRepository.findTerminatedByLicenseNumber(licenseNumber);
         if (optional.isEmpty()) {
             throw new DoctorNotFoundException(licenseNumber);
         }
