@@ -2,10 +2,10 @@ package com.api.v2.people.domain
 
 import com.api.v2.people.domain.exposed.Person
 import org.springframework.data.mongodb.repository.Query
-import org.springframework.data.repository.kotlin.CoroutineCrudRepository
+import org.springframework.data.mongodb.repository.MongoRepository
 
-interface PersonCrudRepository: CoroutineCrudRepository<Person, String> {
+interface PersonCrudRepository: MongoRepository<Person, String> {
 
     @Query("{ '\$or': [ { 'sin': ?0, 'email': ?1 } ] }")
-    suspend fun findBySINOrEmail(sin: String, email: String): Person?
+    fun findBySINOrEmail(sin: String, email: String): Person?
 }

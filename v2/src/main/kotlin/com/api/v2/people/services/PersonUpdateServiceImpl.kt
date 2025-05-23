@@ -23,7 +23,7 @@ class PersonUpdateServiceImpl: PersonUpdateService {
         this.repository = repository
     }
 
-    override suspend fun update(
+    override fun update(
         person: @NotNull Person,
         updatingDTO: @Valid PersonUpdateDTO
     ): Person {

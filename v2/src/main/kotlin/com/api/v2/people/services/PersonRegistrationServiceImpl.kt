@@ -16,7 +16,7 @@ class PersonRegistrationServiceImpl: PersonRegistrationService {
         this.personCrudRepository = personCrudRepository
     }
 
-    override suspend fun register(registrationDTO: @Valid PersonRegistrationDTO): Person {
+    override fun register(registrationDTO: @Valid PersonRegistrationDTO): Person {
         val foundPerson = personCrudRepository.findBySINOrEmail(registrationDTO.sin, registrationDTO.email)
         if (foundPerson == null) {
             val newPerson = Person.of(registrationDTO)

@@ -4,5 +4,5 @@ import com.api.v2.people.domain.exposed.Person
 import com.api.v2.people.requests.PersonRegistrationDTO
 
 interface PersonRegistrationService {
-    suspend fun register(registrationDTO: PersonRegistrationDTO): Person
+    fun register(registrationDTO: PersonRegistrationDTO): Person
 }

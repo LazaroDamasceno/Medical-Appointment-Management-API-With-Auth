@@ -1,12 +1,12 @@
 package com.api.v2.customers.services
 
-import com.api.v2.customers.domain.Customer
+import com.api.v2.customers.domain.exposed.Customer
 import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.responses.CustomerResponseDTO
 import com.api.v2.people.exceptions.DuplicatedSINException
 import com.api.v2.people.requests.PersonRegistrationDTO
 import com.api.v2.people.services.exposed.PersonRegistrationService
-import com.api.v2.toDTO
+import com.api.v2.customers.utils.exposed.toDTO
 import jakarta.validation.Valid
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -19,7 +19,7 @@ class CustomerRegistrationServiceImpl(
     private val personRegistrationService: PersonRegistrationService
 ) : CustomerRegistrationService {
 
-    override suspend fun register(registrationDTO: @Valid PersonRegistrationDTO): ResponseEntity<CustomerResponseDTO> {
+    override fun register(registrationDTO: @Valid PersonRegistrationDTO): ResponseEntity<CustomerResponseDTO> {
         validate(registrationDTO)
         val savedPerson = personRegistrationService.register(registrationDTO)
         val newCustomer = Customer.update(savedPerson)
@@ -31,7 +31,7 @@ class CustomerRegistrationServiceImpl(
             .body(dto)
     }
 
-    private suspend fun validate(registrationDTO: PersonRegistrationDTO) {
+    private fun validate(registrationDTO: PersonRegistrationDTO) {
         if (repository.findBySIN(registrationDTO.sin) != null) {
             throw DuplicatedSINException()
         }

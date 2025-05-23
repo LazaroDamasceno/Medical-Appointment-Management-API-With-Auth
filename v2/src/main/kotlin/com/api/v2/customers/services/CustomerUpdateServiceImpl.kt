@@ -1,6 +1,6 @@
 package com.api.v2.customers.services
 
-import com.api.v2.customers.domain.Customer
+import com.api.v2.customers.domain.exposed.Customer
 import com.api.v2.customers.domain.CustomerAuditRepository
 import com.api.v2.customers.domain.CustomerAuditTrail
 import com.api.v2.customers.domain.CustomerCrudRepository
@@ -31,7 +31,7 @@ class CustomerUpdateServiceImpl: CustomerUpdateService {
         this.customerFinder = customerFinder
     }
 
-    override suspend fun update(customerId: String, updateDTO: @Valid PersonUpdateDTO): ResponseEntity<Unit> {
+    override fun update(customerId: String, updateDTO: @Valid PersonUpdateDTO): ResponseEntity<Unit> {
         val foundCustomer = customerFinder.findById(customerId)
         val auditTrail = CustomerAuditTrail.of(foundCustomer)
         val savedAuditTrail = auditRepository.save<CustomerAuditTrail>(auditTrail)

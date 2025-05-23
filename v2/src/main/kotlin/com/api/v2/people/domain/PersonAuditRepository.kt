@@ -1,5 +1,5 @@
 package com.api.v2.people.domain
 
-import org.springframework.data.repository.kotlin.CoroutineCrudRepository
+import org.springframework.data.mongodb.repository.MongoRepository
 
-interface PersonAuditRepository: CoroutineCrudRepository<PersonAuditTrail, String>
+interface PersonAuditRepository: MongoRepository<PersonAuditTrail, String>

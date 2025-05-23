@@ -1,8 +1,6 @@
-package com.api.v2.customers.domain
+package com.api.v2.customers.domain.exposed
 
-import com.api.v2.customers.responses.CustomerResponseDTO
 import com.api.v2.people.domain.exposed.Person
-import com.api.v2.fullName
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import java.util.UUID

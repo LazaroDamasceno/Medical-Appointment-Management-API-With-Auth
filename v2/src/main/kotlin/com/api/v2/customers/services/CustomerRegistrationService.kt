@@ -5,5 +5,5 @@ import com.api.v2.people.requests.PersonRegistrationDTO
 import org.springframework.http.ResponseEntity
 
 interface CustomerRegistrationService {
-    suspend fun register(registrationDTO: PersonRegistrationDTO): ResponseEntity<CustomerResponseDTO>
+    fun register(registrationDTO: PersonRegistrationDTO): ResponseEntity<CustomerResponseDTO>
 }
