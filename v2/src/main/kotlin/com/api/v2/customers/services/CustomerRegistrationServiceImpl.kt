@@ -6,8 +6,12 @@ import com.api.v2.customers.responses.CustomerResponseDTO
 import com.api.v2.people.exceptions.DuplicatedSINException
 import com.api.v2.people.requests.PersonRegistrationDTO
 import com.api.v2.people.services.exposed.PersonRegistrationService
+import com.api.v2.toDTO
 import jakarta.validation.Valid
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import java.net.URI
 
 @Service
 class CustomerRegistrationServiceImpl(
@@ -15,12 +19,16 @@ class CustomerRegistrationServiceImpl(
     private val personRegistrationService: PersonRegistrationService
 ) : CustomerRegistrationService {
 
-    override suspend fun register(registrationDTO: @Valid PersonRegistrationDTO): CustomerResponseDTO {
+    override suspend fun register(registrationDTO: @Valid PersonRegistrationDTO): ResponseEntity<CustomerResponseDTO> {
         validate(registrationDTO)
         val savedPerson = personRegistrationService.register(registrationDTO)
         val newCustomer = Customer.update(savedPerson)
         val savedCustomer = repository.save<Customer>(newCustomer)
-        return savedCustomer.toDTO()
+        val dto = savedCustomer.toDTO()
+        return ResponseEntity
+            .created(URI.create("/api/v2/customers"))
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(dto)
     }
 
     private suspend fun validate(registrationDTO: PersonRegistrationDTO) {
