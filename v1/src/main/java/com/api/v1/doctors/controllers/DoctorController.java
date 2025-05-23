@@ -8,7 +8,7 @@ import com.api.v1.doctors.services.DoctorManagementService;
 import com.api.v1.doctors.services.DoctorRegistrationService;
 import com.api.v1.doctors.services.DoctorRetrievalService;
 import com.api.v1.doctors.services.DoctorUpdateService;
-import com.api.v1.people.requests.PersonUpdatingDTO;
+import com.api.v1.people.requests.PersonUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -61,7 +61,7 @@ public class DoctorController {
     }
 
     @PatchMapping("/{licenseNumber}/updating")
-    public ResponseEntity<Void> update(@PathVariable @ObjectId String licenseNumber, @Valid PersonUpdatingDTO personUpdatingDto) {
-        return updatingService.update(licenseNumber, personUpdatingDto);
+    public ResponseEntity<Void> update(@PathVariable @ObjectId String licenseNumber, @Valid PersonUpdateDTO personUpdateDto) {
+        return updatingService.update(licenseNumber, personUpdateDto);
     }
 }

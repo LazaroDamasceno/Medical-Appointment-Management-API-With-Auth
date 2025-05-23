@@ -61,7 +61,7 @@ public class CustomerRegistrationTest {
 
     @Test
     @Order(1)
-    void shouldReturnCreatedWhenCustomerIsRegistered() throws Exception {
+    void shouldReturnCreatedWhenSuccessful() throws Exception {
         mockMvc.perform(post("/api/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(customerDTO)))

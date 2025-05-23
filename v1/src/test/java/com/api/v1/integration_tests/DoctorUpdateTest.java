@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class CustomerUpdatingTest {
+public class DoctorUpdateTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -31,12 +30,12 @@ public class CustomerUpdatingTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    PersonUpdateDTO customerDTO  = new PersonUpdateDTO(
-            "Leonard",
-            "Campbell",
+    PersonUpdateDTO personDTO = new PersonUpdateDTO(
+            "Willian",
             "Smith",
+            "Belfast",
             LocalDate.of(2000,12,12),
-            "leosmith@leosmith.com",
+            "contect@drwillianbelfast.com",
             Gender.MALE,
             new Address(
                     "Downtown",
@@ -46,23 +45,23 @@ public class CustomerUpdatingTest {
             "1234567890"
     );
 
-    @Test
     @Order(1)
-    void shouldReturnNoContentWhenCustomerSuccessful() throws Exception {
-        String customerId = "";
-        mockMvc.perform(patch("/api/v1/customers/%s".formatted(customerId))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(customerDTO)))
-                .andExpect(status().isNoContent());
+    @Test
+    void shouldReturnNoContentWhenSuccessful() throws Exception {
+        var doctorId = "";
+        mockMvc.perform(patch("/api/v1/doctors/%s".formatted(doctorId))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personDTO))
+        ).andExpect(status().isNoContent());
     }
 
+    @Order(1)
     @Test
-    @Order(2)
-    void shouldReturnNotFoundWhenCustomerWasNotFound() throws Exception {
-        String randomId = UUID.randomUUID().toString();
-        mockMvc.perform(patch("/api/v1/customers/%s".formatted(randomId))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(customerDTO)))
-                .andExpect(status().isNotFound());
+    void shouldReturnNotFoundWhenDoctorWasNotFound() throws Exception {
+        var doctorId = "";
+        mockMvc.perform(patch("/api/v1/doctors/%s".formatted(doctorId))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(personDTO))
+        ).andExpect(status().isNotFound());
     }
 }

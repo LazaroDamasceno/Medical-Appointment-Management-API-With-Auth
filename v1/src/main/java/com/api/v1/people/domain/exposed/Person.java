@@ -3,7 +3,7 @@ package com.api.v1.people.domain.exposed;
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
 import com.api.v1.people.requests.PersonRegistrationDTO;
-import com.api.v1.people.requests.PersonUpdatingDTO;
+import com.api.v1.people.requests.PersonUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -52,7 +52,7 @@ public class Person {
         return new Person(registrationDto);
     }
 
-    public void update(@Valid PersonUpdatingDTO updatingDto) {
+    public void update(@Valid PersonUpdateDTO updatingDto) {
         this.firstName = updatingDto.firstName();
         this.middleName = updatingDto.middleName();
         this.lastName = updatingDto.lastName();

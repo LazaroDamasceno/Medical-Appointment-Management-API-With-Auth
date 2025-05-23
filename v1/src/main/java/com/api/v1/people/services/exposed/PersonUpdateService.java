@@ -1,8 +1,8 @@
 package com.api.v1.people.services.exposed;
 
 import com.api.v1.people.domain.exposed.Person;
-import com.api.v1.people.requests.PersonUpdatingDTO;
+import com.api.v1.people.requests.PersonUpdateDTO;
 
 public interface PersonUpdateService {
-    Person update(Person person, PersonUpdatingDTO updatingDto);
+    Person update(Person person, PersonUpdateDTO updatingDto);
 }

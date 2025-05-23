@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
-public record PersonUpdatingDTO(
+public record PersonUpdateDTO(
         @NotBlank
         String firstName,
         String middleName,

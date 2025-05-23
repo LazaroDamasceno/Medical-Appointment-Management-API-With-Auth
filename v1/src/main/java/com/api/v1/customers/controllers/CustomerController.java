@@ -6,7 +6,7 @@ import com.api.v1.customers.services.CustomerRegistrationService;
 import com.api.v1.customers.services.CustomerRetrievalService;
 import com.api.v1.customers.services.CustomerUpdateService;
 import com.api.v1.people.requests.PersonRegistrationDTO;
-import com.api.v1.people.requests.PersonUpdatingDTO;
+import com.api.v1.people.requests.PersonUpdateDTO;
 import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -48,8 +48,8 @@ public class CustomerController  {
 
     @PatchMapping("/{customerId}")
     public ResponseEntity<Void> update(@ObjectId @PathVariable String customerId,
-                                               @RequestBody PersonUpdatingDTO personUpdatingDto
+                                               @RequestBody PersonUpdateDTO personUpdateDto
     ) {
-        return updatingService.update(customerId, personUpdatingDto);
+        return updatingService.update(customerId, personUpdateDto);
     }
 }

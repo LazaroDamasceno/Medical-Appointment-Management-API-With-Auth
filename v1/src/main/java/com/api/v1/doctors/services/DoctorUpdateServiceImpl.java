@@ -7,7 +7,7 @@ import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
 import com.api.v1.doctors.utils.exposed.DoctorFinder;
 import com.api.v1.people.domain.exposed.Person;
-import com.api.v1.people.requests.PersonUpdatingDTO;
+import com.api.v1.people.requests.PersonUpdateDTO;
 import com.api.v1.people.services.exposed.PersonUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +33,11 @@ public class DoctorUpdateServiceImpl implements DoctorUpdateService {
     }
 
     @Override
-    public ResponseEntity<Void> update(@ObjectId String licenseNumber, @Valid PersonUpdatingDTO personUpdatingDTO) {
+    public ResponseEntity<Void> update(@ObjectId String licenseNumber, @Valid PersonUpdateDTO personUpdateDTO) {
         Doctor foundDoctor = finder.findByLicenseNumber(licenseNumber);
         DoctorAuditTrail auditTrail = DoctorAuditTrail.of(foundDoctor);
         DoctorAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdateService.update(foundDoctor.getPerson(), personUpdatingDTO);
+        Person updatedPerson = personUpdateService.update(foundDoctor.getPerson(), personUpdateDTO);
         foundDoctor.update(updatedPerson);
         Doctor updatedDoctor = repository.save(foundDoctor);
         return ResponseEntity.noContent().build();
