@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,12 +33,18 @@ public class DoctorRegistrationTest {
     private ObjectMapper objectMapper;
 
     DoctorRegistrationDTO doctorDTO = new DoctorRegistrationDTO(
-            "1234567890",
+            UUID.randomUUID()
+                    .toString()
+                    .replace("-", "")
+                    .substring(0, 10),
             new PersonRegistrationDTO(
                     "Willian",
                     "",
                     "Belfast",
-                    "0987654321",
+                    UUID.randomUUID()
+                            .toString()
+                            .replace("-", "")
+                            .substring(0, 10),
                     LocalDate.of(2000,12,12),
                     "william@drbelfast.com",
                     Gender.MALE,
@@ -69,12 +76,18 @@ public class DoctorRegistrationTest {
     }
 
     DoctorRegistrationDTO duplicatedSinDTO = new DoctorRegistrationDTO(
-            "0987654321",
+            UUID.randomUUID()
+                    .toString()
+                    .replace("-", "")
+                    .substring(0, 10),
             new PersonRegistrationDTO(
                     "Willian",
                     "",
                     "Belfast",
-                    "0987654321",
+                    UUID.randomUUID()
+                            .toString()
+                            .replace("-", "")
+                            .substring(0, 10),
                     LocalDate.of(2000,12,12),
                     "william@drbelfast.com",
                     Gender.MALE,
@@ -97,12 +110,18 @@ public class DoctorRegistrationTest {
     }
 
     DoctorRegistrationDTO duplicatedEmailDTO = new DoctorRegistrationDTO(
-            "0987654321",
+            UUID.randomUUID()
+                    .toString()
+                    .replace("-", "")
+                    .substring(0, 10),
             new PersonRegistrationDTO(
                     "Willian",
                     "",
                     "Belfast",
-                    "1230987654",
+                    UUID.randomUUID()
+                            .toString()
+                            .replace("-", "")
+                            .substring(0, 10),
                     LocalDate.of(2000,12,12),
                     "william@drbelfast.com",
                     Gender.MALE,

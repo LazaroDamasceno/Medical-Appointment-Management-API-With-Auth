@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,7 +32,10 @@ public class CustomerRegistrationTest {
             "Leonard",
             "",
             "Smith",
-            "1234567890",
+            UUID.randomUUID()
+                    .toString()
+                    .replace("-", "")
+                    .substring(0, 10),
             LocalDate.of(2000,12,12),
             "leosmith@mail.com",
             Gender.MALE,
@@ -43,11 +47,14 @@ public class CustomerRegistrationTest {
             "1234567890"
     );
 
-    PersonRegistrationDTO duplicateEmailDTO = new PersonRegistrationDTO(
+    PersonRegistrationDTO duplicatedEmailDTO  = new PersonRegistrationDTO(
             "Leonard",
             "",
             "Smith",
-            "0987654321",
+            UUID.randomUUID()
+                    .toString()
+                    .replace("-", "")
+                    .substring(0, 10),
             LocalDate.of(2000,12,12),
             "leosmith@mail.com",
             Gender.MALE,
@@ -82,7 +89,7 @@ public class CustomerRegistrationTest {
     void shouldReturnConflictWhenEmailIsDuplicated() throws Exception {
         mockMvc.perform(post("/api/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(duplicateEmailDTO)))
+                        .content(objectMapper.writeValueAsString(duplicatedEmailDTO)))
                 .andExpect(status().isConflict());
     }
 }
