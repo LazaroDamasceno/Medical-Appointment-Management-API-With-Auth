@@ -3,7 +3,7 @@ package com.api.v2.people.domain.exposed
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
 import com.api.v2.people.requests.PersonRegistrationDTO
-import com.api.v2.people.requests.PersonUpdatingDTO
+import com.api.v2.people.requests.PersonUpdateDTO
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -42,7 +42,7 @@ class Person private constructor(
         }
     }
 
-    fun update(updatingDTO: PersonUpdatingDTO) {
+    fun update(updatingDTO: PersonUpdateDTO) {
         firstName = updatingDTO.firstName
         middleName = updatingDTO.middleName
         lastName = updatingDTO.lastName
