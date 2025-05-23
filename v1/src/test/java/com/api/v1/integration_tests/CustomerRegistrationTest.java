@@ -11,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDate;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -41,7 +39,8 @@ public class CustomerRegistrationTest {
                     "Downtown",
                     "LA",
                     "90012"
-            )
+            ),
+            "1234567890"
     );
 
     PersonRegistrationDTO duplicateEmailDTO = new PersonRegistrationDTO(
@@ -56,7 +55,8 @@ public class CustomerRegistrationTest {
                     "Downtown",
                     "LA",
                     "90012"
-            )
+            ),
+            "1234567890"
     );
 
     @Test

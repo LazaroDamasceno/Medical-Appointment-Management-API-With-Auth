@@ -42,7 +42,8 @@ public class CustomerUpdatingTest {
                     "Downtown",
                     "LA",
                     "90012"
-            )
+            ),
+            "1234567890"
     );
 
     @Test
