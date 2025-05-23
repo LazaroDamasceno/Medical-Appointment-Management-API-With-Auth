@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,18 +49,22 @@ public class DoctorUpdateTest {
     @Order(1)
     @Test
     void shouldReturnNoContentWhenSuccessful() throws Exception {
-        var doctorId = "";
-        mockMvc.perform(patch("/api/v1/doctors/%s".formatted(doctorId))
+        var licenseNumber = "";
+        mockMvc.perform(patch("/api/v1/doctors/%s".formatted(licenseNumber))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personDTO))
         ).andExpect(status().isNoContent());
     }
 
-    @Order(1)
+    @Order(2)
     @Test
     void shouldReturnNotFoundWhenDoctorWasNotFound() throws Exception {
-        var doctorId = "";
-        mockMvc.perform(patch("/api/v1/doctors/%s".formatted(doctorId))
+        String licenseNumber = UUID
+                .randomUUID()
+                .toString()
+                .replace("-", "")
+                .substring(0, 10);
+        mockMvc.perform(patch("/api/v1/doctors/%s".formatted(licenseNumber))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personDTO))
         ).andExpect(status().isNotFound());
