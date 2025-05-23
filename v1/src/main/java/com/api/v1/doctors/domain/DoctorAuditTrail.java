@@ -2,10 +2,12 @@ package com.api.v1.doctors.domain;
 
 import com.api.v1.doctors.domain.exposed.Doctor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Document(collection = "DoctorAuditTrail")
 public record DoctorAuditTrail(
         @Id
         String id,
