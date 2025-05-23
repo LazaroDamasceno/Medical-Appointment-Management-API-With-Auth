@@ -1,13 +1,13 @@
 package com.api.v2.customers.utils
 
 import com.api.v2.customers.domain.Customer
-import com.api.v2.customers.domain.CustomerRepository
+import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.exceptions.CustomerNotFoundException
 import com.api.v2.customers.utils.exposed.CustomerFinder
 import org.springframework.stereotype.Component
 
 @Component
-class CustomerFinderImpl(private val repository: CustomerRepository): CustomerFinder {
+class CustomerFinderImpl(private val repository: CustomerCrudRepository): CustomerFinder {
 
     override suspend fun findById(id: String): Customer {
         val foundCustomer = repository.findById(id)

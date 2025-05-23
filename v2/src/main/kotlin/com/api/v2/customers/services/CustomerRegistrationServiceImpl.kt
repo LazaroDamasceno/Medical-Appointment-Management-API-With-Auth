@@ -1,7 +1,7 @@
 package com.api.v2.customers.services
 
 import com.api.v2.customers.domain.Customer
-import com.api.v2.customers.domain.CustomerRepository
+import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.responses.CustomerResponseDTO
 import com.api.v2.people.exceptions.DuplicatedSINException
 import com.api.v2.people.requests.PersonRegistrationDTO
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class CustomerRegistrationServiceImpl(
-    private val repository: CustomerRepository,
+    private val repository: CustomerCrudRepository,
     private val personRegistrationService: PersonRegistrationService
 ) : CustomerRegistrationService {
 

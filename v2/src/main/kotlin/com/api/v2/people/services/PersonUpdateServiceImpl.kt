@@ -1,8 +1,8 @@
 package com.api.v2.people.services
 
 import com.api.v2.people.domain.PersonAuditTrail
-import com.api.v2.people.domain.PersonAuditTrailRepository
-import com.api.v2.people.domain.PersonRepository
+import com.api.v2.people.domain.PersonAuditRepository
+import com.api.v2.people.domain.PersonCrudRepository
 import com.api.v2.people.domain.exposed.Person
 import com.api.v2.people.requests.PersonUpdateDTO
 import com.api.v2.people.services.exposed.PersonUpdateService
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service
 @Service
 class PersonUpdateServiceImpl: PersonUpdateService {
 
-    private val auditTrailRepository: PersonAuditTrailRepository
-    private val repository: PersonRepository
+    private val auditTrailRepository: PersonAuditRepository
+    private val repository: PersonCrudRepository
 
-    constructor(auditTrailRepository: PersonAuditTrailRepository,
-                repository: PersonRepository
+    constructor(auditTrailRepository: PersonAuditRepository,
+                repository: PersonCrudRepository
     ) {
         this.auditTrailRepository = auditTrailRepository
         this.repository = repository
