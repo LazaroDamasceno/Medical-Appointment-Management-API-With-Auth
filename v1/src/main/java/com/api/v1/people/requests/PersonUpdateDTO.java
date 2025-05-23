@@ -16,7 +16,6 @@ public record PersonUpdateDTO(
         String middleName,
         @NotBlank
         String lastName,
-        @NotBlank
         @NotNull
         LocalDate birthDate,
         @NotBlank

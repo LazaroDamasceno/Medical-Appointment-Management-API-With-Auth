@@ -61,7 +61,9 @@ public class DoctorController {
     }
 
     @PatchMapping("/{licenseNumber}/updating")
-    public ResponseEntity<Void> update(@PathVariable @ObjectId String licenseNumber, @Valid PersonUpdateDTO personUpdateDto) {
+    public ResponseEntity<Void> update(@PathVariable @LicenseNumber String licenseNumber,
+                                       @Valid @RequestBody PersonUpdateDTO personUpdateDto
+    ) {
         return updatingService.update(licenseNumber, personUpdateDto);
     }
 }

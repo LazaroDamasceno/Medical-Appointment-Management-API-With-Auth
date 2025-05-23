@@ -49,8 +49,8 @@ public class DoctorUpdateTest {
     @Order(1)
     @Test
     void shouldReturnNoContentWhenSuccessful() throws Exception {
-        var licenseNumber = "";
-        mockMvc.perform(patch("/api/v1/doctors/%s".formatted(licenseNumber))
+        var licenseNumber = "249fe92707";
+        mockMvc.perform(patch("/api/v1/doctors/%s/updating".formatted(licenseNumber))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personDTO))
         ).andExpect(status().isNoContent());
@@ -64,7 +64,7 @@ public class DoctorUpdateTest {
                 .toString()
                 .replace("-", "")
                 .substring(0, 10);
-        mockMvc.perform(patch("/api/v1/doctors/%s".formatted(licenseNumber))
+        mockMvc.perform(patch("/api/v1/doctors/%s/updating".formatted(licenseNumber))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personDTO))
         ).andExpect(status().isNotFound());
