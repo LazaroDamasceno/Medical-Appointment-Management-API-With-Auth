@@ -1,5 +1,6 @@
 package com.api.v1.customers.domain;
 
+import com.api.v1.customers.domain.exposed.Customer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

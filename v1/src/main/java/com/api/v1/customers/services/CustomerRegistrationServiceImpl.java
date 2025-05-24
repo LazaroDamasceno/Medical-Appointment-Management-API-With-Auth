@@ -1,6 +1,6 @@
 package com.api.v1.customers.services;
 
-import com.api.v1.customers.domain.Customer;
+import com.api.v1.customers.domain.exposed.Customer;
 import com.api.v1.customers.domain.CustomerCrudRepository;
 import com.api.v1.customers.response.CustomerResponseDTO;
 import com.api.v1.people.domain.exposed.Person;
