@@ -1,6 +1,7 @@
 package com.api.v1.nurses.services;
 
 import com.api.v1.common.LicenseNumber;
+import com.api.v1.nurses.controllers.NurseController;
 import com.api.v1.nurses.domain.NurseCrudRepository;
 import com.api.v1.nurses.domain.exposed.Nurse;
 import com.api.v1.nurses.responses.NurseResponseDTO;
@@ -9,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class NurseRetrievalServiceImpl implements NurseRetrievalService {
@@ -27,6 +31,9 @@ public class NurseRetrievalServiceImpl implements NurseRetrievalService {
     public ResponseEntity<NurseResponseDTO> findByLicenseNumber(@LicenseNumber String licenseNumber) {
         Nurse foundNurse = nurseFinder.findByLicenseNumber(licenseNumber);
         NurseResponseDTO dto = foundNurse.toDTO();
+        dto.add(
+                linkTo(methodOn(NurseController.class).findByLicenseNumber(licenseNumber)).withSelfRel()
+        );
         return ResponseEntity.ok(dto);
     }
 
