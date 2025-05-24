@@ -1,6 +1,7 @@
 package com.api.v1.nurses.domain.exposed;
 
 import com.api.v1.common.ProfessionalStatus;
+import com.api.v1.nurses.responses.NurseResponseDTO;
 import com.api.v1.people.domain.exposed.Person;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
@@ -49,6 +50,10 @@ public class Nurse {
     public void markAsRehired() {
         this.status = ProfessionalStatus.ACTIVE;
         this.terminatedAt = null;
+    }
+
+    public NurseResponseDTO toDTO() {
+        return NurseResponseDTO.from(this);
     }
 
     public String getId() {
