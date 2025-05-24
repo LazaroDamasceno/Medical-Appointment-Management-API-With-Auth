@@ -7,8 +7,6 @@ import com.api.v1.customers.exceptions.CustomerNotFoundException;
 import com.api.v1.customers.utils.exposed.CustomerFinder;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public final class CustomerFinderImpl implements CustomerFinder {
 
@@ -19,10 +17,8 @@ public final class CustomerFinderImpl implements CustomerFinder {
     }
 
     public Customer findById(@ObjectId String id) {
-        Optional<Customer> optional = repository.findById(id);
-        if (optional.isEmpty()) {
-            throw new CustomerNotFoundException(id);
-        }
-        return optional.get();
+        return repository
+                .findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
     }
 }

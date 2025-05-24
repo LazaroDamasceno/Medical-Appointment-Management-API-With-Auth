@@ -7,8 +7,6 @@ import com.api.v1.doctors.exceptions.DoctorNotFoundException;
 import com.api.v1.doctors.utils.exposed.DoctorFinder;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public final class DoctorFinderImpl implements DoctorFinder {
 
@@ -20,26 +18,20 @@ public final class DoctorFinderImpl implements DoctorFinder {
 
     @Override
     public Doctor findByLicenseNumber(@LicenseNumber String licenseNumber) {
-        Optional<Doctor> optional = doctorCrudRepository.findByLicenseNumber(licenseNumber);
-        if (optional.isEmpty()) {
-            throw new DoctorNotFoundException(licenseNumber);
-        }
-        return optional.get();
+        return doctorCrudRepository
+                .findByLicenseNumber(licenseNumber)
+                .orElseThrow(() -> new DoctorNotFoundException(licenseNumber));
     }
 
     public Doctor findActiveByLicenseNumber(@LicenseNumber String licenseNumber) {
-        Optional<Doctor> optional = doctorCrudRepository.findActiveByLicenseNumber(licenseNumber);
-        if (optional.isEmpty()) {
-            throw new DoctorNotFoundException(licenseNumber);
-        }
-        return optional.get();
+        return doctorCrudRepository
+                .findActiveByLicenseNumber(licenseNumber)
+                .orElseThrow(() -> new DoctorNotFoundException(licenseNumber));
     }
 
     public Doctor findTerminatedByLicenseNumber(@LicenseNumber String licenseNumber) {
-        Optional<Doctor> optional = doctorCrudRepository.findTerminatedByLicenseNumber(licenseNumber);
-        if (optional.isEmpty()) {
-            throw new DoctorNotFoundException(licenseNumber);
-        }
-        return optional.get();
+        return doctorCrudRepository
+                .findTerminatedByLicenseNumber(licenseNumber)
+                .orElseThrow(() -> new DoctorNotFoundException(licenseNumber));
     }
 }
