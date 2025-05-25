@@ -8,6 +8,12 @@ import java.util.Optional;
 
 public interface NurseCrudRepository extends MongoRepository<Nurse, String> {
 
+    @Query("{ 'person.sin': ?0 ")
+    Optional<Nurse> findBySIN(String sin);
+
+    @Query("{ 'person.email': ?0 }")
+    Optional<Nurse> findByEmail(String email);
+
     @Query("{ 'licenseNumber': ?0 }")
     Optional<Nurse> findByLicenseNumber(String licenseNumber);
 }
