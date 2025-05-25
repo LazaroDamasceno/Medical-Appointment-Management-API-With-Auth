@@ -8,6 +8,7 @@ import com.api.v1.doctors.services.DoctorManagementService;
 import com.api.v1.doctors.services.DoctorRegistrationService;
 import com.api.v1.doctors.services.DoctorRetrievalService;
 import com.api.v1.doctors.services.DoctorUpdateService;
+import com.api.v1.nurses.services.NurseUpdateService;
 import com.api.v1.people.requests.PersonUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
