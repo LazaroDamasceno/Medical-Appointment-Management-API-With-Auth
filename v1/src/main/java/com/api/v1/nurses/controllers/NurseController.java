@@ -5,8 +5,6 @@ import com.api.v1.nurses.requests.NurseRegistrationDTO;
 import com.api.v1.nurses.responses.NurseResponseDTO;
 import com.api.v1.nurses.services.NurseRegistrationService;
 import com.api.v1.nurses.services.NurseRetrievalService;
-import com.api.v1.nurses.services.NurseUpdateService;
-import com.api.v1.people.requests.PersonUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,15 +17,12 @@ public class NurseController {
 
     private final NurseRetrievalService retrievalService;
     private final NurseRegistrationService registrationService;
-    private final NurseUpdateService updateService;
 
     public NurseController(NurseRetrievalService retrievalService,
-                           NurseRegistrationService registrationService,
-                           NurseUpdateService updateService
+                           NurseRegistrationService registrationService
     ) {
         this.retrievalService = retrievalService;
         this.registrationService = registrationService;
-        this.updateService = updateService;
     }
 
     @GetMapping("{licenseNumber}")
@@ -43,12 +38,5 @@ public class NurseController {
     @PostMapping
     public ResponseEntity<NurseResponseDTO> register(@RequestBody @Valid NurseRegistrationDTO registrationDTO) {
         return registrationService.register(registrationDTO);
-    }
-
-    @PatchMapping("{licenseNumber}")
-    public ResponseEntity<Void> update(@PathVariable @LicenseNumber String licenseNumber,
-                                       @RequestBody @Valid PersonUpdateDTO updateDTO
-    ) {
-        return updateService.update(licenseNumber, updateDTO);
     }
 }
