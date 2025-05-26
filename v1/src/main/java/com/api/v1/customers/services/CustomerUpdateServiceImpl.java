@@ -1,7 +1,7 @@
 package com.api.v1.customers.services;
 
 import com.api.v1.common.ObjectId;
-import com.api.v1.customers.domain.exposed.Customer;
+import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerAuditTrail;
 import com.api.v1.customers.domain.CustomerAuditRepository;
 import com.api.v1.customers.domain.CustomerCrudRepository;

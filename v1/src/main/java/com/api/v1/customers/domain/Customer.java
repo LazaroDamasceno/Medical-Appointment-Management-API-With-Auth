@@ -1,4 +1,4 @@
-package com.api.v1.customers.domain.exposed;
+package com.api.v1.customers.domain;
 
 import com.api.v1.customers.response.CustomerResponseDTO;
 import com.api.v1.people.domain.exposed.Person;

@@ -2,7 +2,6 @@ package com.api.v1.customers.domain;
 
 import java.util.Optional;
 
-import com.api.v1.customers.domain.exposed.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
