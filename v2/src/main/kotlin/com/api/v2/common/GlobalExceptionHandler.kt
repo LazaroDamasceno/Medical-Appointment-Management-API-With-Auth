@@ -1,5 +1,6 @@
 package com.api.v2.common
 
+import com.api.v2.customers.exceptions.CustomerNotFoundException
 import com.api.v2.people.exceptions.DuplicatedEmailException
 import com.api.v2.people.exceptions.DuplicatedSINException
 import org.springframework.http.HttpStatus
@@ -17,6 +18,11 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicatedEmailException::class)
     fun handleException(ex: DuplicatedEmailException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(CustomerNotFoundException::class)
+    fun handleException(ex: CustomerNotFoundException): ResponseEntity<String?> {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
     }
 }

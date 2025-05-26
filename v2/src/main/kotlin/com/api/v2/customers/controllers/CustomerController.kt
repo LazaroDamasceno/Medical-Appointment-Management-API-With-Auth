@@ -46,7 +46,7 @@ class CustomerController {
     }
 
     @GetMapping
-    fun findAll(@RequestParam pageable: Pageable): ResponseEntity<List<CustomerResponseDTO>> {
+    fun findAll(pageable: Pageable): ResponseEntity<List<CustomerResponseDTO>> {
         return retrievalService.findAll(pageable)
     }
 
