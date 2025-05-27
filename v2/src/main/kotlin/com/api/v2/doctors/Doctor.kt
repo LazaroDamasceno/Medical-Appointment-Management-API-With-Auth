@@ -13,6 +13,7 @@ class Doctor private constructor(
 
     var status: ProfessionalStatus = ProfessionalStatus.ACTIVE
     val createdAt: LocalDateTime = LocalDateTime.now()
+    var updatedAt: LocalDateTime? = null
     var terminatedAt: LocalDateTime? = null
 
     companion object {
@@ -29,5 +30,10 @@ class Doctor private constructor(
     fun markAsRehired() {
         status = ProfessionalStatus.ACTIVE
         terminatedAt = null
+    }
+
+    fun update(person: Person) {
+        this.person = person
+        this.updatedAt = LocalDateTime.now()
     }
 }
