@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDate
 import java.util.UUID
@@ -46,13 +46,13 @@ class CustomerUpdateTest {
 
 	@Test
 	@Order(1)
-	fun `should return created when successful`() {
-		val id = ""
+	fun `should return no content when successful`() {
+		val id = "dcb25146-2121-4119-88f3-6f427dfd0d9c"
 		mockMvc.perform(
-			post("/api/v2/customers/$id")
+			patch("/api/v2/customers/$id")
 				.content(objectMapper.writeValueAsString(personDTO))
 				.contentType(MediaType.APPLICATION_JSON)
-		).andExpect(status().isCreated)
+		).andExpect(status().isNoContent)
 	}
 
 	@Test
@@ -60,9 +60,9 @@ class CustomerUpdateTest {
 	fun `should return not found when customer was not found`() {
 		val randomId = UUID.randomUUID().toString()
 		mockMvc.perform(
-			post("/api/v2/customers/$randomId")
+			patch("/api/v2/customers/$randomId")
 				.content(objectMapper.writeValueAsString(personDTO))
 				.contentType(MediaType.APPLICATION_JSON)
-		).andExpect(status().isConflict)
+		).andExpect(status().isNotFound)
 	}
 }

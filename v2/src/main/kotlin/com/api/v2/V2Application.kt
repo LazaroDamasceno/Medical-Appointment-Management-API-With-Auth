@@ -8,7 +8,7 @@ import org.springframework.modulith.core.ApplicationModules
 class V2Application
 
 fun main(args: Array<String>) {
-	val modules = ApplicationModules.of(V2Application::class.java);
+	val modules = ApplicationModules.of(V2Application::class.java)
 	modules.verify()
 	runApplication<V2Application>(*args)
 }

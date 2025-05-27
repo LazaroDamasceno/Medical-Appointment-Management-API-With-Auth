@@ -21,8 +21,13 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
     }
 
+    @ExceptionHandler(DuplicatedLicenseNumberException::class)
+    fun handleException(ex: DuplicatedLicenseNumberException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
     @ExceptionHandler(CustomerNotFoundException::class)
     fun handleException(ex: CustomerNotFoundException): ResponseEntity<String?> {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
     }
 }

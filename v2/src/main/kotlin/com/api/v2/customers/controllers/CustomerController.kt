@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v2/customers")
+@RequestMapping("api/v2/customers")
 class CustomerController {
 
     private val registrationService: CustomerRegistrationService

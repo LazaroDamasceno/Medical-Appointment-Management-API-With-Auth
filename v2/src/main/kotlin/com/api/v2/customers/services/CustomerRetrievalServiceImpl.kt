@@ -1,11 +1,14 @@
 package com.api.v2.customers.services
 
+import com.api.v2.customers.controllers.CustomerController
 import com.api.v2.customers.domain.exposed.Customer
 import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.responses.CustomerResponseDTO
 import com.api.v2.customers.utils.exposed.CustomerFinder
 import com.api.v2.customers.utils.exposed.toDTO
 import org.springframework.data.domain.Pageable
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
@@ -26,6 +29,9 @@ class CustomerRetrievalServiceImpl: CustomerRetrievalService {
     override fun findById(id: String): ResponseEntity<CustomerResponseDTO> {
         val foundCustomer = customerFinder.findById(id)
         val dto = foundCustomer.toDTO()
+        dto.add(
+            linkTo(methodOn(CustomerController::class.java).findById(id)).withSelfRel()
+        )
         return ResponseEntity.ok(dto)
     }
 
