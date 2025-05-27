@@ -1,5 +1,6 @@
-package com.api.v2.doctors
+package com.api.v2.doctors.domain
 
+import com.api.v2.doctors.domain.exposed.Doctor
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
 
