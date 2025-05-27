@@ -2,7 +2,7 @@ package com.api.v1.nurses.services;
 
 import com.api.v1.nurses.domain.NurseCrudRepository;
 import com.api.v1.nurses.domain.exposed.Nurse;
-import com.api.v1.nurses.exceptions.DuplicatedNurseLicenseNumberException;
+import com.api.v1.common.DuplicatedLicenseNumberException;
 import com.api.v1.nurses.requests.NurseRegistrationDTO;
 import com.api.v1.nurses.responses.NurseResponseDTO;
 import com.api.v1.people.domain.exposed.Person;
@@ -44,7 +44,7 @@ public class NurseRegistrationServiceImpl implements NurseRegistrationService {
 
     public void validate(NurseRegistrationDTO registrationDTO) {
         if (crudRepository.findByLicenseNumber(registrationDTO.licenseNumber()).isPresent()) {
-            throw new DuplicatedNurseLicenseNumberException();
+            throw new DuplicatedLicenseNumberException();
         }
         if (crudRepository.findBySIN(registrationDTO.person().sin()).isPresent()) {
             throw new DuplicatedSINException();

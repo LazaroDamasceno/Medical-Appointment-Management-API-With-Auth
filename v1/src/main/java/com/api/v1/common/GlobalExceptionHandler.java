@@ -36,8 +36,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
-    @ExceptionHandler(DuplicatedMedicalLicenseNumberException.class)
-    public ResponseEntity<String> handleException(DuplicatedMedicalLicenseNumberException ex) {
+    @ExceptionHandler(DuplicatedLicenseNumberException.class)
+    public ResponseEntity<String> handleException(DuplicatedLicenseNumberException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 

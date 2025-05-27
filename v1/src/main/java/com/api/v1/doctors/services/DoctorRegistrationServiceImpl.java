@@ -1,8 +1,8 @@
 package com.api.v1.doctors.services;
 
+import com.api.v1.common.DuplicatedLicenseNumberException;
 import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.domain.exposed.Doctor;
-import com.api.v1.doctors.exceptions.DuplicatedMedicalLicenseNumberException;
 import com.api.v1.doctors.requests.DoctorRegistrationDTO;
 import com.api.v1.doctors.response.DoctorResponseDto;
 import com.api.v1.people.domain.exposed.Person;
@@ -43,7 +43,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
 
     private void validate(DoctorRegistrationDTO registrationDto) {
         if (repository.findByLicenseNumber(registrationDto.licenseNumber()).isPresent()) {
-            throw new DuplicatedMedicalLicenseNumberException(registrationDto.licenseNumber());
+            throw new DuplicatedLicenseNumberException();
         }
         if (repository.findBySIN(registrationDto.person().sin()).isPresent()) {
             throw new DuplicatedSINException();
