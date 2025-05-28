@@ -9,6 +9,12 @@ interface DoctorCrudRepository: MongoRepository<Doctor, String> {
     @Query("{ 'licenseNumber': ?0 }")
     fun findByLicenseNumber(licenseNumber: String): Doctor?
 
+    @Query("{ 'licenseNumber': ?0, 'status': 'ACTIVE' }")
+    fun findActiveByLicenseNumber(licenseNumber: String): Doctor?
+
+    @Query("{ 'licenseNumber': ?0, 'status': 'TERMINATED' }")
+    fun findTerminatedByLicenseNumber(licenseNumber: String): Doctor?
+
     @Query("{ 'person.sin': ?0 }")
     fun findBySIN(sin: String): Doctor?
 
