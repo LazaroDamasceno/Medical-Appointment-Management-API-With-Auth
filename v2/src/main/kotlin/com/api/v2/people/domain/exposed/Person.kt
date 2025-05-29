@@ -4,6 +4,7 @@ import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
 import com.api.v2.people.requests.PersonRegistrationDTO
 import com.api.v2.people.requests.PersonUpdateDTO
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -15,7 +16,9 @@ class Person private constructor(
     var middleName: String?,
     var lastName: String,
     var birthDate: LocalDate,
+    @Indexed(unique = true)
     var sin: String,
+    @Indexed(unique = true)
     var email: String,
     var phoneNumber: String,
     var gender: Gender,

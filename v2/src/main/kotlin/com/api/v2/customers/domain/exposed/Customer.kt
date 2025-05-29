@@ -1,6 +1,7 @@
 package com.api.v2.customers.domain.exposed
 
 import com.api.v2.people.domain.exposed.Person
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import java.util.UUID
@@ -10,6 +11,7 @@ class Customer private constructor(
     var person: Person
 ) {
 
+    @Indexed(unique = true)
     var id = UUID.randomUUID().toString();
     val createdAt: LocalDateTime = LocalDateTime.now()
     var updatedAt: LocalDateTime? = null
