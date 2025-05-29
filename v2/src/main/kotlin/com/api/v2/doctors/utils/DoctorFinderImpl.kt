@@ -4,9 +4,9 @@ import com.api.v2.doctors.domain.DoctorCrudRepository
 import com.api.v2.doctors.domain.exposed.Doctor
 import com.api.v2.doctors.exceptions.DoctorNotFoundException
 import com.api.v2.doctors.utils.exposed.DoctorFinder
-import org.springframework.data.mongodb.core.index.CompoundIndex
+import org.springframework.stereotype.Component
 
-@CompoundIndex
+@Component
 class DoctorFinderImpl: DoctorFinder {
 
     private val crudRepository: DoctorCrudRepository
