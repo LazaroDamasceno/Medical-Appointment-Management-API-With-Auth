@@ -4,6 +4,7 @@ import com.api.v2.common.ProfessionalStatus
 import com.api.v2.people.domain.exposed.Person
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Document
 class Doctor private constructor(
@@ -11,6 +12,7 @@ class Doctor private constructor(
     var person: Person
 ) {
 
+    var id: String = UUID.randomUUID().toString()
     var status: ProfessionalStatus = ProfessionalStatus.ACTIVE
     val createdAt: LocalDateTime = LocalDateTime.now()
     var updatedAt: LocalDateTime? = null
