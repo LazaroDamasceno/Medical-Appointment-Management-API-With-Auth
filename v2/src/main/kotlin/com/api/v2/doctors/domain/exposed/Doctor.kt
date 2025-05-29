@@ -36,4 +36,6 @@ class Doctor private constructor(
         this.person = person
         this.updatedAt = LocalDateTime.now()
     }
+
+
 }
