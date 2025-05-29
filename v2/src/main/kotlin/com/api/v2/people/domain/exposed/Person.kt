@@ -4,13 +4,14 @@ import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
 import com.api.v2.people.requests.PersonRegistrationDTO
 import com.api.v2.people.requests.PersonUpdateDTO
+import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
-@Document
+@Document(collection = "People")
 class Person private constructor(
     var firstName: String,
     var middleName: String?,
@@ -25,6 +26,7 @@ class Person private constructor(
     var address: Address
 ){
 
+    @Id
     var id = UUID.randomUUID().toString();
     val createdAt: LocalDateTime = LocalDateTime.now()
     var updatedAt: LocalDateTime? = null
