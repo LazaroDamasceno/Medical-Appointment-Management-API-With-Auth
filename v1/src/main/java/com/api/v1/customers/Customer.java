@@ -1,7 +1,7 @@
-package com.api.v1.customers.domain;
+package com.api.v1.customers;
 
 import com.api.v1.customers.response.CustomerResponseDTO;
-import com.api.v1.people.domain.exposed.Person;
+import com.api.v1.people.Person;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;

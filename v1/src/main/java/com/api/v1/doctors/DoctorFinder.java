@@ -1,6 +1,4 @@
-package com.api.v1.doctors.utils.exposed;
-
-import com.api.v1.doctors.domain.exposed.Doctor;
+package com.api.v1.doctors;
 
 public interface DoctorFinder {
     Doctor findByLicenseNumber(String licenseNumber);

@@ -1,6 +1,6 @@
 package com.api.v1.people.domain;
 
-import com.api.v1.people.domain.exposed.Person;
+import com.api.v1.people.Person;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

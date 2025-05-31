@@ -1,6 +1,4 @@
-package com.api.v1.people.utils;
-
-import com.api.v1.people.domain.exposed.Person;
+package com.api.v1.people;
 
 public final class FullNameFormatter {
 

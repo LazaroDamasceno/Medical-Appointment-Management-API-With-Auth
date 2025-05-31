@@ -2,9 +2,9 @@ package com.api.v1.doctors.services;
 
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.doctors.domain.DoctorCrudRepository;
-import com.api.v1.doctors.domain.exposed.Doctor;
+import com.api.v1.doctors.Doctor;
 import com.api.v1.doctors.response.DoctorResponseDto;
-import com.api.v1.doctors.utils.exposed.DoctorFinder;
+import com.api.v1.doctors.DoctorFinder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

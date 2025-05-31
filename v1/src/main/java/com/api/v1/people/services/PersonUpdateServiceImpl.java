@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import com.api.v1.people.domain.PersonAuditTrail;
 import com.api.v1.people.domain.PersonAuditRepository;
 import com.api.v1.people.domain.PersonCrudRepository;
-import com.api.v1.people.domain.exposed.Person;
+import com.api.v1.people.Person;
 import com.api.v1.people.requests.PersonUpdateDTO;
 import com.api.v1.people.services.exposed.PersonUpdateService;
 

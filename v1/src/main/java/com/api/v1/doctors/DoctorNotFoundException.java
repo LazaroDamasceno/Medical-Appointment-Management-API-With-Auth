@@ -1,4 +1,4 @@
-package com.api.v1.doctors.exceptions;
+package com.api.v1.doctors;
 
 public class DoctorNotFoundException extends RuntimeException {
     public DoctorNotFoundException(String licenseNumber) {
