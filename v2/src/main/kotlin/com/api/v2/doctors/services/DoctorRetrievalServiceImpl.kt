@@ -2,10 +2,10 @@ package com.api.v2.doctors.services
 
 import com.api.v2.doctors.controller.DoctorController
 import com.api.v2.doctors.domain.DoctorCrudRepository
-import com.api.v2.doctors.domain.exposed.Doctor
+import com.api.v2.doctors.Doctor
 import com.api.v2.doctors.responses.DoctorResponseDTO
-import com.api.v2.doctors.utils.exposed.DoctorFinder
-import com.api.v2.doctors.utils.exposed.toDTO
+import com.api.v2.doctors.DoctorFinder
+import com.api.v2.doctors.toDTO
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo

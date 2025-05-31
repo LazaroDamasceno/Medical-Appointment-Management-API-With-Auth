@@ -1,6 +1,6 @@
 package com.api.v2.common
 
-import com.api.v2.customers.exceptions.CustomerNotFoundException
+import com.api.v2.customers.CustomerNotFoundException
 import com.api.v2.people.exceptions.DuplicatedEmailException
 import com.api.v2.people.exceptions.DuplicatedSINException
 import org.springframework.http.HttpStatus

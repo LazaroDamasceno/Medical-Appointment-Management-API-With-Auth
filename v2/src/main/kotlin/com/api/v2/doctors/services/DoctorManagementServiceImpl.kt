@@ -5,9 +5,9 @@ import com.api.v2.doctors.domain.DoctorAuditTrail
 import com.api.v2.doctors.domain.DoctorCrudRepository
 import com.api.v2.doctors.exceptions.ActiveDoctorException
 import com.api.v2.doctors.exceptions.TerminatedDoctorException
-import com.api.v2.doctors.utils.exposed.DoctorFinder
+import com.api.v2.doctors.DoctorFinder
 import com.api.v2.people.requests.PersonUpdateDTO
-import com.api.v2.people.services.exposed.PersonUpdateService
+import com.api.v2.people.PersonUpdateService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service

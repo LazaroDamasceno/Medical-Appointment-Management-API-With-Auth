@@ -1,8 +1,8 @@
-package com.api.v2.doctors.utils.exposed
+package com.api.v2.doctors
 
-import com.api.v2.doctors.domain.exposed.Doctor
+import com.api.v2.doctors.Doctor
 import com.api.v2.doctors.responses.DoctorResponseDTO
-import com.api.v2.people.utils.fullName
+import com.api.v2.people.fullName
 
 fun Doctor.toDTO(): DoctorResponseDTO {
     return DoctorResponseDTO(

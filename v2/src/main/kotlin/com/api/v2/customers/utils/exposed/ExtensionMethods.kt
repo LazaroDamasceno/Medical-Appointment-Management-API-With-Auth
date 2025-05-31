@@ -1,8 +1,8 @@
 package com.api.v2.customers.utils.exposed
 
-import com.api.v2.customers.domain.exposed.Customer
+import com.api.v2.customers.Customer
 import com.api.v2.customers.responses.CustomerResponseDTO
-import com.api.v2.people.utils.fullName
+import com.api.v2.people.fullName
 
 fun Customer.toDTO(): CustomerResponseDTO {
     return CustomerResponseDTO(

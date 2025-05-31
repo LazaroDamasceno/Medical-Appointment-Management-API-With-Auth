@@ -1,4 +1,4 @@
-package com.api.v2.people.domain.exposed
+package com.api.v2.people
 
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
