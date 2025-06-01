@@ -44,7 +44,7 @@ class MedicalSlotRegistrationServiceImpl: MedicalSlotRegistrationService {
     }
 
     fun validate(doctor: Doctor, availableAt: @NotNull LocalDateTime) {
-        if (crudRepository.findByDoctorAndAvailableAt(doctor, availableAt) != null) {
+        if (crudRepository.findByDoctorAndAvailableAt(doctor.id, availableAt) != null) {
             throw DuplicatedBookingDateTimeException()
         }
     }

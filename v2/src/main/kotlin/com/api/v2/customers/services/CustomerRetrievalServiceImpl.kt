@@ -6,6 +6,7 @@ import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.responses.CustomerResponseDTO
 import com.api.v2.customers.utils.exposed.CustomerFinder
 import com.api.v2.customers.utils.exposed.toDTO
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
@@ -35,9 +36,9 @@ class CustomerRetrievalServiceImpl: CustomerRetrievalService {
         return ResponseEntity.ok(dto)
     }
 
-    override fun findAll(pageable: Pageable): ResponseEntity<List<CustomerResponseDTO>> {
+    override fun findAll(pageable: Pageable): ResponseEntity<Page<CustomerResponseDTO>> {
         val response = crudRepository
-            .findAll()
+            .findAll(pageable)
             .map(Customer::toDTO)
         return ResponseEntity.ok(response)
     }
