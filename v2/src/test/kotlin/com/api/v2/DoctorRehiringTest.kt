@@ -22,9 +22,6 @@ class DoctorRehiringTest {
     @Autowired
     lateinit var mockMvc: MockMvc
 
-    @Autowired
-    lateinit var objectMapper: ObjectMapper
-
     @Order(1)
     @Test
     fun `should return no content when successful`() {
