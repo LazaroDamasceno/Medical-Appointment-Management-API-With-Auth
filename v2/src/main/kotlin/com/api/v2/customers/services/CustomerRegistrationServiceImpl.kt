@@ -1,12 +1,12 @@
 package com.api.v2.customers.services
 
-import com.api.v2.customers.domain.Customer
+import com.api.v2.customers.Customer
 import com.api.v2.customers.domain.CustomerCrudRepository
-import com.api.v2.customers.responses.CustomerResponseDTO
-import com.api.v2.people.exceptions.DuplicatedSINException
+import com.api.v2.customers.CustomerResponseDTO
+import com.api.v2.people.DuplicatedSINException
 import com.api.v2.people.requests.PersonRegistrationDTO
-import com.api.v2.people.services.PersonRegistrationService
-import com.api.v2.customers.utils.exposed.toDTO
+import com.api.v2.people.PersonRegistrationService
+import com.api.v2.customers.toDTO
 import jakarta.validation.Valid
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

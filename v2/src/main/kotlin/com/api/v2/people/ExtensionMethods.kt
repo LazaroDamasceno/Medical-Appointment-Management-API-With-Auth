@@ -1,6 +1,4 @@
-package com.api.v2.people.utils
-
-import com.api.v2.people.domain.Person
+package com.api.v2.people
 
 fun Person.fullName(): String {
     if (this.middleName == null) {

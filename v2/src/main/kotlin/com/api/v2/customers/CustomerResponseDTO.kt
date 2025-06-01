@@ -1,4 +1,4 @@
-package com.api.v2.customers.responses
+package com.api.v2.customers
 
 import org.springframework.hateoas.RepresentationModel
 

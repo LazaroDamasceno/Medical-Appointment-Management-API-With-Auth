@@ -1,4 +1,4 @@
-package com.api.v2.doctors.exceptions
+package com.api.v2.doctors
 
 import java.lang.RuntimeException
 

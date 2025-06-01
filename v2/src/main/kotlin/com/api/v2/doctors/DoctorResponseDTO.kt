@@ -1,4 +1,4 @@
-package com.api.v2.doctors.responses
+package com.api.v2.doctors
 
 import org.springframework.hateoas.RepresentationModel
 

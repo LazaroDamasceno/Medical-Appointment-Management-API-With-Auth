@@ -1,6 +1,6 @@
 package com.api.v2.customers.domain
 
-import com.api.v2.customers.domain.Customer
+import com.api.v2.customers.Customer
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
 
