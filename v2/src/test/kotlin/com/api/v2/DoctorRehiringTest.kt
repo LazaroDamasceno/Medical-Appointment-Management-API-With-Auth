@@ -26,16 +26,16 @@ class DoctorRehiringTest {
         val licenseNumber = ""
         mockMvc.perform(
             patch("/api/v2/doctors/$licenseNumber/rehiring")
-        ).andExpect(status().isCreated)
+        ).andExpect(status().isNoContent)
     }
 
     @Order(2)
     @Test
-    fun `should return conflict when doctor is terminated`() {
+    fun `should return conflict when doctor is active`() {
         val licenseNumber = ""
         mockMvc.perform(
             patch("/api/v2/doctors/$licenseNumber/rehiring")
-        ).andExpect(status().isNoContent)
+        ).andExpect(status().isConflict)
     }
 
     @Order(3)

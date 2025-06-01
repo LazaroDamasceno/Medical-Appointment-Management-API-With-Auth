@@ -1,6 +1,9 @@
 package com.api.v2.common
 
 import com.api.v2.customers.CustomerNotFoundException
+import com.api.v2.doctors.ActiveDoctorException
+import com.api.v2.doctors.DoctorNotFoundException
+import com.api.v2.doctors.TerminatedDoctorException
 import com.api.v2.people.DuplicatedEmailException
 import com.api.v2.people.DuplicatedSINException
 import org.springframework.http.HttpStatus
@@ -33,6 +36,21 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicatedBookingDateTimeException::class)
     fun handleException(ex: DuplicatedBookingDateTimeException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(DoctorNotFoundException::class)
+    fun handleException(ex: DoctorNotFoundException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
+    }
+
+    @ExceptionHandler(TerminatedDoctorException::class)
+    fun handleException(ex: TerminatedDoctorException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(ActiveDoctorException::class)
+    fun handleException(ex: ActiveDoctorException): ResponseEntity<String?> {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
     }
 }
