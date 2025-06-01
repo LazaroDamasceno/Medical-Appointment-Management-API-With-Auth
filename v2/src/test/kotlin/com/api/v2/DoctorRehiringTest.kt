@@ -1,6 +1,5 @@
 package com.api.v2
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
