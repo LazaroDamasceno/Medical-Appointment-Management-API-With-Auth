@@ -2,8 +2,6 @@ package com.api.v2.people
 
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
-import com.api.v2.people.requests.PersonRegistrationDTO
-import com.api.v2.people.requests.PersonUpdateDTO
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document

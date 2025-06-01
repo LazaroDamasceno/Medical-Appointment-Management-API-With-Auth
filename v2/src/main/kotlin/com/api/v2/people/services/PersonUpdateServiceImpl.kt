@@ -4,8 +4,8 @@ import com.api.v2.people.domain.PersonAuditTrail
 import com.api.v2.people.domain.PersonAuditRepository
 import com.api.v2.people.domain.PersonCrudRepository
 import com.api.v2.people.Person
+import com.api.v2.people.PersonUpdateDTO
 import com.api.v2.people.PersonUpdateService
-import com.api.v2.people.requests.PersonUpdateDTO
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotNull
 import org.springframework.stereotype.Service

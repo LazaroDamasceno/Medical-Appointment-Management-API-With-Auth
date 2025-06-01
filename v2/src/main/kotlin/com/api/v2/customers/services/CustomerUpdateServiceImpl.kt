@@ -5,7 +5,7 @@ import com.api.v2.customers.domain.CustomerAuditRepository
 import com.api.v2.customers.domain.CustomerAuditTrail
 import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.CustomerFinder
-import com.api.v2.people.requests.PersonUpdateDTO
+import com.api.v2.people.PersonUpdateDTO
 import com.api.v2.people.PersonUpdateService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity

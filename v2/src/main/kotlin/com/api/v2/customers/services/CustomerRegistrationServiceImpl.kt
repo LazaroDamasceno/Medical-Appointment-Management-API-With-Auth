@@ -4,7 +4,7 @@ import com.api.v2.customers.Customer
 import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.CustomerResponseDTO
 import com.api.v2.people.DuplicatedSINException
-import com.api.v2.people.requests.PersonRegistrationDTO
+import com.api.v2.people.PersonRegistrationDTO
 import com.api.v2.people.PersonRegistrationService
 import com.api.v2.customers.toDTO
 import jakarta.validation.Valid

@@ -6,7 +6,7 @@ import com.api.v2.doctors.domain.DoctorCrudRepository
 import com.api.v2.doctors.ActiveDoctorException
 import com.api.v2.doctors.TerminatedDoctorException
 import com.api.v2.doctors.DoctorFinder
-import com.api.v2.people.requests.PersonUpdateDTO
+import com.api.v2.people.PersonUpdateDTO
 import com.api.v2.people.PersonUpdateService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity

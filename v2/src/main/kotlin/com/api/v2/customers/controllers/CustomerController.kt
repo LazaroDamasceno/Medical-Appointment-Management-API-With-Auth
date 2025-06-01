@@ -2,8 +2,8 @@ package com.api.v2.customers.controllers
 
 import com.api.v2.customers.CustomerResponseDTO
 import com.api.v2.customers.services.*
-import com.api.v2.people.requests.PersonRegistrationDTO
-import com.api.v2.people.requests.PersonUpdateDTO
+import com.api.v2.people.PersonRegistrationDTO
+import com.api.v2.people.PersonUpdateDTO
 import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

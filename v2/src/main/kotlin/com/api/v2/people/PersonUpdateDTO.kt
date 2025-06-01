@@ -1,4 +1,4 @@
-package com.api.v2.people.requests
+package com.api.v2.people
 
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 import java.time.LocalDate
 
-data class PersonRegistrationDTO(
+data class PersonUpdateDTO(
     @NotBlank
     val firstName: String,
     val middleName: String?,
@@ -17,9 +17,6 @@ data class PersonRegistrationDTO(
     val lastName: String,
     @NotNull
     val birthDate: LocalDate,
-    @NotBlank
-    @Size(min = 10, max = 10)
-    val sin: String,
     @NotBlank
     @Email
     val email: String,

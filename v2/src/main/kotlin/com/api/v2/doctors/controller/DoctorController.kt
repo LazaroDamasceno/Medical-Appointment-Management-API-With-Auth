@@ -3,7 +3,7 @@ package com.api.v2.doctors.controller
 import com.api.v2.doctors.requests.DoctorRegistrationDTO
 import com.api.v2.doctors.DoctorResponseDTO
 import com.api.v2.doctors.services.*
-import com.api.v2.people.requests.PersonUpdateDTO
+import com.api.v2.people.PersonUpdateDTO
 import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

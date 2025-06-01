@@ -2,7 +2,7 @@ package com.api.v2
 
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
-import com.api.v2.people.requests.PersonUpdateDTO
+import com.api.v2.people.PersonUpdateDTO
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order

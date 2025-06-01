@@ -3,7 +3,7 @@ package com.api.v2
 import com.api.v2.doctors.requests.DoctorRegistrationDTO
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
-import com.api.v2.people.requests.PersonRegistrationDTO
+import com.api.v2.people.PersonRegistrationDTO
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
