@@ -1,6 +1,6 @@
-package com.api.v2.customers
+package com.api.v2.customers.domain
 
-import com.api.v2.people.Person
+import com.api.v2.people.domain.Person
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document

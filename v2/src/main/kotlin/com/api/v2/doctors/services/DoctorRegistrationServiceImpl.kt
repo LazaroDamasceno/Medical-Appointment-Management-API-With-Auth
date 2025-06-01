@@ -2,13 +2,13 @@ package com.api.v2.doctors.services
 
 import com.api.v2.common.DuplicatedLicenseNumberException
 import com.api.v2.doctors.domain.DoctorCrudRepository
-import com.api.v2.doctors.Doctor
+import com.api.v2.doctors.domain.Doctor
 import com.api.v2.doctors.requests.DoctorRegistrationDTO
 import com.api.v2.doctors.responses.DoctorResponseDTO
-import com.api.v2.doctors.toDTO
+import com.api.v2.doctors.utils.toDTO
 import com.api.v2.people.exceptions.DuplicatedEmailException
 import com.api.v2.people.exceptions.DuplicatedSINException
-import com.api.v2.people.PersonRegistrationService
+import com.api.v2.people.services.PersonRegistrationService
 import jakarta.validation.Valid
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

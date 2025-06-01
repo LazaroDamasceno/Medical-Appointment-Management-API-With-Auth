@@ -1,7 +1,7 @@
 package com.api.v2.customers.services
 
 import com.api.v2.customers.controllers.CustomerController
-import com.api.v2.customers.Customer
+import com.api.v2.customers.domain.Customer
 import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.responses.CustomerResponseDTO
 import com.api.v2.customers.utils.exposed.CustomerFinder

@@ -5,6 +5,7 @@ import com.api.v2.customers.services.*
 import com.api.v2.people.requests.PersonRegistrationDTO
 import com.api.v2.people.requests.PersonUpdateDTO
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -46,7 +47,7 @@ class CustomerController {
     }
 
     @GetMapping
-    fun findAll(pageable: Pageable): ResponseEntity<List<CustomerResponseDTO>> {
+    fun findAll(pageable: Pageable): ResponseEntity<Page<CustomerResponseDTO>> {
         return retrievalService.findAll(pageable)
     }
 

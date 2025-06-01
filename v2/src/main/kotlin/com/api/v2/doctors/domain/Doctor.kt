@@ -1,7 +1,7 @@
-package com.api.v2.doctors
+package com.api.v2.doctors.domain
 
 import com.api.v2.common.ProfessionalStatus
-import com.api.v2.people.Person
+import com.api.v2.people.domain.Person
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document

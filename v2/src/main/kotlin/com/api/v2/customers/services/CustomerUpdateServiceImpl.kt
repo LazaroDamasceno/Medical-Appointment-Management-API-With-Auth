@@ -1,12 +1,12 @@
 package com.api.v2.customers.services
 
-import com.api.v2.customers.Customer
+import com.api.v2.customers.domain.Customer
 import com.api.v2.customers.domain.CustomerAuditRepository
 import com.api.v2.customers.domain.CustomerAuditTrail
 import com.api.v2.customers.domain.CustomerCrudRepository
 import com.api.v2.customers.utils.exposed.CustomerFinder
 import com.api.v2.people.requests.PersonUpdateDTO
-import com.api.v2.people.PersonUpdateService
+import com.api.v2.people.services.PersonUpdateService
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service

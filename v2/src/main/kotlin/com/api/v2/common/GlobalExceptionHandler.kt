@@ -1,10 +1,10 @@
 package com.api.v2.common
 
-import com.api.v2.customers.CustomerNotFoundException
-import com.api.v2.medical_slots.CancelledMedicalSlotException
-import com.api.v2.medical_slots.InaccessibleMedicalSlotException
-import com.api.v2.medical_slots.MedicalSlotNotFoundException
-import com.api.v2.medical_slots.CompletedMedicalSlotException
+import com.api.v2.customers.exceptions.CustomerNotFoundException
+import com.api.v2.medical_slots.exceptions.CancelledMedicalSlotException
+import com.api.v2.medical_slots.exceptions.InaccessibleMedicalSlotException
+import com.api.v2.medical_slots.exceptions.MedicalSlotNotFoundException
+import com.api.v2.medical_slots.exceptions.CompletedMedicalSlotException
 import com.api.v2.people.exceptions.DuplicatedEmailException
 import com.api.v2.people.exceptions.DuplicatedSINException
 import org.springframework.http.HttpStatus

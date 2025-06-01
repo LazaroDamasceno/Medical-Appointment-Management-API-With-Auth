@@ -1,6 +1,6 @@
-package com.api.v2.medical_slots
+package com.api.v2.medical_slots.domain
 
-import com.api.v2.doctors.Doctor
+import com.api.v2.doctors.domain.Doctor
 import com.api.v2.medical_slots.enums.MedicalSlotStatus
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

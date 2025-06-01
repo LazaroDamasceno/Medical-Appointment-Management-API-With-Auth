@@ -1,12 +1,12 @@
 package com.api.v2.medical_slots.services
 
-import com.api.v2.doctors.Doctor
-import com.api.v2.doctors.DoctorFinder
-import com.api.v2.medical_slots.CancelledMedicalSlotException
-import com.api.v2.medical_slots.CompletedMedicalSlotException
-import com.api.v2.medical_slots.InaccessibleMedicalSlotException
-import com.api.v2.medical_slots.MedicalSlot
-import com.api.v2.medical_slots.MedicalSlotFinder
+import com.api.v2.doctors.domain.Doctor
+import com.api.v2.doctors.utils.DoctorFinder
+import com.api.v2.medical_slots.exceptions.CancelledMedicalSlotException
+import com.api.v2.medical_slots.exceptions.CompletedMedicalSlotException
+import com.api.v2.medical_slots.exceptions.InaccessibleMedicalSlotException
+import com.api.v2.medical_slots.domain.MedicalSlot
+import com.api.v2.medical_slots.utils.MedicalSlotFinder
 import com.api.v2.medical_slots.domain.MedicalSlotAuditRepository
 import com.api.v2.medical_slots.domain.MedicalSlotAuditTrail
 import com.api.v2.medical_slots.domain.MedicalSlotCrudRepository

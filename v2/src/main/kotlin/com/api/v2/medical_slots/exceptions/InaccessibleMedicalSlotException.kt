@@ -1,4 +1,4 @@
-package com.api.v2.medical_slots
+package com.api.v2.medical_slots.exceptions
 
 class InaccessibleMedicalSlotException(doctorLicenseNumber: String)
     : RuntimeException(

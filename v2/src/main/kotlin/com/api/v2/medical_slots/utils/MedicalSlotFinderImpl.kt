@@ -1,8 +1,7 @@
 package com.api.v2.medical_slots.utils
 
-import com.api.v2.medical_slots.MedicalSlot
-import com.api.v2.medical_slots.MedicalSlotFinder
-import com.api.v2.medical_slots.MedicalSlotNotFoundException
+import com.api.v2.medical_slots.domain.MedicalSlot
+import com.api.v2.medical_slots.exceptions.MedicalSlotNotFoundException
 import com.api.v2.medical_slots.domain.MedicalSlotCrudRepository
 import org.springframework.stereotype.Service
 

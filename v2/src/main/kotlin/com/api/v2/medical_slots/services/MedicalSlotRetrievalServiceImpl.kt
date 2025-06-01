@@ -1,12 +1,12 @@
 package com.api.v2.medical_slots.services
 
-import com.api.v2.doctors.DoctorFinder
-import com.api.v2.medical_slots.InaccessibleMedicalSlotException
-import com.api.v2.medical_slots.MedicalSlot
+import com.api.v2.doctors.utils.DoctorFinder
+import com.api.v2.medical_slots.exceptions.InaccessibleMedicalSlotException
+import com.api.v2.medical_slots.domain.MedicalSlot
 import com.api.v2.medical_slots.controllers.MedicalSlotController
 import com.api.v2.medical_slots.domain.MedicalSlotCrudRepository
 import com.api.v2.medical_slots.responses.MedicalSlotResponseDTO
-import com.api.v2.medical_slots.toDTO
+import com.api.v2.medical_slots.utils.toDTO
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo

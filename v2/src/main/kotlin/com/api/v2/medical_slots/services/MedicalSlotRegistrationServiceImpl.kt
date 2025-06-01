@@ -1,12 +1,12 @@
 package com.api.v2.medical_slots.services
 
 import com.api.v2.common.DuplicatedBookingDateTimeException
-import com.api.v2.doctors.Doctor
-import com.api.v2.doctors.DoctorFinder
-import com.api.v2.medical_slots.MedicalSlot
+import com.api.v2.doctors.domain.Doctor
+import com.api.v2.doctors.utils.DoctorFinder
+import com.api.v2.medical_slots.domain.MedicalSlot
 import com.api.v2.medical_slots.domain.MedicalSlotCrudRepository
 import com.api.v2.medical_slots.responses.MedicalSlotResponseDTO
-import com.api.v2.medical_slots.toDTO
+import com.api.v2.medical_slots.utils.toDTO
 import jakarta.validation.constraints.NotNull
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity

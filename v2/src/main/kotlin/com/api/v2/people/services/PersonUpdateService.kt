@@ -1,6 +1,6 @@
-package com.api.v2.people
+package com.api.v2.people.services
 
-import com.api.v2.people.Person
+import com.api.v2.people.domain.Person
 import com.api.v2.people.requests.PersonUpdateDTO
 
 interface PersonUpdateService {
