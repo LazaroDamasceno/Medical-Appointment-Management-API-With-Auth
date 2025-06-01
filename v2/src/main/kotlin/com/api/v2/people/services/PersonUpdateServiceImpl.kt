@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class PersonUpdateServiceImpl(
-    private val auditTrailRepository: PersonAuditRepository,
-    private val repository: PersonCrudRepository
+    val auditTrailRepository: PersonAuditRepository,
+    val repository: PersonCrudRepository
 ) : PersonUpdateService {
 
     override fun update(

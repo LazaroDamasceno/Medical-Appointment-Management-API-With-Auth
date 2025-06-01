@@ -15,8 +15,8 @@ import java.net.URI
 
 @Service
 class CustomerRegistrationServiceImpl(
-    private val repository: CustomerCrudRepository,
-    private val personRegistrationService: PersonRegistrationService
+    val repository: CustomerCrudRepository,
+    val personRegistrationService: PersonRegistrationService
 ) : CustomerRegistrationService {
 
     override fun register(registrationDTO: @Valid PersonRegistrationDTO): ResponseEntity<CustomerResponseDTO> {

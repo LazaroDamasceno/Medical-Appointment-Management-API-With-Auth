@@ -1,4 +1,4 @@
-package com.api.v1.people.exceptions;
+package com.api.v1.people;
 
 public class DuplicatedEmailException extends RuntimeException {
     public DuplicatedEmailException() {

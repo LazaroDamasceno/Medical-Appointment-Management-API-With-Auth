@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class DoctorManagementServiceImpl(
-    private val crudRepository: DoctorCrudRepository,
-    private val auditRepository: DoctorAuditRepository,
-    private val personUpdateService: PersonUpdateService,
-    private val doctorFinder: DoctorFinder
+    val crudRepository: DoctorCrudRepository,
+    val auditRepository: DoctorAuditRepository,
+    val personUpdateService: PersonUpdateService,
+    val doctorFinder: DoctorFinder
 ) : DoctorManagementService {
 
     override fun terminate(licenseNumber: String): ResponseEntity<Void> {

@@ -8,8 +8,7 @@ import jakarta.validation.Valid
 import org.springframework.stereotype.Service
 
 @Service
-class PersonRegistrationServiceImpl(private val personCrudRepository: PersonCrudRepository) :
-    PersonRegistrationService {
+class PersonRegistrationServiceImpl(val personCrudRepository: PersonCrudRepository): PersonRegistrationService {
 
     override fun register(registrationDTO: @Valid PersonRegistrationDTO): Person {
         val foundPerson = personCrudRepository.findBySINOrEmail(registrationDTO.sin, registrationDTO.email)

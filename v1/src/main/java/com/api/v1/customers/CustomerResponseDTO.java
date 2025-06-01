@@ -1,7 +1,6 @@
-package com.api.v1.customers.responses;
+package com.api.v1.customers;
 
-import com.api.v1.customers.domain.Customer;
-import com.api.v1.people.utils.FullNameFormatter;
+import com.api.v1.people.FullNameFormatter;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.hateoas.RepresentationModel;
 

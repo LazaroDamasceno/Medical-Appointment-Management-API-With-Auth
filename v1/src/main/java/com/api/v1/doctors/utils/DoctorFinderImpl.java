@@ -1,9 +1,10 @@
 package com.api.v1.doctors.utils;
 
 import com.api.v1.common.LicenseNumber;
+import com.api.v1.doctors.DoctorFinder;
 import com.api.v1.doctors.domain.DoctorCrudRepository;
-import com.api.v1.doctors.domain.Doctor;
-import com.api.v1.doctors.exceptions.DoctorNotFoundException;
+import com.api.v1.doctors.Doctor;
+import com.api.v1.doctors.DoctorNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component

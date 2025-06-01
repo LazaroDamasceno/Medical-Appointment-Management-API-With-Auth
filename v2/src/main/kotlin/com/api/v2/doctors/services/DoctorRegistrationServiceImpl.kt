@@ -17,8 +17,8 @@ import java.net.URI
 
 @Service
 class DoctorRegistrationServiceImpl(
-    private val personRegistrationService: PersonRegistrationService,
-    private val crudRepository: DoctorCrudRepository
+    val personRegistrationService: PersonRegistrationService,
+    val crudRepository: DoctorCrudRepository
 ) : DoctorRegistrationService {
 
     override fun register(registrationDTO: @Valid DoctorRegistrationDTO): ResponseEntity<DoctorResponseDTO> {

@@ -1,13 +1,13 @@
 package com.api.v1.customers.services;
 
-import com.api.v1.customers.domain.Customer;
+import com.api.v1.customers.Customer;
 import com.api.v1.customers.domain.CustomerCrudRepository;
-import com.api.v1.customers.responses.CustomerResponseDTO;
-import com.api.v1.people.domain.Person;
-import com.api.v1.people.exceptions.DuplicatedEmailException;
-import com.api.v1.people.exceptions.DuplicatedSINException;
+import com.api.v1.customers.CustomerResponseDTO;
+import com.api.v1.people.Person;
+import com.api.v1.people.DuplicatedEmailException;
+import com.api.v1.people.DuplicatedSINException;
 import com.api.v1.people.requests.PersonRegistrationDTO;
-import com.api.v1.people.services.exposed.PersonRegistrationService;
+import com.api.v1.people.PersonRegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class CustomerRetrievalServiceImpl(
-    private val crudRepository: CustomerCrudRepository,
-    private val customerFinder: CustomerFinder
+    val crudRepository: CustomerCrudRepository,
+    val customerFinder: CustomerFinder
 ) : CustomerRetrievalService {
 
     override fun findById(id: String): ResponseEntity<CustomerResponseDTO> {

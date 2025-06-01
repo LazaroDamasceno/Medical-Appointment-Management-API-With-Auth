@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class DoctorRetrievalServiceImpl(
-    private val crudRepository: DoctorCrudRepository,
-    private val doctorFinder: DoctorFinder
+    val crudRepository: DoctorCrudRepository,
+    val doctorFinder: DoctorFinder
 ) : DoctorRetrievalService {
 
     override fun findByLicenseNumber(licenseNumber: String): ResponseEntity<DoctorResponseDTO> {

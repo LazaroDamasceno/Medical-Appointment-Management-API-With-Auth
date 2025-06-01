@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service
 
 @Service
 class CustomerUpdateServiceImpl(
-    private val crudRepository: CustomerCrudRepository,
-    private val auditRepository: CustomerAuditRepository,
-    private val personUpdateService: PersonUpdateService,
-    private val customerFinder: CustomerFinder
+    val crudRepository: CustomerCrudRepository,
+    val auditRepository: CustomerAuditRepository,
+    val personUpdateService: PersonUpdateService,
+    val customerFinder: CustomerFinder
 ) : CustomerUpdateService {
 
     override fun update(customerId: String, updateDTO: @Valid PersonUpdateDTO): ResponseEntity<Unit> {

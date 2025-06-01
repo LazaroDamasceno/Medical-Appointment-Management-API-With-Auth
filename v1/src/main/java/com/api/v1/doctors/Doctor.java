@@ -1,8 +1,7 @@
-package com.api.v1.doctors.domain;
+package com.api.v1.doctors;
 
 import com.api.v1.common.ProfessionalStatus;
-import com.api.v1.doctors.responses.DoctorResponseDto;
-import com.api.v1.people.domain.Person;
+import com.api.v1.people.Person;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;

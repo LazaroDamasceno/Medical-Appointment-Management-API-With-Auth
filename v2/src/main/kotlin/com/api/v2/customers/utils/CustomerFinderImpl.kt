@@ -7,7 +7,7 @@ import com.api.v2.customers.CustomerFinder
 import org.springframework.stereotype.Component
 
 @Component
-class CustomerFinderImpl(private val repository: CustomerCrudRepository): CustomerFinder {
+class CustomerFinderImpl(val repository: CustomerCrudRepository): CustomerFinder {
 
     override fun findById(id: String): Customer {
         val foundCustomer = repository.findById(id)
