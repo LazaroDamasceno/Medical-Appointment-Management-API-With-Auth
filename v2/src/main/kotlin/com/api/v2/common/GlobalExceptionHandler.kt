@@ -4,7 +4,7 @@ import com.api.v2.customers.CustomerNotFoundException
 import com.api.v2.medical_slots.CancelledMedicalSlotException
 import com.api.v2.medical_slots.InaccessibleMedicalSlotException
 import com.api.v2.medical_slots.MedicalSlotNotFoundException
-import com.api.v2.medical_slots.utils.CompletedMedicalSlotException
+import com.api.v2.medical_slots.CompletedMedicalSlotException
 import com.api.v2.people.exceptions.DuplicatedEmailException
 import com.api.v2.people.exceptions.DuplicatedSINException
 import org.springframework.http.HttpStatus

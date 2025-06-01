@@ -2,6 +2,7 @@ package com.api.v2.medical_slots.services
 
 import com.api.v2.doctors.DoctorFinder
 import com.api.v2.medical_slots.InaccessibleMedicalSlotException
+import com.api.v2.medical_slots.MedicalSlot
 import com.api.v2.medical_slots.domain.MedicalSlotCrudRepository
 import com.api.v2.medical_slots.responses.MedicalSlotResponseDTO
 import com.api.v2.medical_slots.toDTO
@@ -35,6 +36,9 @@ class MedicalSlotRetrievalServiceImpl: MedicalSlotRetrievalService {
     }
 
     override fun findAll(pageable: Pageable): ResponseEntity<Page<MedicalSlotResponseDTO>> {
-        TODO()
+        val all = crudRepository
+            .findAll(pageable)
+            .map(MedicalSlot::toDTO)
+        return ResponseEntity.ok(all)
     }
 }

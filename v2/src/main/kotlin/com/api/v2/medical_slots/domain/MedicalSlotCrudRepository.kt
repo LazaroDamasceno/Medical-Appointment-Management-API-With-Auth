@@ -12,4 +12,10 @@ interface MedicalSlotCrudRepository: MongoRepository<MedicalSlot, String> {
 
     @Query("{ '_id': ?0, 'doctor._id': ?1 }")
     fun findByDoctorAndId(id: String, doctorId: String): MedicalSlot?
+
+    @Query("{ '_id': ?0, 'doctor._id': ?1, 'status': 'CANCELLED' }")
+    fun findCancelledByDoctorAndId(id: String, doctorId: String): MedicalSlot?
+
+    @Query("{ '_id': ?0, 'doctor._id': ?1, 'status': 'COMPLETED' }")
+    fun findCompletedByDoctorAndId(id: String, doctorId: String): MedicalSlot?
 }

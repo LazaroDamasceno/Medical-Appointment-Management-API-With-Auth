@@ -25,4 +25,14 @@ class MedicalSlot private constructor(
             return MedicalSlot(doctor, availableAt)
         }
     }
+
+    fun markAsCompleted() {
+        status = MedicalSlotStatus.COMPLETED
+        canceledAt = LocalDateTime.now()
+    }
+
+    fun markAsCancelled() {
+        status = MedicalSlotStatus.CANCELLED
+        completedAt = LocalDateTime.now()
+    }
 }
