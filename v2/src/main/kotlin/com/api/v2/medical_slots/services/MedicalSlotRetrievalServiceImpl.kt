@@ -3,11 +3,14 @@ package com.api.v2.medical_slots.services
 import com.api.v2.doctors.DoctorFinder
 import com.api.v2.medical_slots.InaccessibleMedicalSlotException
 import com.api.v2.medical_slots.MedicalSlot
+import com.api.v2.medical_slots.controllers.MedicalSlotController
 import com.api.v2.medical_slots.domain.MedicalSlotCrudRepository
 import com.api.v2.medical_slots.responses.MedicalSlotResponseDTO
 import com.api.v2.medical_slots.toDTO
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
@@ -32,6 +35,10 @@ class MedicalSlotRetrievalServiceImpl: MedicalSlotRetrievalService {
             throw InaccessibleMedicalSlotException(foundDoctor.licenseNumber)
         }
         val dto = foundSlot.toDTO()
+        dto.add(
+            linkTo(methodOn(MedicalSlotController::class.java).findById(doctorLicenseNumber, id))
+                .withSelfRel()
+        )
         return ResponseEntity.ok(dto)
     }
 
