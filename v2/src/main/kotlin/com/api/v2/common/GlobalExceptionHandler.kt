@@ -1,6 +1,7 @@
 package com.api.v2.common
 
 import com.api.v2.customers.CustomerNotFoundException
+import com.api.v2.medical_slots.MedicalSlotNotFoundException
 import com.api.v2.people.exceptions.DuplicatedEmailException
 import com.api.v2.people.exceptions.DuplicatedSINException
 import org.springframework.http.HttpStatus
@@ -28,6 +29,16 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomerNotFoundException::class)
     fun handleException(ex: CustomerNotFoundException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
+    }
+
+    @ExceptionHandler(DuplicatedBookingDateTimeException::class)
+    fun handleException(ex: DuplicatedBookingDateTimeException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(MedicalSlotNotFoundException::class)
+    fun handleException(ex: MedicalSlotNotFoundException): ResponseEntity<String?> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
     }
 }

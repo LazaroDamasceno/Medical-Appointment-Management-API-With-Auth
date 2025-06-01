@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
 import java.time.LocalDateTime
 
-interface MedicalSlotRepository: MongoRepository<MedicalSlot, String> {
+interface MedicalSlotCrudRepository: MongoRepository<MedicalSlot, String> {
 
     @Query("{ 'doctor': ?0, 'availableAt': ?1 }")
     fun findByDoctorAndAvailableAt(doctor: Doctor, availableAt: LocalDateTime): MedicalSlot?
