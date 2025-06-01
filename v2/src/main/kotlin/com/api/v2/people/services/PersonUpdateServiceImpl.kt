@@ -10,17 +10,10 @@ import jakarta.validation.constraints.NotNull
 import org.springframework.stereotype.Service
 
 @Service
-class PersonUpdateServiceImpl: PersonUpdateService {
-
-    private val auditTrailRepository: PersonAuditRepository
+class PersonUpdateServiceImpl(
+    private val auditTrailRepository: PersonAuditRepository,
     private val repository: PersonCrudRepository
-
-    constructor(auditTrailRepository: PersonAuditRepository,
-                repository: PersonCrudRepository
-    ) {
-        this.auditTrailRepository = auditTrailRepository
-        this.repository = repository
-    }
+) : PersonUpdateService {
 
     override fun update(
         person: @NotNull Person,

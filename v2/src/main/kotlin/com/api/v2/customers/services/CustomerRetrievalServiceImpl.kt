@@ -14,18 +14,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerRetrievalServiceImpl: CustomerRetrievalService {
-
-    private val crudRepository: CustomerCrudRepository
+class CustomerRetrievalServiceImpl(
+    private val crudRepository: CustomerCrudRepository,
     private val customerFinder: CustomerFinder
-
-    constructor(
-        crudRepository: CustomerCrudRepository,
-        customerFinder: CustomerFinder
-    ) {
-        this.crudRepository = crudRepository
-        this.customerFinder = customerFinder
-    }
+) : CustomerRetrievalService {
 
     override fun findById(id: String): ResponseEntity<CustomerResponseDTO> {
         val foundCustomer = customerFinder.findById(id)

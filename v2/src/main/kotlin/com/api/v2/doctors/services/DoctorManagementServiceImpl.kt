@@ -13,24 +13,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class DoctorManagementServiceImpl: DoctorManagementService {
-
-    private val crudRepository: DoctorCrudRepository
-    private val auditRepository: DoctorAuditRepository
-    private val personUpdateService: PersonUpdateService
+class DoctorManagementServiceImpl(
+    private val crudRepository: DoctorCrudRepository,
+    private val auditRepository: DoctorAuditRepository,
+    private val personUpdateService: PersonUpdateService,
     private val doctorFinder: DoctorFinder
-
-    constructor(
-        crudRepository: DoctorCrudRepository,
-        auditRepository: DoctorAuditRepository,
-        personUpdateService: PersonUpdateService,
-        doctorFinder: DoctorFinder
-    ) {
-        this.crudRepository = crudRepository
-        this.auditRepository = auditRepository
-        this.personUpdateService = personUpdateService
-        this.doctorFinder = doctorFinder
-    }
+) : DoctorManagementService {
 
     override fun terminate(licenseNumber: String): ResponseEntity<Void> {
         val foundDoctor = doctorFinder.findByLicenseNumber(licenseNumber)

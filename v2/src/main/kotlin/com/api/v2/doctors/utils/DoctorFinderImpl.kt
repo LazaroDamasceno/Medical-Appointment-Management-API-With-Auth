@@ -6,13 +6,7 @@ import com.api.v2.doctors.exceptions.DoctorNotFoundException
 import org.springframework.stereotype.Component
 
 @Component
-class DoctorFinderImpl: DoctorFinder {
-
-    private val crudRepository: DoctorCrudRepository
-
-    constructor(crudRepository: DoctorCrudRepository) {
-        this.crudRepository = crudRepository
-    }
+class DoctorFinderImpl(private val crudRepository: DoctorCrudRepository) : DoctorFinder {
 
     override fun findByLicenseNumber(licenseNumber: String): Doctor {
         val foundDoctor = crudRepository.findByLicenseNumber(licenseNumber)

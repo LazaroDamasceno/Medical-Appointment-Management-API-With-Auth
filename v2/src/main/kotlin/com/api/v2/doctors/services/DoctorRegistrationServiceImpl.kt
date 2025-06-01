@@ -16,15 +16,10 @@ import org.springframework.stereotype.Service
 import java.net.URI
 
 @Service
-class DoctorRegistrationServiceImpl: DoctorRegistrationService {
-
-    private val personRegistrationService: PersonRegistrationService
+class DoctorRegistrationServiceImpl(
+    private val personRegistrationService: PersonRegistrationService,
     private val crudRepository: DoctorCrudRepository
-
-    constructor(personRegistrationService: PersonRegistrationService, crudRepository: DoctorCrudRepository) {
-        this.personRegistrationService = personRegistrationService
-        this.crudRepository = crudRepository
-    }
+) : DoctorRegistrationService {
 
     override fun register(registrationDTO: @Valid DoctorRegistrationDTO): ResponseEntity<DoctorResponseDTO> {
         validate(registrationDTO)

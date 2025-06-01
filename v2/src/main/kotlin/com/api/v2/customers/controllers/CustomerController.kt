@@ -12,21 +12,11 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("api/v2/customers")
-class CustomerController {
-
-    private val registrationService: CustomerRegistrationService
-    private val updateService: CustomerUpdateService
+class CustomerController(
+    private val registrationService: CustomerRegistrationService,
+    private val updateService: CustomerUpdateService,
     private val retrievalService: CustomerRetrievalService
-
-    constructor(
-        registrationService: CustomerRegistrationService,
-        updateService: CustomerUpdateService,
-        retrievalService: CustomerRetrievalService
-    ) {
-        this.registrationService = registrationService
-        this.updateService = updateService
-        this.retrievalService = retrievalService
-    }
+) {
 
     @PostMapping
     fun register(@RequestBody registrationDTO: @Valid PersonRegistrationDTO): ResponseEntity<CustomerResponseDTO> {

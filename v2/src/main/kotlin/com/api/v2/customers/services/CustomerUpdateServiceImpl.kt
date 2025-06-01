@@ -12,29 +12,17 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 @Service
-class CustomerUpdateServiceImpl: CustomerUpdateService {
-
-    private val crudRepository: CustomerCrudRepository
-    private val auditRepository: CustomerAuditRepository
-    private val personUpdateService: PersonUpdateService
+class CustomerUpdateServiceImpl(
+    private val crudRepository: CustomerCrudRepository,
+    private val auditRepository: CustomerAuditRepository,
+    private val personUpdateService: PersonUpdateService,
     private val customerFinder: CustomerFinder
-
-    constructor(
-        crudRepository: CustomerCrudRepository,
-        auditRepository: CustomerAuditRepository,
-        personUpdateService: PersonUpdateService,
-        customerFinder: CustomerFinder
-    ) {
-        this.crudRepository = crudRepository
-        this.auditRepository = auditRepository
-        this.personUpdateService = personUpdateService
-        this.customerFinder = customerFinder
-    }
+) : CustomerUpdateService {
 
     override fun update(customerId: String, updateDTO: @Valid PersonUpdateDTO): ResponseEntity<Unit> {
         val foundCustomer = customerFinder.findById(customerId)
         val auditTrail = CustomerAuditTrail.of(foundCustomer)
-        val savedAuditTrail = auditRepository.save<CustomerAuditTrail>(auditTrail)
+        val  savedAuditTrail = auditRepository.save<CustomerAuditTrail>(auditTrail)
         val updatedPerson = personUpdateService.update(foundCustomer.person, updateDTO)
         foundCustomer.update(updatedPerson)
         val updatedCustomer = crudRepository.save<Customer>(foundCustomer)

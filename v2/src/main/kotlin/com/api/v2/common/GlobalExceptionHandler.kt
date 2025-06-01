@@ -47,16 +47,16 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(InaccessibleMedicalSlotException::class)
     fun handleException(ex: InaccessibleMedicalSlotException): ResponseEntity<String?> {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
     }
 
     @ExceptionHandler(CompletedMedicalSlotException::class)
     fun handleException(ex: CompletedMedicalSlotException): ResponseEntity<String?> {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
     }
 
     @ExceptionHandler(CancelledMedicalSlotException::class)
     fun handleException(ex: CancelledMedicalSlotException): ResponseEntity<String?> {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
     }
 }

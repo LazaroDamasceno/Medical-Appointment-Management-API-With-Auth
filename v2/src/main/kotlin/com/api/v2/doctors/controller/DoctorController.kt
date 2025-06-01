@@ -12,21 +12,11 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("api/v2/doctors")
-class DoctorController {
-
-    private val registrationService: DoctorRegistrationService
-    private val managementService: DoctorManagementService
+class DoctorController(
+    private val registrationService: DoctorRegistrationService,
+    private val managementService: DoctorManagementService,
     private val retrievalService: DoctorRetrievalService
-
-    constructor(
-        registrationService: DoctorRegistrationService,
-        managementService: DoctorManagementService,
-        retrievalService: DoctorRetrievalService
-    ) {
-        this.registrationService = registrationService
-        this.managementService = managementService
-        this.retrievalService = retrievalService
-    }
+) {
 
     @PostMapping
     fun register(
