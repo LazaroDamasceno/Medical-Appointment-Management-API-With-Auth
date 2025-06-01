@@ -1,6 +1,6 @@
 package com.api.v1.doctors.services;
 
-import com.api.v1.doctors.response.DoctorResponseDto;
+import com.api.v1.doctors.responses.DoctorResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

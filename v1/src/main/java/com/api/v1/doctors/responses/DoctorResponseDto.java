@@ -1,7 +1,7 @@
-package com.api.v1.doctors.response;
+package com.api.v1.doctors.responses;
 
-import com.api.v1.doctors.Doctor;
-import com.api.v1.people.FullNameFormatter;
+import com.api.v1.doctors.domain.Doctor;
+import com.api.v1.people.utils.FullNameFormatter;
 import org.springframework.hateoas.RepresentationModel;
 
 public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {

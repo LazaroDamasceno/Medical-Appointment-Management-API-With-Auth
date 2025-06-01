@@ -1,6 +1,6 @@
 package com.api.v1.customers.services;
 
-import com.api.v1.customers.response.CustomerResponseDTO;
+import com.api.v1.customers.responses.CustomerResponseDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

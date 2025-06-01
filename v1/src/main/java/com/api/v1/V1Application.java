@@ -8,7 +8,7 @@ import org.springframework.modulith.core.ApplicationModules;
 import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 
 @SpringBootApplication
-@EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
+//@EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class V1Application {
 
 	public static void main(String[] args) {

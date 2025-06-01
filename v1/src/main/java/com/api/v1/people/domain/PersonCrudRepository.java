@@ -1,6 +1,5 @@
 package com.api.v1.people.domain;
 
-import com.api.v1.people.Person;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

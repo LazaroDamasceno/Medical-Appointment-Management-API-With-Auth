@@ -1,4 +1,4 @@
-package com.api.v1.doctors;
+package com.api.v1.doctors.exceptions;
 
 public class TerminatedDoctorException extends RuntimeException {
     public TerminatedDoctorException(String licenseNumber) {

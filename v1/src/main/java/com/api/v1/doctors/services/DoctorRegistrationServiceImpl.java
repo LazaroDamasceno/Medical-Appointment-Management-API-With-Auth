@@ -2,11 +2,11 @@ package com.api.v1.doctors.services;
 
 import com.api.v1.common.DuplicatedLicenseNumberException;
 import com.api.v1.doctors.domain.DoctorCrudRepository;
-import com.api.v1.doctors.Doctor;
+import com.api.v1.doctors.domain.Doctor;
 import com.api.v1.doctors.requests.DoctorRegistrationDTO;
-import com.api.v1.doctors.response.DoctorResponseDto;
-import com.api.v1.people.Person;
-import com.api.v1.people.DuplicatedSINException;
+import com.api.v1.doctors.responses.DoctorResponseDto;
+import com.api.v1.people.domain.Person;
+import com.api.v1.people.exceptions.DuplicatedSINException;
 import com.api.v1.people.services.exposed.PersonRegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;

@@ -2,7 +2,7 @@ package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.doctors.requests.DoctorRegistrationDTO;
-import com.api.v1.doctors.response.DoctorResponseDto;
+import com.api.v1.doctors.responses.DoctorResponseDto;
 import com.api.v1.doctors.services.DoctorManagementService;
 import com.api.v1.doctors.services.DoctorRegistrationService;
 import com.api.v1.doctors.services.DoctorRetrievalService;

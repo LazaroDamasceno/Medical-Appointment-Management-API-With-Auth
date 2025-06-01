@@ -1,12 +1,12 @@
 package com.api.v1.customers.services;
 
 import com.api.v1.common.ObjectId;
-import com.api.v1.customers.Customer;
+import com.api.v1.customers.domain.Customer;
 import com.api.v1.customers.domain.CustomerAuditTrail;
 import com.api.v1.customers.domain.CustomerAuditRepository;
 import com.api.v1.customers.domain.CustomerCrudRepository;
-import com.api.v1.customers.CustomerFinder;
-import com.api.v1.people.Person;
+import com.api.v1.customers.utils.CustomerFinder;
+import com.api.v1.people.domain.Person;
 import com.api.v1.people.requests.PersonUpdateDTO;
 import com.api.v1.people.services.exposed.PersonUpdateService;
 import jakarta.validation.Valid;
