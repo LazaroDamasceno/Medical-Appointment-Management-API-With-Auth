@@ -2,8 +2,6 @@ package com.api.v1.people;
 
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
-import com.api.v1.people.requests.PersonRegistrationDTO;
-import com.api.v1.people.requests.PersonUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

@@ -3,8 +3,8 @@ package com.api.v2.doctors.services
 import com.api.v2.doctors.domain.DoctorAuditRepository
 import com.api.v2.doctors.domain.DoctorAuditTrail
 import com.api.v2.doctors.domain.DoctorCrudRepository
-import com.api.v2.doctors.ActiveDoctorException
-import com.api.v2.doctors.TerminatedDoctorException
+import com.api.v2.doctors.exceptions.ActiveDoctorException
+import com.api.v2.doctors.exceptions.TerminatedDoctorException
 import com.api.v2.doctors.DoctorFinder
 import com.api.v2.people.PersonUpdateDTO
 import com.api.v2.people.PersonUpdateService

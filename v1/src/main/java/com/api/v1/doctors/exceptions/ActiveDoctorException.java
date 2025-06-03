@@ -1,4 +1,4 @@
-package com.api.v1.doctors;
+package com.api.v1.doctors.exceptions;
 
 public class ActiveDoctorException extends RuntimeException {
     public ActiveDoctorException(String licenseNumber) {

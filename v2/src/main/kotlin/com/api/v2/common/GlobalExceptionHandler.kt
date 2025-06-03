@@ -1,11 +1,11 @@
 package com.api.v2.common
 
-import com.api.v2.customers.CustomerNotFoundException
-import com.api.v2.doctors.ActiveDoctorException
-import com.api.v2.doctors.DoctorNotFoundException
-import com.api.v2.doctors.TerminatedDoctorException
-import com.api.v2.people.DuplicatedEmailException
-import com.api.v2.people.DuplicatedSINException
+import com.api.v2.customers.exceptions.CustomerNotFoundException
+import com.api.v2.doctors.exceptions.ActiveDoctorException
+import com.api.v2.doctors.exceptions.DoctorNotFoundException
+import com.api.v2.doctors.exceptions.TerminatedDoctorException
+import com.api.v2.people.exceptions.DuplicatedEmailException
+import com.api.v2.people.exceptions.DuplicatedSINException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice

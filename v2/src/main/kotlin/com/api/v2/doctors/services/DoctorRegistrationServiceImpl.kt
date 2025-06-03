@@ -6,8 +6,8 @@ import com.api.v2.doctors.Doctor
 import com.api.v2.doctors.requests.DoctorRegistrationDTO
 import com.api.v2.doctors.DoctorResponseDTO
 import com.api.v2.doctors.toDTO
-import com.api.v2.people.DuplicatedEmailException
-import com.api.v2.people.DuplicatedSINException
+import com.api.v2.people.exceptions.DuplicatedEmailException
+import com.api.v2.people.exceptions.DuplicatedSINException
 import com.api.v2.people.PersonRegistrationService
 import jakarta.validation.Valid
 import org.springframework.http.MediaType

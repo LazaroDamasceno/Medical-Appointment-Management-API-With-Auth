@@ -2,7 +2,7 @@ package com.api.v1.people.services;
 
 import com.api.v1.people.Person;
 import com.api.v1.people.domain.PersonCrudRepository;
-import com.api.v1.people.requests.PersonRegistrationDTO;
+import com.api.v1.people.PersonRegistrationDTO;
 import com.api.v1.people.PersonRegistrationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;

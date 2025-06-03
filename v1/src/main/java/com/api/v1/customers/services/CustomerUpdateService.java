@@ -1,6 +1,6 @@
 package com.api.v1.customers.services;
 
-import com.api.v1.people.requests.PersonUpdateDTO;
+import com.api.v1.people.PersonUpdateDTO;
 import org.springframework.http.ResponseEntity;
 
 public interface CustomerUpdateService {

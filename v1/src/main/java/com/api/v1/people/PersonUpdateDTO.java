@@ -1,4 +1,4 @@
-package com.api.v1.people.requests;
+package com.api.v1.people;
 
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;

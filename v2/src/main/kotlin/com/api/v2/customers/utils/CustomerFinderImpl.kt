@@ -2,7 +2,7 @@ package com.api.v2.customers.utils
 
 import com.api.v2.customers.Customer
 import com.api.v2.customers.domain.CustomerCrudRepository
-import com.api.v2.customers.CustomerNotFoundException
+import com.api.v2.customers.exceptions.CustomerNotFoundException
 import com.api.v2.customers.CustomerFinder
 import org.springframework.stereotype.Component
 

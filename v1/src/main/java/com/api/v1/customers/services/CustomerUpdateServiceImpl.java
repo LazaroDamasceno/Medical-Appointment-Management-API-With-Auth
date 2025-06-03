@@ -7,7 +7,7 @@ import com.api.v1.customers.domain.CustomerAuditRepository;
 import com.api.v1.customers.domain.CustomerCrudRepository;
 import com.api.v1.customers.CustomerFinder;
 import com.api.v1.people.Person;
-import com.api.v1.people.requests.PersonUpdateDTO;
+import com.api.v1.people.PersonUpdateDTO;
 import com.api.v1.people.PersonUpdateService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

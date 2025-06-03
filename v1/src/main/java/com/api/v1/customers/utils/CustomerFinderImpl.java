@@ -4,7 +4,7 @@ import com.api.v1.common.*;
 import com.api.v1.customers.CustomerFinder;
 import com.api.v1.customers.Customer;
 import com.api.v1.customers.domain.CustomerCrudRepository;
-import com.api.v1.customers.CustomerNotFoundException;
+import com.api.v1.customers.exceptions.CustomerNotFoundException;
 import org.springframework.stereotype.Component;
 
 @Component
