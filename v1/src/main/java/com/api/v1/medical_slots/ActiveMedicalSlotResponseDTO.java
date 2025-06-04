@@ -7,13 +7,18 @@ import java.time.LocalDateTime;
 
 public final class ActiveMedicalSlotResponseDTO extends MedicalSlotResponseDTO {
 
-    private final MedicalSlotStatus status = MedicalSlotStatus.ACTIVE;
-
-    private ActiveMedicalSlotResponseDTO(DoctorResponseDTO doctor, LocalDateTime availableAt) {
-        super(doctor, availableAt);
+    private ActiveMedicalSlotResponseDTO(MedicalSlotStatus status,
+                                         DoctorResponseDTO doctor,
+                                         LocalDateTime availableAt
+    ) {
+        super(status, doctor, availableAt);
     }
 
     public static ActiveMedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
-        return new ActiveMedicalSlotResponseDTO(medicalSlot.toDTO().getDoctor(), medicalSlot.getAvailableAt());
+        return new ActiveMedicalSlotResponseDTO(
+                MedicalSlotStatus.ACTIVE,
+                medicalSlot.toDTO().getDoctor(),
+                medicalSlot.getAvailableAt()
+        );
     }
 }
