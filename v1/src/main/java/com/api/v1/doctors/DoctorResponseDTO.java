@@ -3,21 +3,21 @@ package com.api.v1.doctors;
 import com.api.v1.people.FullNameFormatter;
 import org.springframework.hateoas.RepresentationModel;
 
-public final class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
+public final class DoctorResponseDTO extends RepresentationModel<DoctorResponseDTO> {
 
     private String fullName;
     private String licenseNumber;
 
-    private DoctorResponseDto() {
+    private DoctorResponseDTO() {
     }
 
-    private DoctorResponseDto(String fullName, String licenseNumber) {
+    private DoctorResponseDTO(String fullName, String licenseNumber) {
         this.fullName = fullName;
         this.licenseNumber = licenseNumber;
     }
 
-    public static DoctorResponseDto from(Doctor doctor) {
-        return new DoctorResponseDto(
+    public static DoctorResponseDTO from(Doctor doctor) {
+        return new DoctorResponseDTO(
                 FullNameFormatter.format(doctor.getPerson()),
                 doctor.getLicenseNumber()
         );

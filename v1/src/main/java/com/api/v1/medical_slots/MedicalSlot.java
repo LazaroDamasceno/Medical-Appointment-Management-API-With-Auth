@@ -45,7 +45,13 @@ public class MedicalSlot {
     }
 
     public MedicalSlotResponseDTO toDTO() {
-        return MedicalSlotResponseDTO.from(this);
+        if (cancelledAt != null && completedAt == null) {
+            CancelledMedicalSlotResponseDTO.from(this);
+        }
+        else if (cancelledAt == null && completedAt != null) {
+            CompletedMedicalSlotResponseDTO.from(this);
+        }
+        return ActiveMedicalSlotResponseDTO.from(this);
     }
 
     public String getId() {

@@ -1,9 +1,9 @@
 package com.api.v1.doctors.services;
 
 import com.api.v1.doctors.DoctorRegistrationDTO;
-import com.api.v1.doctors.DoctorResponseDto;
+import com.api.v1.doctors.DoctorResponseDTO;
 import org.springframework.http.ResponseEntity;
 
 public interface DoctorRegistrationService {
-    ResponseEntity<DoctorResponseDto> register(DoctorRegistrationDTO registrationDTO);
+    ResponseEntity<DoctorResponseDTO> register(DoctorRegistrationDTO registrationDTO);
 }

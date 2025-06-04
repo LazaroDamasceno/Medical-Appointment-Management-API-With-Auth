@@ -4,7 +4,7 @@ import com.api.v1.common.DuplicatedLicenseNumberException;
 import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.Doctor;
 import com.api.v1.doctors.DoctorRegistrationDTO;
-import com.api.v1.doctors.DoctorResponseDto;
+import com.api.v1.doctors.DoctorResponseDTO;
 import com.api.v1.people.Person;
 import com.api.v1.people.exceptions.DuplicatedSINException;
 import com.api.v1.people.PersonRegistrationService;
@@ -29,12 +29,12 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
     }
 
     @Override
-    public ResponseEntity<DoctorResponseDto> register(@Valid DoctorRegistrationDTO registrationDTO) {
+    public ResponseEntity<DoctorResponseDTO> register(@Valid DoctorRegistrationDTO registrationDTO) {
         validate(registrationDTO);
         Person savedPerson = personRegistrationService.register(registrationDTO.person());
         Doctor newDoctor = Doctor.of(savedPerson, registrationDTO.licenseNumber());
         Doctor savedDoctor = repository.save(newDoctor);
-        DoctorResponseDto responseDto = savedDoctor.toDto();
+        DoctorResponseDTO responseDto = savedDoctor.toDto();
         return ResponseEntity
                 .created(URI.create("/api/v1/doctors"))
                 .contentType(MediaType.APPLICATION_JSON)

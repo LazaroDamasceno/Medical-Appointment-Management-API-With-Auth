@@ -1,26 +1,26 @@
 package com.api.v1.medical_slots;
 
-import com.api.v1.doctors.DoctorResponseDto;
+import com.api.v1.doctors.DoctorResponseDTO;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
-public final class MedicalSlotResponseDTO {
+public sealed class MedicalSlotResponseDTO
+        extends RepresentationModel<MedicalSlotResponseDTO>
+        permits ActiveMedicalSlotResponseDTO, CancelledMedicalSlotResponseDTO, CompletedMedicalSlotResponseDTO
+{
 
-    private DoctorResponseDto doctor;
+    private DoctorResponseDTO doctor;
     private LocalDateTime availableAt;
 
-    private MedicalSlotResponseDTO() {}
+    protected MedicalSlotResponseDTO() {}
 
-    private MedicalSlotResponseDTO(DoctorResponseDto doctor, LocalDateTime availableAt) {
+    protected MedicalSlotResponseDTO(DoctorResponseDTO doctor, LocalDateTime availableAt) {
         this.doctor = doctor;
         this.availableAt = availableAt;
     }
 
-    public static MedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
-        return new MedicalSlotResponseDTO(medicalSlot.getDoctor().toDto(), medicalSlot.getAvailableAt());
-    }
-
-    public DoctorResponseDto getDoctor() {
+    public DoctorResponseDTO getDoctor() {
         return doctor;
     }
 

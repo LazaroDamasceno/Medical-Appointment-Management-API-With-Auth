@@ -2,7 +2,7 @@ package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.doctors.DoctorRegistrationDTO;
-import com.api.v1.doctors.DoctorResponseDto;
+import com.api.v1.doctors.DoctorResponseDTO;
 import com.api.v1.doctors.services.DoctorManagementService;
 import com.api.v1.doctors.services.DoctorRegistrationService;
 import com.api.v1.doctors.services.DoctorRetrievalService;
@@ -41,17 +41,17 @@ public class DoctorController {
     }
 
     @PostMapping
-    public ResponseEntity<DoctorResponseDto> register(@RequestBody @Valid DoctorRegistrationDTO registrationDto) {
+    public ResponseEntity<DoctorResponseDTO> register(@RequestBody @Valid DoctorRegistrationDTO registrationDto) {
         return registrationService.register(registrationDto);
     }
 
     @GetMapping("/{licenseNumber}")
-    public ResponseEntity<DoctorResponseDto> findByLicenseNumber(@PathVariable @LicenseNumber String licenseNumber) {
+    public ResponseEntity<DoctorResponseDTO> findByLicenseNumber(@PathVariable @LicenseNumber String licenseNumber) {
         return retrievalService.findByLicenseNumber(licenseNumber);
     }
 
     @GetMapping
-    public ResponseEntity<Page<DoctorResponseDto>> findAll(@RequestBody Pageable pageable) {
+    public ResponseEntity<Page<DoctorResponseDTO>> findAll(@RequestBody Pageable pageable) {
         return retrievalService.findAll(pageable);
     }
 

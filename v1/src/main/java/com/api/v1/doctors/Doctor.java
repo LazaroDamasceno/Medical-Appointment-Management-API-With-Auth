@@ -56,8 +56,8 @@ public class Doctor {
         this.status = ProfessionalStatus.ACTIVE;
     }
 
-    public DoctorResponseDto toDto() {
-        return DoctorResponseDto.from(this);
+    public DoctorResponseDTO toDto() {
+        return DoctorResponseDTO.from(this);
     }
 
     public String getId() {
