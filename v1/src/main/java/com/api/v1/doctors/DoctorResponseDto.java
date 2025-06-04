@@ -3,7 +3,7 @@ package com.api.v1.doctors;
 import com.api.v1.people.FullNameFormatter;
 import org.springframework.hateoas.RepresentationModel;
 
-public class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
+public final class DoctorResponseDto extends RepresentationModel<DoctorResponseDto> {
 
     private String fullName;
     private String licenseNumber;

@@ -43,4 +43,36 @@ public class MedicalSlot {
         this.status = MedicalSlotStatus.COMPLETED;
         this.completedAt = LocalDateTime.now();
     }
+
+    public MedicalSlotResponseDTO toDTO() {
+        return MedicalSlotResponseDTO.from(this);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public MedicalSlotStatus getStatus() {
+        return status;
+    }
+
+    public LocalDateTime getAvailableAt() {
+        return availableAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getCancelledAt() {
+        return cancelledAt;
+    }
+
+    public LocalDateTime getCompletedAt() {
+        return completedAt;
+    }
 }
