@@ -47,10 +47,10 @@ public class MedicalSlot {
     }
 
     public MedicalSlotResponseDTO toDTO() {
-        if (cancelledAt != null && completedAt == null) {
+        if (status.equals(MedicalSlotStatus.CANCELLED)) {
             CancelledMedicalSlotResponseDTO.from(this);
         }
-        else if (cancelledAt == null && completedAt != null) {
+        else if (status.equals(MedicalSlotStatus.COMPLETED)) {
             CompletedMedicalSlotResponseDTO.from(this);
         }
         return MedicalSlotResponseDTO.from(this);
