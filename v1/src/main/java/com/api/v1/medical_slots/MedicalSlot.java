@@ -3,6 +3,7 @@ package com.api.v1.medical_slots;
 import com.api.v1.doctors.Doctor;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.UUID;
 public class MedicalSlot {
 
     @Id
+    @Indexed(unique = true)
     private String id;
     private Doctor doctor;
     private MedicalSlotStatus status;
