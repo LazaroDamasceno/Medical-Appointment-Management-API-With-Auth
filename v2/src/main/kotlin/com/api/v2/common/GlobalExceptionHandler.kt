@@ -4,6 +4,7 @@ import com.api.v2.customers.exceptions.CustomerNotFoundException
 import com.api.v2.doctors.exceptions.ActiveDoctorException
 import com.api.v2.doctors.exceptions.DoctorNotFoundException
 import com.api.v2.doctors.exceptions.TerminatedDoctorException
+import com.api.v2.medical_slots.exceptions.MedicalSlotNotFoundException
 import com.api.v2.people.exceptions.DuplicatedEmailException
 import com.api.v2.people.exceptions.DuplicatedSINException
 import org.springframework.http.HttpStatus
@@ -53,4 +54,10 @@ class GlobalExceptionHandler {
     fun handleException(ex: ActiveDoctorException): ResponseEntity<String?> {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
     }
+
+    @ExceptionHandler(MedicalSlotNotFoundException::class)
+    fun handleException(ex: MedicalSlotNotFoundException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+    //
 }

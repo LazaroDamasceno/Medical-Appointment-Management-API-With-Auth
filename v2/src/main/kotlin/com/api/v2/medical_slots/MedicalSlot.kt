@@ -1,6 +1,7 @@
 package com.api.v2.medical_slots
 
 import com.api.v2.doctors.Doctor
+import com.api.v2.medical_slots.enums.MedicalSlotStatus
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
