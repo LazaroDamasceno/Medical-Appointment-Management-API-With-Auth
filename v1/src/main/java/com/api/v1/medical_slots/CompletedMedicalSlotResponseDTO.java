@@ -9,20 +9,24 @@ public final class CompletedMedicalSlotResponseDTO extends MedicalSlotResponseDT
 
     private final LocalDateTime completedAt;
 
-    public CompletedMedicalSlotResponseDTO(MedicalSlotStatus status,
+    private CompletedMedicalSlotResponseDTO(String id,
+                                           MedicalSlotStatus status,
                                            DoctorResponseDTO doctor,
                                            LocalDateTime availableAt,
+                                           LocalDateTime createdAt,
                                            LocalDateTime completedAt
     ) {
-        super(status, doctor, availableAt);
+        super(id, status, doctor, availableAt, createdAt);
         this.completedAt = completedAt;
     }
 
     public static CompletedMedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
         return new CompletedMedicalSlotResponseDTO(
+                medicalSlot.getId(),
                 MedicalSlotStatus.COMPLETED,
                 medicalSlot.toDTO().getDoctor(),
                 medicalSlot.getAvailableAt(),
+                medicalSlot.getCreatedAt(),
                 medicalSlot.getCompletedAt()
         );
     }

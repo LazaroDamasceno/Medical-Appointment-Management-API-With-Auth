@@ -9,19 +9,24 @@ public final class CancelledMedicalSlotResponseDTO extends MedicalSlotResponseDT
 
     private final LocalDateTime cancelledAt;
 
-    public CancelledMedicalSlotResponseDTO(MedicalSlotStatus status,
+    private CancelledMedicalSlotResponseDTO(String id,
+                                           MedicalSlotStatus status,
                                            DoctorResponseDTO doctor,
                                            LocalDateTime availableAt,
-                                           LocalDateTime cancelledAt) {
-        super(status, doctor, availableAt);
+                                           LocalDateTime createdAt,
+                                           LocalDateTime cancelledAt
+    ) {
+        super(id, status, doctor, availableAt, createdAt);
         this.cancelledAt = cancelledAt;
     }
 
     public static CancelledMedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
         return new CancelledMedicalSlotResponseDTO(
+                medicalSlot.getId(),
                 MedicalSlotStatus.CANCELLED,
                 medicalSlot.toDTO().getDoctor(),
                 medicalSlot.getAvailableAt(),
+                medicalSlot.getCreatedAt(),
                 medicalSlot.getCancelledAt()
         );
     }

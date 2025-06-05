@@ -1,11 +1,16 @@
 package com.api.v1.medical_slots.utils;
 
 import com.api.v1.common.ObjectId;
+import com.api.v1.doctors.Doctor;
 import com.api.v1.medical_slots.MedicalSlot;
 import com.api.v1.medical_slots.MedicalSlotFinder;
 import com.api.v1.medical_slots.domain.MedicalSlotCrudRepository;
+import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.MedicalSlotNotFoundException;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public final class MedicalSlotFinderImpl implements MedicalSlotFinder {
@@ -21,5 +26,14 @@ public final class MedicalSlotFinderImpl implements MedicalSlotFinder {
         return crudRepository
                 .findById(id)
                 .orElseThrow(() -> new MedicalSlotNotFoundException(id));
+    }
+
+    @Override
+    public MedicalSlot findByIdAndDoctor(@ObjectId String id, @NotNull Doctor doctor) {
+        Optional<MedicalSlot> foundSlot = crudRepository.findByDoctorAndId(id, doctor.getId());
+        if (foundSlot.isEmpty()) {
+            throw new InaccessibleMedicalSlotException(id, doctor.getLicenseNumber());
+        }
+        return foundSlot.get();
     }
 }

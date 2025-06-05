@@ -51,7 +51,7 @@ public class MedicalSlot {
         else if (cancelledAt == null && completedAt != null) {
             CompletedMedicalSlotResponseDTO.from(this);
         }
-        return ActiveMedicalSlotResponseDTO.from(this);
+        return MedicalSlotResponseDTO.from(this);
     }
 
     public String getId() {
