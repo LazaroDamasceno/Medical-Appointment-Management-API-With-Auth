@@ -24,6 +24,7 @@ fun MedicalSlot.toDTO(): MedicalSlotResponseDTO {
     }
     return MedicalSlotResponseDTO(
         this.id,
+        MedicalSlotStatus.ACTIVE,
         this.doctor.toDTO(),
         this.availableAt,
         this.createdAt
