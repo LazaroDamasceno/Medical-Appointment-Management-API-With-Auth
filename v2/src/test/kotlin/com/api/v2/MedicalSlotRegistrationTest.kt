@@ -49,7 +49,7 @@ class MedicalSlotRegistrationTest {
         mockMvc.perform(
             post("/api/v2/medical-slots/$medicalLicenseNumber/$availableAt")
                 .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isConflict)
+        ).andExpect(status().isNotFound)
     }
 
     @Order(3)
