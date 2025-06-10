@@ -1,6 +1,5 @@
 package com.api.v2
 
-import com.api.v2.doctors.requests.DoctorRegistrationDTO
 import com.api.v2.people.dtos.Address
 import com.api.v2.people.enums.Gender
 import com.api.v2.people.PersonRegistrationDTO
@@ -30,30 +29,29 @@ class DoctorRegistrationTest {
     @Autowired
     lateinit var objectMapper: ObjectMapper
 
-    val doctorDTO = DoctorRegistrationDTO(
+    val licenseNumber = UUID
+        .randomUUID()
+        .toString()
+        .replace("-", "")
+        .substring(0, 10)
+
+    val personDTO = PersonRegistrationDTO(
+        "Wilson",
+        "",
+        "Wisconsin",
+        LocalDate.of(2000,12,12),
         UUID
             .randomUUID()
             .toString()
             .replace("-", "")
             .substring(0, 10),
-        PersonRegistrationDTO(
-            "Wilson",
-            "",
-            "Wisconsin",
-            LocalDate.of(2000,12,12),
-            UUID
-                .randomUUID()
-                .toString()
-                .replace("-", "")
-                .substring(0, 10),
-            "wilsonwisconsin@mail.com",
-            "1234567890",
-            Gender.MALE,
-            Address(
-                "Downtown",
-                "LA",
-                "90012"
-            )
+        "wilsonwisconsin@mail.com",
+        "1234567890",
+        Gender.MALE,
+        Address(
+            "Downtown",
+            "LA",
+            "90012"
         )
     )
 
@@ -61,9 +59,9 @@ class DoctorRegistrationTest {
      @Order(1)
      fun `should return created when successful`() {
          mockMvc.perform(
-             post("/api/v2/doctors")
+             post("/api/v2/doctors/$licenseNumber")
                  .contentType(MediaType.APPLICATION_JSON)
-                 .content(objectMapper.writeValueAsString(doctorDTO))
+                 .content(objectMapper.writeValueAsString(personDTO))
          ).andExpect(status().isCreated)
      }
 
@@ -71,81 +69,77 @@ class DoctorRegistrationTest {
     @Order(2)
     fun `should return conflict when medical license number is duplicated`() {
         mockMvc.perform(
-            post("/api/v2/doctors")
+            post("/api/v2/doctors/$licenseNumber")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(doctorDTO))
+                .content(objectMapper.writeValueAsString(personDTO))
         ).andExpect(status().isConflict)
     }
 
-    val duplicatedSIN = DoctorRegistrationDTO(
+    val duplicatedSIN = PersonRegistrationDTO(
+        "Wilson",
+        "",
+        "Wisconsin",
+        LocalDate.of(2000,12,12),
         UUID
             .randomUUID()
             .toString()
             .replace("-", "")
             .substring(0, 10),
-        PersonRegistrationDTO(
-            "Wilson",
-            "",
-            "Wisconsin",
-            LocalDate.of(2000,12,12),
-            UUID
-                .randomUUID()
-                .toString()
-                .replace("-", "")
-                .substring(0, 10),
-            "wilsonwisconsin@mail.com",
-            "1234567890",
-            Gender.MALE,
-            Address(
-                "Downtown",
-                "LA",
-                "90012"
-            )
+        "wilsonwisconsin@mail.com",
+        "1234567890",
+        Gender.MALE,
+        Address(
+            "Downtown",
+            "LA",
+            "90012"
         )
     )
 
     @Test
     @Order(3)
     fun `should return conflict when SIN is duplicated`() {
+        val randomLicenseNumber = UUID
+            .randomUUID()
+            .toString()
+            .replace("-", "")
+            .substring(0, 10)
         mockMvc.perform(
-            post("/api/v2/doctors")
+            post("/api/v2/doctors/$randomLicenseNumber")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(duplicatedSIN))
         ).andExpect(status().isConflict)
     }
 
-    val duplicatedEmail = DoctorRegistrationDTO(
+    val duplicatedEmail = PersonRegistrationDTO(
+        "Wilson",
+        "",
+        "Wisconsin",
+        LocalDate.of(2000,12,12),
         UUID
             .randomUUID()
             .toString()
             .replace("-", "")
             .substring(0, 10),
-        PersonRegistrationDTO(
-            "Wilson",
-            "",
-            "Wisconsin",
-            LocalDate.of(2000,12,12),
-            UUID
-                .randomUUID()
-                .toString()
-                .replace("-", "")
-                .substring(0, 10),
-            "wilsonwisconsin@mail.com",
-            "1234567890",
-            Gender.MALE,
-            Address(
-                "Downtown",
-                "LA",
-                "90012"
-            )
+        "wilsonwisconsin@mail.com",
+        "1234567890",
+        Gender.MALE,
+        Address(
+            "Downtown",
+            "LA",
+            "90012"
         )
     )
 
     @Test
     @Order(4)
     fun `should return conflict when email is duplicated`() {
+        val randomLicenseNumber = UUID
+            .randomUUID()
+            .toString()
+            .replace("-", "")
+            .substring(0, 10)
         mockMvc.perform(
-            post("/api/v2/doctors")
+            post("/api/v2/doctors/$randomLicenseNumber")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(duplicatedEmail))
         ).andExpect(status().isConflict)
