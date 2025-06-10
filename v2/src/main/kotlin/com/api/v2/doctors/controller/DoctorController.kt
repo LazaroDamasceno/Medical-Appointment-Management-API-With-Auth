@@ -1,8 +1,8 @@
 package com.api.v2.doctors.controller
 
-import com.api.v2.doctors.requests.DoctorRegistrationDTO
 import com.api.v2.doctors.DoctorResponseDTO
 import com.api.v2.doctors.services.*
+import com.api.v2.people.PersonRegistrationDTO
 import com.api.v2.people.PersonUpdateDTO
 import jakarta.validation.Valid
 import org.springframework.data.domain.Page
@@ -18,11 +18,12 @@ class DoctorController(
     private val retrievalService: DoctorRetrievalService
 ) {
 
-    @PostMapping
+    @PostMapping("{licenseNumber}")
     fun register(
-        @RequestBody registrationDTO: @Valid DoctorRegistrationDTO
+        @PathVariable licenseNumber: String,
+        @RequestBody registrationDTO: @Valid PersonRegistrationDTO
     ): ResponseEntity<DoctorResponseDTO> {
-        return registrationService.register(registrationDTO)
+        return registrationService.register(licenseNumber, registrationDTO)
     }
 
     @PatchMapping("{licenseNumber}/termination")

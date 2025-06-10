@@ -3,9 +3,9 @@ package com.api.v2.doctors.services
 import com.api.v2.common.DuplicatedLicenseNumberException
 import com.api.v2.doctors.domain.DoctorCrudRepository
 import com.api.v2.doctors.Doctor
-import com.api.v2.doctors.requests.DoctorRegistrationDTO
 import com.api.v2.doctors.DoctorResponseDTO
 import com.api.v2.doctors.toDTO
+import com.api.v2.people.PersonRegistrationDTO
 import com.api.v2.people.exceptions.DuplicatedEmailException
 import com.api.v2.people.exceptions.DuplicatedSINException
 import com.api.v2.people.PersonRegistrationService
@@ -21,10 +21,13 @@ class DoctorRegistrationServiceImpl(
     val crudRepository: DoctorCrudRepository
 ) : DoctorRegistrationService {
 
-    override fun register(registrationDTO: @Valid DoctorRegistrationDTO): ResponseEntity<DoctorResponseDTO> {
-        validate(registrationDTO)
-        val savedPerson = personRegistrationService.register(registrationDTO.person)
-        val newDoctor = Doctor.of(registrationDTO.licenseNumber, savedPerson)
+    override fun register(
+        licenseNumber: String,
+        personDTO: @Valid PersonRegistrationDTO
+    ): ResponseEntity<DoctorResponseDTO> {
+        validate(licenseNumber, personDTO)
+        val savedPerson = personRegistrationService.register(personDTO)
+        val newDoctor = Doctor.of(licenseNumber, savedPerson)
         val savedDoctor = crudRepository.save(newDoctor)
         val dto = savedDoctor.toDTO()
         return ResponseEntity
@@ -33,14 +36,14 @@ class DoctorRegistrationServiceImpl(
             .body(dto)
     }
 
-    fun validate(registrationDTO: DoctorRegistrationDTO) {
-        if (crudRepository.findByLicenseNumber(registrationDTO.licenseNumber) != null) {
+    fun validate(licenseNumber: String, personDTO: PersonRegistrationDTO) {
+        if (crudRepository.findByLicenseNumber(licenseNumber) != null) {
             throw DuplicatedLicenseNumberException()
         }
-        if (crudRepository.findBySIN(registrationDTO.person.sin) != null) {
+        if (crudRepository.findBySIN(personDTO.sin) != null) {
             throw DuplicatedSINException()
         }
-        if (crudRepository.findByEmail(registrationDTO.person.email) != null) {
+        if (crudRepository.findByEmail(personDTO.email) != null) {
             throw DuplicatedEmailException()
         }
     }
