@@ -10,28 +10,28 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Document(collection = "People")
-class Person private constructor(
-    var firstName: String,
-    var middleName: String?,
-    var lastName: String,
-    var birthDate: LocalDate,
-    @Indexed(unique = true)
-    var sin: String,
-    @Indexed(unique = true)
-    var email: String,
-    var phoneNumber: String,
-    var gender: Gender,
-    var address: Address
-){
-
+data class Person(
     @Id
-    var id = UUID.randomUUID().toString();
-    val createdAt: LocalDateTime = LocalDateTime.now()
-    var updatedAt: LocalDateTime? = null
+    val id: String,
+    val firstName: String,
+    val middleName: String?,
+    val lastName: String,
+    val birthDate: LocalDate,
+    @Indexed(unique = true)
+    val sin: String,
+    @Indexed(unique = true)
+    val email: String,
+    val phoneNumber: String,
+    val gender: Gender,
+    val address: Address,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime?
+) {
 
     companion object {
         fun of(registrationDto: PersonRegistrationDTO): Person {
             return Person(
+                UUID.randomUUID().toString(),
                 registrationDto.firstName,
                 registrationDto.middleName,
                 registrationDto.lastName,
@@ -40,20 +40,27 @@ class Person private constructor(
                 registrationDto.email,
                 registrationDto.phoneNumber,
                 registrationDto.gender,
-                registrationDto.address
+                registrationDto.address,
+                LocalDateTime.now(),
+                null
             )
         }
     }
 
-    fun update(updatingDTO: PersonUpdateDTO) {
-        firstName = updatingDTO.firstName
-        middleName = updatingDTO.middleName
-        lastName = updatingDTO.lastName
-        birthDate = updatingDTO.birthDate
-        email = updatingDTO.email
-        phoneNumber = updatingDTO.phoneNumber
-        gender = updatingDTO.gender
-        address = updatingDTO.address
-        updatedAt = LocalDateTime.now()
+    fun update(updatingDTO: PersonUpdateDTO): Person {
+        return Person(
+            this.id,
+            updatingDTO.firstName,
+            updatingDTO.middleName,
+            updatingDTO.lastName,
+            updatingDTO.birthDate,
+            this.sin,
+            updatingDTO.email,
+            updatingDTO.phoneNumber,
+            updatingDTO.gender,
+            updatingDTO.address,
+            this.createdAt,
+            LocalDateTime.now()
+        )
     }
 }

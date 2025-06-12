@@ -22,7 +22,7 @@ class PersonUpdateServiceImpl(
     ): Person {
         val auditTrail = PersonAuditTrail.of(person)
         val savedAuditTrail = auditTrailRepository.save(auditTrail)
-        person.update(updatingDTO)
-        return repository.save(person)
+        val updatedPerson = person.update(updatingDTO)
+        return repository.save(updatedPerson)
     }
 }

@@ -9,38 +9,66 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Document(collection = "Doctors")
-class Doctor private constructor(
-    @Indexed(unique = true)
-    var licenseNumber: String,
-    var person: Person
-) {
-
+data class Doctor(
     @Id
-    var id: String = UUID.randomUUID().toString()
-    var status: ProfessionalStatus = ProfessionalStatus.ACTIVE
-    val createdAt: LocalDateTime = LocalDateTime.now()
-    var updatedAt: LocalDateTime? = null
-    var terminatedAt: LocalDateTime? = null
+    val id: String,
+    @Indexed(unique = true)
+    val licenseNumber: String,
+    val person: Person,
+    val status: ProfessionalStatus,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime?,
+    val terminatedAt: LocalDateTime?
+) {
 
     companion object {
         fun of(licenseNumber: String, person: Person): Doctor {
-            return Doctor(licenseNumber, person)
+            return Doctor(
+                UUID.randomUUID().toString(),
+                licenseNumber,
+                person,
+                ProfessionalStatus.ACTIVE,
+                LocalDateTime.now(),
+                null,
+                null
+            )
         }
     }
 
-    fun markAsTerminated() {
-        status = ProfessionalStatus.TERMINATED
-        terminatedAt = LocalDateTime.now()
+    fun markAsTerminated(): Doctor {
+        return Doctor(
+            this.id,
+            this.licenseNumber,
+            this.person,
+            ProfessionalStatus.TERMINATED,
+            this.createdAt,
+            this.updatedAt,
+            LocalDateTime.now()
+        )
     }
 
-    fun markAsRehired() {
-        status = ProfessionalStatus.ACTIVE
-        terminatedAt = null
+    fun markAsRehired(): Doctor {
+        return Doctor(
+            this.id,
+            this.licenseNumber,
+            this.person,
+            ProfessionalStatus.ACTIVE,
+            this.createdAt,
+            this.updatedAt,
+            null
+        )
     }
 
-    fun update(person: Person) {
-        this.person = person
-        this.updatedAt = LocalDateTime.now()
+    fun update(person: Person): Doctor {
+        return Doctor(
+            this.id,
+            this.licenseNumber,
+            person,
+            this.status,
+            this.createdAt,
+            LocalDateTime.now(),
+            this.updatedAt
+        )
     }
 
 

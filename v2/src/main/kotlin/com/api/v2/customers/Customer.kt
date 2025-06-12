@@ -8,24 +8,32 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Document(collection = "People")
-class Customer private constructor(
-    var person: Person
-) {
-
+data class Customer(
     @Id
     @Indexed(unique = true)
-    var id = UUID.randomUUID().toString();
-    val createdAt: LocalDateTime = LocalDateTime.now()
-    var updatedAt: LocalDateTime? = null
+    val id: String,
+    val person: Person,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime?
+) {
 
     companion object {
         fun update(person: Person): Customer {
-            return Customer(person)
+            return Customer(
+                UUID.randomUUID().toString(),
+                person,
+                LocalDateTime.now(),
+                null
+            )
         }
     }
 
-    fun update(person: Person) {
-        this.person = person
-        this.updatedAt = LocalDateTime.now()
+    fun update(person: Person): Customer {
+        return Customer(
+            this.id,
+            person,
+            this.createdAt,
+            LocalDateTime.now()
+        )
     }
 }
