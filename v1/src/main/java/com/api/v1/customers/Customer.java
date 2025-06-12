@@ -9,49 +9,34 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document(collection = "Customers")
-public class Customer {
-
-    @Id
-    @Indexed(unique = true)
-    private String id;
-    private Person person;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    private Customer() {}
-
-    private Customer(Person person) {
-        this.id = UUID.randomUUID().toString();
-        this.person = person;
-        this.createdAt = LocalDateTime.now();
-    }
+public record Customer(
+        @Id
+        @Indexed(unique = true)
+        String id,
+        Person person,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+) {
 
     public static Customer of(Person person) {
-        return new Customer(person);
+        return new Customer(
+                UUID.randomUUID().toString(),
+                person,
+                LocalDateTime.now(),
+                null
+        );
     }
 
-    public void update(Person person) {
-        this.person = person;
-        this.updatedAt = LocalDateTime.now();
+    public Customer update(Person person) {
+        return new Customer(
+                this.id,
+                person,
+                this.createdAt,
+                LocalDateTime.now()
+        );
     }
 
     public CustomerResponseDTO toDto() {
         return CustomerResponseDTO.from(this);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
     }
 }

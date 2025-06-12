@@ -12,101 +12,55 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document(collection = "People")
-public class Person {
-
-    @Id
-    private String id;
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    @Indexed(unique = true)
-    private String sin;
-    private LocalDate birthDate;
-    @Indexed(unique = true)
-    private String email;
-    private Gender gender;
-    private Address address;
-    private String phoneNumber;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    private Person() {}
-
-    private Person(@Valid PersonRegistrationDTO registrationDto) {
-        this.id = UUID.randomUUID().toString();
-        this.firstName = registrationDto.firstName();
-        this.middleName = registrationDto.middleName();
-        this.lastName = registrationDto.lastName();
-        this.sin = registrationDto.sin();
-        this.birthDate = registrationDto.birthDate();
-        this.email = registrationDto.email();
-        this.gender = registrationDto.gender();
-        this.address = registrationDto.address();
-        this.phoneNumber = registrationDto.phoneNumber();
-        this.createdAt = LocalDateTime.now();
-    }
+public record Person(
+        @Id
+        String id,
+        String firstName,
+        String middleName,
+        String lastName,
+        @Indexed(unique = true)
+        String sin,
+        LocalDate birthDate,
+        @Indexed(unique = true)
+        String email,
+        Gender gender,
+        Address address,
+        String phoneNumber,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+) {
 
     public static Person of(@Valid PersonRegistrationDTO registrationDto) {
-        return new Person(registrationDto);
+        return new Person(
+                UUID.randomUUID().toString(),
+                registrationDto.firstName(),
+                registrationDto.middleName(),
+                registrationDto.lastName(),
+                registrationDto.sin(),
+                registrationDto.birthDate(),
+                registrationDto.email(),
+                registrationDto.gender(),
+                registrationDto.address(),
+                registrationDto.phoneNumber(),
+                LocalDateTime.now(),
+                null
+        );
     }
 
-    public void update(@Valid PersonUpdateDTO updatingDto) {
-        this.firstName = updatingDto.firstName();
-        this.middleName = updatingDto.middleName();
-        this.lastName = updatingDto.lastName();
-        this.birthDate = updatingDto.birthDate();
-        this.email = updatingDto.email();
-        this.gender = updatingDto.gender();
-        this.address = updatingDto.address();
-        this.phoneNumber = updatingDto.phoneNumber();
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getSin() {
-        return sin;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public Person update(@Valid PersonUpdateDTO updatingDto) {
+        return new Person(
+                this.id,
+                updatingDto.firstName(),
+                updatingDto.middleName(),
+                updatingDto.lastName(),
+                this.sin,
+                updatingDto.birthDate(),
+                updatingDto.email(),
+                updatingDto.gender(),
+                updatingDto.address(),
+                updatingDto.phoneNumber(),
+                this.createdAt,
+                LocalDateTime.now()
+        );
     }
 }

@@ -34,7 +34,7 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
         Person savedPerson = personRegistrationService.register(registrationDTO.person());
         Doctor newDoctor = Doctor.of(savedPerson, registrationDTO.licenseNumber());
         Doctor savedDoctor = repository.save(newDoctor);
-        DoctorResponseDTO responseDto = savedDoctor.toDto();
+        DoctorResponseDTO responseDto = savedDoctor.toDTO();
         return ResponseEntity
                 .created(URI.create("/api/v1/doctors"))
                 .contentType(MediaType.APPLICATION_JSON)

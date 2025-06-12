@@ -51,7 +51,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
                                                                         Pageable pageable
     ) {
         Doctor foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber);
-        var all = crudRepository.findAllByDoctor(foundDoctor.getId(), pageable).map(MedicalSlot::toDTO);
+        var all = crudRepository.findAllByDoctor(foundDoctor.id(), pageable).map(MedicalSlot::toDTO);
         return ResponseEntity.ok(all);
     }
 

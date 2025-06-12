@@ -6,12 +6,12 @@ public final class FullNameFormatter {
     }
 
     public static String format(Person person) {
-        String firstName = person.getFirstName();
-        String lastName = person.getLastName();
-        if  (person.getMiddleName() == null) {
+        String firstName = person.firstName();
+        String lastName = person.lastName();
+        String middleName = person.middleName();
+        if  (middleName == null) {
             return "%s %s".formatted(firstName, lastName);
         }
-        String middleName = person.getMiddleName();
         return "%s %s %s".formatted(firstName, middleName, lastName);
     }
 

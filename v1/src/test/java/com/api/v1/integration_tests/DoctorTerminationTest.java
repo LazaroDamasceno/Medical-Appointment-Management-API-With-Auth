@@ -55,4 +55,5 @@ public class DoctorTerminationTest {
         mockMvc.perform(patch("/api/v1/doctors/%s/termination".formatted(licenseNumber))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isNotFound());
-    }}
+    }
+}

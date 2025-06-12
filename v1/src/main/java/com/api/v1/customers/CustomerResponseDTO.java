@@ -19,8 +19,8 @@ public final class CustomerResponseDTO extends RepresentationModel<CustomerRespo
 
     public static CustomerResponseDTO from(@NotNull Customer customer) {
         return new CustomerResponseDTO(
-                customer.getId(),
-                FullNameFormatter.format(customer.getPerson())
+                customer.id(),
+                FullNameFormatter.format(customer.person())
         );
     }
 

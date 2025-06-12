@@ -28,7 +28,7 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
     @Override
     public ResponseEntity<DoctorResponseDTO> findByLicenseNumber(@LicenseNumber String licenseNumber) {
         Doctor foundDoctor = finder.findByLicenseNumber(licenseNumber);
-        DoctorResponseDTO responseDto = foundDoctor.toDto();
+        DoctorResponseDTO responseDto = foundDoctor.toDTO();
         responseDto.add(
                 linkTo(methodOn(DoctorController.class).findByLicenseNumber(licenseNumber)).withSelfRel()
         );
@@ -37,6 +37,6 @@ public class DoctorRetrievalServiceImpl implements DoctorRetrievalService {
 
     @Override
     public ResponseEntity<Page<DoctorResponseDTO>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(repository.findAll(pageable).map(Doctor::toDto));
+        return ResponseEntity.ok(repository.findAll(pageable).map(Doctor::toDTO));
     }
 }

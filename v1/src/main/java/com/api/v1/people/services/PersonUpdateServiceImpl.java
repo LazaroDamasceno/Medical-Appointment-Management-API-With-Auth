@@ -27,7 +27,7 @@ public class PersonUpdateServiceImpl implements PersonUpdateService {
     public Person update(@NotNull Person person, @Valid PersonUpdateDTO updatingDto) {
         PersonAuditTrail auditTrail = PersonAuditTrail.of(person);
         PersonAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        person.update(updatingDto);
-        return repository.save(person);
+        Person updatedPerson = person.update(updatingDto);
+        return repository.save(updatedPerson);
     }
 }

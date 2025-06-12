@@ -36,7 +36,7 @@ public sealed class MedicalSlotResponseDTO
         return new MedicalSlotResponseDTO(
                 medicalSlot.getId(),
                 MedicalSlotStatus.ACTIVE,
-                medicalSlot.getDoctor().toDto(),
+                medicalSlot.getDoctor().toDTO(),
                 medicalSlot.getAvailableAt(),
                 medicalSlot.getCreatedAt()
         );

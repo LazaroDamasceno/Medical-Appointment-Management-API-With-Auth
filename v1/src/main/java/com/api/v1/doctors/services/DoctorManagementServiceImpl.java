@@ -41,14 +41,14 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
         onCurrentlyTerminatedDoctor(foundDoctor);
         DoctorAuditTrail auditTrail = DoctorAuditTrail.of(foundDoctor);
         DoctorAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        foundDoctor.markedAsTerminated();
-        Doctor updatedDoctor = repository.save(foundDoctor);
+        Doctor updatedDoctor = foundDoctor.markedAsTerminated();
+        Doctor savedDoctor = repository.save(updatedDoctor);
         return ResponseEntity.noContent().build();
     }
 
     private void onCurrentlyTerminatedDoctor(Doctor doctor) {
-        if (doctor.getStatus().equals(ProfessionalStatus.TERMINATED)) {
-            throw new TerminatedDoctorException(doctor.getLicenseNumber());
+        if (doctor.status().equals(ProfessionalStatus.TERMINATED)) {
+            throw new TerminatedDoctorException(doctor.licenseNumber());
         }
     }
 
@@ -58,14 +58,14 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
         onCurrentlyActiveDoctor(foundDoctor);
         DoctorAuditTrail auditTrail = DoctorAuditTrail.of(foundDoctor);
         DoctorAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        foundDoctor.markedAsRehired();
-        Doctor updatedDoctor = repository.save(foundDoctor);
+        Doctor updatedDoctor = foundDoctor.markedAsRehired();
+        Doctor savedDoctor = repository.save(updatedDoctor);
         return ResponseEntity.noContent().build();
     }
 
     private void onCurrentlyActiveDoctor(Doctor doctor) {
-        if (doctor.getStatus().equals(ProfessionalStatus.ACTIVE)) {
-            throw new TerminatedDoctorException(doctor.getLicenseNumber());
+        if (doctor.status().equals(ProfessionalStatus.ACTIVE)) {
+            throw new TerminatedDoctorException(doctor.licenseNumber());
         }
     }
 
@@ -74,9 +74,9 @@ public class DoctorManagementServiceImpl implements DoctorManagementService {
         Doctor foundDoctor = finder.findByLicenseNumber(licenseNumber);
         DoctorAuditTrail auditTrail = DoctorAuditTrail.of(foundDoctor);
         DoctorAuditTrail savedAuditTrail = auditTrailRepository.save(auditTrail);
-        Person updatedPerson = personUpdateService.update(foundDoctor.getPerson(), personUpdateDTO);
-        foundDoctor.update(updatedPerson);
-        Doctor updatedDoctor = repository.save(foundDoctor);
+        Person updatedPerson = personUpdateService.update(foundDoctor.person(), personUpdateDTO);
+        Doctor updatedDoctor = foundDoctor.update(updatedPerson);
+        Doctor savedDoctor = repository.save(updatedDoctor);
         return ResponseEntity.noContent().build();
     }
 }

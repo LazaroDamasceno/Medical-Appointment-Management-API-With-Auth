@@ -10,81 +10,67 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document(collection = "Doctors")
-public class Doctor {
+public record Doctor(
+        @Id
+        String id,
+        Person person,
+        @Indexed(unique = true)
+        String licenseNumber,
+        ProfessionalStatus status,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt,
+        LocalDateTime terminatedAt
+) {
 
-    @Id
-    private String id;
-    private Person person;
-    @Indexed(unique = true)
-    private String licenseNumber;
-    private ProfessionalStatus status;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private LocalDateTime terminatedAt;
-
-    private Doctor() {
+    public static Doctor of(Person person, String licenseNumber) {
+        return new Doctor(
+                UUID.randomUUID().toString(),
+                person,
+                licenseNumber,
+                ProfessionalStatus.ACTIVE,
+                LocalDateTime.now(),
+                null,
+                null
+        );
     }
 
-    private Doctor(Person person,
-                  String licenseNumber
-    ) {
-        this.id = UUID.randomUUID().toString();
-        this.person = person;
-        this.licenseNumber = licenseNumber;
-        this.status = ProfessionalStatus.ACTIVE;
-        this.createdAt = LocalDateTime.now();
+    public Doctor update(Person person) {
+        return new Doctor(
+                this.id,
+                person,
+                this.licenseNumber,
+                this.status,
+                this.createdAt,
+                this.updatedAt,
+                this.terminatedAt
+        );
     }
 
-    public static Doctor of(Person person,
-                         String licenseNumber
-    ) {
-        return new Doctor(person, licenseNumber);
+    public Doctor markedAsTerminated() {
+        return new Doctor(
+                this.id,
+                person,
+                this.licenseNumber,
+                ProfessionalStatus.TERMINATED,
+                this.createdAt,
+                this.updatedAt,
+                LocalDateTime.now()
+        );
     }
 
-    public void update(Person person) {
-        this.person = person;
-        this.updatedAt = LocalDateTime.now();
+    public Doctor markedAsRehired() {
+        return new Doctor(
+                this.id,
+                person,
+                this.licenseNumber,
+                ProfessionalStatus.ACTIVE,
+                this.createdAt,
+                this.updatedAt,
+                null
+        );
     }
 
-    public void markedAsTerminated() {
-        this.terminatedAt = LocalDateTime.now();
-        this.status = ProfessionalStatus.TERMINATED;
-    }
-
-    public void markedAsRehired() {
-        this.terminatedAt = null;
-        this.status = ProfessionalStatus.ACTIVE;
-    }
-
-    public DoctorResponseDTO toDto() {
+    public DoctorResponseDTO toDTO() {
         return DoctorResponseDTO.from(this);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public String getLicenseNumber() {
-        return licenseNumber;
-    }
-
-    public ProfessionalStatus getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public LocalDateTime getTerminatedAt() {
-        return terminatedAt;
     }
 }

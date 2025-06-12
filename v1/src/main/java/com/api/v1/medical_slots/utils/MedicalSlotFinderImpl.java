@@ -31,8 +31,8 @@ public final class MedicalSlotFinderImpl implements MedicalSlotFinder {
     @Override
     public MedicalSlot findByIdAndDoctor(@ObjectId String id, @NotNull Doctor doctor) {
         MedicalSlot foundSlot = findById(id);
-        if (!foundSlot.getDoctor().getId().equals(doctor.getId())) {
-            throw new InaccessibleMedicalSlotException(id, doctor.getLicenseNumber());
+        if (!foundSlot.getDoctor().id().equals(doctor.id())) {
+            throw new InaccessibleMedicalSlotException(id, doctor.licenseNumber());
         }
         return foundSlot;
     }

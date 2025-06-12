@@ -49,7 +49,7 @@ public class DoctorUpdateTest {
     @Order(1)
     @Test
     void shouldReturnNoContentWhenSuccessful() throws Exception {
-        var licenseNumber = "249fe92707";
+        var licenseNumber = "";
         mockMvc.perform(patch("/api/v1/doctors/%s/updating".formatted(licenseNumber))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(personDTO))

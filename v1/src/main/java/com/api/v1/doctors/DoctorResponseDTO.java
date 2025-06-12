@@ -18,8 +18,8 @@ public final class DoctorResponseDTO extends RepresentationModel<DoctorResponseD
 
     public static DoctorResponseDTO from(Doctor doctor) {
         return new DoctorResponseDTO(
-                FullNameFormatter.format(doctor.getPerson()),
-                doctor.getLicenseNumber()
+                FullNameFormatter.format(doctor.person()),
+                doctor.licenseNumber()
         );
     }
 
