@@ -23,7 +23,7 @@ class CustomerRegistrationServiceImpl(
         validate(registrationDTO)
         val savedPerson = personRegistrationService.register(registrationDTO)
         val newCustomer = Customer.update(savedPerson)
-        val savedCustomer = repository.save<Customer>(newCustomer)
+        val savedCustomer = repository.save(newCustomer)
         val dto = savedCustomer.toDTO()
         return ResponseEntity
             .created(URI.create("/api/v2/customers"))

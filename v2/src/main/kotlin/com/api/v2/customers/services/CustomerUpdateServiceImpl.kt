@@ -22,10 +22,10 @@ class CustomerUpdateServiceImpl(
     override fun update(customerId: String, updateDTO: @Valid PersonUpdateDTO): ResponseEntity<Unit> {
         val foundCustomer = customerFinder.findById(customerId)
         val auditTrail = CustomerAuditTrail.of(foundCustomer)
-        val  savedAuditTrail = auditRepository.save<CustomerAuditTrail>(auditTrail)
+        val savedAuditTrail = auditRepository.save(auditTrail)
         val updatedPerson = personUpdateService.update(foundCustomer.person, updateDTO)
-        foundCustomer.update(updatedPerson)
-        val updatedCustomer = crudRepository.save<Customer>(foundCustomer)
+        val updatedCustomer = foundCustomer.update(updatedPerson)
+        val savedCustomer = crudRepository.save(updatedCustomer)
         return ResponseEntity.noContent().build()
     }
 }

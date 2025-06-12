@@ -27,8 +27,8 @@ class DoctorManagementServiceImpl(
         }
         val auditTrail = DoctorAuditTrail.of(foundDoctor)
         val savedAuditTrail = auditRepository.save(auditTrail)
-        foundDoctor.markAsTerminated()
-        val updatedDoctor = crudRepository.save(foundDoctor)
+        val updatedDoctor = foundDoctor.markAsTerminated()
+        val savedDoctor = crudRepository.save(updatedDoctor)
         return ResponseEntity.noContent().build()
     }
 
@@ -39,8 +39,8 @@ class DoctorManagementServiceImpl(
         }
         val auditTrail = DoctorAuditTrail.of(foundDoctor)
         val savedAuditTrail = auditRepository.save(auditTrail)
-        foundDoctor.markAsRehired()
-        val updatedDoctor = crudRepository.save(foundDoctor)
+        val updatedDoctor =foundDoctor.markAsRehired()
+        val savedDoctor = crudRepository.save(updatedDoctor)
         return ResponseEntity.noContent().build()
     }
 
@@ -49,8 +49,8 @@ class DoctorManagementServiceImpl(
         val auditTrail = DoctorAuditTrail.of(foundDoctor)
         val savedAuditTrail = auditRepository.save(auditTrail)
         val updatedPerson = personUpdateService.update(foundDoctor.person, updateDTO)
-        foundDoctor.update(updatedPerson)
-        val updatedDoctor = crudRepository.save(foundDoctor)
+        val updatedDoctor = foundDoctor.update(updatedPerson)
+        val savedDoctor = crudRepository.save(updatedDoctor)
         return ResponseEntity.noContent().build()
     }
 
