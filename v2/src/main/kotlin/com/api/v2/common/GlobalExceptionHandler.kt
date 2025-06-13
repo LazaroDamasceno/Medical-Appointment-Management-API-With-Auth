@@ -60,7 +60,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(MedicalSlotNotFoundException::class)
     fun handleException(ex: MedicalSlotNotFoundException): ResponseEntity<String?> {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
     }
 
     @ExceptionHandler(InaccessibleMedicalSlotException::class)
