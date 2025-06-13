@@ -1,6 +1,7 @@
 package com.api.v2.medical_slots.controllers
 
 import com.api.v2.medical_slots.MedicalSlotResponseDTO
+import com.api.v2.medical_slots.services.MedicalSlotManagementService
 import com.api.v2.medical_slots.services.MedicalSlotRegistrationService
 import com.api.v2.medical_slots.services.MedicalSlotRetrievalService
 import jakarta.validation.constraints.NotNull
@@ -8,6 +9,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,7 +20,8 @@ import java.time.LocalDateTime
 @RequestMapping("api/v2/medical-slots")
 class MedicalSlotController(
     private val retrievalService: MedicalSlotRetrievalService,
-    private val registrationService: MedicalSlotRegistrationService
+    private val registrationService: MedicalSlotRegistrationService,
+    private val managementService: MedicalSlotManagementService
 ) {
 
     @GetMapping("{id}/{medicalLicenseNumber}")
@@ -48,5 +51,21 @@ class MedicalSlotController(
         @PathVariable availableAt: @NotNull LocalDateTime
     ): ResponseEntity<MedicalSlotResponseDTO> {
         return registrationService.register(medicalLicenseNumber, availableAt)
+    }
+
+    @PatchMapping("{licenseNumber}/{slotId}/cancellation")
+    fun cancel(
+        @PathVariable licenseNumber: String,
+        @PathVariable slotId: String
+    ): ResponseEntity<Void> {
+        return managementService.cancel(licenseNumber, slotId)
+    }
+
+    @PatchMapping("{licenseNumber}/{slotId}/completion")
+    fun complete(
+        @PathVariable licenseNumber: String,
+        @PathVariable slotId: String
+    ): ResponseEntity<Void> {
+        return managementService.complete(licenseNumber, slotId)
     }
 }

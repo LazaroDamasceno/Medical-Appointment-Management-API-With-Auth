@@ -4,6 +4,8 @@ import com.api.v2.customers.exceptions.CustomerNotFoundException
 import com.api.v2.doctors.exceptions.ActiveDoctorException
 import com.api.v2.doctors.exceptions.DoctorNotFoundException
 import com.api.v2.doctors.exceptions.TerminatedDoctorException
+import com.api.v2.medical_slots.exceptions.CancelledMedicalSlotException
+import com.api.v2.medical_slots.exceptions.CompletedMedicalSlotException
 import com.api.v2.medical_slots.exceptions.InaccessibleMedicalSlotException
 import com.api.v2.medical_slots.exceptions.MedicalSlotNotFoundException
 import com.api.v2.people.exceptions.DuplicatedEmailException
@@ -63,6 +65,16 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(InaccessibleMedicalSlotException::class)
     fun handleException(ex: InaccessibleMedicalSlotException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(CompletedMedicalSlotException::class)
+    fun handleException(ex: CompletedMedicalSlotException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(CancelledMedicalSlotException::class)
+    fun handleException(ex: CancelledMedicalSlotException): ResponseEntity<String?> {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
     }
 }
