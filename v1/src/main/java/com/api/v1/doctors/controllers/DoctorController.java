@@ -1,11 +1,11 @@
 package com.api.v1.doctors.controllers;
 
 import com.api.v1.common.LicenseNumber;
-import com.api.v1.doctors.DoctorRegistrationDTO;
 import com.api.v1.doctors.DoctorResponseDTO;
 import com.api.v1.doctors.services.DoctorManagementService;
 import com.api.v1.doctors.services.DoctorRegistrationService;
 import com.api.v1.doctors.services.DoctorRetrievalService;
+import com.api.v1.people.PersonRegistrationDTO;
 import com.api.v1.people.PersonUpdateDTO;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -40,9 +40,12 @@ public class DoctorController {
         return managementService.rehire(licenseNumber);
     }
 
-    @PostMapping
-    public ResponseEntity<DoctorResponseDTO> register(@RequestBody @Valid DoctorRegistrationDTO registrationDto) {
-        return registrationService.register(registrationDto);
+    @PostMapping("/{medicalLicenseNumber}")
+    public ResponseEntity<DoctorResponseDTO> register(
+            @PathVariable @LicenseNumber String medicalLicenseNumber,
+            @RequestBody @Valid PersonRegistrationDTO registrationDto
+    ) {
+        return registrationService.register(medicalLicenseNumber, registrationDto);
     }
 
     @GetMapping("/{licenseNumber}")

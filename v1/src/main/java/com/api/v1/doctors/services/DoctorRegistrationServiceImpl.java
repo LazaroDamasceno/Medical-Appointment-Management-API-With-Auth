@@ -1,11 +1,12 @@
 package com.api.v1.doctors.services;
 
 import com.api.v1.common.DuplicatedLicenseNumberException;
+import com.api.v1.common.LicenseNumber;
 import com.api.v1.doctors.domain.DoctorCrudRepository;
 import com.api.v1.doctors.Doctor;
-import com.api.v1.doctors.DoctorRegistrationDTO;
 import com.api.v1.doctors.DoctorResponseDTO;
 import com.api.v1.people.Person;
+import com.api.v1.people.PersonRegistrationDTO;
 import com.api.v1.people.exceptions.DuplicatedSINException;
 import com.api.v1.people.PersonRegistrationService;
 import jakarta.validation.Valid;
@@ -29,10 +30,12 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
     }
 
     @Override
-    public ResponseEntity<DoctorResponseDTO> register(@Valid DoctorRegistrationDTO registrationDTO) {
-        validate(registrationDTO);
-        Person savedPerson = personRegistrationService.register(registrationDTO.person());
-        Doctor newDoctor = Doctor.of(savedPerson, registrationDTO.licenseNumber());
+    public ResponseEntity<DoctorResponseDTO> register(@LicenseNumber String medicalLicenseNumber,
+                                                      @Valid PersonRegistrationDTO registrationDTO
+    ) {
+        validate(medicalLicenseNumber, registrationDTO);
+        Person savedPerson = personRegistrationService.register(registrationDTO);
+        Doctor newDoctor = Doctor.of(savedPerson, medicalLicenseNumber);
         Doctor savedDoctor = repository.save(newDoctor);
         DoctorResponseDTO responseDto = savedDoctor.toDTO();
         return ResponseEntity
@@ -41,14 +44,14 @@ public class DoctorRegistrationServiceImpl implements DoctorRegistrationService 
                 .body(responseDto);
     }
 
-    private void validate(DoctorRegistrationDTO registrationDto) {
-        if (repository.findByLicenseNumber(registrationDto.licenseNumber()).isPresent()) {
+    private void validate(String medicalLicenseNumber, PersonRegistrationDTO registrationDTO) {
+        if (repository.findByLicenseNumber(medicalLicenseNumber).isPresent()) {
             throw new DuplicatedLicenseNumberException();
         }
-        if (repository.findBySIN(registrationDto.person().sin()).isPresent()) {
+        if (repository.findBySIN(registrationDTO.sin()).isPresent()) {
             throw new DuplicatedSINException();
         }
-        if (repository.findByEmail(registrationDto.person().email()).isPresent()) {
+        if (repository.findByEmail(registrationDTO.email()).isPresent()) {
             throw new DuplicatedSINException();
         }
     }

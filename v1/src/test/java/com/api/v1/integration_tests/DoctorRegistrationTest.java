@@ -1,6 +1,5 @@
 package com.api.v1.integration_tests;
 
-import com.api.v1.doctors.DoctorRegistrationDTO;
 import com.api.v1.people.dtos.Address;
 import com.api.v1.people.enums.Gender;
 import com.api.v1.people.PersonRegistrationDTO;
