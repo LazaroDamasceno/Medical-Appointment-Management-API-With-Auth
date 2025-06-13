@@ -53,19 +53,19 @@ class MedicalSlotController(
         return registrationService.register(medicalLicenseNumber, availableAt)
     }
 
-    @PatchMapping("{licenseNumber}/{slotId}/cancellation")
+    @PatchMapping("{medicalLicenseNumber}/{slotId}/cancellation")
     fun cancel(
-        @PathVariable licenseNumber: String,
+        @PathVariable medicalLicenseNumber: String,
         @PathVariable slotId: String
     ): ResponseEntity<Void> {
-        return managementService.cancel(licenseNumber, slotId)
+        return managementService.cancel(medicalLicenseNumber, slotId)
     }
 
-    @PatchMapping("{licenseNumber}/{slotId}/completion")
+    @PatchMapping("{medicalLicenseNumber}/{slotId}/completion")
     fun complete(
-        @PathVariable licenseNumber: String,
+        @PathVariable medicalLicenseNumber: String,
         @PathVariable slotId: String
     ): ResponseEntity<Void> {
-        return managementService.complete(licenseNumber, slotId)
+        return managementService.complete(medicalLicenseNumber, slotId)
     }
 }

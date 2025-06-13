@@ -20,8 +20,8 @@ class MedicalSlotManagementServiceImpl(
     private val medicalSlotFinder: MedicalSlotFinder
 ): MedicalSlotManagementService {
 
-    override fun cancel(licenseNumber: String, slotId: String): ResponseEntity<Void> {
-        val foundDoctor = doctorFinder.findByLicenseNumber(licenseNumber)
+    override fun cancel(medicalLicenseNumber: String, slotId: String): ResponseEntity<Void> {
+        val foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber)
         val foundSlot = medicalSlotFinder.findByIdAndDoctor(slotId, foundDoctor)
         validate(foundSlot)
         val auditTrail = MedicalSlotAuditTrail.of(foundSlot)
@@ -31,8 +31,8 @@ class MedicalSlotManagementServiceImpl(
         return ResponseEntity.noContent().build()
     }
 
-    override fun complete(licenseNumber: String, slotId: String): ResponseEntity<Void> {
-        val foundDoctor = doctorFinder.findByLicenseNumber(licenseNumber)
+    override fun complete(medicalLicenseNumber: String, slotId: String): ResponseEntity<Void> {
+        val foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber)
         val foundSlot = medicalSlotFinder.findByIdAndDoctor(slotId, foundDoctor)
         validate(foundSlot)
         val auditTrail = MedicalSlotAuditTrail.of(foundSlot)
