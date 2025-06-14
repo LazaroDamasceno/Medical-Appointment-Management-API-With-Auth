@@ -50,10 +50,16 @@ public class DoctorRegistrationTest {
             "1234567890"
     );
 
+    String licenseNumber = UUID
+            .randomUUID()
+            .toString()
+            .replace("-", "")
+            .substring(0, 10);
+
     @Order(1)
     @Test
     void shouldReturnCreatedWhenSuccessful() throws Exception {
-        mockMvc.perform(post("/api/v1/doctors")
+        mockMvc.perform(post("/api/v1/doctors/%s".formatted(licenseNumber))
                 .content(objectMapper.writeValueAsString(doctorDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isCreated());
@@ -62,7 +68,7 @@ public class DoctorRegistrationTest {
     @Order(2)
     @Test
     void shouldReturnConflictWhenMedicalLicenseNumber() throws Exception {
-        mockMvc.perform(post("/api/v1/doctors")
+        mockMvc.perform(post("/api/v1/doctors/%s".formatted(licenseNumber))
                 .content(objectMapper.writeValueAsString(doctorDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isConflict());
@@ -90,7 +96,12 @@ public class DoctorRegistrationTest {
     @Order(3)
     @Test
     void shouldReturnConflictWhenSinIsDuplicated() throws Exception {
-        mockMvc.perform(post("/api/v1/doctors")
+        String randomLicenseNumber = UUID
+                .randomUUID()
+                .toString()
+                .replace("-", "")
+                .substring(0, 10);
+        mockMvc.perform(post("/api/v1/doctors/%s".formatted(randomLicenseNumber))
                 .content(objectMapper.writeValueAsString(duplicatedSinDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isConflict());
@@ -118,7 +129,12 @@ public class DoctorRegistrationTest {
     @Order(4)
     @Test
     void shouldReturnConflictWhenEmailIsDuplicated() throws Exception {
-        mockMvc.perform(post("/api/v1/doctors")
+        String randomLicenseNumber = UUID
+                .randomUUID()
+                .toString()
+                .replace("-", "")
+                .substring(0, 10);
+        mockMvc.perform(post("/api/v1/doctors/%s".formatted(randomLicenseNumber))
                 .content(objectMapper.writeValueAsString(duplicatedEmailDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isConflict());
