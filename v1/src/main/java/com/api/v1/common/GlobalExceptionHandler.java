@@ -4,6 +4,8 @@ import com.api.v1.customers.exceptions.CustomerNotFoundException;
 import com.api.v1.doctors.exceptions.ActiveDoctorException;
 import com.api.v1.doctors.exceptions.DoctorNotFoundException;
 import com.api.v1.doctors.exceptions.TerminatedDoctorException;
+import com.api.v1.medical_slots.exceptions.CancelledMedicalSlotException;
+import com.api.v1.medical_slots.exceptions.CompletedMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.MedicalSlotNotFoundException;
 import com.api.v1.people.exceptions.DuplicatedEmailException;
@@ -63,6 +65,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicatedBookingDateTimeException.class)
     public ResponseEntity<String> handleException(DuplicatedBookingDateTimeException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CompletedMedicalSlotException.class)
+    public ResponseEntity<String> handleException(CompletedMedicalSlotException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CancelledMedicalSlotException.class)
+    public ResponseEntity<String> handleException(CancelledMedicalSlotException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }
