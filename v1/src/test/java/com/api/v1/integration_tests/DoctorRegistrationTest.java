@@ -31,29 +31,23 @@ public class DoctorRegistrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    DoctorRegistrationDTO doctorDTO = new DoctorRegistrationDTO(
+    PersonRegistrationDTO doctorDTO = new PersonRegistrationDTO(
+            "Willian",
+            "",
+            "Belfast",
             UUID.randomUUID()
                     .toString()
                     .replace("-", "")
                     .substring(0, 10),
-            new PersonRegistrationDTO(
-                    "Willian",
-                    "",
-                    "Belfast",
-                    UUID.randomUUID()
-                            .toString()
-                            .replace("-", "")
-                            .substring(0, 10),
-                    LocalDate.of(2000,12,12),
+            LocalDate.of(2000,12,12),
                     "william@drbelfast.com",
                     Gender.MALE,
-                    new Address(
-                            "Downtown",
-                            "LA",
-                            "90012"
-                    ),
-                    "1234567890"
-            )
+            new Address(
+                    "Downtown",
+                    "LA",
+                    "90012"
+            ),
+            "1234567890"
     );
 
     @Order(1)
@@ -74,29 +68,23 @@ public class DoctorRegistrationTest {
         ).andExpect(status().isConflict());
     }
 
-    DoctorRegistrationDTO duplicatedSinDTO = new DoctorRegistrationDTO(
+    PersonRegistrationDTO duplicatedSinDTO = new PersonRegistrationDTO(
+            "Willian",
+            "",
+            "Belfast",
             UUID.randomUUID()
-                    .toString()
-                    .replace("-", "")
-                    .substring(0, 10),
-            new PersonRegistrationDTO(
-                    "Willian",
-                    "",
-                    "Belfast",
-                    UUID.randomUUID()
                             .toString()
                             .replace("-", "")
                             .substring(0, 10),
-                    LocalDate.of(2000,12,12),
-                    "william@drbelfast.com",
-                    Gender.MALE,
-                    new Address(
-                            "Downtown",
-                            "LA",
-                            "90012"
-                    ),
-                    "1234567890"
-            )
+            LocalDate.of(2000,12,12),
+            "william@drbelfast.com",
+            Gender.MALE,
+            new Address(
+                    "Downtown",
+                    "LA",
+                    "90012"
+            ),
+            "1234567890"
     );
 
     @Order(3)
@@ -108,32 +96,26 @@ public class DoctorRegistrationTest {
         ).andExpect(status().isConflict());
     }
 
-    DoctorRegistrationDTO duplicatedEmailDTO = new DoctorRegistrationDTO(
+    PersonRegistrationDTO duplicatedEmailDTO = new PersonRegistrationDTO(
+            "Willian",
+            "",
+            "Belfast",
             UUID.randomUUID()
                     .toString()
                     .replace("-", "")
                     .substring(0, 10),
-            new PersonRegistrationDTO(
-                    "Willian",
-                    "",
-                    "Belfast",
-                    UUID.randomUUID()
-                            .toString()
-                            .replace("-", "")
-                            .substring(0, 10),
-                    LocalDate.of(2000,12,12),
-                    "william@drbelfast.com",
-                    Gender.MALE,
-                    new Address(
-                            "Downtown",
-                            "LA",
-                            "90012"
-                    ),
-                    "1234567890"
-            )
+            LocalDate.of(2000,12,12),
+            "william@drbelfast.com",
+            Gender.MALE,
+            new Address(
+                    "Downtown",
+                    "LA",
+                    "90012"
+            ),
+            "1234567890"
     );
 
-    @Order(3)
+    @Order(4)
     @Test
     void shouldReturnConflictWhenEmailIsDuplicated() throws Exception {
         mockMvc.perform(post("/api/v1/doctors")
