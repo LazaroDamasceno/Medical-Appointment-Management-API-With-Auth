@@ -57,7 +57,7 @@ class MedicalSlotController(
     fun cancel(
         @PathVariable medicalLicenseNumber: String,
         @PathVariable slotId: String
-    ): ResponseEntity<Void> {
+    ): ResponseEntity<Unit> {
         return managementService.cancel(medicalLicenseNumber, slotId)
     }
 
@@ -65,7 +65,7 @@ class MedicalSlotController(
     fun complete(
         @PathVariable medicalLicenseNumber: String,
         @PathVariable slotId: String
-    ): ResponseEntity<Void> {
+    ): ResponseEntity<Unit> {
         return managementService.complete(medicalLicenseNumber, slotId)
     }
 }

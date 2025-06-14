@@ -4,7 +4,7 @@ import com.api.v2.people.PersonUpdateDTO
 import org.springframework.http.ResponseEntity
 
 interface DoctorManagementService {
-    fun terminate(licenseNumber: String): ResponseEntity<Void>
-    fun rehire(licenseNumber: String): ResponseEntity<Void>
-    fun update(licenseNumber: String, updateDTO: PersonUpdateDTO): ResponseEntity<Void>
+    fun terminate(licenseNumber: String): ResponseEntity<Unit>
+    fun rehire(licenseNumber: String): ResponseEntity<Unit>
+    fun update(licenseNumber: String, updateDTO: PersonUpdateDTO): ResponseEntity<Unit>
 }

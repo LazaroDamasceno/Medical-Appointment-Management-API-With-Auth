@@ -3,6 +3,7 @@ package com.api.v1.medical_slots.controllers;
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.common.ObjectId;
 import com.api.v1.medical_slots.MedicalSlotResponseDTO;
+import com.api.v1.medical_slots.services.MedicalSlotManagementService;
 import com.api.v1.medical_slots.services.MedicalSlotRegistrationService;
 import com.api.v1.medical_slots.services.MedicalSlotRetrievalService;
 import jakarta.validation.constraints.NotNull;
@@ -19,13 +20,16 @@ public class MedicalSlotController {
 
     private final MedicalSlotRetrievalService retrievalService;
     private final MedicalSlotRegistrationService registrationService;
+    private final MedicalSlotManagementService managementService;
 
     public MedicalSlotController(
             MedicalSlotRetrievalService retrievalService,
-            MedicalSlotRegistrationService registrationService
+            MedicalSlotRegistrationService registrationService,
+            MedicalSlotManagementService managementService
     ) {
         this.retrievalService = retrievalService;
         this.registrationService = registrationService;
+        this.managementService = managementService;
     }
 
     @GetMapping("{id}/{medicalLicenseNumber}")
@@ -53,5 +57,21 @@ public class MedicalSlotController {
             @PathVariable @NotNull LocalDateTime availableAt
     ) {
         return registrationService.register(medicalLicenseNumber, availableAt);
+    }
+
+    @PatchMapping("{medicalLicenseNumber}/{medicalLicenseNumber}/cancellation")
+    public ResponseEntity<Void> cancel(
+            @PathVariable @LicenseNumber String medicalLicenseNumber,
+            @PathVariable @ObjectId String slotId
+    ) {
+        return managementService.cancel(medicalLicenseNumber, slotId);
+    }
+
+    @PatchMapping("{medicalLicenseNumber}/{medicalLicenseNumber}/completion")
+    public ResponseEntity<Void> complete(
+            @PathVariable @LicenseNumber String medicalLicenseNumber,
+            @PathVariable @ObjectId String slotId
+    ) {
+        return managementService.complete(medicalLicenseNumber, slotId);
     }
 }

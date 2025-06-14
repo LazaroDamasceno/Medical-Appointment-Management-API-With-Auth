@@ -10,40 +10,52 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Document(collection = "MedicalSlots")
-public class MedicalSlot {
+public record MedicalSlot(
 
     @Id
     @Indexed(unique = true)
-    private String id;
-    private Doctor doctor;
-    private MedicalSlotStatus status;
-    private LocalDateTime availableAt;
-    private LocalDateTime createdAt;
-    private LocalDateTime cancelledAt;
-    private LocalDateTime completedAt;
-
-    private MedicalSlot() {}
-
-    private MedicalSlot(Doctor doctor, LocalDateTime availableAt) {
-        this.id = UUID.randomUUID().toString();
-        this.status = MedicalSlotStatus.ACTIVE;
-        this.doctor = doctor;
-        this.availableAt = availableAt;
-        this.createdAt = LocalDateTime.now();
-    }
-
+    String id,
+    Doctor doctor,
+    MedicalSlotStatus status,
+    LocalDateTime availableAt,
+    LocalDateTime createdAt,
+    LocalDateTime cancelledAt,
+    LocalDateTime completedAt
+) {
     public static MedicalSlot of(Doctor doctor, LocalDateTime availableAt) {
-        return new MedicalSlot(doctor, availableAt);
+        return new MedicalSlot(
+                UUID.randomUUID().toString(),
+                doctor,
+                MedicalSlotStatus.ACTIVE,
+                availableAt,
+                LocalDateTime.now(),
+                null,
+                null
+        );
     }
 
-    public void markAsCancelled() {
-        this.status = MedicalSlotStatus.CANCELLED;
-        this.cancelledAt = LocalDateTime.now();
+    public MedicalSlot markAsCancelled() {
+        return new MedicalSlot(
+                this.id,
+                this.doctor,
+                MedicalSlotStatus.CANCELLED,
+                this.availableAt,
+                this.createdAt,
+                LocalDateTime.now(),
+                null
+        );
     }
 
-    public void markAsCompleted() {
-        this.status = MedicalSlotStatus.COMPLETED;
-        this.completedAt = LocalDateTime.now();
+    public MedicalSlot markAsCompleted() {
+        return new MedicalSlot(
+                this.id,
+                this.doctor,
+                MedicalSlotStatus.COMPLETED,
+                this.availableAt,
+                this.createdAt,
+                null,
+                LocalDateTime.now()
+        );
     }
 
     public MedicalSlotResponseDTO toDTO() {
@@ -54,33 +66,5 @@ public class MedicalSlot {
             CompletedMedicalSlotResponseDTO.from(this);
         }
         return MedicalSlotResponseDTO.from(this);
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public Doctor getDoctor() {
-        return doctor;
-    }
-
-    public MedicalSlotStatus getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getAvailableAt() {
-        return availableAt;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getCancelledAt() {
-        return cancelledAt;
-    }
-
-    public LocalDateTime getCompletedAt() {
-        return completedAt;
     }
 }

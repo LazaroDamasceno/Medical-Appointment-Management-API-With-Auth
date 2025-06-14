@@ -20,7 +20,7 @@ class DoctorManagementServiceImpl(
     val doctorFinder: DoctorFinder
 ) : DoctorManagementService {
 
-    override fun terminate(licenseNumber: String): ResponseEntity<Void> {
+    override fun terminate(licenseNumber: String): ResponseEntity<Unit> {
         val foundDoctor = doctorFinder.findByLicenseNumber(licenseNumber)
         if (crudRepository.findTerminatedByLicenseNumber(licenseNumber) != null) {
             throw TerminatedDoctorException()
@@ -32,7 +32,7 @@ class DoctorManagementServiceImpl(
         return ResponseEntity.noContent().build()
     }
 
-    override fun rehire(licenseNumber: String): ResponseEntity<Void> {
+    override fun rehire(licenseNumber: String): ResponseEntity<Unit> {
         val foundDoctor = doctorFinder.findByLicenseNumber(licenseNumber)
         if (crudRepository.findActiveByLicenseNumber(licenseNumber) != null) {
             throw ActiveDoctorException()
@@ -44,7 +44,7 @@ class DoctorManagementServiceImpl(
         return ResponseEntity.noContent().build()
     }
 
-    override fun update(licenseNumber: String, updateDTO: @Valid PersonUpdateDTO): ResponseEntity<Void> {
+    override fun update(licenseNumber: String, updateDTO: @Valid PersonUpdateDTO): ResponseEntity<Unit> {
         val foundDoctor = doctorFinder.findByLicenseNumber(licenseNumber)
         val auditTrail = DoctorAuditTrail.of(foundDoctor)
         val savedAuditTrail = auditRepository.save(auditTrail)

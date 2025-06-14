@@ -27,12 +27,12 @@ class DoctorController(
     }
 
     @PatchMapping("{licenseNumber}/termination")
-    fun terminate(@PathVariable licenseNumber: String): ResponseEntity<Void> {
+    fun terminate(@PathVariable licenseNumber: String): ResponseEntity<Unit> {
         return managementService.terminate(licenseNumber)
     }
 
     @PatchMapping("{licenseNumber}/rehiring")
-    fun rehire(@PathVariable licenseNumber: String): ResponseEntity<Void> {
+    fun rehire(@PathVariable licenseNumber: String): ResponseEntity<Unit> {
         return managementService.rehire(licenseNumber)
     }
 
@@ -40,7 +40,7 @@ class DoctorController(
     fun update(
         @PathVariable licenseNumber: String,
         @RequestBody updateDTO: @Valid PersonUpdateDTO
-    ): ResponseEntity<Void> {
+    ): ResponseEntity<Unit> {
         return managementService.update(licenseNumber, updateDTO)
     }
 
