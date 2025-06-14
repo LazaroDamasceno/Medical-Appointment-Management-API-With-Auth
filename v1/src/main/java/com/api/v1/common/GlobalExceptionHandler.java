@@ -58,6 +58,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InaccessibleMedicalSlotException.class)
     public ResponseEntity<String> handleException(InaccessibleMedicalSlotException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DuplicatedBookingDateTimeException.class)
+    public ResponseEntity<String> handleException(DuplicatedBookingDateTimeException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }
