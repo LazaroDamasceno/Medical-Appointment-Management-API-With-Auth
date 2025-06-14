@@ -67,10 +67,10 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
 
     private void validate(MedicalSlot medicalSlot) {
         if (medicalSlot.status().equals(MedicalSlotStatus.CANCELLED)) {
-            throw new CompletedMedicalSlotException(medicalSlot.id());
+            throw new CancelledMedicalSlotException(medicalSlot.id());
         }
         if (medicalSlot.status().equals(MedicalSlotStatus.COMPLETED)) {
-            throw new CancelledMedicalSlotException(medicalSlot.id());
+            throw new CompletedMedicalSlotException(medicalSlot.id());
         }
     }
 }
