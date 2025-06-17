@@ -4,6 +4,7 @@ import com.api.v1.customers.exceptions.CustomerNotFoundException;
 import com.api.v1.doctors.exceptions.ActiveDoctorException;
 import com.api.v1.doctors.exceptions.DoctorNotFoundException;
 import com.api.v1.doctors.exceptions.TerminatedDoctorException;
+import com.api.v1.medical_appointments.exceptions.MedicalAppointmentNotFoundException;
 import com.api.v1.medical_slots.exceptions.CancelledMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.CompletedMedicalSlotException;
 import com.api.v1.medical_slots.exceptions.InaccessibleMedicalSlotException;
@@ -76,5 +77,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CancelledMedicalSlotException.class)
     public ResponseEntity<String> handleException(CancelledMedicalSlotException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+    //
+    @ExceptionHandler(MedicalAppointmentNotFoundException.class)
+    public ResponseEntity<String> handleException(MedicalAppointmentNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

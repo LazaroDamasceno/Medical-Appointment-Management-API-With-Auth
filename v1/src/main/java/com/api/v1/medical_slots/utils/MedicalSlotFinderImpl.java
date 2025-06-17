@@ -10,8 +10,6 @@ import com.api.v1.medical_slots.exceptions.MedicalSlotNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public final class MedicalSlotFinderImpl implements MedicalSlotFinder {
 
