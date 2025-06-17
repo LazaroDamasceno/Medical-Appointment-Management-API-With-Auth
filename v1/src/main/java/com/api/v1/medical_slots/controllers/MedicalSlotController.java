@@ -59,19 +59,19 @@ public class MedicalSlotController {
         return registrationService.register(medicalLicenseNumber, availableAt);
     }
 
-    @PatchMapping("{medicalLicenseNumber}/{medicalLicenseNumber}/cancellation")
+    @PatchMapping("{medicalLicenseNumber}/{id}/cancellation")
     public ResponseEntity<Void> cancel(
             @PathVariable @LicenseNumber String medicalLicenseNumber,
-            @PathVariable @ObjectId String slotId
+            @PathVariable @ObjectId String id
     ) {
-        return managementService.cancel(medicalLicenseNumber, slotId);
+        return managementService.cancel(medicalLicenseNumber, id);
     }
 
-    @PatchMapping("{medicalLicenseNumber}/{medicalLicenseNumber}/completion")
+    @PatchMapping("{medicalLicenseNumber}/{id}/completion")
     public ResponseEntity<Void> complete(
             @PathVariable @LicenseNumber String medicalLicenseNumber,
-            @PathVariable @ObjectId String slotId
+            @PathVariable @ObjectId String id
     ) {
-        return managementService.complete(medicalLicenseNumber, slotId);
+        return managementService.complete(medicalLicenseNumber, id);
     }
 }

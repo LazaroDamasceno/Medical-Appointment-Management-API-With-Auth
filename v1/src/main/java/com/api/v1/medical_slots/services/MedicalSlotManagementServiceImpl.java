@@ -38,10 +38,10 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
     @Override
     public ResponseEntity<Void> cancel(
             @LicenseNumber String medicalLicenseNumber,
-            @ObjectId String slotId
+            @ObjectId String id
     ) {
         Doctor foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber);
-        MedicalSlot foundSlot = slotFinder.findByIdAndDoctor(slotId, foundDoctor);
+        MedicalSlot foundSlot = slotFinder.findByIdAndDoctor(id, foundDoctor);
         validate(foundSlot);
         MedicalSlotAuditTrail auditTrail = MedicalSlotAuditTrail.of(foundSlot);
         MedicalSlotAuditTrail savedAuditTrail = auditRepository.save(auditTrail);
@@ -53,10 +53,10 @@ public class MedicalSlotManagementServiceImpl implements MedicalSlotManagementSe
     @Override
     public ResponseEntity<Void> complete(
             @LicenseNumber String medicalLicenseNumber,
-            @ObjectId String slotId
+            @ObjectId String id
     ) {
         Doctor foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber);
-        MedicalSlot foundSlot = slotFinder.findByIdAndDoctor(slotId, foundDoctor);
+        MedicalSlot foundSlot = slotFinder.findByIdAndDoctor(id, foundDoctor);
         validate(foundSlot);
         MedicalSlotAuditTrail auditTrail = MedicalSlotAuditTrail.of(foundSlot);
         MedicalSlotAuditTrail savedAuditTrail = auditRepository.save(auditTrail);
