@@ -7,8 +7,9 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
-public class MedicalAppointmentResponseDTO
-        extends RepresentationModel<MedicalAppointmentResponseDTO> {
+public sealed class MedicalAppointmentResponseDTO
+        extends RepresentationModel<MedicalAppointmentResponseDTO>
+        permits CancelledMedicalAppointmentResponseDTO, CompletedMedicalAppointmentResponseDTO {
 
     private String id;
     private CustomerResponseDTO customer;
@@ -29,7 +30,7 @@ public class MedicalAppointmentResponseDTO
         this.bookedAt = medicalAppointment.bookedAt();
     }
 
-    public MedicalAppointmentResponseDTO from(MedicalAppointment medicalAppointment) {
+    public static MedicalAppointmentResponseDTO from(MedicalAppointment medicalAppointment) {
         return new MedicalAppointmentResponseDTO(medicalAppointment);
     }
 
