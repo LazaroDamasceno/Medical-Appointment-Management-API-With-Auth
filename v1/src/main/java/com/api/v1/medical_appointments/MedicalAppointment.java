@@ -34,4 +34,40 @@ public record MedicalAppointment(
                 null
         );
     }
+
+    public MedicalAppointmentResponseDTO toDTO() {
+        if (this.status.equals(MedicalAppointmentStatus.CANCELLED)) {
+            return CancelledMedicalAppointmentResponseDTO.from(this);
+        }
+        else if (this.status.equals(MedicalAppointmentStatus.COMPLETED)) {
+            return CompletedMedicalAppointmentResponseDTO.from(this);
+        }
+        return MedicalAppointmentResponseDTO.from(this);
+    }
+
+    public MedicalAppointment markAsCancelled() {
+        return new MedicalAppointment(
+                this.id,
+                this.customer,
+                this.doctor,
+                MedicalAppointmentStatus.CANCELLED,
+                this.createdAt,
+                this.bookedAt,
+                LocalDateTime.now(),
+                null
+        );
+    }
+
+    public MedicalAppointment markAsCompleted() {
+        return new MedicalAppointment(
+                this.id,
+                this.customer,
+                this.doctor,
+                MedicalAppointmentStatus.COMPLETED,
+                this.createdAt,
+                this.bookedAt,
+                null,
+                LocalDateTime.now()
+        );
+    }
 }
