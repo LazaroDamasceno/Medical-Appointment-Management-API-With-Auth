@@ -21,17 +21,31 @@ public sealed class MedicalAppointmentResponseDTO
     protected MedicalAppointmentResponseDTO() {
     }
 
-    protected MedicalAppointmentResponseDTO(MedicalAppointment medicalAppointment) {
-        this.id = medicalAppointment.id();
-        this.customer = medicalAppointment.customer().toDto();
-        this.doctor = medicalAppointment.doctor().toDTO();
-        this.status = medicalAppointment.status();
-        this.createdAt = medicalAppointment.createdAt();
-        this.bookedAt = medicalAppointment.bookedAt();
+    protected MedicalAppointmentResponseDTO(
+            String id,
+            CustomerResponseDTO customer,
+            DoctorResponseDTO doctor,
+            MedicalAppointmentStatus status,
+            LocalDateTime createdAt,
+            LocalDateTime bookedAt
+    ) {
+        this.id = id;
+        this.customer = customer;
+        this.doctor = doctor;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.bookedAt = bookedAt;
     }
 
     public static MedicalAppointmentResponseDTO from(MedicalAppointment medicalAppointment) {
-        return new MedicalAppointmentResponseDTO(medicalAppointment);
+        return new MedicalAppointmentResponseDTO(
+                medicalAppointment.id(),
+                medicalAppointment.customer().toDto(),
+                medicalAppointment.doctor().toDTO(),
+                MedicalAppointmentStatus.ACTIVE,
+                medicalAppointment.createdAt(),
+                medicalAppointment.bookedAt()
+        );
     }
 
     public String getId() {
