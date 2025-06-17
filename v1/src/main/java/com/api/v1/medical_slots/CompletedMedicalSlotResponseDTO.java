@@ -22,12 +22,12 @@ public final class CompletedMedicalSlotResponseDTO extends MedicalSlotResponseDT
 
     public static CompletedMedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
         return new CompletedMedicalSlotResponseDTO(
-                medicalSlot.getId(),
+                medicalSlot.id(),
                 MedicalSlotStatus.COMPLETED,
                 medicalSlot.toDTO().getDoctor(),
-                medicalSlot.getAvailableAt(),
-                medicalSlot.getCreatedAt(),
-                medicalSlot.getCompletedAt()
+                medicalSlot.availableAt(),
+                medicalSlot.createdAt(),
+                medicalSlot.completedAt()
         );
     }
 

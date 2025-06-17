@@ -62,18 +62,7 @@ public class MedicalSlotCancellationTest {
 
     @Test
     @Order(4)
-    void shouldReturnConflictWhenMedicalSlotIsCurrentlyCancelled() throws Exception {
-        String medicalLicenseNumber = "";
-        String id = "";
-        mockMvc.perform(
-                patch("/api/v1/medical-slots/%s/%s/cancellation".formatted(medicalLicenseNumber, id))
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isConflict());
-    }
-
-    @Test
-    @Order(5)
-    void shouldReturnConflictWhenMedicalSlotIsCurrentlyCompleted() throws Exception {
+    void shouldReturnConflictWhenMedicalSlotIsCurrentlyCancelledOrCompleted() throws Exception {
         String medicalLicenseNumber = "";
         String id = "";
         mockMvc.perform(

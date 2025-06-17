@@ -34,11 +34,11 @@ public sealed class MedicalSlotResponseDTO
 
     public static MedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
         return new MedicalSlotResponseDTO(
-                medicalSlot.getId(),
+                medicalSlot.id(),
                 MedicalSlotStatus.ACTIVE,
-                medicalSlot.getDoctor().toDTO(),
-                medicalSlot.getAvailableAt(),
-                medicalSlot.getCreatedAt()
+                medicalSlot.doctor().toDTO(),
+                medicalSlot.availableAt(),
+                medicalSlot.createdAt()
         );
     }
 
