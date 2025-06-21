@@ -4,6 +4,10 @@ import com.api.v2.customers.exceptions.CustomerNotFoundException
 import com.api.v2.doctors.exceptions.ActiveDoctorException
 import com.api.v2.doctors.exceptions.DoctorNotFoundException
 import com.api.v2.doctors.exceptions.TerminatedDoctorException
+import com.api.v2.medical_appointment.exceptions.CancelledMedicalAppointmentException
+import com.api.v2.medical_appointment.exceptions.CompletedMedicalAppointmentException
+import com.api.v2.medical_appointment.exceptions.InaccessibleMedicalAppointmentException
+import com.api.v2.medical_appointment.exceptions.MedicalAppointmentNotFoundException
 import com.api.v2.medical_slots.exceptions.CancelledMedicalSlotException
 import com.api.v2.medical_slots.exceptions.CompletedMedicalSlotException
 import com.api.v2.medical_slots.exceptions.InaccessibleMedicalSlotException
@@ -76,5 +80,25 @@ class GlobalExceptionHandler {
     @ExceptionHandler(CancelledMedicalSlotException::class)
     fun handleException(ex: CancelledMedicalSlotException): ResponseEntity<String?> {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(CancelledMedicalAppointmentException::class)
+    fun handleException(ex: CancelledMedicalAppointmentException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(CompletedMedicalAppointmentException::class)
+    fun handleException(ex: CompletedMedicalAppointmentException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(InaccessibleMedicalAppointmentException::class)
+    fun handleException(ex: InaccessibleMedicalAppointmentException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.message)
+    }
+
+    @ExceptionHandler(MedicalAppointmentNotFoundException::class)
+    fun handleException(ex: MedicalAppointmentNotFoundException): ResponseEntity<String?> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.message)
     }
 }
