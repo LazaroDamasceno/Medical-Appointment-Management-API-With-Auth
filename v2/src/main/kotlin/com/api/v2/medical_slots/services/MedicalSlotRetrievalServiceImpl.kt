@@ -3,7 +3,7 @@ package com.api.v2.medical_slots.services
 import com.api.v2.doctors.DoctorFinder
 import com.api.v2.medical_slots.MedicalSlot
 import com.api.v2.medical_slots.MedicalSlotFinder
-import com.api.v2.medical_slots.MedicalSlotResponseDTO
+import com.api.v2.medical_slots.DefaultMedicalSlotResponseDTO
 import com.api.v2.medical_slots.controllers.MedicalSlotController
 import com.api.v2.medical_slots.domain.MedicalSlotCrudRepository
 import com.api.v2.medical_slots.toDTO
@@ -24,7 +24,7 @@ class MedicalSlotRetrievalServiceImpl(
     override fun findByIdAndDoctor(
         id: String,
         medicalLicenseNumber: String
-    ): ResponseEntity<MedicalSlotResponseDTO> {
+    ): ResponseEntity<DefaultMedicalSlotResponseDTO> {
         val foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber)
         val foundSlot = medicalSlotFinder.findByIdAndDoctor(id, foundDoctor)
         val dto = foundSlot.toDTO()
@@ -39,13 +39,13 @@ class MedicalSlotRetrievalServiceImpl(
     override fun findAllByDoctor(
         medicalLicenseNumber: String,
         pageable: Pageable
-    ): ResponseEntity<Page<MedicalSlotResponseDTO>> {
+    ): ResponseEntity<Page<DefaultMedicalSlotResponseDTO>> {
         val foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber)
         val page = crudRepository.findAllByDoctor(foundDoctor.id, pageable).map(MedicalSlot::toDTO)
         return ResponseEntity.ok(page)
     }
 
-    override fun findAll(pageable: Pageable): ResponseEntity<Page<MedicalSlotResponseDTO>> {
+    override fun findAll(pageable: Pageable): ResponseEntity<Page<DefaultMedicalSlotResponseDTO>> {
         val page = crudRepository.findAll(pageable).map(MedicalSlot::toDTO)
         return ResponseEntity.ok(page)
     }

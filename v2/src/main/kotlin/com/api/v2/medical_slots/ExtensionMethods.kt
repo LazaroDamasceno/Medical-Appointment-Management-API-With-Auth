@@ -1,12 +1,14 @@
 package com.api.v2.medical_slots
 
 import com.api.v2.doctors.toDTO
+import com.api.v2.medical_appointment.toDTO
 import com.api.v2.medical_slots.enums.MedicalSlotStatus
 
-fun MedicalSlot.toDTO(): MedicalSlotResponseDTO {
+fun MedicalSlot.toDTO(): DefaultMedicalSlotResponseDTO {
     if (this.status == MedicalSlotStatus.CANCELLED) {
-        return CancelledMedicalSlotResponseDTO(
+        return CancelledDefaultMedicalSlotResponseDTO(
             this.id,
+            this.status,
             this.doctor.toDTO(),
             this.availableAt,
             this.createdAt,
@@ -14,17 +16,31 @@ fun MedicalSlot.toDTO(): MedicalSlotResponseDTO {
         )
     }
     else if (this.status == MedicalSlotStatus.COMPLETED) {
-        return CompletedMedicalSlotResponseDTO(
+        return CompletedDefaultMedicalSlotResponseDTO(
             this.id,
+            this.status,
             this.doctor.toDTO(),
             this.availableAt,
             this.createdAt,
-            this.completedAt!!
+            this.completedAt!!,
+            this.medicalAppointment!!.toDTO()
         )
     }
-    return MedicalSlotResponseDTO(
+    else if (this.status == MedicalSlotStatus.ACTIVE
+        && this.medicalAppointment != null
+    ) {
+        return MedicalSlotWithAppointmentResponseDTO(
+            this.id,
+            this.status,
+            this.doctor.toDTO(),
+            this.availableAt,
+            this.createdAt,
+            this.medicalAppointment.toDTO()
+        )
+    }
+    return DefaultMedicalSlotResponseDTO(
         this.id,
-        MedicalSlotStatus.ACTIVE,
+        this.status,
         this.doctor.toDTO(),
         this.availableAt,
         this.createdAt

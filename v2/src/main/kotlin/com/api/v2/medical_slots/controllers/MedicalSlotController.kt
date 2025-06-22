@@ -1,6 +1,6 @@
 package com.api.v2.medical_slots.controllers
 
-import com.api.v2.medical_slots.MedicalSlotResponseDTO
+import com.api.v2.medical_slots.DefaultMedicalSlotResponseDTO
 import com.api.v2.medical_slots.services.MedicalSlotManagementService
 import com.api.v2.medical_slots.services.MedicalSlotRegistrationService
 import com.api.v2.medical_slots.services.MedicalSlotRetrievalService
@@ -28,7 +28,7 @@ class MedicalSlotController(
     fun findByIdAndDoctor(
         @PathVariable id: String,
         @PathVariable medicalLicenseNumber: String
-    ): ResponseEntity<MedicalSlotResponseDTO> {
+    ): ResponseEntity<DefaultMedicalSlotResponseDTO> {
         return retrievalService.findByIdAndDoctor(id, medicalLicenseNumber)
     }
 
@@ -36,12 +36,12 @@ class MedicalSlotController(
     fun findAllByDoctor(
         @PathVariable medicalLicenseNumber: String,
         pageable: Pageable
-    ): ResponseEntity<Page<MedicalSlotResponseDTO>> {
+    ): ResponseEntity<Page<DefaultMedicalSlotResponseDTO>> {
         return retrievalService.findAllByDoctor(medicalLicenseNumber, pageable)
     }
 
     @GetMapping
-    fun findAll(pageable: Pageable): ResponseEntity<Page<MedicalSlotResponseDTO>> {
+    fun findAll(pageable: Pageable): ResponseEntity<Page<DefaultMedicalSlotResponseDTO>> {
         return retrievalService.findAll( pageable)
     }
 
@@ -49,7 +49,7 @@ class MedicalSlotController(
     fun register(
         @PathVariable medicalLicenseNumber: String,
         @PathVariable availableAt: @NotNull LocalDateTime
-    ): ResponseEntity<MedicalSlotResponseDTO> {
+    ): ResponseEntity<DefaultMedicalSlotResponseDTO> {
         return registrationService.register(medicalLicenseNumber, availableAt)
     }
 

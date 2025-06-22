@@ -4,10 +4,11 @@ import com.api.v2.doctors.DoctorResponseDTO
 import com.api.v2.medical_slots.enums.MedicalSlotStatus
 import java.time.LocalDateTime
 
-class CancelledMedicalSlotResponseDTO(
+class CancelledDefaultMedicalSlotResponseDTO(
     id: String,
+    status: MedicalSlotStatus,
     doctor: DoctorResponseDTO,
     availableAt: LocalDateTime,
     createdAt: LocalDateTime,
     cancelledAt: LocalDateTime
-) : MedicalSlotResponseDTO(id, MedicalSlotStatus.CANCELLED, doctor, availableAt, createdAt)
+) : DefaultMedicalSlotResponseDTO(id, status, doctor, availableAt, createdAt)

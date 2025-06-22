@@ -3,7 +3,7 @@ package com.api.v2.medical_slots.services
 import com.api.v2.common.DuplicatedBookingDateTimeException
 import com.api.v2.doctors.DoctorFinder
 import com.api.v2.medical_slots.MedicalSlot
-import com.api.v2.medical_slots.MedicalSlotResponseDTO
+import com.api.v2.medical_slots.DefaultMedicalSlotResponseDTO
 import com.api.v2.medical_slots.domain.MedicalSlotCrudRepository
 import com.api.v2.medical_slots.toDTO
 import jakarta.validation.constraints.NotNull
@@ -22,7 +22,7 @@ class MedicalSlotRegistrationServiceImpl(
     override fun register(
         medicalLicenseNumber: String,
         availableAt: @NotNull LocalDateTime
-    ): ResponseEntity<MedicalSlotResponseDTO> {
+    ): ResponseEntity<DefaultMedicalSlotResponseDTO> {
         val foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber)
         val foundSlot = crudRepository.findActiveByDoctorAndAvailableAt(foundDoctor.id, availableAt)
         if (foundSlot != null) {
