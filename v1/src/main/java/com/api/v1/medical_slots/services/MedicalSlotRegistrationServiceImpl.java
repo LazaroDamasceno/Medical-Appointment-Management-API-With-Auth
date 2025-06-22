@@ -36,7 +36,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
             @NotNull LocalDateTime availableAt
     ) {
         Doctor foundDoctor = doctorFinder.findActiveByLicenseNumber(medicalLicenseNumber);
-        Optional<MedicalSlot> foundSlot = crudRepository.findByDoctorAndAvailable(foundDoctor.id(), availableAt);
+        Optional<MedicalSlot> foundSlot = crudRepository.findActiveByDoctorAndAvailable(foundDoctor.id(), availableAt);
         if (foundSlot.isPresent()) {
             throw new DuplicatedBookingDateTimeException();
         }

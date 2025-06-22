@@ -1,6 +1,7 @@
 package com.api.v2.medical_slots
 
 import com.api.v2.doctors.Doctor
+import com.api.v2.medical_appointment.MedicalAppointment
 import com.api.v2.medical_slots.enums.MedicalSlotStatus
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -16,7 +17,8 @@ data class MedicalSlot(
     val status: MedicalSlotStatus,
     val createdAt: LocalDateTime,
     val cancelledAt: LocalDateTime?,
-    val completedAt: LocalDateTime?
+    val completedAt: LocalDateTime?,
+    val medicalAppointment: MedicalAppointment?
 ) {
 
     companion object {
@@ -27,6 +29,7 @@ data class MedicalSlot(
                 availableAt,
                 MedicalSlotStatus.ACTIVE,
                 LocalDateTime.now(),
+                null,
                 null,
                 null
             )
@@ -41,11 +44,12 @@ data class MedicalSlot(
             MedicalSlotStatus.CANCELLED,
             this.createdAt,
             LocalDateTime.now(),
+            null,
             null
         )
     }
 
-    fun markAsCompleted(): MedicalSlot {
+    fun markAsCompleted(medicalAppointment: MedicalAppointment): MedicalSlot {
         return MedicalSlot(
             this.id,
             this.doctor,
@@ -53,7 +57,8 @@ data class MedicalSlot(
             MedicalSlotStatus.COMPLETED,
             this.createdAt,
             null,
-            LocalDateTime.now()
+            LocalDateTime.now(),
+            medicalAppointment
         )
     }
 }

@@ -15,5 +15,5 @@ public interface MedicalSlotCrudRepository extends MongoRepository<MedicalSlot, 
     Page<MedicalSlot> findAllByDoctor(String doctorId, Pageable pageable);
 
     @Query("{ 'doctor._id': ?0, 'availableAt': ?1, 'status': 'ACTIVE' }")
-    Optional<MedicalSlot> findByDoctorAndAvailable(String doctorId, LocalDateTime availableAt);
+    Optional<MedicalSlot> findActiveByDoctorAndAvailable(String doctorId, LocalDateTime availableAt);
 }
