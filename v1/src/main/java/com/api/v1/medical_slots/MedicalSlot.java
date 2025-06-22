@@ -1,6 +1,7 @@
 package com.api.v1.medical_slots;
 
 import com.api.v1.doctors.Doctor;
+import com.api.v1.medical_appointments.MedicalAppointment;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,7 +19,8 @@ public record MedicalSlot(
     LocalDateTime availableAt,
     LocalDateTime createdAt,
     LocalDateTime cancelledAt,
-    LocalDateTime completedAt
+    LocalDateTime completedAt,
+    MedicalAppointment medicalAppointment
 ) {
     public static MedicalSlot of(Doctor doctor, LocalDateTime availableAt) {
         return new MedicalSlot(
@@ -27,6 +29,7 @@ public record MedicalSlot(
                 MedicalSlotStatus.ACTIVE,
                 availableAt,
                 LocalDateTime.now(),
+                null,
                 null,
                 null
         );
@@ -40,11 +43,12 @@ public record MedicalSlot(
                 this.availableAt,
                 this.createdAt,
                 LocalDateTime.now(),
+                null,
                 null
         );
     }
 
-    public MedicalSlot markAsCompleted() {
+    public MedicalSlot markAsCompleted(MedicalAppointment medicalAppointment) {
         return new MedicalSlot(
                 this.id,
                 this.doctor,
@@ -52,7 +56,8 @@ public record MedicalSlot(
                 this.availableAt,
                 this.createdAt,
                 null,
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                medicalAppointment
         );
     }
 
