@@ -1,37 +1,34 @@
 package com.api.v1.medical_slots;
 
 import com.api.v1.doctors.DoctorResponseDTO;
+import com.api.v1.medical_appointments.MedicalAppointment;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 
 import java.time.LocalDateTime;
 
-public final class CompletedMedicalSlotResponseDTO extends MedicalSlotResponseDTO {
+public final class CompletedDefaultMedicalSlotResponseDTO extends DefaultMedicalSlotResponseDTO {
 
     private final LocalDateTime completedAt;
+    private final MedicalAppointment medicalAppointment;
 
-    private CompletedMedicalSlotResponseDTO(String id,
+    CompletedDefaultMedicalSlotResponseDTO(String id,
                                            MedicalSlotStatus status,
                                            DoctorResponseDTO doctor,
                                            LocalDateTime availableAt,
                                            LocalDateTime createdAt,
-                                           LocalDateTime completedAt
+                                           LocalDateTime completedAt,
+                                           MedicalAppointment medicalAppointment
     ) {
         super(id, status, doctor, availableAt, createdAt);
         this.completedAt = completedAt;
-    }
-
-    public static CompletedMedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
-        return new CompletedMedicalSlotResponseDTO(
-                medicalSlot.id(),
-                MedicalSlotStatus.COMPLETED,
-                medicalSlot.toDTO().getDoctor(),
-                medicalSlot.availableAt(),
-                medicalSlot.createdAt(),
-                medicalSlot.completedAt()
-        );
+        this.medicalAppointment = medicalAppointment;
     }
 
     public LocalDateTime getCompletedAt() {
         return completedAt;
+    }
+
+    public MedicalAppointment getMedicalAppointment() {
+        return medicalAppointment;
     }
 }

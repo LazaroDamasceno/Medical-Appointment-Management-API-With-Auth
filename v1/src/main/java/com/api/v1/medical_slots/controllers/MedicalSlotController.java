@@ -2,7 +2,7 @@ package com.api.v1.medical_slots.controllers;
 
 import com.api.v1.common.LicenseNumber;
 import com.api.v1.common.ObjectId;
-import com.api.v1.medical_slots.MedicalSlotResponseDTO;
+import com.api.v1.medical_slots.DefaultMedicalSlotResponseDTO;
 import com.api.v1.medical_slots.services.MedicalSlotManagementService;
 import com.api.v1.medical_slots.services.MedicalSlotRegistrationService;
 import com.api.v1.medical_slots.services.MedicalSlotRetrievalService;
@@ -33,26 +33,26 @@ public class MedicalSlotController {
     }
 
     @GetMapping("{id}/{medicalLicenseNumber}")
-    public ResponseEntity<MedicalSlotResponseDTO> findByIdAndDoctor(@PathVariable @ObjectId String id,
-                                                                    @PathVariable @LicenseNumber String medicalLicenseNumber
+    public ResponseEntity<DefaultMedicalSlotResponseDTO> findByIdAndDoctor(@PathVariable @ObjectId String id,
+                                                                           @PathVariable @LicenseNumber String medicalLicenseNumber
     ) {
         return retrievalService.findByIdAndDoctor(id, medicalLicenseNumber);
     }
 
     @GetMapping("{medicalLicenseNumber}")
-    public ResponseEntity<Page<MedicalSlotResponseDTO>> findAllByDoctor(@PathVariable @LicenseNumber String medicalLicenseNumber,
-                                                                        @RequestParam Pageable pageable
+    public ResponseEntity<Page<DefaultMedicalSlotResponseDTO>> findAllByDoctor(@PathVariable @LicenseNumber String medicalLicenseNumber,
+                                                                               @RequestParam Pageable pageable
     ) {
         return retrievalService.findAllByDoctor(medicalLicenseNumber, pageable);
     }
 
     @GetMapping
-    public ResponseEntity<Page<MedicalSlotResponseDTO>> findAll(@RequestParam Pageable pageable) {
+    public ResponseEntity<Page<DefaultMedicalSlotResponseDTO>> findAll(@RequestParam Pageable pageable) {
         return retrievalService.findAll(pageable);
     }
 
     @PostMapping("{medicalLicenseNumber}/{availableAt}")
-    public ResponseEntity<MedicalSlotResponseDTO> register(
+    public ResponseEntity<DefaultMedicalSlotResponseDTO> register(
             @PathVariable @LicenseNumber String medicalLicenseNumber,
             @PathVariable @NotNull LocalDateTime availableAt
     ) {

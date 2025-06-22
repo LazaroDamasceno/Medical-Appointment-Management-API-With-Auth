@@ -5,7 +5,7 @@ import com.api.v1.common.LicenseNumber;
 import com.api.v1.doctors.Doctor;
 import com.api.v1.doctors.DoctorFinder;
 import com.api.v1.medical_slots.MedicalSlot;
-import com.api.v1.medical_slots.MedicalSlotResponseDTO;
+import com.api.v1.medical_slots.DefaultMedicalSlotResponseDTO;
 import com.api.v1.medical_slots.domain.MedicalSlotCrudRepository;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.MediaType;
@@ -31,7 +31,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
     }
 
     @Override
-    public ResponseEntity<MedicalSlotResponseDTO> register(
+    public ResponseEntity<DefaultMedicalSlotResponseDTO> register(
             @LicenseNumber String medicalLicenseNumber,
             @NotNull LocalDateTime availableAt
     ) {
@@ -42,7 +42,7 @@ public class MedicalSlotRegistrationServiceImpl implements MedicalSlotRegistrati
         }
         MedicalSlot newSlot = MedicalSlot.of(foundDoctor, availableAt);
         MedicalSlot savedSlot = crudRepository.save(newSlot);
-        MedicalSlotResponseDTO responseDTO = savedSlot.toDTO();
+        DefaultMedicalSlotResponseDTO responseDTO = savedSlot.toDTO();
         return ResponseEntity
                 .created(URI.create("/api/v1/medical-slots"))
                 .contentType(MediaType.APPLICATION_JSON)

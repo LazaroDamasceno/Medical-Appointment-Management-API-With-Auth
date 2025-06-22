@@ -6,7 +6,7 @@ import com.api.v1.doctors.Doctor;
 import com.api.v1.doctors.DoctorFinder;
 import com.api.v1.medical_slots.MedicalSlot;
 import com.api.v1.medical_slots.MedicalSlotFinder;
-import com.api.v1.medical_slots.MedicalSlotResponseDTO;
+import com.api.v1.medical_slots.DefaultMedicalSlotResponseDTO;
 import com.api.v1.medical_slots.controllers.MedicalSlotController;
 import com.api.v1.medical_slots.domain.MedicalSlotCrudRepository;
 import org.springframework.data.domain.Page;
@@ -34,12 +34,12 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public ResponseEntity<MedicalSlotResponseDTO> findByIdAndDoctor(@ObjectId String id,
-                                                                    @LicenseNumber String medicalLicenseNumber
+    public ResponseEntity<DefaultMedicalSlotResponseDTO> findByIdAndDoctor(@ObjectId String id,
+                                                                           @LicenseNumber String medicalLicenseNumber
     ) {
         Doctor foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber);
         MedicalSlot foundSlot = medicalSlotFinder.findByIdAndDoctor(id, foundDoctor);
-        MedicalSlotResponseDTO responseDTO = foundSlot.toDTO();
+        DefaultMedicalSlotResponseDTO responseDTO = foundSlot.toDTO();
         responseDTO.add(
             linkTo(methodOn(MedicalSlotController.class).findByIdAndDoctor(id, medicalLicenseNumber)).withSelfRel()
         );
@@ -47,8 +47,8 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public ResponseEntity<Page<MedicalSlotResponseDTO>> findAllByDoctor(@LicenseNumber String medicalLicenseNumber,
-                                                                        Pageable pageable
+    public ResponseEntity<Page<DefaultMedicalSlotResponseDTO>> findAllByDoctor(@LicenseNumber String medicalLicenseNumber,
+                                                                               Pageable pageable
     ) {
         Doctor foundDoctor = doctorFinder.findByLicenseNumber(medicalLicenseNumber);
         var all = crudRepository.findAllByDoctor(foundDoctor.id(), pageable).map(MedicalSlot::toDTO);
@@ -56,7 +56,7 @@ public class MedicalSlotRetrievalServiceImpl implements MedicalSlotRetrievalServ
     }
 
     @Override
-    public ResponseEntity<Page<MedicalSlotResponseDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<DefaultMedicalSlotResponseDTO>> findAll(Pageable pageable) {
         var all = crudRepository.findAll(pageable).map(MedicalSlot::toDTO);
         return ResponseEntity.ok(all);
     }

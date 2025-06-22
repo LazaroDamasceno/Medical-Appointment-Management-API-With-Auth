@@ -5,11 +5,11 @@ import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 
 import java.time.LocalDateTime;
 
-public final class CancelledMedicalSlotResponseDTO extends MedicalSlotResponseDTO {
+public final class CancelledDefaultMedicalSlotResponseDTO extends DefaultMedicalSlotResponseDTO {
 
     private final LocalDateTime cancelledAt;
 
-    private CancelledMedicalSlotResponseDTO(String id,
+    CancelledDefaultMedicalSlotResponseDTO(String id,
                                            MedicalSlotStatus status,
                                            DoctorResponseDTO doctor,
                                            LocalDateTime availableAt,
@@ -18,17 +18,6 @@ public final class CancelledMedicalSlotResponseDTO extends MedicalSlotResponseDT
     ) {
         super(id, status, doctor, availableAt, createdAt);
         this.cancelledAt = cancelledAt;
-    }
-
-    public static CancelledMedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
-        return new CancelledMedicalSlotResponseDTO(
-                medicalSlot.id(),
-                MedicalSlotStatus.CANCELLED,
-                medicalSlot.toDTO().getDoctor(),
-                medicalSlot.availableAt(),
-                medicalSlot.createdAt(),
-                medicalSlot.cancelledAt()
-        );
     }
 
     public LocalDateTime getCancelledAt() {

@@ -61,13 +61,13 @@ public record MedicalSlot(
         );
     }
 
-    public MedicalSlotResponseDTO toDTO() {
+    public DefaultMedicalSlotResponseDTO toDTO() {
         if (status.equals(MedicalSlotStatus.CANCELLED)) {
-            CancelledMedicalSlotResponseDTO.from(this);
+            CancelledDefaultMedicalSlotResponseDTO.from(this);
         }
         else if (status.equals(MedicalSlotStatus.COMPLETED)) {
-            CompletedMedicalSlotResponseDTO.from(this);
+            CompletedDefaultMedicalSlotResponseDTO.from(this);
         }
-        return MedicalSlotResponseDTO.from(this);
+        return DefaultMedicalSlotResponseDTO.from(this);
     }
 }

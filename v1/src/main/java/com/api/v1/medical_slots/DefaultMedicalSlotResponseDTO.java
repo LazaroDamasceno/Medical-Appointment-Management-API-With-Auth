@@ -6,9 +6,11 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
-public sealed class MedicalSlotResponseDTO
-        extends RepresentationModel<MedicalSlotResponseDTO>
-        permits CancelledMedicalSlotResponseDTO, CompletedMedicalSlotResponseDTO
+public sealed class DefaultMedicalSlotResponseDTO
+        extends RepresentationModel<DefaultMedicalSlotResponseDTO>
+        permits CancelledDefaultMedicalSlotResponseDTO,
+            CompletedDefaultMedicalSlotResponseDTO,
+            MedicalSlotWithAppointmentResponseDTO
 {
 
     private String id;
@@ -17,29 +19,19 @@ public sealed class MedicalSlotResponseDTO
     private LocalDateTime availableAt;
     private LocalDateTime createdAt;
 
-    protected MedicalSlotResponseDTO() {}
+    protected DefaultMedicalSlotResponseDTO() {}
 
-    protected MedicalSlotResponseDTO(String id,
-                                     MedicalSlotStatus status,
-                                     DoctorResponseDTO doctor,
-                                     LocalDateTime availableAt,
-                                     LocalDateTime createdAt
+    protected DefaultMedicalSlotResponseDTO(String id,
+                                            MedicalSlotStatus status,
+                                            DoctorResponseDTO doctor,
+                                            LocalDateTime availableAt,
+                                            LocalDateTime createdAt
     ) {
         this.id = id;
         this.status = status;
         this.doctor = doctor;
         this.availableAt = availableAt;
         this.createdAt = createdAt;
-    }
-
-    public static MedicalSlotResponseDTO from(MedicalSlot medicalSlot) {
-        return new MedicalSlotResponseDTO(
-                medicalSlot.id(),
-                MedicalSlotStatus.ACTIVE,
-                medicalSlot.doctor().toDTO(),
-                medicalSlot.availableAt(),
-                medicalSlot.createdAt()
-        );
     }
 
     public DoctorResponseDTO getDoctor() {
