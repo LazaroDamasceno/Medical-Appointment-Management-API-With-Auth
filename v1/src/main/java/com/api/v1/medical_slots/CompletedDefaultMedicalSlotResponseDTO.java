@@ -2,6 +2,7 @@ package com.api.v1.medical_slots;
 
 import com.api.v1.doctors.DoctorResponseDTO;
 import com.api.v1.medical_appointments.MedicalAppointment;
+import com.api.v1.medical_appointments.MedicalAppointmentResponseDTO;
 import com.api.v1.medical_slots.enums.MedicalSlotStatus;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 public final class CompletedDefaultMedicalSlotResponseDTO extends DefaultMedicalSlotResponseDTO {
 
     private final LocalDateTime completedAt;
-    private final MedicalAppointment medicalAppointment;
+    private final MedicalAppointmentResponseDTO medicalAppointment;
 
     CompletedDefaultMedicalSlotResponseDTO(String id,
                                            MedicalSlotStatus status,
@@ -17,7 +18,7 @@ public final class CompletedDefaultMedicalSlotResponseDTO extends DefaultMedical
                                            LocalDateTime availableAt,
                                            LocalDateTime createdAt,
                                            LocalDateTime completedAt,
-                                           MedicalAppointment medicalAppointment
+                                           MedicalAppointmentResponseDTO medicalAppointment
     ) {
         super(id, status, doctor, availableAt, createdAt);
         this.completedAt = completedAt;
@@ -28,7 +29,7 @@ public final class CompletedDefaultMedicalSlotResponseDTO extends DefaultMedical
         return completedAt;
     }
 
-    public MedicalAppointment getMedicalAppointment() {
+    public MedicalAppointmentResponseDTO getMedicalAppointment() {
         return medicalAppointment;
     }
 }

@@ -62,12 +62,6 @@ public record MedicalSlot(
     }
 
     public DefaultMedicalSlotResponseDTO toDTO() {
-        if (status.equals(MedicalSlotStatus.CANCELLED)) {
-            CancelledDefaultMedicalSlotResponseDTO.from(this);
-        }
-        else if (status.equals(MedicalSlotStatus.COMPLETED)) {
-            CompletedDefaultMedicalSlotResponseDTO.from(this);
-        }
-        return DefaultMedicalSlotResponseDTO.from(this);
+        return MedicalSlotDtoConverter.toDTO(this);
     }
 }
