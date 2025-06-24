@@ -62,6 +62,6 @@ public record MedicalSlot(
     }
 
     public DefaultMedicalSlotResponseDTO toDTO() {
-        return MedicalSlotDtoConverter.toDTO(this);
+        return MedicalSlotResponseWrapperImpl.toDTO(this);
     }
 }
