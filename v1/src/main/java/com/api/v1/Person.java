@@ -3,6 +3,7 @@ package com.api.v1;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 public class Person {
@@ -17,4 +18,40 @@ public class Person {
     private String email;
     private String phoneNumber;
     private Address address;
+
+    public Person() {
+    }
+
+    private Person(String firstName,
+                  String middleName,
+                  String lastName,
+                  LocalDate birthDate,
+                  String sin,
+                  String email,
+                  String phoneNumber,
+                  Address address
+    ) {
+        this.id = UUID.randomUUID().toString();
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.sin = sin;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
+    public static Person of(PersonRegistrationDto dto) {
+        return new Person(
+                dto.firstName(),
+                dto.middleName(),
+                dto.lastName(),
+                dto.birthDate(),
+                dto.sin(),
+                dto.email(),
+                dto.phoneNumber(),
+                dto.address()
+        );
+    }
 }
