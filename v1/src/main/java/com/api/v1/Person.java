@@ -16,4 +16,5 @@ public class Person {
     private String sin;
     private String email;
     private String phoneNumber;
+    private Address address;
 }
