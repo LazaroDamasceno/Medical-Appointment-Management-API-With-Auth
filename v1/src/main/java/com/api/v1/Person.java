@@ -1,13 +1,17 @@
 package com.api.v1;
 
 import lombok.Getter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
+@Document(collection = "People")
 public class Person {
 
+    @Id
     private String id;
     private String firstName;
     private String middleName;

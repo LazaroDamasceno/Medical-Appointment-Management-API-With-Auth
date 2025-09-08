@@ -1,13 +1,19 @@
 package com.api.v1;
 
 import lombok.Getter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
 @Getter
+@Document(collection = "Physicians")
 public class Physician {
 
+    @Id
     private String id;
+    @Indexed
     private String licenseNumber;
     private Person person;
 
