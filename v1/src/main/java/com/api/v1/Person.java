@@ -22,14 +22,15 @@ public class Person {
     public Person() {
     }
 
-    private Person(String firstName,
-                  String middleName,
-                  String lastName,
-                  LocalDate birthDate,
-                  String sin,
-                  String email,
-                  String phoneNumber,
-                  Address address
+    private Person(
+            String firstName,
+            String middleName,
+            String lastName,
+            LocalDate birthDate,
+            String sin,
+            String email,
+            String phoneNumber,
+            Address address
     ) {
         this.id = UUID.randomUUID().toString();
         this.firstName = firstName;
