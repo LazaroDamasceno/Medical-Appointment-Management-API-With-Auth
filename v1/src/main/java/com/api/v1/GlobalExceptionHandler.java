@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({
-            UnknowUsStateException.class
+            UnknowUsStateException.class,
+            DuplicatedMedicalLicenseNumberException.class
     })
     public ResponseEntity<String> handleException(Exception ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
