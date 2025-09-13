@@ -9,23 +9,45 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record PersonRegistrationDto(
-        @NotBlank
         String firstName,
         String middleName,
-        @NotBlank
         String lastName,
-        @NotNull
         LocalDate birthDate,
-        @NotBlank
-        @Size(min=10, max=10)
         String sin,
-        @Email
-        @NotBlank
         String email,
-        @NotBlank
-        @Size(min=10, max=10)
         String phoneNumber,
-        @Valid
         Address address
 ) {
+
+    public static PersonRegistrationDto of(
+            @NotBlank
+            String firstName,
+            String middleName,
+            @NotBlank
+            String lastName,
+            @NotNull
+            LocalDate birthDate,
+            @NotBlank
+            @Size(min=10, max=10)
+            String sin,
+            @Email
+            @NotBlank
+            String email,
+            @NotBlank
+            @Size(min=10, max=10)
+            String phoneNumber,
+            @Valid
+            Address address
+    ) {
+        return new PersonRegistrationDto(
+                firstName,
+                middleName,
+                lastName,
+                birthDate,
+                sin,
+                email,
+                phoneNumber,
+                address
+        );
+    }
 }
