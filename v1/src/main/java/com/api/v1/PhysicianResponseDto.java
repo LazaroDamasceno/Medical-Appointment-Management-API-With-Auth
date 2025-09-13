@@ -4,13 +4,13 @@ import jakarta.validation.constraints.NotNull;
 
 public record PhysicianResponseDto(
         String fullName,
-        MedicalLicenseNumber licenseNumber
+        MedicalLicense medicalLicense
 ) {
 
     public static PhysicianResponseDto from(@NotNull Physician physician) {
         return new PhysicianResponseDto(
                 physician.getPerson().getFullName(),
-                physician.getLicenseNumber()
+                physician.getMedicalLicense()
         );
     }
 }

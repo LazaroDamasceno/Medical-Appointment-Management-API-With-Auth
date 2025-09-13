@@ -10,7 +10,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             UnknowUsStateException.class,
-            DuplicatedMedicalLicenseNumberException.class,
+            DuplicatedMedicalLicenseException.class,
             DuplicatedSinException.class,
             DuplicatedEmailException.class
     })

@@ -4,18 +4,18 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record MedicalLicenseNumber(
-        String licenseNumber,
+public record MedicalLicense(
+        String id,
         UsState state
 ) {
 
-    public static MedicalLicenseNumber of(
+    public static MedicalLicense of(
             @NotBlank
             @Size(min=4, max=10)
-            String licenseNumber,
+            String id,
             @NotNull
             UsState state
     ) {
-        return new MedicalLicenseNumber(licenseNumber, state);
+        return new MedicalLicense(id, state);
     }
 }

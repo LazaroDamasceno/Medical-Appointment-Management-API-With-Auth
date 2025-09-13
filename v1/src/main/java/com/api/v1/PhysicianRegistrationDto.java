@@ -4,14 +4,14 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 public record PhysicianRegistrationDto(
-        Person person,
-        MedicalLicenseNumber licenseNumber,
+        PersonRegistrationDto person,
+        MedicalLicense licenseNumber,
         MedicalSpecialization specialization
 ) {
 
     public static PhysicianRegistrationDto of(
-            @Valid Person person,
-            @Valid MedicalLicenseNumber licenseNumber,
+            @Valid PersonRegistrationDto person,
+            @Valid MedicalLicense licenseNumber,
             @NotNull MedicalSpecialization specialization
     ) {
         return new PhysicianRegistrationDto(
