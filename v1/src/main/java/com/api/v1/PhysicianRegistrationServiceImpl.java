@@ -23,7 +23,12 @@ public class PhysicianRegistrationServiceImpl implements PhysicianRegistrationSe
     }
 
     private void isMedicalLicenseNumber(MedicalLicense medicalLicense) {
-        if (physicianRepository.findByMedicalLicense(medicalLicense).isPresent()) {
+        if (physicianRepository
+                .findByMedicalLicenseIdAndMedicalLicenseState(
+                        medicalLicense.id(),
+                        medicalLicense.state())
+                .isPresent()
+        ) {
             throw new DuplicatedMedicalLicenseException();
         }
     }

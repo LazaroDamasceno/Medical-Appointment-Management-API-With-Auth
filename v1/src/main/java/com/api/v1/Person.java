@@ -3,6 +3,7 @@ package com.api.v1;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -18,7 +19,9 @@ public class Person {
     private String middleName;
     private String lastName;
     private LocalDate birthDate;
+    @Indexed(unique = true)
     private String sin; // Single Identification Number
+    @Indexed(unique = true)
     private String email;
     private String phoneNumber;
     private Address address;
