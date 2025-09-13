@@ -1,5 +1,6 @@
 package com.api.v1;
 
+import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -46,7 +47,7 @@ public class Person {
         this.address = address;
     }
 
-    public static Person of(PersonRegistrationDto dto) {
+    public static Person of(@Valid PersonRegistrationDto dto) {
         return new Person(
                 dto.firstName(),
                 dto.middleName(),
