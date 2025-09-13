@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public record MedicalLicenseNumber(
         String licenseNumber,
-        UsStates state
+        UsState state
 ) {
 
     public static MedicalLicenseNumber of(
@@ -14,7 +14,7 @@ public record MedicalLicenseNumber(
             @Size(min=4, max=10)
             String licenseNumber,
             @NotNull
-            UsStates state
+            UsState state
     ) {
         return new MedicalLicenseNumber(licenseNumber, state);
     }

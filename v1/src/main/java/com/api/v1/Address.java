@@ -10,7 +10,7 @@ public record Address(
         @NotBlank
         String city,
         @NotNull
-        UsStates state,
+        UsState state,
         @NotBlank
         @Size(min=5, max=5)
         String zipcode
