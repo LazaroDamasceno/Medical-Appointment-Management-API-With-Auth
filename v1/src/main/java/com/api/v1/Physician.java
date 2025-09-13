@@ -17,23 +17,28 @@ public class Physician {
     private MedicalLicenseNumber licenseNumber;
     private Person person;
     private boolean isLicenseValid;
+    private MedicalSpecialization specialization;
 
     public Physician() {
     }
 
     private Physician(
             MedicalLicenseNumber licenseNumber,
-            Person person
+            Person person,
+            MedicalSpecialization specialization
     ) {
         this.id = UUID.randomUUID().toString();
         this.licenseNumber = licenseNumber;
         this.person = person;
+        this.isLicenseValid = true;
+        this.specialization = specialization;
     }
 
     public static Physician of(PhysicianRegistrationDto dto) {
         return new Physician(
                 dto.licenseNumber(),
-                dto.person()
+                dto.person(),
+                dto.specialization()
         );
     }
 
