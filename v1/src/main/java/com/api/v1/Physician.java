@@ -1,5 +1,6 @@
 package com.api.v1;
 
+import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -34,7 +35,7 @@ public class Physician {
         this.specialization = specialization;
     }
 
-    public static Physician of(PhysicianRegistrationDto dto) {
+    public static Physician of(@Valid PhysicianRegistrationDto dto) {
         return new Physician(
                 dto.licenseNumber(),
                 dto.person(),
