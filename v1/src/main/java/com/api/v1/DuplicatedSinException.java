@@ -1,4 +1,4 @@
-package com.api.v1.people.exceptions;
+package com.api.v1;
 
 public class DuplicatedSinException extends RuntimeException {
     public DuplicatedSinException() {

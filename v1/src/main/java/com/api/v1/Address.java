@@ -1,6 +1,5 @@
-package com.api.v1.people.helpers;
+package com.api.v1;
 
-import com.api.v1.UsState;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

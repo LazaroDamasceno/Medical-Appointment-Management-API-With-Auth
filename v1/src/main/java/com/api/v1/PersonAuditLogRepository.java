@@ -1,6 +1,5 @@
-package com.api.v1.people.repositories;
+package com.api.v1;
 
-import com.api.v1.people.models.Person;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface PersonAuditLogRepository extends MongoRepository<Person, String> {

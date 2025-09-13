@@ -1,6 +1,5 @@
-package com.api.v1.physicians.repositories;
+package com.api.v1;
 
-import com.api.v1.physicians.models.Physician;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface PhysicianAuditLogRepository extends MongoRepository<Physician, String> {

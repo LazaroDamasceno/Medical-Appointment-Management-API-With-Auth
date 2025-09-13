@@ -1,7 +1,7 @@
-package com.api.v1.people.repositories;
+package com.api.v1;
 
-import com.api.v1.people.models.Person;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import java.util.Optional;
 

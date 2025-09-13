@@ -1,4 +1,4 @@
-package com.api.v1.physicians.helpers;
+package com.api.v1;
 
 public enum MedicalSpecialization {
 

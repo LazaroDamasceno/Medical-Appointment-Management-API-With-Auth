@@ -1,6 +1,5 @@
-package com.api.v1.people.requests;
+package com.api.v1;
 
-import com.api.v1.people.helpers.Address;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

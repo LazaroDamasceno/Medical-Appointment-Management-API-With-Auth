@@ -1,8 +1,5 @@
-package com.api.v1.physicians.controller;
+package com.api.v1;
 
-import com.api.v1.physicians.requests.PhysicianRegistrationDto;
-import com.api.v1.physicians.services.PhysicianRegistrationService;
-import com.api.v1.physicians.responses.PhysicianResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

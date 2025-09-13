@@ -1,8 +1,5 @@
-package com.api.v1.physicians.requests;
+package com.api.v1;
 
-import com.api.v1.people.requests.PersonRegistrationDto;
-import com.api.v1.physicians.helpers.MedicalLicense;
-import com.api.v1.physicians.helpers.MedicalSpecialization;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 

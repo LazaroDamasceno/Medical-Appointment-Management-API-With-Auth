@@ -1,10 +1,5 @@
-package com.api.v1.physicians.models;
+package com.api.v1;
 
-import com.api.v1.people.models.Person;
-import com.api.v1.physicians.responses.PhysicianResponseDto;
-import com.api.v1.physicians.helpers.MedicalLicense;
-import com.api.v1.physicians.helpers.MedicalSpecialization;
-import com.api.v1.physicians.requests.PhysicianRegistrationDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -60,4 +55,6 @@ public class Physician {
     public void setInvalidLicense() {
         this.isLicenseValid = false;
     }
+
+
 }

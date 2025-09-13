@@ -1,4 +1,4 @@
-package com.api.v1.physicians.exceptions;
+package com.api.v1;
 
 public class DuplicatedMedicalLicenseException extends RuntimeException {
     public DuplicatedMedicalLicenseException() {
