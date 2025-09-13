@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface PhysicianRepository extends MongoRepository<Physician, String> {
 
     @Query("{ 'MedicalLicenseNumber': ?0 }")
-    Optional<MedicalLicense> findByMedicalLicenseNumber(MedicalLicense medicalLicense);
+    Optional<MedicalLicense> findByMedicalLicense(MedicalLicense medicalLicense);
 }

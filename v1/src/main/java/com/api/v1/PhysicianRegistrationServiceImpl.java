@@ -19,15 +19,12 @@ public class PhysicianRegistrationServiceImpl implements PhysicianRegistrationSe
         Physician newPhysician = Physician.of(dto, newPerson);
         Physician savedPhysician = physicianRepository.save(newPhysician);
         PhysicianResponseDto responseDto = savedPhysician.toDto();
-        return ResponseEntity.status(Constant.CREATED_201).body(responseDto);
+        return ResponseEntity.status(Constant.CREATED).body(responseDto);
     }
 
     private void isMedicalLicenseNumber(MedicalLicense medicalLicense) {
-        if (physicianRepository.findByMedicalLicenseNumber(medicalLicense).isPresent()) {
-            throw new DuplicatedMedicalLicenseException(
-                    medicalLicense.id(),
-                    medicalLicense.state().toString()
-            );
+        if (physicianRepository.findByMedicalLicense(medicalLicense).isPresent()) {
+            throw new DuplicatedMedicalLicenseException();
         }
     }
 }

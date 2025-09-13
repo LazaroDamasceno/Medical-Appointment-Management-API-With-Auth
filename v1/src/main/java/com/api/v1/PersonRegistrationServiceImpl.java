@@ -20,13 +20,13 @@ public class PersonRegistrationServiceImpl implements PersonRegistrationService 
 
     private void isSinDuplicated(String sin){
         if (personRepository.findBySin(sin).isPresent()) {
-            throw new DuplicatedSinException(sin);
+            throw new DuplicatedSinException();
         }
     }
 
     private void isEmailDuplicated(String email){
         if (personRepository.findByEmail(email).isPresent()) {
-            throw new DuplicatedEmailException(email);
+            throw new DuplicatedEmailException();
         }
     }
 }
