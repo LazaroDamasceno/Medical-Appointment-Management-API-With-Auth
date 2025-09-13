@@ -17,8 +17,7 @@ public class Person {
     private String middleName;
     private String lastName;
     private LocalDate birthDate;
-    // Single Identification Number
-    private String sin;
+    private String sin; // Single Identification Number
     private String email;
     private String phoneNumber;
     private Address address;
@@ -58,5 +57,12 @@ public class Person {
                 dto.phoneNumber(),
                 dto.address()
         );
+    }
+
+    public String getFullName() {
+        if (middleName == null) {
+            return "%s %s".formatted(firstName, lastName);
+        }
+        return "%s %s %s".formatted(firstName, middleName, lastName);
     }
 }
