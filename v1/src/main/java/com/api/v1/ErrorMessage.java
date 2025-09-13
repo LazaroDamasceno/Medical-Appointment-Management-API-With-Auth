@@ -9,4 +9,8 @@ public class ErrorMessage {
     public static String unknowUsState(String stateCode) {
         return "The US State's code %s does not exist.".formatted(stateCode);
     }
+
+    public static String duplicatedSin(String sin) {
+        return "The provided SIN %s is currently in use.".formatted(sin);
+    }
 }

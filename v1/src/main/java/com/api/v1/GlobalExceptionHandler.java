@@ -10,7 +10,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             UnknowUsStateException.class,
-            DuplicatedMedicalLicenseNumberException.class
+            DuplicatedMedicalLicenseNumberException.class,
+            DuplicatedSinException.class
     })
     public ResponseEntity<String> handleException(Exception ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
