@@ -13,4 +13,8 @@ public class ErrorMessage {
     public static String duplicatedSin(String sin) {
         return "The provided SIN %s is currently in use.".formatted(sin);
     }
+
+    public static String duplicatedEmail(String email) {
+        return "The provided email %s is currently in use.".formatted(email);
+    }
 }
