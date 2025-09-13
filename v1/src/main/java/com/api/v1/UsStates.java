@@ -2,7 +2,7 @@ package com.api.v1;
 
 import java.util.stream.Stream;
 
-public enum States {
+public enum UsStates {
 
     AL, AK, AZ, AR, CA,
     CO, CT, DE, FL, GA,
@@ -15,11 +15,11 @@ public enum States {
     TX, UT, VT, VA, WA,
     WV, MS, WI, MO, WY;
 
-    public static States getState(String stateCode) {
-        return Stream.of(States.values())
+    public static UsStates getState(String stateCode) {
+        return Stream.of(UsStates.values())
                 .filter(state -> state.toString().equals(stateCode))
                 .findFirst()
-                .orElseThrow(() -> new UnknowStateException(stateCode));
+                .orElseThrow(() -> new UnknowUsStateException(stateCode));
     }
 
 }

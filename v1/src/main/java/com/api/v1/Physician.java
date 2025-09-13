@@ -13,15 +13,15 @@ public class Physician {
 
     @Id
     private String id;
-    @Indexed
-    private String licenseNumber;
+    @Indexed(unique = true)
+    private MedicalLicenseNumber licenseNumber;
     private Person person;
 
     public Physician() {
     }
 
     private Physician(
-            String licenseNumber,
+            MedicalLicenseNumber licenseNumber,
             Person person
     ) {
         this.id = UUID.randomUUID().toString();
