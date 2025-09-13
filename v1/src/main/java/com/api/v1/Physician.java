@@ -16,6 +16,7 @@ public class Physician {
     @Indexed(unique = true)
     private MedicalLicenseNumber licenseNumber;
     private Person person;
+    private boolean isLicenseValid;
 
     public Physician() {
     }
@@ -34,5 +35,13 @@ public class Physician {
                 dto.licenseNumber(),
                 dto.person()
         );
+    }
+
+    public void setValidLicense() {
+        this.isLicenseValid = true;
+    }
+
+    public void setInvalidLicense() {
+        this.isLicenseValid = false;
     }
 }

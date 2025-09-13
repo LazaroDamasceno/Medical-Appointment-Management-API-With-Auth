@@ -4,8 +4,8 @@ import jakarta.validation.Valid;
 
 public record PhysicianRegistrationDto(
         @Valid
-        MedicalLicenseNumber licenseNumber,
+        Person person,
         @Valid
-        Person person
+        MedicalLicenseNumber licenseNumber
 ) {
 }
