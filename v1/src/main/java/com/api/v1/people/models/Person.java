@@ -1,5 +1,7 @@
-package com.api.v1;
+package com.api.v1.people.models;
 
+import com.api.v1.people.helpers.Address;
+import com.api.v1.people.requests.PersonRegistrationDto;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

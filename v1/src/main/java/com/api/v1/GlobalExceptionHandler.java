@@ -1,5 +1,8 @@
 package com.api.v1;
 
+import com.api.v1.people.exceptions.DuplicatedEmailException;
+import com.api.v1.people.exceptions.DuplicatedSinException;
+import com.api.v1.physicians.exceptions.DuplicatedMedicalLicenseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

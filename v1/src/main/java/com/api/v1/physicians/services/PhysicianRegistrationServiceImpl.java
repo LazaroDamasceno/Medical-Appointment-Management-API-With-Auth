@@ -1,5 +1,14 @@
-package com.api.v1;
+package com.api.v1.physicians.services;
 
+import com.api.v1.Status201;
+import com.api.v1.people.models.Person;
+import com.api.v1.people.services.PersonRegistrationService;
+import com.api.v1.physicians.exceptions.DuplicatedMedicalLicenseException;
+import com.api.v1.physicians.helpers.MedicalLicense;
+import com.api.v1.physicians.models.Physician;
+import com.api.v1.physicians.repositories.PhysicianRepository;
+import com.api.v1.physicians.requests.PhysicianRegistrationDto;
+import com.api.v1.physicians.responses.PhysicianResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

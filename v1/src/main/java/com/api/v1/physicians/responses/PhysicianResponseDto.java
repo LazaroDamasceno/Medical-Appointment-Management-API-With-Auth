@@ -1,5 +1,7 @@
-package com.api.v1;
+package com.api.v1.physicians.responses;
 
+import com.api.v1.physicians.helpers.MedicalLicense;
+import com.api.v1.physicians.models.Physician;
 import jakarta.validation.constraints.NotNull;
 
 public record PhysicianResponseDto(
