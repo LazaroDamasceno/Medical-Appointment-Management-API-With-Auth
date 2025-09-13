@@ -19,7 +19,7 @@ public class PhysicianRegistrationServiceImpl implements PhysicianRegistrationSe
         Physician newPhysician = Physician.of(dto, newPerson);
         Physician savedPhysician = physicianRepository.save(newPhysician);
         PhysicianResponseDto responseDto = savedPhysician.toDto();
-        return ResponseEntity.status(Constant.CREATED).body(responseDto);
+        return ResponseEntity.status(Status201.get201()).body(responseDto);
     }
 
     private void isMedicalLicenseNumber(MedicalLicense medicalLicense) {
