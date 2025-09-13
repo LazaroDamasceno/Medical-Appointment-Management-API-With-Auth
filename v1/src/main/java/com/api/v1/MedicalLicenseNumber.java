@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public record MedicalLicenseNumber(
         @NotBlank
-        @Size(min=8, max=8)
+        @Size(min=4, max=10)
         String licenseNumber,
         @NotNull
         UsStates state
